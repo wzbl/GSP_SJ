@@ -28,13 +28,47 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            this.btnOpenServices = new System.Windows.Forms.Button();
+            this.btnCloseServices = new System.Windows.Forms.Button();
+            this.SuspendLayout();
+            // 
+            // btnOpenServices
+            // 
+            this.btnOpenServices.Location = new System.Drawing.Point(109, 147);
+            this.btnOpenServices.Name = "btnOpenServices";
+            this.btnOpenServices.Size = new System.Drawing.Size(75, 23);
+            this.btnOpenServices.TabIndex = 0;
+            this.btnOpenServices.Text = "打开服务";
+            this.btnOpenServices.UseVisualStyleBackColor = true;
+            this.btnOpenServices.Click += new System.EventHandler(this.btnOpenServices_Click);
+            // 
+            // btnCloseServices
+            // 
+            this.btnCloseServices.Location = new System.Drawing.Point(268, 147);
+            this.btnCloseServices.Name = "btnCloseServices";
+            this.btnCloseServices.Size = new System.Drawing.Size(75, 23);
+            this.btnCloseServices.TabIndex = 1;
+            this.btnCloseServices.Text = "关闭服务";
+            this.btnCloseServices.UseVisualStyleBackColor = true;
+            this.btnCloseServices.Click += new System.EventHandler(this.btnCloseServices_Click);
+            // 
+            // Form1
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.btnCloseServices);
+            this.Controls.Add(this.btnOpenServices);
+            this.Name = "Form1";
             this.Text = "Form1";
+            this.ResumeLayout(false);
+
         }
 
         #endregion
+
+        private System.Windows.Forms.Button btnOpenServices;
+        private System.Windows.Forms.Button btnCloseServices;
     }
 }
 
