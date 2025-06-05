@@ -120,6 +120,10 @@
       <Project>{a69e772a-5b43-4f9f-9f80-433d613fdc9d}</Project>
       <Name>MyTestWcfServiceLibrary</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SqlHelper\SqlHelper.csproj">
+      <Project>{33a74706-9429-47bc-8ecb-5d5a0f6dbe27}</Project>
+      <Name>SqlHelper</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
