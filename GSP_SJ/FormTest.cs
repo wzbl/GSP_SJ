@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.Entity.Core.Objects;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -20,13 +21,15 @@ namespace GSP_SJ
         private void FormTest_Load(object sender, EventArgs e)
         {
             kryptonDataGridView1.CellDoubleClick += CellDoubleClick;
+            //ObjectParameter XYCode = new ObjectParameter("XYCode", "");
+            //int ret = db.P_Eng_GetXYCode(XYCode);
         }
 
         private void CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             var query = db.Eng_PubModelItem.OrderByDescending(x => x.CreationDate).ToList();
-            string materialcode= kryptonDataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString();
-            kryptonDataGridView7.DataSource = db.Eng_PubModel.Where(x=>x.MaterialCode== materialcode).ToList();
+            string materialcode = kryptonDataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString();
+            kryptonDataGridView7.DataSource = db.Eng_PubModel.Where(x => x.MaterialCode == materialcode).ToList();
         }
 
         public void SearchDB()
