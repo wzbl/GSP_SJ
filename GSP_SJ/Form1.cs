@@ -26,13 +26,13 @@ namespace GSP_SJ
 
         private void btnOpenServices_Click(object sender, EventArgs e)
         {
-            SqlHelper.SQL.ConnectSqlSever(@"DESKTOP-9F1CI68\SQLEXPRESS", "test", "sa", "123456");
+            SqlHelper.SQL.ConnectSqlSever(@"DESKTOP-9F1CI68\SQLEXPRESS", "FAI_new", "sa", "123456");
             SqlHelper.SQL.InsertIMG(textBox1.Text,textBox2.Text);
         }
 
         private void btnCloseServices_Click(object sender, EventArgs e)
         {
-            SqlHelper.SQL.ConnectSqlSever(@"DESKTOP-9F1CI68\SQLEXPRESS", "test", "sa", "123456");
+            SqlHelper.SQL.ConnectSqlSever(@"DESKTOP-9F1CI68\SQLEXPRESS", "FAI_new", "sa", "123456");
             MemoryStream mystream = new MemoryStream(SqlHelper.SQL.SelectIMG());
             //用指定的数据流来创建一个image图片
             System.Drawing.Image img = System.Drawing.Image.FromStream(mystream, true);
