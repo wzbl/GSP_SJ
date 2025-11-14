@@ -1,7 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Drawing;
+using System.Drawing.Drawing2D;
+using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.Windows.Forms;
 using System.Windows.Forms;
 
 namespace GSP_SJ
@@ -16,7 +21,7 @@ namespace GSP_SJ
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FormTest());
+            Application.Run(new FormChart());
         }
     }
 }

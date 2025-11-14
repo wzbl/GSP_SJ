@@ -46,6 +46,30 @@ namespace SqlHelper
             }
         }
 
+        public static DataTable Excute(string query)
+        {
+            try
+            {
+                if (IsConnected())
+                {
+                    SqlCommand cmd = new SqlCommand(query, conn);
+                    SqlDataAdapter da = new SqlDataAdapter(cmd);
+                    DataTable dt = new DataTable();
+                    da.Fill(dt);
+                    return dt;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error executing query: " + ex.Message);
+                return null;
+            }
+        }
+
         public static void ExecuteQuery(string query)
         {
             try
