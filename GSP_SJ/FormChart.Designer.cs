@@ -37,6 +37,7 @@
             this.ClientSize = new System.Drawing.Size(1764, 1193);
             this.Name = "FormChart";
             this.Text = "FormChart";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.ResumeLayout(false);
 
         }

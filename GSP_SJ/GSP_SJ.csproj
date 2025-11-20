@@ -8,10 +8,11 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>GSP_SJ</RootNamespace>
     <AssemblyName>GSP_SJ</AssemblyName>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -22,6 +23,8 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -33,6 +36,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ComponentFactory.Krypton.Navigator">
+      <HintPath>..\..\..\吸嘴清洗机\双轴换控件版\Bin\ComponentFactory.Krypton.Navigator.dll</HintPath>
+    </Reference>
+    <Reference Include="ComponentFactory.Krypton.Ribbon">
+      <HintPath>..\..\..\吸嘴清洗机\双轴换控件版\Bin\ComponentFactory.Krypton.Ribbon.dll</HintPath>
+    </Reference>
     <Reference Include="ComponentFactory.Krypton.Toolkit">
       <HintPath>..\..\..\吸嘴清洗机\双轴换控件版\Bin\ComponentFactory.Krypton.Toolkit.dll</HintPath>
     </Reference>
@@ -56,127 +65,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Bas_CompensationValue.cs">
-      <DependentUpon>FAI_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Bas_Customer.cs">
-      <DependentUpon>FAI_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Bas_DicIndex.cs">
-      <DependentUpon>FAI_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Bas_DicItem.cs">
-      <DependentUpon>FAI_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Bas_DicRegister.cs">
-      <DependentUpon>FAI_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Bas_Material.cs">
-      <DependentUpon>FAI_DB.tt</DependentUpon>
-    </Compile>
     <Compile Include="Connected Services\ServiceReference1\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
-    </Compile>
-    <Compile Include="Eng_Bom.cs">
-      <DependentUpon>FAI_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Eng_BomECN.cs">
-      <DependentUpon>FAI_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Eng_BomReplace.cs">
-      <DependentUpon>FAI_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Eng_BomSub.cs">
-      <DependentUpon>FAI_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Eng_Material.cs">
-      <DependentUpon>FAI_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Eng_Meter.cs">
-      <DependentUpon>FAI_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Eng_MeterOption.cs">
-      <DependentUpon>FAI_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Eng_MeterOptionItem.cs">
-      <DependentUpon>FAI_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Eng_Model.cs">
-      <DependentUpon>FAI_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Eng_ModelItem.cs">
-      <DependentUpon>FAI_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Eng_ParseRule.cs">
-      <DependentUpon>FAI_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Eng_ParseRuleExpression.cs">
-      <DependentUpon>FAI_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Eng_ParseRuleReplace.cs">
-      <DependentUpon>FAI_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Eng_ParseRuleSeparator.cs">
-      <DependentUpon>FAI_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Eng_ParseRuleToleranceC.cs">
-      <DependentUpon>FAI_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Eng_ParseRuleToleranceL.cs">
-      <DependentUpon>FAI_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Eng_ParseRuleToleranceR.cs">
-      <DependentUpon>FAI_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Eng_PictureLibrary.cs">
-      <DependentUpon>FAI_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Eng_Program.cs">
-      <DependentUpon>FAI_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Eng_ProgramLog.cs">
-      <DependentUpon>FAI_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Eng_ProgramOption.cs">
-      <DependentUpon>FAI_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Eng_ProgramOptionPicture.cs">
-      <DependentUpon>FAI_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Eng_PubModel.cs">
-      <DependentUpon>FAI_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Eng_PubModelItem.cs">
-      <DependentUpon>FAI_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Eng_Replace.cs">
-      <DependentUpon>FAI_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Eng_StationTable.cs">
-      <DependentUpon>FAI_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Eng_StationTableItem.cs">
-      <DependentUpon>FAI_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Eng_XYData.cs">
-      <DependentUpon>FAI_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="FAI_DB.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>FAI_DB.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="FAI_DB.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>FAI_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="FAI_DB.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>FAI_DB.edmx</DependentUpon>
     </Compile>
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
@@ -184,11 +76,41 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Form2.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form2.Designer.cs">
+      <DependentUpon>Form2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form3.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form3.Designer.cs">
+      <DependentUpon>Form3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form4.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form4.Designer.cs">
+      <DependentUpon>Form4.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormChart.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FormChart.Designer.cs">
       <DependentUpon>FormChart.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormMain.Designer.cs">
+      <DependentUpon>FormMain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormProductItem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormProductItem.Designer.cs">
+      <DependentUpon>FormProductItem.cs</DependentUpon>
     </Compile>
     <Compile Include="FormTest.cs">
       <SubType>Form</SubType>
@@ -196,40 +118,13 @@
     <Compile Include="FormTest.Designer.cs">
       <DependentUpon>FormTest.cs</DependentUpon>
     </Compile>
-    <Compile Include="GetPoints_Result.cs">
-      <DependentUpon>FAI_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Man_ComponentCheck.cs">
-      <DependentUpon>FAI_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Man_ComponentPackaging.cs">
-      <DependentUpon>FAI_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Man_ComponentSize.cs">
-      <DependentUpon>FAI_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Man_ComponentSizeItem.cs">
-      <DependentUpon>FAI_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Man_Report.cs">
-      <DependentUpon>FAI_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Man_ReportInspectionItems.cs">
-      <DependentUpon>FAI_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Man_ReportItem.cs">
-      <DependentUpon>FAI_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Man_ReportLog.cs">
-      <DependentUpon>FAI_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Program.cs" />
-    <Compile Include="ProjectInstaller.cs">
+    <Compile Include="PictureBoxZoom.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="ProjectInstaller.Designer.cs">
-      <DependentUpon>ProjectInstaller.cs</DependentUpon>
+    <Compile Include="PictureBoxZoom.Designer.cs">
+      <DependentUpon>PictureBoxZoom.cs</DependentUpon>
     </Compile>
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service1.cs">
       <SubType>Component</SubType>
@@ -237,62 +132,56 @@
     <Compile Include="Service1.Designer.cs">
       <DependentUpon>Service1.cs</DependentUpon>
     </Compile>
-    <Compile Include="SplitStr_Result.cs">
-      <DependentUpon>FAI_DB.tt</DependentUpon>
+    <Compile Include="UCAllProgram.cs">
+      <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="sp_helpdiagramdefinition_Result.cs">
-      <DependentUpon>FAI_DB.tt</DependentUpon>
+    <Compile Include="UCAllProgram.Designer.cs">
+      <DependentUpon>UCAllProgram.cs</DependentUpon>
     </Compile>
-    <Compile Include="sp_helpdiagrams_Result.cs">
-      <DependentUpon>FAI_DB.tt</DependentUpon>
+    <Compile Include="UCAllReport.cs">
+      <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="sysdiagrams.cs">
-      <DependentUpon>FAI_DB.tt</DependentUpon>
+    <Compile Include="UCAllReport.Designer.cs">
+      <DependentUpon>UCAllReport.cs</DependentUpon>
     </Compile>
-    <Compile Include="Sys_Error.cs">
-      <DependentUpon>FAI_DB.tt</DependentUpon>
+    <Compile Include="UCProgram.cs">
+      <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Sys_Help.cs">
-      <DependentUpon>FAI_DB.tt</DependentUpon>
+    <Compile Include="UCProgram.Designer.cs">
+      <DependentUpon>UCProgram.cs</DependentUpon>
     </Compile>
-    <Compile Include="Sys_Lang.cs">
-      <DependentUpon>FAI_DB.tt</DependentUpon>
+    <Compile Include="UCReport.cs">
+      <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Sys_Log.cs">
-      <DependentUpon>FAI_DB.tt</DependentUpon>
+    <Compile Include="UCReport.Designer.cs">
+      <DependentUpon>UCReport.cs</DependentUpon>
     </Compile>
-    <Compile Include="Sys_Option.cs">
-      <DependentUpon>FAI_DB.tt</DependentUpon>
+    <Compile Include="UCXYDataChart.cs">
+      <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Sys_OptionDDLB.cs">
-      <DependentUpon>FAI_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Sys_Power.cs">
-      <DependentUpon>FAI_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Sys_Role.cs">
-      <DependentUpon>FAI_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Sys_RolePower.cs">
-      <DependentUpon>FAI_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Sys_User.cs">
-      <DependentUpon>FAI_DB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Sys_UserLog.cs">
-      <DependentUpon>FAI_DB.tt</DependentUpon>
+    <Compile Include="UCXYDataChart.Designer.cs">
+      <DependentUpon>UCXYDataChart.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Form2.resx">
+      <DependentUpon>Form2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form3.resx">
+      <DependentUpon>Form3.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormChart.resx">
       <DependentUpon>FormChart.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormMain.resx">
+      <DependentUpon>FormMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormProductItem.resx">
+      <DependentUpon>FormProductItem.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormTest.resx">
       <DependentUpon>FormTest.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ProjectInstaller.resx">
-      <DependentUpon>ProjectInstaller.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -302,7 +191,23 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="UCAllProgram.resx">
+      <DependentUpon>UCAllProgram.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UCAllReport.resx">
+      <DependentUpon>UCAllReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UCProgram.resx">
+      <DependentUpon>UCProgram.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UCReport.resx">
+      <DependentUpon>UCReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UCXYDataChart.resx">
+      <DependentUpon>UCXYDataChart.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Connected Services\ServiceReference1\item.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -313,13 +218,6 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Connected Services\ServiceReference1\MyFirstService.wsdl" />
-    <EntityDeploy Include="FAI_DB.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>FAI_DB.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <None Include="FAI_DB.edmx.diagram">
-      <DependentUpon>FAI_DB.edmx</DependentUpon>
-    </None>
     <None Include="Properties\DataSources\MyTestWcfServiceLibrary.CompositeType.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -335,6 +233,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BorwinAnalyse\BorwinAnalyse.csproj">
+      <Project>{e24f3998-ff55-4a8f-a7b5-b2dcc34eb3c2}</Project>
+      <Name>BorwinAnalyse</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MyTestWcfServiceLibrary\MyTestWcfServiceLibrary.csproj">
       <Project>{a69e772a-5b43-4f9f-9f80-433d613fdc9d}</Project>
       <Name>MyTestWcfServiceLibrary</Name>
@@ -364,18 +266,6 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="FAI_DB.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>FAI_DB.edmx</DependentUpon>
-      <LastGenOutput>FAI_DB.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="FAI_DB.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>FAI_DB.edmx</DependentUpon>
-      <LastGenOutput>FAI_DB.cs</LastGenOutput>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="EntityFramework">

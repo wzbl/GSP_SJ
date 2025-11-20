@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="08948a4ea39a4adaaadc6223008f3fc4" Name="Diagram1">
+        <EntityTypeShape EntityType="FAI_NewModel.Bas_CompensationValue" Width="1.5" PointX="0.75" PointY="15.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FAI_NewModel.Bas_Customer" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FAI_NewModel.Bas_DicIndex" Width="1.5" PointX="22.75" PointY="8.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="FAI_NewModel.Bas_DicItem" Width="1.5" PointX="25" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="FAI_NewModel.Bas_DicRegister" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FAI_NewModel.Bas_Material" Width="1.5" PointX="7.75" PointY="21.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FAI_NewModel.Eng_Bom" Width="1.5" PointX="3" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FAI_NewModel.Eng_BomECN" Width="1.5" PointX="3" PointY="10.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="FAI_NewModel.Eng_BomReplace" Width="1.5" PointX="9.75" PointY="21.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FAI_NewModel.Eng_BomSub" Width="1.5" PointX="22.75" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FAI_NewModel.Eng_Material" Width="1.5" PointX="22.75" PointY="16.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FAI_NewModel.Eng_Meter" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FAI_NewModel.Eng_MeterOption" Width="1.5" PointX="22.75" PointY="2.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="FAI_NewModel.Eng_MeterOptionItem" Width="1.5" PointX="25" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="FAI_NewModel.Eng_Model" Width="1.5" PointX="3" PointY="21.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FAI_NewModel.Eng_ModelItem" Width="1.5" PointX="5.25" PointY="14.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="FAI_NewModel.Eng_ParseRule" Width="1.5" PointX="7.75" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="FAI_NewModel.Eng_ParseRuleExpression" Width="1.5" PointX="10" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FAI_NewModel.Eng_ParseRuleReplace" Width="1.5" PointX="10" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="FAI_NewModel.Eng_ParseRuleSeparator" Width="1.5" PointX="10" PointY="9.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="FAI_NewModel.Eng_ParseRuleToleranceC" Width="1.5" PointX="10" PointY="12.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="FAI_NewModel.Eng_ParseRuleToleranceL" Width="1.5" PointX="10" PointY="15.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="FAI_NewModel.Eng_ParseRuleToleranceR" Width="1.5" PointX="10" PointY="18.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="FAI_NewModel.Eng_PictureLibrary" Width="1.5" PointX="22.75" PointY="20.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FAI_NewModel.Eng_Program" Width="1.5" PointX="0.75" PointY="29.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FAI_NewModel.Eng_ProgramLog" Width="1.5" PointX="3" PointY="34.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="FAI_NewModel.Eng_ProgramOption" Width="1.5" PointX="3" PointY="37.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FAI_NewModel.Eng_ProgramOptionPicture" Width="1.5" PointX="5.25" PointY="44.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="FAI_NewModel.Eng_PubModel" Width="1.5" PointX="17.75" PointY="24.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="FAI_NewModel.Eng_PubModelItem" Width="1.5" PointX="20" PointY="17.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FAI_NewModel.Eng_Replace" Width="1.5" PointX="24.75" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FAI_NewModel.Eng_StationTable" Width="1.5" PointX="17.75" PointY="12.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="FAI_NewModel.Eng_StationTableItem" Width="1.5" PointX="20" PointY="12" IsExpanded="true" />
+        <EntityTypeShape EntityType="FAI_NewModel.Eng_XYData" Width="1.5" PointX="3" PointY="53.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="FAI_NewModel.Man_ComponentCheck" Width="1.5" PointX="24.75" PointY="15.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FAI_NewModel.Man_ComponentPackaging" Width="1.5" PointX="24.75" PointY="21.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FAI_NewModel.Man_ComponentSize" Width="1.5" PointX="9.75" PointY="25.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FAI_NewModel.Man_ComponentSizeItem" Width="1.5" PointX="22.75" PointY="25.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FAI_NewModel.Man_Report" Width="1.5" PointX="12.75" PointY="10" IsExpanded="true" />
+        <EntityTypeShape EntityType="FAI_NewModel.Man_ReportInspectionItems" Width="1.5" PointX="15" PointY="2.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="FAI_NewModel.Man_ReportItem" Width="1.5" PointX="15" PointY="16.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="FAI_NewModel.Man_ReportLog" Width="1.5" PointX="15" PointY="6.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="FAI_NewModel.Sys_Error" Width="1.5" PointX="24.75" PointY="25.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FAI_NewModel.Sys_Help" Width="1.5" PointX="26.75" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FAI_NewModel.Sys_Lang" Width="1.5" PointX="26.75" PointY="17.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FAI_NewModel.Sys_Log" Width="1.5" PointX="26.75" PointY="22.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FAI_NewModel.Sys_Option" Width="1.5" PointX="26.75" PointY="26.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FAI_NewModel.Sys_OptionDDLB" Width="1.5" PointX="27.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FAI_NewModel.Sys_Power" Width="1.5" PointX="17.75" PointY="7.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="FAI_NewModel.Sys_Role" Width="1.5" PointX="17.75" PointY="2.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="FAI_NewModel.Sys_RolePower" Width="1.5" PointX="20" PointY="2.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="FAI_NewModel.Sys_User" Width="1.5" PointX="20" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="FAI_NewModel.Sys_UserLog" Width="1.5" PointX="27.75" PointY="3.75" IsExpanded="true" />
+        <AssociationConnector Association="FAI_NewModel.FK_Bas_DicItem_Bas_DicIndex" ManuallyRouted="false" />
+        <AssociationConnector Association="FAI_NewModel.FK_Eng_Bom_Eng_Program" ManuallyRouted="false" />
+        <AssociationConnector Association="FAI_NewModel.FK_Eng_BomECN_Eng_BomECN" ManuallyRouted="false" />
+        <AssociationConnector Association="FAI_NewModel.FK_Eng_MeterOptionItem_Eng_MeterOption" ManuallyRouted="false" />
+        <AssociationConnector Association="FAI_NewModel.FK_Eng_Model_Eng_Program" ManuallyRouted="false" />
+        <AssociationConnector Association="FAI_NewModel.FK_Eng_ModelItem_Eng_Model" ManuallyRouted="false" />
+        <AssociationConnector Association="FAI_NewModel.FK_Eng_ParseRuleExpression_Eng_ParseRule" ManuallyRouted="false" />
+        <AssociationConnector Association="FAI_NewModel.FK_Eng_ParseRuleReplace_Eng_ParseRule" ManuallyRouted="false" />
+        <AssociationConnector Association="FAI_NewModel.FK_Eng_ParseRuleSeparator_Eng_ParseRule" ManuallyRouted="false" />
+        <AssociationConnector Association="FAI_NewModel.FK_Eng_ParseRuleToleranceC_Eng_ParseRule" ManuallyRouted="false" />
+        <AssociationConnector Association="FAI_NewModel.FK_Eng_ParseRuleToleranceL_Eng_ParseRule" ManuallyRouted="false" />
+        <AssociationConnector Association="FAI_NewModel.FK_Eng_ParseRuleToleranceR_Eng_ParseRule" ManuallyRouted="false" />
+        <AssociationConnector Association="FAI_NewModel.FK_Eng_ProgramLog_Eng_Program" ManuallyRouted="false" />
+        <AssociationConnector Association="FAI_NewModel.FK_Eng_ProgramOption_Eng_Program" ManuallyRouted="false" />
+        <AssociationConnector Association="FAI_NewModel.FK_Eng_XYData_Eng_Program" ManuallyRouted="false" />
+        <AssociationConnector Association="FAI_NewModel.FK_Eng_ProgramOptionPicture_Eng_ProgramOption" ManuallyRouted="false" />
+        <AssociationConnector Association="FAI_NewModel.FK_Eng_PubModelItem_Eng_PubModel" ManuallyRouted="false" />
+        <AssociationConnector Association="FAI_NewModel.FK_Eng_StationTableItem_Eng_StationTable" ManuallyRouted="false" />
+        <AssociationConnector Association="FAI_NewModel.FK_Man_FirstBoardCheckItem_Man_FirstBoardCheck" ManuallyRouted="false" />
+        <AssociationConnector Association="FAI_NewModel.FK_Man_FirstBoardCheckLog_Man_FirstBoardCheck" ManuallyRouted="false" />
+        <AssociationConnector Association="FAI_NewModel.FK_Man_ReportInspectionItems_Man_Report" ManuallyRouted="false" />
+        <AssociationConnector Association="FAI_NewModel.FK_Sys_RolePower_Sys_Power" ManuallyRouted="false" />
+        <AssociationConnector Association="FAI_NewModel.FK_Sys_RolePower_Sys_Role" ManuallyRouted="false" />
+        <AssociationConnector Association="FAI_NewModel.FK_Sys_User_Sys_Role" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="FAI_NewModel.View_Eng_Program" Width="1.5" PointX="27.375" PointY="6.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
