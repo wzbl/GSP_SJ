@@ -83,6 +83,10 @@
         <AssociationConnector Association="FAI_NewModel.FK_Sys_RolePower_Sys_Role" ManuallyRouted="false" />
         <AssociationConnector Association="FAI_NewModel.FK_Sys_User_Sys_Role" ManuallyRouted="false" />
         <EntityTypeShape EntityType="FAI_NewModel.View_Eng_Program" Width="1.5" PointX="27.375" PointY="6.75" />
+        <EntityTypeShape EntityType="FAI_NewModel.View_Bas_Material" Width="1.5" PointX="29.375" PointY="6.75" />
+        <EntityTypeShape EntityType="FAI_NewModel.View_ComponentSize" Width="1.5" PointX="29.375" PointY="11.75" />
+        <EntityTypeShape EntityType="FAI_NewModel.View_Bas_CompensationValue" Width="1.5" PointX="29.375" PointY="15.75" />
+        <EntityTypeShape EntityType="FAI_NewModel.View_Eng_MeterOptionItem" Width="1.5" PointX="29.375" PointY="19.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

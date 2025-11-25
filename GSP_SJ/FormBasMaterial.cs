@@ -11,24 +11,22 @@ using System.Windows.Forms;
 
 namespace GSP_SJ
 {
-    public partial class UCAllReport : UserControl
+    public partial class FormBasMaterial : Form
     {
-        public UCAllReport()
+        public FormBasMaterial()
         {
             InitializeComponent();
-            Dock = DockStyle.Fill;
-            this.Load += UCAllReport_Load;
+            this.Load += FormCompensationParam_Load;
         }
 
-        private void UCAllReport_Load(object sender, EventArgs e)
+        private void FormCompensationParam_Load(object sender, EventArgs e)
         {
-            //Search();
+            Search();
         }
-        List<Man_Report> reports;
+
         private void Search()
         {
-            reports = SQLDataControl.GetAllReport();
-            dgvProgram.DataSource = reports;
+            dgvProgram.DataSource = SQLDataControl.View_Bas_Material();
         }
     }
 }

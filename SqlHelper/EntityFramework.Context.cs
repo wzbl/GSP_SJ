@@ -81,6 +81,10 @@ namespace SqlHelper
         public virtual DbSet<Sys_User> Sys_User { get; set; }
         public virtual DbSet<Sys_UserLog> Sys_UserLog { get; set; }
         public virtual DbSet<View_Eng_Program> View_Eng_Program { get; set; }
+        public virtual DbSet<View_Bas_Material> View_Bas_Material { get; set; }
+        public virtual DbSet<View_ComponentSize> View_ComponentSize { get; set; }
+        public virtual DbSet<View_Bas_CompensationValue> View_Bas_CompensationValue { get; set; }
+        public virtual DbSet<View_Eng_MeterOptionItem> View_Eng_MeterOptionItem { get; set; }
     
         [DbFunction("FAI_NewEntities", "GetPoints")]
         public virtual IQueryable<GetPoints_Result> GetPoints(string bgId)

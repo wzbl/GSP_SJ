@@ -1355,6 +1355,84 @@
           <Property Name="OperationDate" Type="datetime" />
         </EntityType>
         <!--生成过程中发现错误:
+警告 6002: 表/视图“FAI_New.dbo.View_Bas_CompensationValue”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+        <EntityType Name="View_Bas_CompensationValue">
+          <Key>
+            <PropertyRef Name="行" />
+          </Key>
+          <Property Name="行" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="范围最大值" Type="numeric" Precision="19" Scale="4" />
+          <Property Name="范围最小值" Type="numeric" Precision="19" Scale="4" />
+          <Property Name="调整值加" Type="numeric" Precision="19" Scale="4" />
+          <Property Name="调整值减" Type="numeric" Precision="19" Scale="4" />
+          <Property Name="精度" Type="numeric" Precision="19" Scale="4" />
+          <Property Name="单位" Type="varchar" MaxLength="10" />
+          <Property Name="启用" Type="bit" />
+        </EntityType>
+        <!--生成过程中发现错误:
+警告 6002: 表/视图“FAI_New.dbo.View_Bas_Material”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+        <EntityType Name="View_Bas_Material">
+          <Key>
+            <PropertyRef Name="物料编码" />
+          </Key>
+          <Property Name="物料编码" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="物料名称" Type="varchar" MaxLength="1000" />
+          <Property Name="元件类型" Type="varchar" MaxLength="10" />
+          <Property Name="标准值" Type="numeric" Precision="19" Scale="4" />
+          <Property Name="单位" Type="varchar" MaxLength="10" />
+          <Property Name="最大值" Type="numeric" Precision="19" Scale="4" />
+          <Property Name="最小值" Type="numeric" Precision="19" Scale="4" />
+          <Property Name="尺寸" Type="varchar" MaxLength="50" />
+          <Property Name="公差上限" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="公差下限" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="公差类别" Type="varchar" MaxLength="10" />
+          <Property Name="备注" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <!--生成过程中发现错误:
+警告 6002: 表/视图“FAI_New.dbo.View_ComponentSize”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+        <EntityType Name="View_ComponentSize">
+          <Key>
+            <PropertyRef Name="尺寸" />
+          </Key>
+          <Property Name="尺寸" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="截图长度" Type="int" />
+          <Property Name="截图宽度" Type="int" />
+          <Property Name="物理长度" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="物理宽度" Type="decimal" Precision="18" Scale="4" />
+          <Property Name="OCR" Type="bit" />
+          <Property Name="备注" Type="varchar" MaxLength="200" />
+        </EntityType>
+        <!--生成过程中发现错误:
+警告 6002: 表/视图“FAI_New.dbo.View_Eng_MeterOptionItem”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
+        <EntityType Name="View_Eng_MeterOptionItem">
+          <Key>
+            <PropertyRef Name="行" />
+            <PropertyRef Name="操作码" />
+          </Key>
+          <Property Name="行" Type="int" Nullable="false" />
+          <Property Name="操作码" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="元件类型" Type="nvarchar" MaxLength="50" />
+          <Property Name="最小值" Type="numeric" Precision="19" Scale="4" />
+          <Property Name="最小值单位" Type="nvarchar" MaxLength="50" />
+          <Property Name="最大值" Type="numeric" Precision="19" Scale="4" />
+          <Property Name="最大值单位" Type="nvarchar" MaxLength="50" />
+          <Property Name="测试类型" Type="nvarchar" MaxLength="50" />
+          <Property Name="测试频率" Type="nvarchar" MaxLength="50" />
+          <Property Name="测试电压" Type="nvarchar" MaxLength="50" />
+          <Property Name="量程类型" Type="nvarchar" MaxLength="50" />
+          <Property Name="量程" Type="nvarchar" MaxLength="50" />
+          <Property Name="失败次数" Type="int" />
+          <Property Name="测量速度" Type="nvarchar" MaxLength="50" />
+          <Property Name="测试内阻" Type="nvarchar" MaxLength="50" />
+          <Property Name="取值次数" Type="int" />
+          <Property Name="波动区间" Type="numeric" Precision="19" Scale="4" />
+          <Property Name="有效值下限" Type="numeric" Precision="19" Scale="4" />
+          <Property Name="下限单位" Type="nvarchar" MaxLength="50" />
+          <Property Name="有效值上限" Type="numeric" Precision="19" Scale="4" />
+          <Property Name="上限单位" Type="nvarchar" MaxLength="50" />
+          <Property Name="备注" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <!--生成过程中发现错误:
 警告 6002: 表/视图“FAI_New.dbo.View_Eng_Program”未定义主键。已推断出该键，并将定义创建为只读的表/视图。-->
         <EntityType Name="View_Eng_Program">
           <Key>
@@ -2149,6 +2227,71 @@
           <EntitySet Name="Sys_RolePower" EntityType="Self.Sys_RolePower" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Sys_User" EntityType="Self.Sys_User" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Sys_UserLog" EntityType="Self.Sys_UserLog" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="View_Bas_CompensationValue" EntityType="Self.View_Bas_CompensationValue" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [View_Bas_CompensationValue].[行] AS [行], 
+    [View_Bas_CompensationValue].[范围最大值] AS [范围最大值], 
+    [View_Bas_CompensationValue].[范围最小值] AS [范围最小值], 
+    [View_Bas_CompensationValue].[调整值加] AS [调整值加], 
+    [View_Bas_CompensationValue].[调整值减] AS [调整值减], 
+    [View_Bas_CompensationValue].[精度] AS [精度], 
+    [View_Bas_CompensationValue].[单位] AS [单位], 
+    [View_Bas_CompensationValue].[启用] AS [启用]
+    FROM [dbo].[View_Bas_CompensationValue] AS [View_Bas_CompensationValue]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="View_Bas_Material" EntityType="Self.View_Bas_Material" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [View_Bas_Material].[物料编码] AS [物料编码], 
+    [View_Bas_Material].[物料名称] AS [物料名称], 
+    [View_Bas_Material].[元件类型] AS [元件类型], 
+    [View_Bas_Material].[标准值] AS [标准值], 
+    [View_Bas_Material].[单位] AS [单位], 
+    [View_Bas_Material].[最大值] AS [最大值], 
+    [View_Bas_Material].[最小值] AS [最小值], 
+    [View_Bas_Material].[尺寸] AS [尺寸], 
+    [View_Bas_Material].[公差上限] AS [公差上限], 
+    [View_Bas_Material].[公差下限] AS [公差下限], 
+    [View_Bas_Material].[公差类别] AS [公差类别], 
+    [View_Bas_Material].[备注] AS [备注]
+    FROM [dbo].[View_Bas_Material] AS [View_Bas_Material]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="View_ComponentSize" EntityType="Self.View_ComponentSize" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [View_ComponentSize].[尺寸] AS [尺寸], 
+    [View_ComponentSize].[截图长度] AS [截图长度], 
+    [View_ComponentSize].[截图宽度] AS [截图宽度], 
+    [View_ComponentSize].[物理长度] AS [物理长度], 
+    [View_ComponentSize].[物理宽度] AS [物理宽度], 
+    [View_ComponentSize].[OCR] AS [OCR], 
+    [View_ComponentSize].[备注] AS [备注]
+    FROM [dbo].[View_ComponentSize] AS [View_ComponentSize]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="View_Eng_MeterOptionItem" EntityType="Self.View_Eng_MeterOptionItem" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [View_Eng_MeterOptionItem].[行] AS [行], 
+    [View_Eng_MeterOptionItem].[操作码] AS [操作码], 
+    [View_Eng_MeterOptionItem].[元件类型] AS [元件类型], 
+    [View_Eng_MeterOptionItem].[最小值] AS [最小值], 
+    [View_Eng_MeterOptionItem].[最小值单位] AS [最小值单位], 
+    [View_Eng_MeterOptionItem].[最大值] AS [最大值], 
+    [View_Eng_MeterOptionItem].[最大值单位] AS [最大值单位], 
+    [View_Eng_MeterOptionItem].[测试类型] AS [测试类型], 
+    [View_Eng_MeterOptionItem].[测试频率] AS [测试频率], 
+    [View_Eng_MeterOptionItem].[测试电压] AS [测试电压], 
+    [View_Eng_MeterOptionItem].[量程类型] AS [量程类型], 
+    [View_Eng_MeterOptionItem].[量程] AS [量程], 
+    [View_Eng_MeterOptionItem].[失败次数] AS [失败次数], 
+    [View_Eng_MeterOptionItem].[测量速度] AS [测量速度], 
+    [View_Eng_MeterOptionItem].[测试内阻] AS [测试内阻], 
+    [View_Eng_MeterOptionItem].[取值次数] AS [取值次数], 
+    [View_Eng_MeterOptionItem].[波动区间] AS [波动区间], 
+    [View_Eng_MeterOptionItem].[有效值下限] AS [有效值下限], 
+    [View_Eng_MeterOptionItem].[下限单位] AS [下限单位], 
+    [View_Eng_MeterOptionItem].[有效值上限] AS [有效值上限], 
+    [View_Eng_MeterOptionItem].[上限单位] AS [上限单位], 
+    [View_Eng_MeterOptionItem].[备注] AS [备注]
+    FROM [dbo].[View_Eng_MeterOptionItem] AS [View_Eng_MeterOptionItem]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="View_Eng_Program" EntityType="Self.View_Eng_Program" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [View_Eng_Program].[产品编号] AS [产品编号], 
@@ -4490,11 +4633,15 @@
             <Parameter Name="Groups" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="P_Search_Eng_Bom" ReturnType="Collection(FAI_NewModel.P_Search_Eng_Bom_Result)">
-            <Parameter Name="ProductCode" Mode="In" Type="String" />
+          <Parameter Name="ProductCode" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="P_Search_Eng_XYData" ReturnType="Collection(FAI_NewModel.P_Search_Eng_XYData_Result)">
-            <Parameter Name="ProductCode" Mode="In" Type="String" />
+          <Parameter Name="ProductCode" Mode="In" Type="String" />
           </FunctionImport>
+          <EntitySet Name="View_Bas_Material" EntityType="FAI_NewModel.View_Bas_Material" />
+          <EntitySet Name="View_ComponentSize" EntityType="FAI_NewModel.View_ComponentSize" />
+          <EntitySet Name="View_Bas_CompensationValue" EntityType="FAI_NewModel.View_Bas_CompensationValue" />
+          <EntitySet Name="View_Eng_MeterOptionItem" EntityType="FAI_NewModel.View_Eng_MeterOptionItem" />
         </EntityContainer>
         <ComplexType Name="P_Search_Eng_Program_Result">
           <Property Type="String" Name="产品编号" Nullable="false" MaxLength="100" />
@@ -4578,6 +4725,76 @@
           <Property Type="Decimal" Name="原始角度" Nullable="true" Precision="19" Scale="2" />
           <Property Type="Int32" Name="序号" Nullable="false" />
         </ComplexType>
+        <EntityType Name="View_Bas_Material">
+          <Key>
+            <PropertyRef Name="物料编码" />
+          </Key>
+          <Property Name="物料编码" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="物料名称" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="元件类型" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="标准值" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="单位" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="最大值" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="最小值" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="尺寸" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="公差上限" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="公差下限" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="公差类别" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="备注" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="View_ComponentSize">
+          <Key>
+            <PropertyRef Name="尺寸" />
+          </Key>
+          <Property Name="尺寸" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="截图长度" Type="Int32" />
+          <Property Name="截图宽度" Type="Int32" />
+          <Property Name="物理长度" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="物理宽度" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="OCR" Type="Boolean" />
+          <Property Name="备注" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="View_Bas_CompensationValue">
+          <Key>
+            <PropertyRef Name="行" />
+          </Key>
+          <Property Name="行" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="范围最大值" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="范围最小值" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="调整值加" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="调整值减" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="精度" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="单位" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="启用" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="View_Eng_MeterOptionItem">
+          <Key>
+            <PropertyRef Name="行" />
+            <PropertyRef Name="操作码" />
+          </Key>
+          <Property Name="行" Type="Int32" Nullable="false" />
+          <Property Name="操作码" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="元件类型" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="最小值" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="最小值单位" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="最大值" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="最大值单位" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="测试类型" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="测试频率" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="测试电压" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="量程类型" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="量程" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="失败次数" Type="Int32" />
+          <Property Name="测量速度" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="测试内阻" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="取值次数" Type="Int32" />
+          <Property Name="波动区间" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="有效值下限" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="下限单位" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="有效值上限" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="上限单位" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="备注" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -6113,6 +6330,79 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="View_Bas_Material">
+            <EntityTypeMapping TypeName="FAI_NewModel.View_Bas_Material">
+              <MappingFragment StoreEntitySet="View_Bas_Material">
+                <ScalarProperty Name="备注" ColumnName="备注" />
+                <ScalarProperty Name="公差类别" ColumnName="公差类别" />
+                <ScalarProperty Name="公差下限" ColumnName="公差下限" />
+                <ScalarProperty Name="公差上限" ColumnName="公差上限" />
+                <ScalarProperty Name="尺寸" ColumnName="尺寸" />
+                <ScalarProperty Name="最小值" ColumnName="最小值" />
+                <ScalarProperty Name="最大值" ColumnName="最大值" />
+                <ScalarProperty Name="单位" ColumnName="单位" />
+                <ScalarProperty Name="标准值" ColumnName="标准值" />
+                <ScalarProperty Name="元件类型" ColumnName="元件类型" />
+                <ScalarProperty Name="物料名称" ColumnName="物料名称" />
+                <ScalarProperty Name="物料编码" ColumnName="物料编码" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="View_ComponentSize">
+            <EntityTypeMapping TypeName="FAI_NewModel.View_ComponentSize">
+              <MappingFragment StoreEntitySet="View_ComponentSize">
+                <ScalarProperty Name="备注" ColumnName="备注" />
+                <ScalarProperty Name="OCR" ColumnName="OCR" />
+                <ScalarProperty Name="物理宽度" ColumnName="物理宽度" />
+                <ScalarProperty Name="物理长度" ColumnName="物理长度" />
+                <ScalarProperty Name="截图宽度" ColumnName="截图宽度" />
+                <ScalarProperty Name="截图长度" ColumnName="截图长度" />
+                <ScalarProperty Name="尺寸" ColumnName="尺寸" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="View_Bas_CompensationValue">
+            <EntityTypeMapping TypeName="FAI_NewModel.View_Bas_CompensationValue">
+              <MappingFragment StoreEntitySet="View_Bas_CompensationValue">
+                <ScalarProperty Name="启用" ColumnName="启用" />
+                <ScalarProperty Name="单位" ColumnName="单位" />
+                <ScalarProperty Name="精度" ColumnName="精度" />
+                <ScalarProperty Name="调整值减" ColumnName="调整值减" />
+                <ScalarProperty Name="调整值加" ColumnName="调整值加" />
+                <ScalarProperty Name="范围最小值" ColumnName="范围最小值" />
+                <ScalarProperty Name="范围最大值" ColumnName="范围最大值" />
+                <ScalarProperty Name="行" ColumnName="行" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="View_Eng_MeterOptionItem">
+            <EntityTypeMapping TypeName="FAI_NewModel.View_Eng_MeterOptionItem">
+              <MappingFragment StoreEntitySet="View_Eng_MeterOptionItem">
+                <ScalarProperty Name="备注" ColumnName="备注" />
+                <ScalarProperty Name="上限单位" ColumnName="上限单位" />
+                <ScalarProperty Name="有效值上限" ColumnName="有效值上限" />
+                <ScalarProperty Name="下限单位" ColumnName="下限单位" />
+                <ScalarProperty Name="有效值下限" ColumnName="有效值下限" />
+                <ScalarProperty Name="波动区间" ColumnName="波动区间" />
+                <ScalarProperty Name="取值次数" ColumnName="取值次数" />
+                <ScalarProperty Name="测试内阻" ColumnName="测试内阻" />
+                <ScalarProperty Name="测量速度" ColumnName="测量速度" />
+                <ScalarProperty Name="失败次数" ColumnName="失败次数" />
+                <ScalarProperty Name="量程" ColumnName="量程" />
+                <ScalarProperty Name="量程类型" ColumnName="量程类型" />
+                <ScalarProperty Name="测试电压" ColumnName="测试电压" />
+                <ScalarProperty Name="测试频率" ColumnName="测试频率" />
+                <ScalarProperty Name="测试类型" ColumnName="测试类型" />
+                <ScalarProperty Name="最大值单位" ColumnName="最大值单位" />
+                <ScalarProperty Name="最大值" ColumnName="最大值" />
+                <ScalarProperty Name="最小值单位" ColumnName="最小值单位" />
+                <ScalarProperty Name="最小值" ColumnName="最小值" />
+                <ScalarProperty Name="元件类型" ColumnName="元件类型" />
+                <ScalarProperty Name="操作码" ColumnName="操作码" />
+                <ScalarProperty Name="行" ColumnName="行" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -6128,7 +6418,7 @@
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
         <DesignerProperty Name="EnablePluralization" Value="false" />
-        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="无" />
       </DesignerInfoPropertySet>

@@ -94,9 +94,6 @@ namespace BorwinAnalyse.UCControls
             UpdataLanguage();
 
             MicroKeyManager.Instance.AddEventToControl(this);
-
-
-
         }
 
         public void UpdataLanguage()

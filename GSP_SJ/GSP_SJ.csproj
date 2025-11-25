@@ -45,6 +45,25 @@
     <Reference Include="ComponentFactory.Krypton.Toolkit">
       <HintPath>..\..\..\吸嘴清洗机\双轴换控件版\Bin\ComponentFactory.Krypton.Toolkit.dll</HintPath>
     </Reference>
+    <Reference Include="Emgu.CV.Bitmap">
+      <HintPath>..\..\..\Brow Vision\lib\Emgu.CV.Bitmap.dll</HintPath>
+    </Reference>
+    <Reference Include="Emgu.CV.UI, Version=3.2.0.2682, Culture=neutral, PublicKeyToken=7281126722ab4438, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\Emgu.CV.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="Emgu.CV.UI.GL, Version=3.2.0.2682, Culture=neutral, PublicKeyToken=7281126722ab4438, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\Emgu.CV.UI.GL.dll</HintPath>
+    </Reference>
+    <Reference Include="Emgu.CV.World, Version=3.2.0.2682, Culture=neutral, PublicKeyToken=7281126722ab4438, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\Emgu.CV.World.dll</HintPath>
+    </Reference>
+    <Reference Include="halcondotnet, Version=20.11.1.0, Culture=neutral, PublicKeyToken=4973bed59ddbf2b8, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\halcondotnet.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration.Install" />
     <Reference Include="System.Core" />
@@ -94,11 +113,29 @@
     <Compile Include="Form4.Designer.cs">
       <DependentUpon>Form4.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormBasMaterial.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormBasMaterial.Designer.cs">
+      <DependentUpon>FormBasMaterial.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormChart.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FormChart.Designer.cs">
       <DependentUpon>FormChart.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormCompensationParam.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormCompensationParam.Designer.cs">
+      <DependentUpon>FormCompensationParam.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormCompensationSet.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormCompensationSet.Designer.cs">
+      <DependentUpon>FormCompensationSet.cs</DependentUpon>
     </Compile>
     <Compile Include="FormMain.cs">
       <SubType>Form</SubType>
@@ -112,11 +149,39 @@
     <Compile Include="FormProductItem.Designer.cs">
       <DependentUpon>FormProductItem.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormSize.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormSize.Designer.cs">
+      <DependentUpon>FormSize.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormTest.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FormTest.Designer.cs">
       <DependentUpon>FormTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ModelClass\DeepOCRHelper.cs" />
+    <Compile Include="ModelClass\DirectionalROI.cs" />
+    <Compile Include="ModelClass\FormModel.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ModelClass\FormModel.Designer.cs">
+      <DependentUpon>FormModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ModelClass\FormModelItem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ModelClass\FormModelItem.Designer.cs">
+      <DependentUpon>FormModelItem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ModelClass\HalconImageConverter.cs" />
+    <Compile Include="ModelClass\ROI.cs" />
+    <Compile Include="ModelClass\UCOCRModel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ModelClass\UCOCRModel.Designer.cs">
+      <DependentUpon>UCOCRModel.cs</DependentUpon>
     </Compile>
     <Compile Include="PictureBoxZoom.cs">
       <SubType>Component</SubType>
@@ -171,8 +236,17 @@
     <EmbeddedResource Include="Form3.resx">
       <DependentUpon>Form3.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormBasMaterial.resx">
+      <DependentUpon>FormBasMaterial.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormChart.resx">
       <DependentUpon>FormChart.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormCompensationParam.resx">
+      <DependentUpon>FormCompensationParam.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormCompensationSet.resx">
+      <DependentUpon>FormCompensationSet.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
@@ -180,8 +254,17 @@
     <EmbeddedResource Include="FormProductItem.resx">
       <DependentUpon>FormProductItem.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormSize.resx">
+      <DependentUpon>FormSize.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormTest.resx">
       <DependentUpon>FormTest.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ModelClass\FormModel.resx">
+      <DependentUpon>FormModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ModelClass\FormModelItem.resx">
+      <DependentUpon>FormModelItem.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

@@ -175,6 +175,12 @@
     <Compile Include="BaseClass\CommonAnalyse.cs" />
     <Compile Include="BaseClass\SpecialLcrOffset.cs" />
     <Compile Include="BaseClass\SpecialLcrOffsetManager.cs" />
+    <Compile Include="Forms\FormBomSet.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormBomSet.Designer.cs">
+      <DependentUpon>FormBomSet.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\FormMicroKeyboard.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -225,6 +231,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Forms\AnalyseMainForm.resx">
       <DependentUpon>AnalyseMainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormBomSet.resx">
+      <DependentUpon>FormBomSet.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

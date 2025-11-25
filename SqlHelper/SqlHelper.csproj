@@ -251,6 +251,18 @@
     <Compile Include="Sys_UserLog.cs">
       <DependentUpon>EntityFramework.tt</DependentUpon>
     </Compile>
+    <Compile Include="View_Bas_CompensationValue.cs">
+      <DependentUpon>EntityFramework.tt</DependentUpon>
+    </Compile>
+    <Compile Include="View_Bas_Material.cs">
+      <DependentUpon>EntityFramework.tt</DependentUpon>
+    </Compile>
+    <Compile Include="View_ComponentSize.cs">
+      <DependentUpon>EntityFramework.tt</DependentUpon>
+    </Compile>
+    <Compile Include="View_Eng_MeterOptionItem.cs">
+      <DependentUpon>EntityFramework.tt</DependentUpon>
+    </Compile>
     <Compile Include="View_Eng_Program.cs">
       <DependentUpon>EntityFramework.tt</DependentUpon>
     </Compile>

@@ -247,5 +247,45 @@ namespace SqlHelper
                 return null;
             }
         }
+
+
+        /// <summary>
+        /// 获取所有公共模板库
+        /// </summary>
+        /// <returns></returns>
+        public static List<Eng_PubModel> GetAllEng_PubModel()
+        {
+            return db.Eng_PubModel.ToList();
+        }
+
+        /// <summary>
+        /// 获取模板数据
+        /// </summary>
+        /// <returns></returns>
+        public static List<Eng_PubModelItem> GETEng_PubModelItem(string materialCode)
+        {
+            return db.Eng_PubModelItem.Where(x => x.MaterialCode == materialCode).ToList();
+        }
+
+
+        public static List<View_Eng_MeterOptionItem> View_Eng_MeterOptionItem()
+        {
+           return db.View_Eng_MeterOptionItem.ToList();
+        }
+
+        public static List<View_ComponentSize> View_ComponentSize()
+        {
+            return db.View_ComponentSize.ToList();
+        }
+
+
+        public static List<View_Bas_CompensationValue> View_Bas_CompensationValue()
+        {
+            return db.View_Bas_CompensationValue.ToList();
+        }
+        public static List<View_Bas_Material> View_Bas_Material()
+        {
+            return db.View_Bas_Material.ToList();
+        }
     }
 }
