@@ -1,14 +1,19 @@
-﻿using BorwinAnalyse.UCControls;
+﻿using BorwinAnalyse.BaseClass;
+using BorwinAnalyse.Forms;
+using BorwinAnalyse.UCControls;
+using GSP_SJ.ModelClass;
 using SqlHelper;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml.Linq;
 
 namespace GSP_SJ
 {
@@ -20,12 +25,10 @@ namespace GSP_SJ
         public UCProgram()
         {
             InitializeComponent();
-            uCBOM = new UCBOM();
-            this.kryptonPage1.Controls.Add(uCBOM);
             Dock = DockStyle.Fill;
             this.Load += UCProgram_Load;
         }
-        public UCProgram(View_Eng_Program view_Eng_Program) 
+        public UCProgram(View_Eng_Program view_Eng_Program)
         {
             InitializeComponent();
             txtProductCode.Enabled = false;
@@ -34,23 +37,36 @@ namespace GSP_SJ
             txtProductName.Text = view_Eng_Program.产品名称;
             txtCustom.Text = view_Eng_Program.客户;
             txtBoardSide.Text = view_Eng_Program.板面;
-            uCBOM = new UCBOM(view_Eng_Program.产品编号);
-            this.kryptonPage1.Controls.Add(uCBOM);
             Dock = DockStyle.Fill;
             this.Load += UCProgram_Load;
         }
 
         private void UCProgram_Load(object sender, EventArgs e)
         {
-            uCXYDataChart=new UCXYDataChart();
+            uCXYDataChart = new UCXYDataChart();
             this.kryptonPage3.Controls.Add(uCXYDataChart);
             RefreshBomData();
             RefreshXYData();
+            RefreshModelData();
+            comBomRule.Items.Clear();
+            for (int i = 0; i < CommonAnalyse.Instance.Rules.Count; i++)
+            {
+                comBomRule.Items.Add(CommonAnalyse.Instance.Rules[i]);
+            }
+        }
+
+        private void RefreshModelData()
+        {
         }
 
         private void RefreshBomData()
         {
-
+            
+            List<P_Search_Eng_Bom_Result> p_Search_Engs = SQLDataControl.SearchBom(ProductCode);
+            if (p_Search_Engs.Count > 0)
+            {
+                DataGridView_BOM.DataSource = p_Search_Engs;
+            }
         }
 
         private void RefreshXYData()
@@ -124,5 +140,22 @@ namespace GSP_SJ
             uCBOM.ProductCode = txtProductCode.Text;
         }
 
+     
+
+        private void btnSetRule_Click(object sender, EventArgs e)
+        {
+            FormAnalySeting formAnalySeting = new FormAnalySeting(comBomRule.Text);
+            formAnalySeting.ShowDialog();
+        }
+
+        private void btnAnalyse_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnAddReport_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

@@ -33,17 +33,17 @@ namespace SqlHelper
         /// <param name="password">密码</param>
         public static void ConnectSqlSever(string ip, string database, string user, string password)
         {
-            try
-            {
+            //try
+            //{
                 string connectionString = "Server=" + ip + ";Database=" + database + ";User Id=" + user + ";Password=" + password + ";";
                 conn = new SqlConnection(connectionString);
                 conn.Open();
-                Console.WriteLine("Connected to SQL Server");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Error connecting to SQL Server: " + ex.Message);
-            }
+            //    Console.WriteLine("Connected to SQL Server");
+            //}
+            //catch (Exception ex)
+            //{
+            //    Console.WriteLine("Error connecting to SQL Server: " + ex.Message);
+            //}
         }
 
         public static DataTable Excute(string query)

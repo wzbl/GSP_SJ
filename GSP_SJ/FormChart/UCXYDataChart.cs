@@ -85,6 +85,7 @@ namespace GSP_SJ
 
 
             }
+            canvas.FitToView();
         }
 
         private void UCXYDataChart_Load(object sender, EventArgs e)
@@ -92,7 +93,6 @@ namespace GSP_SJ
             canvas = new ComponentCanvas();
             canvas.Dock = DockStyle.Fill;
             this.Controls.Add(canvas);
-
             // 添加工具栏
             AddToolbar();
         }

@@ -1,4 +1,5 @@
 ﻿using BorwinAnalyse.BaseClass;
+using GSP_SJ.ModelClass;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -18,6 +19,7 @@ namespace GSP_SJ
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             CommonAnalyse.Instance.Load();
+            DeepOCRHelper.Init();
             Application.Run(new FormMain());
         }
     }

@@ -29,13 +29,12 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
-            this.btnSaveImg = new System.Windows.Forms.Button();
             this.btnDeleteRoi = new System.Windows.Forms.Button();
             this.btnAddRoi = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel4 = new System.Windows.Forms.Panel();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
-            this.roiPictureBox1 = new DirectionalROIPictureBox();
+            this.roiPictureBox1 = new GSP_SJ.ModelClass.DirectionalROIPictureBox();
             this.panel3 = new System.Windows.Forms.Panel();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
@@ -62,31 +61,19 @@
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.btnSaveImg);
             this.panel1.Controls.Add(this.btnDeleteRoi);
             this.panel1.Controls.Add(this.btnAddRoi);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
-            this.panel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel1.Margin = new System.Windows.Forms.Padding(4);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1579, 93);
             this.panel1.TabIndex = 0;
             // 
-            // btnSaveImg
-            // 
-            this.btnSaveImg.Location = new System.Drawing.Point(737, 16);
-            this.btnSaveImg.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.btnSaveImg.Name = "btnSaveImg";
-            this.btnSaveImg.Size = new System.Drawing.Size(100, 49);
-            this.btnSaveImg.TabIndex = 2;
-            this.btnSaveImg.Text = "保存图片";
-            this.btnSaveImg.UseVisualStyleBackColor = true;
-            this.btnSaveImg.Click += new System.EventHandler(this.btnSaveImg_Click);
-            // 
             // btnDeleteRoi
             // 
             this.btnDeleteRoi.Location = new System.Drawing.Point(1044, 16);
-            this.btnDeleteRoi.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnDeleteRoi.Margin = new System.Windows.Forms.Padding(4);
             this.btnDeleteRoi.Name = "btnDeleteRoi";
             this.btnDeleteRoi.Size = new System.Drawing.Size(100, 49);
             this.btnDeleteRoi.TabIndex = 1;
@@ -97,7 +84,7 @@
             // btnAddRoi
             // 
             this.btnAddRoi.Location = new System.Drawing.Point(887, 16);
-            this.btnAddRoi.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnAddRoi.Margin = new System.Windows.Forms.Padding(4);
             this.btnAddRoi.Name = "btnAddRoi";
             this.btnAddRoi.Size = new System.Drawing.Size(100, 49);
             this.btnAddRoi.TabIndex = 0;
@@ -111,7 +98,7 @@
             this.panel2.Controls.Add(this.panel3);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(0, 93);
-            this.panel2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel2.Margin = new System.Windows.Forms.Padding(4);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(1579, 1164);
             this.panel2.TabIndex = 1;
@@ -121,7 +108,7 @@
             this.panel4.Controls.Add(this.splitContainer2);
             this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel4.Location = new System.Drawing.Point(527, 0);
-            this.panel4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel4.Margin = new System.Windows.Forms.Padding(4);
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(1052, 1164);
             this.panel4.TabIndex = 3;
@@ -130,7 +117,7 @@
             // 
             this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainer2.Location = new System.Drawing.Point(0, 0);
-            this.splitContainer2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.splitContainer2.Margin = new System.Windows.Forms.Padding(4);
             this.splitContainer2.Name = "splitContainer2";
             this.splitContainer2.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
@@ -144,11 +131,11 @@
             // 
             // roiPictureBox1
             // 
-            this.roiPictureBox1.DrawingType = ROIType.Rectangle;
+            this.roiPictureBox1.DrawingType = GSP_SJ.ModelClass.ROIType.Rectangle;
             this.roiPictureBox1.Image = null;
             this.roiPictureBox1.Location = new System.Drawing.Point(134, 4);
-            this.roiPictureBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.roiPictureBox1.Mode = ROIMode.Select;
+            this.roiPictureBox1.Margin = new System.Windows.Forms.Padding(4);
+            this.roiPictureBox1.Mode = GSP_SJ.ModelClass.ROIMode.Select;
             this.roiPictureBox1.Name = "roiPictureBox1";
             this.roiPictureBox1.Size = new System.Drawing.Size(483, 343);
             this.roiPictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -160,7 +147,7 @@
             this.panel3.Controls.Add(this.splitContainer1);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel3.Location = new System.Drawing.Point(0, 0);
-            this.panel3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel3.Margin = new System.Windows.Forms.Padding(4);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(527, 1164);
             this.panel3.TabIndex = 2;
@@ -169,7 +156,7 @@
             // 
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainer1.Location = new System.Drawing.Point(0, 0);
-            this.splitContainer1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.splitContainer1.Margin = new System.Windows.Forms.Padding(4);
             this.splitContainer1.Name = "splitContainer1";
             this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
@@ -193,7 +180,7 @@
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridView1.Location = new System.Drawing.Point(0, 0);
-            this.dataGridView1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dataGridView1.Margin = new System.Windows.Forms.Padding(4);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersWidth = 53;
             this.dataGridView1.RowTemplate.Height = 23;
@@ -204,7 +191,7 @@
             // trackcontrack
             // 
             this.trackcontrack.Location = new System.Drawing.Point(93, 79);
-            this.trackcontrack.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.trackcontrack.Margin = new System.Windows.Forms.Padding(4);
             this.trackcontrack.Maximum = 255;
             this.trackcontrack.Minimum = -255;
             this.trackcontrack.Name = "trackcontrack";
@@ -225,7 +212,7 @@
             // trackLight
             // 
             this.trackLight.Location = new System.Drawing.Point(93, 35);
-            this.trackLight.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.trackLight.Margin = new System.Windows.Forms.Padding(4);
             this.trackLight.Maximum = 128;
             this.trackLight.Minimum = -128;
             this.trackLight.Name = "trackLight";
@@ -250,7 +237,7 @@
             this.ClientSize = new System.Drawing.Size(1579, 1257);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "FormModelItem";
             this.Text = "FormModelItem";
             this.panel1.ResumeLayout(false);
@@ -289,6 +276,5 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TrackBar trackLight;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button btnSaveImg;
     }
 }

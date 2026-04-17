@@ -1,4 +1,4 @@
-﻿using MyTestWcfServiceLibrary;
+﻿
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -9,6 +9,7 @@ using System.IO;
 using System.Linq;
 using System.ServiceModel;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Linq;
@@ -17,7 +18,6 @@ namespace GSP_SJ
 {
     public partial class Form1 : Form
     {
-        private List<Component2> components = new List<Component2>();
         private float scale = 1.0f;
         private PointF panOffset = new PointF(0, 0);
         private bool isPanning = false;
@@ -28,6 +28,8 @@ namespace GSP_SJ
             InitializeComponent();
             InitializeComponents();
             this.DoubleBuffered = true; // 启用双缓冲防止闪烁
+
+            this.Load+= Form1_Load;    
         }
 
         private void InitializeComponents()
@@ -40,91 +42,90 @@ namespace GSP_SJ
             //components.Add(new Component2("D1", 50, -120));
             //components.Add(new Component2("Q1", -50, 150));
 
-            SqlHelper.SQL.ConnectSqlSever("127.0.0.1", "FAI_New", "FAILogin", "123456");
-            DataTable dataTable = SqlHelper.SQL.Excute("select * from Eng_XYData where ProductCode ='1212'");
+            //SqlHelper.SQL.ConnectSqlSever("127.0.0.1", "FAI_New", "FAILogin", "123456");
+            //DataTable dataTable = SqlHelper.SQL.Excute("select * from Eng_XYData where ProductCode ='1212'");
        
-            foreach (DataRow row in dataTable.Rows)
-            {
-                try
-                {
-                    if (row.ItemArray.Length > 10)
-                    {
-                        Size size = new Size(86, 55);
-                        Color color = Color.HotPink;
-                        float fontradio = 1.0f;
-                        if (row.ItemArray[6].ToString().Contains("01005"))
-                        {
-                            size = new Size(16, 9);
-                            color = Color.DimGray;
-                        }
-                        else if (row.ItemArray[6].ToString().Contains("0201"))
-                        {
-                            size = new Size(25, 13);
-                            components[0].Color = Color.Red;
-                            color = Color.DarkCyan;
-                            fontradio = 1.2f;
-                        }
-                        else if (row.ItemArray[6].ToString().Contains("0402"))
-                        {
-                            size = new Size(43, 23);
-                            color = Color.Blue;
-                            fontradio = 1.4f;
-                        }
-                        else if (row.ItemArray[6].ToString().Contains("0603"))
-                        {
-                            size = new Size(68, 37);
-                            color = Color.Azure;
-                            fontradio = 1.6f;
-                        }
-                        else if (row.ItemArray[6].ToString().Contains("0805"))
-                        {
-                            size = new Size(86, 55);
-                            color = Color.Cyan;
-                            fontradio = 1.8f;
-                        }
-                        else if (row.ItemArray[6].ToString().Contains("1206"))
-                        {
-                            size = new Size(133, 68);
-                            color = Color.Gray;
-                            fontradio = 2f;
-                        }
-                        else if (row.ItemArray[1].ToString().ToUpper().Contains("MARK"))
-                        {
-                            size = new Size(200, 100);
-                            color = Color.DarkGreen;
-                            fontradio = 2f;
-                        }
-                        string _x = row.ItemArray[7].ToString();
-                        string _y = row.ItemArray[8].ToString();
+            //foreach (DataRow row in dataTable.Rows)
+            //{
+            //    try
+            //    {
+            //        if (row.ItemArray.Length > 10)
+            //        {
+            //            Size size = new Size(86, 55);
+            //            Color color = Color.HotPink;
+            //            float fontradio = 1.0f;
+            //            if (row.ItemArray[6].ToString().Contains("01005"))
+            //            {
+            //                size = new Size(16, 9);
+            //                color = Color.DimGray;
+            //            }
+            //            else if (row.ItemArray[6].ToString().Contains("0201"))
+            //            {
+            //                size = new Size(25, 13);
+            //                components[0].Color = Color.Red;
+            //                color = Color.DarkCyan;
+            //                fontradio = 1.2f;
+            //            }
+            //            else if (row.ItemArray[6].ToString().Contains("0402"))
+            //            {
+            //                size = new Size(43, 23);
+            //                color = Color.Blue;
+            //                fontradio = 1.4f;
+            //            }
+            //            else if (row.ItemArray[6].ToString().Contains("0603"))
+            //            {
+            //                size = new Size(68, 37);
+            //                color = Color.Azure;
+            //                fontradio = 1.6f;
+            //            }
+            //            else if (row.ItemArray[6].ToString().Contains("0805"))
+            //            {
+            //                size = new Size(86, 55);
+            //                color = Color.Cyan;
+            //                fontradio = 1.8f;
+            //            }
+            //            else if (row.ItemArray[6].ToString().Contains("1206"))
+            //            {
+            //                size = new Size(133, 68);
+            //                color = Color.Gray;
+            //                fontradio = 2f;
+            //            }
+            //            else if (row.ItemArray[1].ToString().ToUpper().Contains("MARK"))
+            //            {
+            //                size = new Size(200, 100);
+            //                color = Color.DarkGreen;
+            //                fontradio = 2f;
+            //            }
+            //            string _x = row.ItemArray[7].ToString();
+            //            string _y = row.ItemArray[8].ToString();
 
-                        if (float.TryParse(_x.Trim().ToString(), out float x) && float.TryParse(_y.Trim().ToString(), out float y))
-                        {
-                            float angle = 0;
-                            if (float.TryParse(row.ItemArray[10].ToString(), out
-                                angle))
-                            {
+            //            if (float.TryParse(_x.Trim().ToString(), out float x) && float.TryParse(_y.Trim().ToString(), out float y))
+            //            {
+            //                float angle = 0;
+            //                if (float.TryParse(row.ItemArray[10].ToString(), out
+            //                    angle))
+            //                {
 
-                            }
-                            Component2 component = new Component2(row.ItemArray[1].ToString(), x , y);
-                            components.Add(component);
-                        }
-                    }
-                }
-                catch (Exception)
-                {
+            //                }
+            //                Component2 component = new Component2(row.ItemArray[1].ToString(), x , y);
+            //                components.Add(component);
+            //            }
+            //        }
+            //    }
+            //    catch (Exception)
+            //    {
 
 
 
-                }
-            }
+            //    }
+            //}
 
         }
 
         protected override void OnPaint(PaintEventArgs e)
         {
             base.OnPaint(e);
-            DrawCoordinateSystem(e.Graphics);
-            DrawComponents(e.Graphics);
+            //DrawCoordinateSystem(e.Graphics);
         }
 
         private void DrawCoordinateSystem(Graphics g)
@@ -205,13 +206,7 @@ namespace GSP_SJ
             g.DrawLine(pen, tip, rightWing);
         }
 
-        private void DrawComponents(Graphics g)
-        {
-            foreach (var component in components)
-            {
-                component.Draw(g, scale);
-            }
-        }
+    
 
         protected override void OnMouseWheel(MouseEventArgs e)
         {
@@ -282,24 +277,42 @@ namespace GSP_SJ
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            UpdateScaleDisplay();
+            Thread thread = new Thread(Conn);
+            thread.IsBackground = true;
+            thread.Start();
+            //UpdateScaleDisplay();
+            timer1.Start();
         }
-
-        // 添加新元件的方法
-        public void AddComponent(string name, float x, float y)
+        Queue<string> queue = new Queue<string>();  
+        private void Conn()
         {
-            if (x >= -270 && x <= 270 && y >= -150 && y <= 150)
-            {
-                components.Add(new Component2(name, x, y));
-                this.Invalidate();
+            
+            while (true) {
+
+                try
+                {
+                    SqlHelper.SQL.ConnectSqlSever("127.0.0.1", "FAI_New1", "FAILogin", "123456789");
+                    DataTable dataTable = SqlHelper.SQL.Excute("select * from Eng_XYData where ProductCode ='1212'");
+                }
+                catch (Exception ex)
+                {
+
+                    queue.Enqueue(ex.Message);
+
+                }
+
+                Thread.Sleep(1000);
+
             }
         }
 
-        // 清空所有元件
-        public void ClearComponents()
+      
+
+      
+        private void timer1_Tick(object sender, EventArgs e)
         {
-            components.Clear();
-            this.Invalidate();
+            if(queue.Count>0)
+            richTextBox1.Text+=queue.Dequeue()+"\r\n";
         }
     }
 

@@ -18,23 +18,37 @@ namespace GSP_SJ.ModelClass
     public partial class FormModelItem : Form
     {
         private string MaterialCode = "";
-        public FormModelItem(string MaterialCode, string description)
+
+        private string ProducerCode = "";
+        public FormModelItem(string MaterialCode, string description, string producerCode = "")
         {
             InitializeComponent();
             this.MaterialCode = MaterialCode;
             Text = "[" + MaterialCode + "]描述[" + description + "]";
             this.Load += FormModelItem_Load;
-
+            ProducerCode = producerCode;
         }
         List<Eng_PubModelItem> eng_PubModelItems;
+        List<Eng_ModelItem> eng_ModelItems;
 
         private Image org = null;
         private void FormModelItem_Load(object sender, EventArgs e)
         {
-            eng_PubModelItems = SQLDataControl.GETEng_PubModelItem(MaterialCode);
-            if (eng_PubModelItems != null && eng_PubModelItems.Count > 0)
+            if (string.IsNullOrEmpty(ProducerCode))
             {
-                dataGridView1.DataSource = eng_PubModelItems;
+                eng_PubModelItems = SQLDataControl.GETEng_PubModelItem(MaterialCode);
+                if (eng_PubModelItems != null && eng_PubModelItems.Count > 0)
+                {
+                    dataGridView1.DataSource = eng_PubModelItems;
+                }
+            }
+            else
+            {
+                eng_ModelItems = SQLDataControl.GetEng_ModelItem(ProducerCode,MaterialCode);
+                if (eng_ModelItems != null && eng_ModelItems.Count > 0)
+                {
+                    dataGridView1.DataSource = eng_ModelItems;
+                }
             }
 
         }
@@ -43,35 +57,75 @@ namespace GSP_SJ.ModelClass
         {
             if (e.RowIndex >= 0)
             {
-                byte[] img = eng_PubModelItems[e.RowIndex].mPicture;
-                MemoryStream memoryStream = new MemoryStream(img);
-                Image pic = Image.FromStream(memoryStream);
+                if (string.IsNullOrEmpty(ProducerCode))
+                {
+                    byte[] img = eng_PubModelItems[e.RowIndex].mPicture;
+                    MemoryStream memoryStream = new MemoryStream(img);
+                    Image pic = Image.FromStream(memoryStream);
 
-                roiPictureBox1.Width = (int)(eng_PubModelItems[e.RowIndex].mPW * eng_PubModelItems[e.RowIndex].mZoomRatio);
-                roiPictureBox1.Height = (int)(eng_PubModelItems[e.RowIndex].mPH * eng_PubModelItems[e.RowIndex].mZoomRatio);
-                org = ResizeImage(pic, roiPictureBox1.Width, roiPictureBox1.Height);
-                roiPictureBox1.Image = org;
-                roiPictureBox1.ClearROIs();
-                int left = eng_PubModelItems[e.RowIndex].PLeft != null ? (int)eng_PubModelItems[e.RowIndex].PLeft : 30;
-                int top = eng_PubModelItems[e.RowIndex].PTop != null ? (int)eng_PubModelItems[e.RowIndex].PTop : 30;
-                int pw = eng_PubModelItems[e.RowIndex].Pw != null ? (int)eng_PubModelItems[e.RowIndex].Pw : 100;
-                int ph = eng_PubModelItems[e.RowIndex].Ph != null ? (int)eng_PubModelItems[e.RowIndex].Ph : 100;
-                Rectangle rectangle = new Rectangle(
-                    left,
-                    top,
-                    pw,
-                    ph);
-                DirectionalROI rOI = new DirectionalROI(rectangle, e.RowIndex.ToString());
-                roiPictureBox1.AddROI(rOI);
+                    roiPictureBox1.Width = (int)(eng_PubModelItems[e.RowIndex].mPW * eng_PubModelItems[e.RowIndex].mZoomRatio);
+                    roiPictureBox1.Height = (int)(eng_PubModelItems[e.RowIndex].mPH * eng_PubModelItems[e.RowIndex].mZoomRatio);
+                    org = ResizeImage(pic, roiPictureBox1.Width, roiPictureBox1.Height);
+                    roiPictureBox1.Image = org;
+                    roiPictureBox1.ClearROIs();
+                    int left = eng_PubModelItems[e.RowIndex].PLeft != null ? (int)eng_PubModelItems[e.RowIndex].PLeft : 30;
+                    int top = eng_PubModelItems[e.RowIndex].PTop != null ? (int)eng_PubModelItems[e.RowIndex].PTop : 30;
+                    int pw = eng_PubModelItems[e.RowIndex].Pw != null ? (int)eng_PubModelItems[e.RowIndex].Pw : 100;
+                    int ph = eng_PubModelItems[e.RowIndex].Ph != null ? (int)eng_PubModelItems[e.RowIndex].Ph : 100;
+                    Rectangle rectangle = new Rectangle(
+                        left,
+                        top,
+                        pw,
+                        ph);
 
-                //显示模板参数
-                DispPlayParam(eng_PubModelItems[e.RowIndex]);
+
+                    DirectionalROI rOI = new DirectionalROI(rectangle, e.RowIndex.ToString());
+                    roiPictureBox1.AddROI(rOI);
+
+                    //显示模板参数
+                    DispPlayParamPub(eng_PubModelItems[e.RowIndex]);
+                }
+                else
+                {
+                    byte[] img = eng_ModelItems[e.RowIndex].mPicture;
+                    MemoryStream memoryStream = new MemoryStream(img);
+                    Image pic = Image.FromStream(memoryStream);
+
+                    roiPictureBox1.Width = (int)(eng_ModelItems[e.RowIndex].mPW * eng_ModelItems[e.RowIndex].mZoomRatio);
+                    roiPictureBox1.Height = (int)(eng_ModelItems[e.RowIndex].mPH * eng_ModelItems[e.RowIndex].mZoomRatio);
+                    org = ResizeImage(pic, roiPictureBox1.Width, roiPictureBox1.Height);
+                    roiPictureBox1.Image = org;
+                    roiPictureBox1.ClearROIs();
+                    int left = eng_ModelItems[e.RowIndex].PLeft != null ? (int)eng_ModelItems[e.RowIndex].PLeft : 30;
+                    int top = eng_ModelItems[e.RowIndex].PTop != null ? (int)eng_ModelItems[e.RowIndex].PTop : 30;
+                    int pw = eng_ModelItems[e.RowIndex].Pw != null ? (int)eng_ModelItems[e.RowIndex].Pw : 100;
+                    int ph = eng_ModelItems[e.RowIndex].Ph != null ? (int)eng_ModelItems[e.RowIndex].Ph : 100;
+                    Rectangle rectangle = new Rectangle(
+                        left,
+                        top,
+                        pw,
+                        ph);
+
+
+                    DirectionalROI rOI = new DirectionalROI(rectangle, e.RowIndex.ToString());
+                    roiPictureBox1.AddROI(rOI);
+
+                    //显示模板参数
+                    DispPlayParam(eng_ModelItems[e.RowIndex]);
+                }
+               
+
                 //显示比对结果
                 DispMatchResult();
             }
         }
 
-        public void DispPlayParam(Eng_PubModelItem pubModelItem)
+        public void DispPlayParamPub(Eng_PubModelItem pubModelItem)
+        {
+
+        }
+
+        public void DispPlayParam(Eng_ModelItem pubModelItem)
         {
 
         }
@@ -149,6 +203,7 @@ namespace GSP_SJ.ModelClass
             DispMatchResult();
         }
 
+        object lockObj = new object();
 
         /// <summary>
         /// 亮度
@@ -157,7 +212,10 @@ namespace GSP_SJ.ModelClass
         /// <param name="e"></param>
         private void trackLight_Scroll(object sender, EventArgs e)
         {
-            ScaleImage();
+            lock (lockObj)
+            {
+                ScaleImage();
+            }
         }
 
         private void ScaleImage()
@@ -184,25 +242,23 @@ namespace GSP_SJ.ModelClass
         /// <param name="e"></param>
         private void trackcontrack_Scroll(object sender, EventArgs e)
         {
-            using (HImage hImage = HalconImageConverter.BitmapToHImageRGB(new Bitmap(org)))
+            lock (lockObj)
             {
-                //HalconDotNet.HOperatorSet.Emphasize(hImage, out HObject ho_ImageScaled, org.Width, org.Height, (int)Math.Abs(trackcontrack.Value));
-                int val = (int)Math.Abs(trackcontrack.Value);
-                PublicFunction.scale_image_range(hImage, out HObject ho_ImageScaled, 50, val);
-                if (trackcontrack.Value < 0)
+                using (HImage hImage = HalconImageConverter.BitmapToHImageRGB(new Bitmap(org)))
                 {
-                    HalconDotNet.HOperatorSet.InvertImage(ho_ImageScaled, out ho_ImageScaled);
+                    //HalconDotNet.HOperatorSet.Emphasize(hImage, out HObject ho_ImageScaled, org.Width, org.Height, (int)Math.Abs(trackcontrack.Value));
+                    int val = (int)Math.Abs(trackcontrack.Value);
+                    PublicFunction.scale_image_range(hImage, out HObject ho_ImageScaled, 50, val);
+                    if (trackcontrack.Value < 0)
+                    {
+                        HalconDotNet.HOperatorSet.InvertImage(ho_ImageScaled, out ho_ImageScaled);
+                    }
+                    roiPictureBox1.Image = HalconImageConverter.HImageToBitmapRGB(new HImage(ho_ImageScaled));
                 }
-                roiPictureBox1.Image = HalconImageConverter.HImageToBitmapRGB(new HImage(ho_ImageScaled));
+                RefreshOcvData();
             }
-            RefreshOcvData();
         }
 
-        private void btnSaveImg_Click(object sender, EventArgs e)
-        {
-            roiPictureBox1.Image.Save("F:\\" + MaterialCode + ".jpg");
-            roiPictureBox1.Image.Save("F:\\" + MaterialCode + ".png");
-        }
-
+   
     }
 }

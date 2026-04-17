@@ -30,5 +30,15 @@ namespace GSP_SJ
             reports = SQLDataControl.GetAllReport();
             dgvProgram.DataSource = reports;
         }
+
+        private void btnAdd_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnDel_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

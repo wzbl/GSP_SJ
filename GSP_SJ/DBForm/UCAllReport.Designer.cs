@@ -99,6 +99,7 @@
             this.btnDel.Size = new System.Drawing.Size(297, 47);
             this.btnDel.TabIndex = 1;
             this.btnDel.Values.Text = "删除报告";
+            this.btnDel.Click += new System.EventHandler(this.btnDel_Click);
             // 
             // btnAdd
             // 
@@ -108,6 +109,7 @@
             this.btnAdd.Size = new System.Drawing.Size(293, 47);
             this.btnAdd.TabIndex = 0;
             this.btnAdd.Values.Text = "新增报告";
+            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
             // 
             // UCAllReport
             // 

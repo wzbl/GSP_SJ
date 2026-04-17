@@ -1,4 +1,5 @@
-﻿using SqlHelper;
+﻿using ComponentFactory.Krypton.Toolkit;
+using SqlHelper;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -11,7 +12,7 @@ using System.Windows.Forms;
 
 namespace GSP_SJ
 {
-    public partial class FormProductItem : Form
+    public partial class FormProductItem : KryptonForm
     {
         public FormProductItem()
         {

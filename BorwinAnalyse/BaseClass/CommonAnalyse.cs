@@ -128,6 +128,11 @@ namespace BorwinAnalyse.BaseClass
         public string ResGrade_ON_NO_Find = "0%";
         public string CapGrade_ON_NO_Find = "0%";
 
+        /// <summary>
+        /// 规则列表
+        /// </summary>
+        public List<string> Rules = new List<string>();
+
         //string s_Grade = "CDFGJKMN";
 
         /// <summary>
@@ -211,11 +216,11 @@ namespace BorwinAnalyse.BaseClass
         public bool IsMergeDescription = false;
         public bool IsUseNormalRule = true;
 
-        public List<Model.ManufactureRuleModel> ManufactureRuleModels = new List<ManufactureRuleModel>();
+   
 
-        public void Load()
+        public void Load(string Name="Default")
         {
-            string savePath = @"Ini/CommonAnalyse.json";
+            string savePath = @"Ini/"+Name+ ".json";
             if (!File.Exists(savePath))
             {
                 FileStream fs1 = new FileStream(savePath, FileMode.Create, FileAccess.ReadWrite);
@@ -225,10 +230,15 @@ namespace BorwinAnalyse.BaseClass
             {
                 instance = JsonConvert.DeserializeObject<CommonAnalyse>(File.ReadAllText(savePath));
             }
+            if (instance.Rules.Count == 0)
+            {
+                instance.Rules.Add("Default");
+                Save();
+            }
         }
-        public void Save()
+        public void Save(string Name="Default")
         {
-            string savePath = @"Ini/CommonAnalyse.json";
+            string savePath = @"Ini/" + Name + ".json";
             if (!File.Exists(savePath))
             {
                 FileStream fs1 = new FileStream(savePath, FileMode.Create, FileAccess.ReadWrite);
@@ -596,335 +606,7 @@ namespace BorwinAnalyse.BaseClass
 
             bool hadIdentifyingDigits = false;
 
-            #region 产商规则
-            if (!analyseResult.Result)
-            {
-                analyseResult = new AnalyseResult();
-                bool chk = false;
-                for (int i = 0; i < CommonAnalyse.Instance.ManufactureRuleModels.Count; i++)
-                {
-                    analyseResult = new AnalyseResult();
-                    if (CommonAnalyse.Instance.ManufactureRuleModels[i].Enable)
-                    {
-                        int index = 0;
-                        #region 类型
-                        chk = GetTypeManufactureRule(CommonAnalyse.Instance.ManufactureRuleModels[i].ResCode, description, out index);
-                        if (chk)
-                        {
-                            analyseResult.Type = "电阻";
-                        }
-                        else
-                        {
-                            chk = GetTypeManufactureRule(CommonAnalyse.Instance.ManufactureRuleModels[i].CapCode, description, out index);
-                            if (chk)
-                            {
-                                analyseResult.Type = "电容";
-                            }
-                        }
-                        #endregion
-
-                        #region 尺寸
-                        if (chk)
-                        {
-                            chk = false;
-                            string size = String.Empty;
-
-                            int sizeStartId = 0;
-
-                            try
-                            {
-                                if (!CommonAnalyse.Instance.ManufactureRuleModels[i].IsUseStandardSize)
-                                {
-                                    if (CommonAnalyse.Instance.ManufactureRuleModels[i].IsUseSizeId)
-                                    {
-                                        int.TryParse(CommonAnalyse.Instance.ManufactureRuleModels[i].SizeStartId, out sizeStartId);
-                                    }
-
-                                    if (CommonAnalyse.Instance.ManufactureRuleModels[i].IsUseSizeIdAfterType)
-                                    {
-                                        sizeStartId = index;
-                                    }
-
-                                    chk = GetSizeManufactureRule(CommonAnalyse.Instance.ManufactureRuleModels[i], description.Substring(sizeStartId, CommonAnalyse.Instance.ManufactureRuleModels[i].SizeCodeLength), out size);
-                                    if (chk)
-                                    {
-                                        analyseResult.Size = size;
-                                    }
-                                }
-                                else
-                                {
-                                    if (CommonAnalyse.Instance.ManufactureRuleModels[i].IsUseSizeIdAfterType)
-                                    {
-                                        sizeStartId = index;
-                                    }
-
-                                    chk = GetSizeManufactureRule(description, sizeStartId, out size);
-                                    if (chk)
-                                    {
-                                        analyseResult.Size = size;
-                                    }
-                                }
-                            }
-                            catch
-                            {
-
-                            }
-                        }
-                        #endregion
-
-                        #region 标准值、等级
-                        if (chk)
-                        {
-                            chk = false;
-                            string valuestr = String.Empty;
-                            int startid = 0;
-                            if (CommonAnalyse.Instance.ManufactureRuleModels[i].IsUseValueStartId)
-                            {
-                                startid = CommonAnalyse.Instance.ManufactureRuleModels[i].ValueStartId;
-                                if (description.IndexOf("RAT") == 0 && analyseResult.Size == "01005")
-                                {
-                                    startid += 1;
-                                }
-                            }
-
-                            if (CommonAnalyse.Instance.ManufactureRuleModels[i].IsUseValueStartIdAfterChar)
-                            {
-                                startid = description.IndexOf(CommonAnalyse.Instance.ManufactureRuleModels[i].CharBeforeValue) + 1;
-                            }
-
-                            bool isNumStart = false;
-                            for (int m = startid; m < description.Length; m++)
-                            {
-                                if (char.IsDigit(description[m]) 
-                                    || (description[m] == 'R' && m == CommonAnalyse.Instance.ManufactureRuleModels[i].ValueStartId && CommonAnalyse.Instance.ManufactureRuleModels[i].Manufacture == "村田")
-                                    || (description[m] == 'R'))
-                                {
-                                    if(description[m] == 'R')
-                                    {
-                                        if (String.IsNullOrEmpty(valuestr))
-                                        {
-                                            valuestr += "0.";
-                                        }
-                                        else
-                                        {
-                                            valuestr += ".";
-                                        }
-                                        
-                                    }
-                                    else
-                                    {
-                                        valuestr += description[m];
-                                    }
-                                    isNumStart = true;
-                                }
-                                else
-                                {
-                                    if (isNumStart)
-                                    {
-                                        if (CommonAnalyse.Instance.ManufactureRuleModels[i].IsUseRKM && description[m] == 'K')
-                                        {
-                                            valuestr += ".";
-                                            analyseResult.Unit = "KΩ";
-                                        }
-                                        else if (CommonAnalyse.Instance.ManufactureRuleModels[i].IsUseRKM && description[m] == 'M')
-                                        {
-                                            valuestr += ".";
-                                            analyseResult.Unit = "MΩ";
-                                        }
-                                        else
-                                        {
-                                            index = m;
-                                            break; // 遇到非数字字符时停止
-                                        }
-                                    }
-                                }
-                            }
-
-                            if (analyseResult.Unit == "KΩ" || analyseResult.Unit == "MΩ")
-                            {
-                                double val = 0;
-                                double.TryParse(valuestr, out val);
-                                analyseResult.Value = val.ToString();
-                            }
-
-                            if (valuestr == "0.")
-                            {
-                                analyseResult.Value = String.Empty;
-                            }
-
-                            if (valuestr.IndexOf(".") == (valuestr.Length - 1))
-                            {
-                                valuestr = valuestr.Replace(".", "");
-                                double val = 0;
-                                double.TryParse(valuestr, out val);
-                                analyseResult.Value = val.ToString();
-                            }
-
-                            if (description.IndexOf("RK73Z") == 0)
-                            {
-                                analyseResult.Unit = "Ω";
-                                analyseResult.Value = "0";
-                                analyseResult.Grade = description.Substring(6, 1);
-                                valuestr = "0";
-                            }
-
-                            if (valuestr == "0" || (valuestr == "0000" && analyseResult.Type == "电阻"))
-                            {
-                                analyseResult.Unit = "Ω";
-                                analyseResult.Value = "0";
-                                valuestr = "0";
-                            }
-
-                            //数码法分析
-                            if (valuestr.Contains(".") && String.IsNullOrEmpty(analyseResult.Value))
-                            {
-                                analyseResult.Value = double.Parse(valuestr).ToString();
-                                if (analyseResult.Type == "电阻")
-                                {
-                                    analyseResult.Unit = "Ω";
-                                }
-                                if (analyseResult.Type == "电容")
-                                {
-                                    analyseResult.Unit = "PF";
-                                }
-                            }
-                            else if (!String.IsNullOrEmpty(valuestr))
-                            {
-
-                                if (valuestr.ToString().Contains(".") && analyseResult.Type == "电阻" && String.IsNullOrEmpty(analyseResult.Unit))
-                                {
-                                    analyseResult.Unit = "Ω";
-                                    analyseResult.Value = valuestr;
-                                }
-                                else 
-                                { 
-                                    string textValue = valuestr;
-                                    string value = String.Empty;
-                                    if (valuestr.Length >= 2)
-                                    {
-                                        value = textValue.Substring(textValue.Length - 1);
-                                    }
-                                    double val = 0;
-                                    if (textValue[0] == 'R')
-                                    {
-                                        if (double.TryParse("0." + textValue.Replace("R", ""), out val))
-                                        {
-                                            analyseResult.Value = val.ToString();
-                                            analyseResult.Unit = "PF";
-                                        }
-                                        else
-                                        {
-                                            analyseResult.Value = String.Empty;
-                                        }
-                                    }
-                                    else if (CommonAnalyse.Instance.ManufactureRuleModels[i].IsIdentifyingDigits && valuestr.Length > 2 && int.TryParse(valuestr, out int res0) && int.TryParse(value, out int res) && string.IsNullOrEmpty(analyseResult.Unit))
-                                    {
-                                        if (res >= 0 && res <= 7)
-                                        {
-                                            hadIdentifyingDigits = true;
-                                            int factor = (int)Math.Pow(10, Convert.ToInt32(res));
-                                            val = Convert.ToDouble(textValue.Remove(textValue.Length - 1, 1)) * factor;
-                                            analyseResult.Value = val.ToString();
-                                            if (analyseResult.Type == "电阻")
-                                            {
-                                                analyseResult.Unit = "Ω";
-                                            }
-                                            if (analyseResult.Type == "电容")
-                                            {
-                                                analyseResult.Unit = "PF";
-                                            }
-
-                                            if (analyseResult.Unit == "PF")
-                                            {
-                                                if (val >= 1000000)
-                                                {
-                                                    analyseResult.Value = (val / 1000000).ToString();
-                                                    analyseResult.Unit = "UF";
-                                                }
-                                                else if (val >= 1000)
-                                                {
-                                                    analyseResult.Value = (val / 1000).ToString();
-                                                    analyseResult.Unit = "NF";
-                                                }
-                                            }
-                                            if (analyseResult.Unit == "Ω")
-                                            {
-                                                if (val >= 1000000)
-                                                {
-                                                    analyseResult.Value = (val / 1000000).ToString();
-                                                    analyseResult.Unit = "MΩ";
-                                                }
-                                                else if (val >= 1000)
-                                                {
-                                                    analyseResult.Value = (val / 1000).ToString();
-                                                    analyseResult.Unit = "KΩ";
-                                                }
-                                            }
-                                        }
-                                    }
-                                    else if(valuestr.Length == 1)
-                                    {
-                                        if (analyseResult.Type == "电阻")
-                                        {
-                                            analyseResult.Unit = "Ω";
-                                        }
-                                        if (analyseResult.Type == "电容")
-                                        {
-                                            analyseResult.Unit = "PF";
-                                        }
-                                        analyseResult.Value = valuestr;
-                                    }
-                                }
-                            }
-
-
-                            try
-                            {
-                                string grade = String.Empty;
-                                if (CommonAnalyse.Instance.ManufactureRuleModels[i].IsUseGradeStartId)
-                                {
-                                    int gradeId = 0;
-                                    int.TryParse(CommonAnalyse.Instance.ManufactureRuleModels[i].GradeStartId, out gradeId);
-                                    //if (description.IndexOf("TSR") == 0 && (analyseResult.Size == "0402" || analyseResult.Size == "0201"))
-                                    //{
-                                    //    gradeId += 1;
-                                    //}
-                                    grade = description.Substring(gradeId, 1);
-                                }
-                                else
-                                {
-                                    grade = description.Substring(index, 1);
-                                }
-                                chk = GetGradeManufactureRule(CommonAnalyse.Instance.ManufactureRuleModels[i], analyseResult.Type, grade);
-                                if (chk)
-                                {
-                                    analyseResult.Grade = grade;
-                                }
-                            }
-                            catch
-                            {
-
-                            }
-                        }
-                        #endregion
-                    }
-
-                    analyseResult.Check();
-
-                    if (analyseResult.Result)
-                    {
-                        return analyseResult;
-                    }
-                }
-            }
-
-            if (!CommonAnalyse.Instance.IsUseNormalRule)
-            {
-                return analyseResult;
-            }
-
-
-            #endregion
+           
 
             #region 删除首位
             if (IsDeleteString)
@@ -1455,137 +1137,6 @@ namespace BorwinAnalyse.BaseClass
             return analyseResult;
         }
 
-        private bool GetTypeManufactureRule(string rule, string description, out int id)
-        {
-            id = 0;
-
-            if (String.IsNullOrEmpty(rule))
-            {
-                return false;
-            }
-            var result = rule.Split(',').Where(x => description.IndexOf(x) == 0).ToList();
-            if (result.Count > 0)
-            {
-                id = result[0].Length;
-                return true;
-            }
-
-            return false;
-        }
-
-        private bool GetSizeManufactureRule(Model.ManufactureRuleModel manufactureRuleModel, string Sizedescription, out string size)
-        {
-            size = String.Empty;
-
-            if (manufactureRuleModel.substitutionRules.Count <= 0)
-            {
-                return false;
-            }
-            
-            for(int i = 0; i < manufactureRuleModel.substitutionRules.Count; i++)
-            {
-                if (manufactureRuleModel.substitutionRules[i].Enable)
-                {
-                    if(Sizedescription.IndexOf(manufactureRuleModel.substitutionRules[i].FindContent) >= 0)
-                    {
-                        size = manufactureRuleModel.substitutionRules[i].Replace;
-                        return true;
-                    }
-                }
-            }
-
-            return false;
-        }
-
-        private bool GetSizeManufactureRule(string description , int startIndex, out string size)
-        {
-            size = String.Empty;
-
-            if(description.Length > (5 + startIndex))
-            {
-                if(description.Substring(startIndex, 5) == "01005")
-                {
-                    size = "01005";
-                    return true;
-                }
-            }
-
-            if (description.Length > (4 + startIndex))
-            {
-                if (description.Substring(startIndex, 4) == "0201")
-                {
-                    size = "0201";
-                    return true;
-                }
-                if (description.Substring(startIndex, 4) == "0402")
-                {
-                    size = "0402";
-                    return true;
-                }
-                if (description.Substring(startIndex, 4) == "0603")
-                {
-                    size = "0603";
-                    return true;
-                }
-                if (description.Substring(startIndex, 4) == "0805")
-                {
-                    size = "0805";
-                    return true;
-                }
-                if (description.Substring(startIndex, 4) == "1206")
-                {
-                    size = "1206";
-                    return true;
-                }
-                if (description.Substring(startIndex, 4) == "1210")
-                {
-                    size = "1210";
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        private bool GetGradeManufactureRule(Model.ManufactureRuleModel manufactureRuleModel, string type, string grade)
-        {
-
-            if (type == "电阻")
-            {
-                if (manufactureRuleModel.GradeRes.Count <= 0)
-                {
-                    return false;
-                }
-
-                for (int i = 0; i < manufactureRuleModel.GradeRes.Count; i++)
-                {
-                    if (manufactureRuleModel.GradeRes[i].Grade == grade)
-                    {
-                        return true;
-                    }
-                }
-            }
-
-            if (type == "电容")
-            {
-                if (manufactureRuleModel.GradeCap.Count <= 0)
-                {
-                    return false;
-                }
-
-                for (int i = 0; i < manufactureRuleModel.GradeCap.Count; i++)
-                {
-                    if (manufactureRuleModel.GradeCap[i].Grade == grade)
-                    {
-                        return true;
-                    }
-                }
-            }
-
-            return false;
-        }
-
-
         /// <summary>
         /// 获取类型
         /// </summary>
@@ -1933,11 +1484,6 @@ namespace BorwinAnalyse.BaseClass
             return false;
         }
 
-        public void AddManufacture(Model.ManufactureRuleModel manufactureRuleModel)
-        {
-            ManufactureRuleModels.Add(manufactureRuleModel);
-            Save();
-        }
       
     }
 

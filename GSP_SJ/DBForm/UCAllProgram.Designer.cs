@@ -59,7 +59,7 @@
             this.tableLayoutPanel2.ColumnCount = 3;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 49.67742F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.32258F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 387F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 388F));
             this.tableLayoutPanel2.Controls.Add(this.btnRefresh, 2, 0);
             this.tableLayoutPanel2.Controls.Add(this.btnDel, 1, 0);
             this.tableLayoutPanel2.Controls.Add(this.btnAdd, 0, 0);
@@ -74,10 +74,11 @@
             // btnRefresh
             // 
             this.btnRefresh.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnRefresh.Location = new System.Drawing.Point(621, 3);
+            this.btnRefresh.Location = new System.Drawing.Point(620, 3);
             this.btnRefresh.Name = "btnRefresh";
-            this.btnRefresh.Size = new System.Drawing.Size(382, 52);
+            this.btnRefresh.Size = new System.Drawing.Size(383, 52);
             this.btnRefresh.TabIndex = 2;
+            this.btnRefresh.Values.Image = global::GSP_SJ.Properties.Resources._186;
             this.btnRefresh.Values.Text = "刷新";
             this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
             // 
@@ -86,9 +87,10 @@
             this.btnDel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnDel.Location = new System.Drawing.Point(310, 3);
             this.btnDel.Name = "btnDel";
-            this.btnDel.Size = new System.Drawing.Size(305, 52);
+            this.btnDel.Size = new System.Drawing.Size(304, 52);
             this.btnDel.TabIndex = 1;
-            this.btnDel.Values.Text = "删除报告";
+            this.btnDel.Values.Image = global::GSP_SJ.Properties.Resources._2;
+            this.btnDel.Values.Text = "删除程序";
             this.btnDel.Click += new System.EventHandler(this.btnDel_Click);
             // 
             // btnAdd
@@ -98,7 +100,8 @@
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(301, 52);
             this.btnAdd.TabIndex = 0;
-            this.btnAdd.Values.Text = "新增报告";
+            this.btnAdd.Values.Image = global::GSP_SJ.Properties.Resources._160;
+            this.btnAdd.Values.Text = "新增程序";
             this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
             // 
             // dgvProgram

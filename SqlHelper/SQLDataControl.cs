@@ -267,6 +267,18 @@ namespace SqlHelper
             return db.Eng_PubModelItem.Where(x => x.MaterialCode == materialCode).ToList();
         }
 
+        public static List<Eng_Model> GetEng_Model(string productCode)
+        {
+            return db.Eng_Model.Where(x => x.ProductCode == productCode).ToList();
+        }
+
+        public static List <Eng_ModelItem> GetEng_ModelItem(string productCode,string materialCode)
+        {
+            return db.Eng_ModelItem.Where(x => x.ProductCode == productCode && x.MaterialCode==materialCode).ToList();
+        }
+
+
+
 
         public static List<View_Eng_MeterOptionItem> View_Eng_MeterOptionItem()
         {
