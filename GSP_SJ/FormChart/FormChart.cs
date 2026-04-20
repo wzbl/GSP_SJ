@@ -344,7 +344,9 @@ namespace GSP_SJ
         public string Text { get; set; }
         public Color Color { get; set; } = Color.Black;
 
-        public static float radio = 2f;
+        public float TextRadio = 1f;
+
+        public static float radio = 0.8f;
         public Component(string designator, PointF position, SizeF size, float angle, string text, Color color)
         {
             Designator = designator;
@@ -353,6 +355,7 @@ namespace GSP_SJ
             Angle = angle;
             Text = text;
             Color = color;
+            TextRadio = (size.Width* 60f) / 133;
         }
 
         // 获取元件的边界矩形（考虑旋转）
@@ -905,7 +908,7 @@ namespace GSP_SJ
         /// <summary>
         /// Y坐标平移值
         /// </summary>
-        
+
         public int YSaveOffset = 0;
 
         public Bitmap fullImage = null;
@@ -956,21 +959,33 @@ namespace GSP_SJ
                                     format = System.Drawing.Imaging.ImageFormat.Bmp;
                                     break;
                             }
-
-                            fullImage.Save(saveDialog.FileName, format);
+                            //fullImage.Save(saveDialog.FileName, format);
                             //保存一份到数据库
-                            byte[] bytes = PublicFunction.GetByte(saveDialog.FileName);
-                            SQLDataControl.UpdateProgramOptionPicture(ProductCode, "", bytes);
+
+                            byte[] bytes = PublicFunction.CompressImage(fullImage, saveDialog.FileName, 20, OrgWidth, orgHight);
+                            //SQLDataControl.UpdateProgramOptionPicture(ProductCode, "", bytes);
                             MessageBox.Show("全图保存成功！", "保存成功");
                         }
                     }
                 };
-    
+
                 previewForm.Controls.Add(pictureBox);
                 previewForm.Controls.Add(saveButton);
                 previewForm.ShowDialog();
             }
         }
+
+        public void SaveXYImageToDB()
+        {
+            fullImage = null;
+            using (fullImage = SaveToBitmap(true))
+            {
+                byte[] bytes = PublicFunction.CompressImage(fullImage, "", 20, OrgWidth, orgHight);
+                SQLDataControl.UpdateProgramOptionPicture(ProductCode, "", bytes);
+            }
+        }
+
+
 
         // 计算所有元件的边界
         private RectangleF CalculateAllComponentsBounds()
@@ -1209,7 +1224,7 @@ namespace GSP_SJ
         /// 整体偏移100个像素
         /// </summary>
         public int SaveOffset = 500;
-        private void SaveDrawComponent(Graphics g, Component component, float scaw)
+        private void SaveDrawComponent(Graphics g, Component component, float scaw, bool saveScraw)
         {
             // 保存当前图形状态
             GraphicsState state = g.Save();
@@ -1230,7 +1245,8 @@ namespace GSP_SJ
                 //string cmd = "update Eng_XYData set RX='" + screenPos1.X + "' ,RY= '" + screenPos1.Y + "' where ProductCode = " + ProductCode + " and Position='" + component.Designator + "'";
                 //SqlHelper.SQL.ExecuteQuery(cmd);
                 //跟新屏幕坐标到数据库
-                SQLDataControl.UpdateXYData_RXY(ProductCode, component.Designator, (decimal)screenPos1.X, (decimal)screenPos1.Y);
+                if (saveScraw)
+                    SQLDataControl.UpdateXYData_RXY(ProductCode, component.Designator, (decimal)screenPos1.X, (decimal)screenPos1.Y);
                 // 绘制元件矩形
                 using (Pen pen = new Pen(component.Color, 1.0f))
                 using (Brush fillBrush = new SolidBrush(Color.FromArgb(30, component.Color)))
@@ -1247,9 +1263,8 @@ namespace GSP_SJ
                     _recorder.RecordRectangle(rect, component.Color, 3.0f);
                 }
 
-
                 // 绘制位号文本
-                using (Font font = new Font("Arial", Math.Max(3.0f, scaw)))
+                using (Font font = new Font("Arial", Math.Max(1.0f, scaw * component.TextRadio / 2)))
                 using (Brush textBrush = new SolidBrush(component.Color))
                 {
                     StringFormat format = new StringFormat
@@ -1275,7 +1290,7 @@ namespace GSP_SJ
         }
 
         public float SaveScale = 1f;
-        private Bitmap SaveToBitmap()
+        private Bitmap SaveToBitmap(bool saveScraw = false)
         {
             // 创建与控件相同大小的位图
             Bitmap bitmap = new Bitmap(OrgWidth, orgHight);
@@ -1329,10 +1344,10 @@ namespace GSP_SJ
                     // 绘制所有元件
                     foreach (var component in components)
                     {
-                        SaveDrawComponent(g, component, SaveScale);
+                        SaveDrawComponent(g, component, SaveScale, saveScraw);
                     }
 
-                    g.DrawString(ProductCode, new Font("Arial", 200), Brushes.Black, OrgWidth/2, 100);
+                    g.DrawString(ProductCode, new Font("Arial", 200), Brushes.Black, OrgWidth / 2, 100);
                 }
                 finally
                 {
@@ -1348,19 +1363,10 @@ namespace GSP_SJ
         public void SaveToFile(string filePath, System.Drawing.Imaging.ImageFormat format = null)
         {
             ShowFullImagePreview();
-            //if (format == null)
-            //    format = System.Drawing.Imaging.ImageFormat.Bmp;
 
-            //using (Bitmap bitmap = SaveToBitmap())
-            //{
-            //    bitmap.Save(filePath, format);
-            //}
 
         }
         #endregion
-
-
-
 
         private void DrawBackground(Graphics g)
         {
@@ -1522,7 +1528,7 @@ namespace GSP_SJ
                 }
 
                 // 绘制位号文本
-                using (Font font = new Font("Arial", Math.Max(3.0f, scale)))
+                using (Font font = new Font("Arial", Math.Max(1f, (scale * component.TextRadio) / 2)))
                 using (Brush textBrush = new SolidBrush(isHighlighted ? Color.Red : component.Color))
                 {
                     StringFormat format = new StringFormat

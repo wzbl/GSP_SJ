@@ -25,67 +25,82 @@ namespace GSP_SJ
         List<P_Search_Eng_XYData_Result> eng_XYData_Results;
         public void RefreshData(List<P_Search_Eng_XYData_Result> eng_XYData_Results)
         {
-            this.eng_XYData_Results = eng_XYData_Results;
-            canvas.Components.Clear();
-            foreach (var item in eng_XYData_Results)
+            try
+            {
+                this.eng_XYData_Results = eng_XYData_Results;
+                canvas.Components.Clear();
+                foreach (var item in eng_XYData_Results)
+                {
+                    Size size = new Size(86, 55);
+                    Color color = Color.HotPink;
+                    if (item.元件尺寸 == null)
+                    {
+                        continue;
+                    }
+                    if (item.元件尺寸.Contains("01005"))
+                    {
+                        size = new Size(16, 9);
+                        color = Color.BlueViolet;
+                    }
+                    else if (item.元件尺寸.Contains("0201"))
+                    {
+                        size = new Size(25, 13);
+                        color = Color.DarkCyan;
+                    }
+                    else if (item.元件尺寸.Contains("0402"))
+                    {
+                        size = new Size(43, 23);
+                        color = Color.Blue;
+                    }
+                    else if (item.元件尺寸.Contains("0603"))
+                    {
+                        size = new Size(68, 37);
+                        color = Color.OrangeRed;
+                    }
+                    else if (item.元件尺寸.Contains("0805"))
+                    {
+                        size = new Size(86, 55);
+                        color = Color.Cyan;
+                    }
+                    else if (item.元件尺寸.Contains("1206"))
+                    {
+                        size = new Size(133, 68);
+                        color = Color.Brown;
+                    }
+                    else if (item.元件位置.Contains("MARK"))
+                    {
+                        size = new Size(85, 47);
+                        color = Color.DarkGreen;
+                    }
+                    string _x = item.X坐标.ToString();
+                    string _y = item.Y坐标.ToString();
+
+                    if (float.TryParse(_x.Trim().ToString(), out float x) && float.TryParse(_y.Trim().ToString(), out float y))
+                    {
+                        float angle = 0;
+                        if (float.TryParse(item.角度.ToString(), out
+                            angle))
+                        {
+
+                        }
+                        Component component = new Component(item.元件位置, new PointF(x * Component.radio, (-y) * Component.radio), new SizeF(size.Width * Component.radio / 38.5f, size.Height * Component.radio / 38.5f), angle, "null", color);
+                        canvas.Components.Add(component);
+                    }
+
+
+                }
+                canvas.FitToView();
+            }
+            catch (Exception)
             {
 
-
-                Size size = new Size(86, 55);
-                Color color = Color.HotPink;
-                if (item.元件尺寸.Contains("01005"))
-                {
-                    size = new Size(16, 9);
-                    color = Color.BlueViolet;
-                }
-                else if (item.元件尺寸.Contains("0201"))
-                {
-                    size = new Size(25, 13);
-                    color = Color.DarkCyan;
-                }
-                else if (item.元件尺寸.Contains("0402"))
-                {
-                    size = new Size(43, 23);
-                    color = Color.Blue;
-                }
-                else if (item.元件尺寸.Contains("0603"))
-                {
-                    size = new Size(68, 37);
-                    color = Color.Aquamarine;
-                }
-                else if (item.元件尺寸.Contains("0805"))
-                {
-                    size = new Size(86, 55);
-                    color = Color.Cyan;
-                }
-                else if (item.元件尺寸.Contains("1206"))
-                {
-                    size = new Size(133, 68);
-                    color = Color.Brown;
-                }
-                else if (item.元件位置.Contains("MARK"))
-                {
-                    size = new Size(68, 37);
-                    color = Color.DarkGreen;
-                }
-                string _x = item.X坐标.ToString();
-                string _y = item.Y坐标.ToString();
-
-                if (float.TryParse(_x.Trim().ToString(), out float x) && float.TryParse(_y.Trim().ToString(), out float y))
-                {
-                    float angle = 0;
-                    if (float.TryParse(item.角度.ToString(), out
-                        angle))
-                    {
-
-                    }
-                    Component component = new Component(item.元件位置, new PointF(x * Component.radio, (-y) * Component.radio), new SizeF(size.Width * Component.radio / 25.0f, size.Height * Component.radio / 25.0f), angle, "null", color);
-                    canvas.Components.Add(component);
-                }
-
-
             }
-            canvas.FitToView();
+          
+        }
+
+        public void Save()
+        {
+            canvas.SaveXYImageToDB();
         }
 
         private void UCXYDataChart_Load(object sender, EventArgs e)

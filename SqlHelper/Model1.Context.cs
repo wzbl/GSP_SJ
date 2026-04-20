@@ -80,11 +80,11 @@ namespace SqlHelper
         public virtual DbSet<Sys_RolePower> Sys_RolePower { get; set; }
         public virtual DbSet<Sys_User> Sys_User { get; set; }
         public virtual DbSet<Sys_UserLog> Sys_UserLog { get; set; }
-        public virtual DbSet<View_Eng_Program> View_Eng_Program { get; set; }
+        public virtual DbSet<View_Bas_CompensationValue> View_Bas_CompensationValue { get; set; }
         public virtual DbSet<View_Bas_Material> View_Bas_Material { get; set; }
         public virtual DbSet<View_ComponentSize> View_ComponentSize { get; set; }
-        public virtual DbSet<View_Bas_CompensationValue> View_Bas_CompensationValue { get; set; }
         public virtual DbSet<View_Eng_MeterOptionItem> View_Eng_MeterOptionItem { get; set; }
+        public virtual DbSet<View_Eng_Program> View_Eng_Program { get; set; }
     
         [DbFunction("FAI_NewEntities", "GetPoints")]
         public virtual IQueryable<GetPoints_Result> GetPoints(string bgId)
@@ -491,6 +491,309 @@ namespace SqlHelper
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("P_Eng_XYDataQuantityCheck", xYCodeParameter, retVal, retMsg);
         }
     
+        public virtual int P_Insert_Eng_Bom(string productCode, Nullable<int> row, string materialCode, string materialName, Nullable<int> quantity, string position, string allowSubstitute, string lcrType, Nullable<decimal> lcrStandardValue, string lcrUnitCode, Nullable<decimal> lcrMaxValue, Nullable<decimal> lcrMinValue, string size, string remarks, string creator, string modifier, Nullable<decimal> maxTolerance, Nullable<decimal> minTolerance, string status, string screenPrinting, string toleranceType, string componentPackaging)
+        {
+            var productCodeParameter = productCode != null ?
+                new ObjectParameter("ProductCode", productCode) :
+                new ObjectParameter("ProductCode", typeof(string));
+    
+            var rowParameter = row.HasValue ?
+                new ObjectParameter("Row", row) :
+                new ObjectParameter("Row", typeof(int));
+    
+            var materialCodeParameter = materialCode != null ?
+                new ObjectParameter("MaterialCode", materialCode) :
+                new ObjectParameter("MaterialCode", typeof(string));
+    
+            var materialNameParameter = materialName != null ?
+                new ObjectParameter("MaterialName", materialName) :
+                new ObjectParameter("MaterialName", typeof(string));
+    
+            var quantityParameter = quantity.HasValue ?
+                new ObjectParameter("Quantity", quantity) :
+                new ObjectParameter("Quantity", typeof(int));
+    
+            var positionParameter = position != null ?
+                new ObjectParameter("Position", position) :
+                new ObjectParameter("Position", typeof(string));
+    
+            var allowSubstituteParameter = allowSubstitute != null ?
+                new ObjectParameter("AllowSubstitute", allowSubstitute) :
+                new ObjectParameter("AllowSubstitute", typeof(string));
+    
+            var lcrTypeParameter = lcrType != null ?
+                new ObjectParameter("LcrType", lcrType) :
+                new ObjectParameter("LcrType", typeof(string));
+    
+            var lcrStandardValueParameter = lcrStandardValue.HasValue ?
+                new ObjectParameter("LcrStandardValue", lcrStandardValue) :
+                new ObjectParameter("LcrStandardValue", typeof(decimal));
+    
+            var lcrUnitCodeParameter = lcrUnitCode != null ?
+                new ObjectParameter("LcrUnitCode", lcrUnitCode) :
+                new ObjectParameter("LcrUnitCode", typeof(string));
+    
+            var lcrMaxValueParameter = lcrMaxValue.HasValue ?
+                new ObjectParameter("LcrMaxValue", lcrMaxValue) :
+                new ObjectParameter("LcrMaxValue", typeof(decimal));
+    
+            var lcrMinValueParameter = lcrMinValue.HasValue ?
+                new ObjectParameter("LcrMinValue", lcrMinValue) :
+                new ObjectParameter("LcrMinValue", typeof(decimal));
+    
+            var sizeParameter = size != null ?
+                new ObjectParameter("Size", size) :
+                new ObjectParameter("Size", typeof(string));
+    
+            var remarksParameter = remarks != null ?
+                new ObjectParameter("Remarks", remarks) :
+                new ObjectParameter("Remarks", typeof(string));
+    
+            var creatorParameter = creator != null ?
+                new ObjectParameter("Creator", creator) :
+                new ObjectParameter("Creator", typeof(string));
+    
+            var modifierParameter = modifier != null ?
+                new ObjectParameter("Modifier", modifier) :
+                new ObjectParameter("Modifier", typeof(string));
+    
+            var maxToleranceParameter = maxTolerance.HasValue ?
+                new ObjectParameter("MaxTolerance", maxTolerance) :
+                new ObjectParameter("MaxTolerance", typeof(decimal));
+    
+            var minToleranceParameter = minTolerance.HasValue ?
+                new ObjectParameter("MinTolerance", minTolerance) :
+                new ObjectParameter("MinTolerance", typeof(decimal));
+    
+            var statusParameter = status != null ?
+                new ObjectParameter("Status", status) :
+                new ObjectParameter("Status", typeof(string));
+    
+            var screenPrintingParameter = screenPrinting != null ?
+                new ObjectParameter("ScreenPrinting", screenPrinting) :
+                new ObjectParameter("ScreenPrinting", typeof(string));
+    
+            var toleranceTypeParameter = toleranceType != null ?
+                new ObjectParameter("ToleranceType", toleranceType) :
+                new ObjectParameter("ToleranceType", typeof(string));
+    
+            var componentPackagingParameter = componentPackaging != null ?
+                new ObjectParameter("ComponentPackaging", componentPackaging) :
+                new ObjectParameter("ComponentPackaging", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("P_Insert_Eng_Bom", productCodeParameter, rowParameter, materialCodeParameter, materialNameParameter, quantityParameter, positionParameter, allowSubstituteParameter, lcrTypeParameter, lcrStandardValueParameter, lcrUnitCodeParameter, lcrMaxValueParameter, lcrMinValueParameter, sizeParameter, remarksParameter, creatorParameter, modifierParameter, maxToleranceParameter, minToleranceParameter, statusParameter, screenPrintingParameter, toleranceTypeParameter, componentPackagingParameter);
+        }
+    
+        public virtual int P_Insert_Eng_Program(string productCode, string productName, string customerCode, string boardSide, string ruleCode, string status, string remarks, string creator, string modifier)
+        {
+            var productCodeParameter = productCode != null ?
+                new ObjectParameter("ProductCode", productCode) :
+                new ObjectParameter("ProductCode", typeof(string));
+    
+            var productNameParameter = productName != null ?
+                new ObjectParameter("ProductName", productName) :
+                new ObjectParameter("ProductName", typeof(string));
+    
+            var customerCodeParameter = customerCode != null ?
+                new ObjectParameter("CustomerCode", customerCode) :
+                new ObjectParameter("CustomerCode", typeof(string));
+    
+            var boardSideParameter = boardSide != null ?
+                new ObjectParameter("BoardSide", boardSide) :
+                new ObjectParameter("BoardSide", typeof(string));
+    
+            var ruleCodeParameter = ruleCode != null ?
+                new ObjectParameter("RuleCode", ruleCode) :
+                new ObjectParameter("RuleCode", typeof(string));
+    
+            var statusParameter = status != null ?
+                new ObjectParameter("Status", status) :
+                new ObjectParameter("Status", typeof(string));
+    
+            var remarksParameter = remarks != null ?
+                new ObjectParameter("Remarks", remarks) :
+                new ObjectParameter("Remarks", typeof(string));
+    
+            var creatorParameter = creator != null ?
+                new ObjectParameter("Creator", creator) :
+                new ObjectParameter("Creator", typeof(string));
+    
+            var modifierParameter = modifier != null ?
+                new ObjectParameter("Modifier", modifier) :
+                new ObjectParameter("Modifier", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("P_Insert_Eng_Program", productCodeParameter, productNameParameter, customerCodeParameter, boardSideParameter, ruleCodeParameter, statusParameter, remarksParameter, creatorParameter, modifierParameter);
+        }
+    
+        public virtual int P_Insert_Eng_XYData(string productCode, string position, Nullable<int> boardId, string boardSide, string isSMD, string materialCode, string materialName, Nullable<decimal> x, Nullable<decimal> y, string unit, Nullable<decimal> angle, Nullable<decimal> rX, Nullable<decimal> rY, string remarks, string creator, string modifier, string standardCode, Nullable<decimal> standardRotation, string size, string lcrType, string isDefined, Nullable<decimal> oX, Nullable<decimal> oY, Nullable<decimal> oAngle, Nullable<int> row, Nullable<decimal> lX, Nullable<decimal> lY, string isMerge, byte[] standardImage, Nullable<int> sequence, Nullable<decimal> furnaceLcrStandardValue, string furnaceLcrUnitCode, Nullable<decimal> furnaceLcrMaxValue, Nullable<decimal> furnaceLcrMinValue, Nullable<decimal> lXCompensation, Nullable<decimal> lYCompensation, string componentPackaging, Nullable<decimal> sX, Nullable<decimal> sY, Nullable<decimal> adjustedAngle, Nullable<int> groups)
+        {
+            var productCodeParameter = productCode != null ?
+                new ObjectParameter("ProductCode", productCode) :
+                new ObjectParameter("ProductCode", typeof(string));
+    
+            var positionParameter = position != null ?
+                new ObjectParameter("Position", position) :
+                new ObjectParameter("Position", typeof(string));
+    
+            var boardIdParameter = boardId.HasValue ?
+                new ObjectParameter("BoardId", boardId) :
+                new ObjectParameter("BoardId", typeof(int));
+    
+            var boardSideParameter = boardSide != null ?
+                new ObjectParameter("BoardSide", boardSide) :
+                new ObjectParameter("BoardSide", typeof(string));
+    
+            var isSMDParameter = isSMD != null ?
+                new ObjectParameter("IsSMD", isSMD) :
+                new ObjectParameter("IsSMD", typeof(string));
+    
+            var materialCodeParameter = materialCode != null ?
+                new ObjectParameter("MaterialCode", materialCode) :
+                new ObjectParameter("MaterialCode", typeof(string));
+    
+            var materialNameParameter = materialName != null ?
+                new ObjectParameter("MaterialName", materialName) :
+                new ObjectParameter("MaterialName", typeof(string));
+    
+            var xParameter = x.HasValue ?
+                new ObjectParameter("X", x) :
+                new ObjectParameter("X", typeof(decimal));
+    
+            var yParameter = y.HasValue ?
+                new ObjectParameter("Y", y) :
+                new ObjectParameter("Y", typeof(decimal));
+    
+            var unitParameter = unit != null ?
+                new ObjectParameter("Unit", unit) :
+                new ObjectParameter("Unit", typeof(string));
+    
+            var angleParameter = angle.HasValue ?
+                new ObjectParameter("Angle", angle) :
+                new ObjectParameter("Angle", typeof(decimal));
+    
+            var rXParameter = rX.HasValue ?
+                new ObjectParameter("RX", rX) :
+                new ObjectParameter("RX", typeof(decimal));
+    
+            var rYParameter = rY.HasValue ?
+                new ObjectParameter("RY", rY) :
+                new ObjectParameter("RY", typeof(decimal));
+    
+            var remarksParameter = remarks != null ?
+                new ObjectParameter("Remarks", remarks) :
+                new ObjectParameter("Remarks", typeof(string));
+    
+            var creatorParameter = creator != null ?
+                new ObjectParameter("Creator", creator) :
+                new ObjectParameter("Creator", typeof(string));
+    
+            var modifierParameter = modifier != null ?
+                new ObjectParameter("Modifier", modifier) :
+                new ObjectParameter("Modifier", typeof(string));
+    
+            var standardCodeParameter = standardCode != null ?
+                new ObjectParameter("StandardCode", standardCode) :
+                new ObjectParameter("StandardCode", typeof(string));
+    
+            var standardRotationParameter = standardRotation.HasValue ?
+                new ObjectParameter("StandardRotation", standardRotation) :
+                new ObjectParameter("StandardRotation", typeof(decimal));
+    
+            var sizeParameter = size != null ?
+                new ObjectParameter("Size", size) :
+                new ObjectParameter("Size", typeof(string));
+    
+            var lcrTypeParameter = lcrType != null ?
+                new ObjectParameter("LcrType", lcrType) :
+                new ObjectParameter("LcrType", typeof(string));
+    
+            var isDefinedParameter = isDefined != null ?
+                new ObjectParameter("IsDefined", isDefined) :
+                new ObjectParameter("IsDefined", typeof(string));
+    
+            var oXParameter = oX.HasValue ?
+                new ObjectParameter("OX", oX) :
+                new ObjectParameter("OX", typeof(decimal));
+    
+            var oYParameter = oY.HasValue ?
+                new ObjectParameter("OY", oY) :
+                new ObjectParameter("OY", typeof(decimal));
+    
+            var oAngleParameter = oAngle.HasValue ?
+                new ObjectParameter("OAngle", oAngle) :
+                new ObjectParameter("OAngle", typeof(decimal));
+    
+            var rowParameter = row.HasValue ?
+                new ObjectParameter("Row", row) :
+                new ObjectParameter("Row", typeof(int));
+    
+            var lXParameter = lX.HasValue ?
+                new ObjectParameter("LX", lX) :
+                new ObjectParameter("LX", typeof(decimal));
+    
+            var lYParameter = lY.HasValue ?
+                new ObjectParameter("LY", lY) :
+                new ObjectParameter("LY", typeof(decimal));
+    
+            var isMergeParameter = isMerge != null ?
+                new ObjectParameter("IsMerge", isMerge) :
+                new ObjectParameter("IsMerge", typeof(string));
+    
+            var standardImageParameter = standardImage != null ?
+                new ObjectParameter("StandardImage", standardImage) :
+                new ObjectParameter("StandardImage", typeof(byte[]));
+    
+            var sequenceParameter = sequence.HasValue ?
+                new ObjectParameter("Sequence", sequence) :
+                new ObjectParameter("Sequence", typeof(int));
+    
+            var furnaceLcrStandardValueParameter = furnaceLcrStandardValue.HasValue ?
+                new ObjectParameter("FurnaceLcrStandardValue", furnaceLcrStandardValue) :
+                new ObjectParameter("FurnaceLcrStandardValue", typeof(decimal));
+    
+            var furnaceLcrUnitCodeParameter = furnaceLcrUnitCode != null ?
+                new ObjectParameter("FurnaceLcrUnitCode", furnaceLcrUnitCode) :
+                new ObjectParameter("FurnaceLcrUnitCode", typeof(string));
+    
+            var furnaceLcrMaxValueParameter = furnaceLcrMaxValue.HasValue ?
+                new ObjectParameter("FurnaceLcrMaxValue", furnaceLcrMaxValue) :
+                new ObjectParameter("FurnaceLcrMaxValue", typeof(decimal));
+    
+            var furnaceLcrMinValueParameter = furnaceLcrMinValue.HasValue ?
+                new ObjectParameter("FurnaceLcrMinValue", furnaceLcrMinValue) :
+                new ObjectParameter("FurnaceLcrMinValue", typeof(decimal));
+    
+            var lXCompensationParameter = lXCompensation.HasValue ?
+                new ObjectParameter("LXCompensation", lXCompensation) :
+                new ObjectParameter("LXCompensation", typeof(decimal));
+    
+            var lYCompensationParameter = lYCompensation.HasValue ?
+                new ObjectParameter("LYCompensation", lYCompensation) :
+                new ObjectParameter("LYCompensation", typeof(decimal));
+    
+            var componentPackagingParameter = componentPackaging != null ?
+                new ObjectParameter("ComponentPackaging", componentPackaging) :
+                new ObjectParameter("ComponentPackaging", typeof(string));
+    
+            var sXParameter = sX.HasValue ?
+                new ObjectParameter("SX", sX) :
+                new ObjectParameter("SX", typeof(decimal));
+    
+            var sYParameter = sY.HasValue ?
+                new ObjectParameter("SY", sY) :
+                new ObjectParameter("SY", typeof(decimal));
+    
+            var adjustedAngleParameter = adjustedAngle.HasValue ?
+                new ObjectParameter("AdjustedAngle", adjustedAngle) :
+                new ObjectParameter("AdjustedAngle", typeof(decimal));
+    
+            var groupsParameter = groups.HasValue ?
+                new ObjectParameter("Groups", groups) :
+                new ObjectParameter("Groups", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("P_Insert_Eng_XYData", productCodeParameter, positionParameter, boardIdParameter, boardSideParameter, isSMDParameter, materialCodeParameter, materialNameParameter, xParameter, yParameter, unitParameter, angleParameter, rXParameter, rYParameter, remarksParameter, creatorParameter, modifierParameter, standardCodeParameter, standardRotationParameter, sizeParameter, lcrTypeParameter, isDefinedParameter, oXParameter, oYParameter, oAngleParameter, rowParameter, lXParameter, lYParameter, isMergeParameter, standardImageParameter, sequenceParameter, furnaceLcrStandardValueParameter, furnaceLcrUnitCodeParameter, furnaceLcrMaxValueParameter, furnaceLcrMinValueParameter, lXCompensationParameter, lYCompensationParameter, componentPackagingParameter, sXParameter, sYParameter, adjustedAngleParameter, groupsParameter);
+        }
+    
         public virtual int P_Man_DeleteBoardMergeData(string productCode, string reportCode, string side, ObjectParameter retVal, ObjectParameter retMsg)
         {
             var productCodeParameter = productCode != null ?
@@ -692,6 +995,29 @@ namespace SqlHelper
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("P_Man_SynCoordinate", sourceFBCCodeParameter, targetFBCCodeParameter, operatorParameter, retVal, retMsg);
         }
     
+        public virtual ObjectResult<P_Search_Eng_Bom_Result> P_Search_Eng_Bom(string productCode)
+        {
+            var productCodeParameter = productCode != null ?
+                new ObjectParameter("ProductCode", productCode) :
+                new ObjectParameter("ProductCode", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<P_Search_Eng_Bom_Result>("P_Search_Eng_Bom", productCodeParameter);
+        }
+    
+        public virtual ObjectResult<P_Search_Eng_Program_Result> P_Search_Eng_Program()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<P_Search_Eng_Program_Result>("P_Search_Eng_Program");
+        }
+    
+        public virtual ObjectResult<P_Search_Eng_XYData_Result> P_Search_Eng_XYData(string productCode)
+        {
+            var productCodeParameter = productCode != null ?
+                new ObjectParameter("ProductCode", productCode) :
+                new ObjectParameter("ProductCode", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<P_Search_Eng_XYData_Result>("P_Search_Eng_XYData", productCodeParameter);
+        }
+    
         public virtual int P_Sys_ChangePassword(string userCode, string passWord, string newPassWord, ObjectParameter retVal, ObjectParameter retMsg)
         {
             var userCodeParameter = userCode != null ?
@@ -745,61 +1071,32 @@ namespace SqlHelper
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("P_Sys_GetHelpCode", helpCode);
         }
     
-        public virtual int P_Insert_Eng_Program(string productCode, string productName, string customerCode, string boardSide, string ruleCode, string status, string remarks, string creator, string modifier)
+        public virtual int P_Update_Eng_ProgramOption(string productCode, string boardSide, byte[] picture)
         {
             var productCodeParameter = productCode != null ?
                 new ObjectParameter("ProductCode", productCode) :
                 new ObjectParameter("ProductCode", typeof(string));
-    
-            var productNameParameter = productName != null ?
-                new ObjectParameter("ProductName", productName) :
-                new ObjectParameter("ProductName", typeof(string));
-    
-            var customerCodeParameter = customerCode != null ?
-                new ObjectParameter("CustomerCode", customerCode) :
-                new ObjectParameter("CustomerCode", typeof(string));
     
             var boardSideParameter = boardSide != null ?
                 new ObjectParameter("BoardSide", boardSide) :
                 new ObjectParameter("BoardSide", typeof(string));
     
-            var ruleCodeParameter = ruleCode != null ?
-                new ObjectParameter("RuleCode", ruleCode) :
-                new ObjectParameter("RuleCode", typeof(string));
+            var pictureParameter = picture != null ?
+                new ObjectParameter("Picture", picture) :
+                new ObjectParameter("Picture", typeof(byte[]));
     
-            var statusParameter = status != null ?
-                new ObjectParameter("Status", status) :
-                new ObjectParameter("Status", typeof(string));
-    
-            var remarksParameter = remarks != null ?
-                new ObjectParameter("Remarks", remarks) :
-                new ObjectParameter("Remarks", typeof(string));
-    
-            var creatorParameter = creator != null ?
-                new ObjectParameter("Creator", creator) :
-                new ObjectParameter("Creator", typeof(string));
-    
-            var modifierParameter = modifier != null ?
-                new ObjectParameter("Modifier", modifier) :
-                new ObjectParameter("Modifier", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("P_Insert_Eng_Program", productCodeParameter, productNameParameter, customerCodeParameter, boardSideParameter, ruleCodeParameter, statusParameter, remarksParameter, creatorParameter, modifierParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("P_Update_Eng_ProgramOption", productCodeParameter, boardSideParameter, pictureParameter);
         }
     
-        public virtual ObjectResult<P_Search_Eng_Program_Result> P_Search_Eng_Program()
+        public virtual int P_Bas_Material(Nullable<int> type, string customerCode, string materialCode, string materialName, string lcrType, Nullable<decimal> lcrStandardValue, string lcrUnitCode, Nullable<decimal> lcrMaxValue, Nullable<decimal> lcrMinValue, string size, Nullable<decimal> compensateValue, byte[] picture, string remarks, string creator, Nullable<System.DateTime> creationDate, string modifier, Nullable<System.DateTime> modificationDate, string screenPrinting, Nullable<decimal> maxTolerance, Nullable<decimal> minTolerance, string toleranceType, string componentPackaging, ObjectParameter msg)
         {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<P_Search_Eng_Program_Result>("P_Search_Eng_Program");
-        }
+            var typeParameter = type.HasValue ?
+                new ObjectParameter("type", type) :
+                new ObjectParameter("type", typeof(int));
     
-        public virtual int P_Insert_Eng_Bom(string productCode, Nullable<int> row, string materialCode, string materialName, Nullable<int> quantity, string position, string allowSubstitute, string lcrType, Nullable<decimal> lcrStandardValue, string lcrUnitCode, Nullable<decimal> lcrMaxValue, Nullable<decimal> lcrMinValue, string size, string remarks, string creator, string modifier, Nullable<decimal> maxTolerance, Nullable<decimal> minTolerance, string status, string screenPrinting, string toleranceType, string componentPackaging)
-        {
-            var productCodeParameter = productCode != null ?
-                new ObjectParameter("ProductCode", productCode) :
-                new ObjectParameter("ProductCode", typeof(string));
-    
-            var rowParameter = row.HasValue ?
-                new ObjectParameter("Row", row) :
-                new ObjectParameter("Row", typeof(int));
+            var customerCodeParameter = customerCode != null ?
+                new ObjectParameter("CustomerCode", customerCode) :
+                new ObjectParameter("CustomerCode", typeof(string));
     
             var materialCodeParameter = materialCode != null ?
                 new ObjectParameter("MaterialCode", materialCode) :
@@ -808,18 +1105,6 @@ namespace SqlHelper
             var materialNameParameter = materialName != null ?
                 new ObjectParameter("MaterialName", materialName) :
                 new ObjectParameter("MaterialName", typeof(string));
-    
-            var quantityParameter = quantity.HasValue ?
-                new ObjectParameter("Quantity", quantity) :
-                new ObjectParameter("Quantity", typeof(int));
-    
-            var positionParameter = position != null ?
-                new ObjectParameter("Position", position) :
-                new ObjectParameter("Position", typeof(string));
-    
-            var allowSubstituteParameter = allowSubstitute != null ?
-                new ObjectParameter("AllowSubstitute", allowSubstitute) :
-                new ObjectParameter("AllowSubstitute", typeof(string));
     
             var lcrTypeParameter = lcrType != null ?
                 new ObjectParameter("LcrType", lcrType) :
@@ -845,6 +1130,14 @@ namespace SqlHelper
                 new ObjectParameter("Size", size) :
                 new ObjectParameter("Size", typeof(string));
     
+            var compensateValueParameter = compensateValue.HasValue ?
+                new ObjectParameter("CompensateValue", compensateValue) :
+                new ObjectParameter("CompensateValue", typeof(decimal));
+    
+            var pictureParameter = picture != null ?
+                new ObjectParameter("Picture", picture) :
+                new ObjectParameter("Picture", typeof(byte[]));
+    
             var remarksParameter = remarks != null ?
                 new ObjectParameter("Remarks", remarks) :
                 new ObjectParameter("Remarks", typeof(string));
@@ -853,9 +1146,21 @@ namespace SqlHelper
                 new ObjectParameter("Creator", creator) :
                 new ObjectParameter("Creator", typeof(string));
     
+            var creationDateParameter = creationDate.HasValue ?
+                new ObjectParameter("CreationDate", creationDate) :
+                new ObjectParameter("CreationDate", typeof(System.DateTime));
+    
             var modifierParameter = modifier != null ?
                 new ObjectParameter("Modifier", modifier) :
                 new ObjectParameter("Modifier", typeof(string));
+    
+            var modificationDateParameter = modificationDate.HasValue ?
+                new ObjectParameter("ModificationDate", modificationDate) :
+                new ObjectParameter("ModificationDate", typeof(System.DateTime));
+    
+            var screenPrintingParameter = screenPrinting != null ?
+                new ObjectParameter("ScreenPrinting", screenPrinting) :
+                new ObjectParameter("ScreenPrinting", typeof(string));
     
             var maxToleranceParameter = maxTolerance.HasValue ?
                 new ObjectParameter("MaxTolerance", maxTolerance) :
@@ -865,14 +1170,6 @@ namespace SqlHelper
                 new ObjectParameter("MinTolerance", minTolerance) :
                 new ObjectParameter("MinTolerance", typeof(decimal));
     
-            var statusParameter = status != null ?
-                new ObjectParameter("Status", status) :
-                new ObjectParameter("Status", typeof(string));
-    
-            var screenPrintingParameter = screenPrinting != null ?
-                new ObjectParameter("ScreenPrinting", screenPrinting) :
-                new ObjectParameter("ScreenPrinting", typeof(string));
-    
             var toleranceTypeParameter = toleranceType != null ?
                 new ObjectParameter("ToleranceType", toleranceType) :
                 new ObjectParameter("ToleranceType", typeof(string));
@@ -881,194 +1178,7 @@ namespace SqlHelper
                 new ObjectParameter("ComponentPackaging", componentPackaging) :
                 new ObjectParameter("ComponentPackaging", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("P_Insert_Eng_Bom", productCodeParameter, rowParameter, materialCodeParameter, materialNameParameter, quantityParameter, positionParameter, allowSubstituteParameter, lcrTypeParameter, lcrStandardValueParameter, lcrUnitCodeParameter, lcrMaxValueParameter, lcrMinValueParameter, sizeParameter, remarksParameter, creatorParameter, modifierParameter, maxToleranceParameter, minToleranceParameter, statusParameter, screenPrintingParameter, toleranceTypeParameter, componentPackagingParameter);
-        }
-    
-        public virtual int P_Insert_Eng_XYData(string productCode, string position, Nullable<int> boardId, string boardSide, string isSMD, string materialCode, string materialName, Nullable<decimal> x, Nullable<decimal> y, string unit, Nullable<decimal> angle, Nullable<decimal> rX, Nullable<decimal> rY, string remarks, string creator, string modifier, string standardCode, Nullable<decimal> standardRotation, string size, string lcrType, string isDefined, Nullable<decimal> oX, Nullable<decimal> oY, Nullable<decimal> oAngle, Nullable<int> row, Nullable<decimal> lX, Nullable<decimal> lY, string isMerge, byte[] standardImage, Nullable<int> sequence, Nullable<decimal> furnaceLcrStandardValue, string furnaceLcrUnitCode, Nullable<decimal> furnaceLcrMaxValue, Nullable<decimal> furnaceLcrMinValue, Nullable<decimal> lXCompensation, Nullable<decimal> lYCompensation, string componentPackaging, Nullable<decimal> sX, Nullable<decimal> sY, Nullable<decimal> adjustedAngle, Nullable<int> groups)
-        {
-            var productCodeParameter = productCode != null ?
-                new ObjectParameter("ProductCode", productCode) :
-                new ObjectParameter("ProductCode", typeof(string));
-    
-            var positionParameter = position != null ?
-                new ObjectParameter("Position", position) :
-                new ObjectParameter("Position", typeof(string));
-    
-            var boardIdParameter = boardId.HasValue ?
-                new ObjectParameter("BoardId", boardId) :
-                new ObjectParameter("BoardId", typeof(int));
-    
-            var boardSideParameter = boardSide != null ?
-                new ObjectParameter("BoardSide", boardSide) :
-                new ObjectParameter("BoardSide", typeof(string));
-    
-            var isSMDParameter = isSMD != null ?
-                new ObjectParameter("IsSMD", isSMD) :
-                new ObjectParameter("IsSMD", typeof(string));
-    
-            var materialCodeParameter = materialCode != null ?
-                new ObjectParameter("MaterialCode", materialCode) :
-                new ObjectParameter("MaterialCode", typeof(string));
-    
-            var materialNameParameter = materialName != null ?
-                new ObjectParameter("MaterialName", materialName) :
-                new ObjectParameter("MaterialName", typeof(string));
-    
-            var xParameter = x.HasValue ?
-                new ObjectParameter("X", x) :
-                new ObjectParameter("X", typeof(decimal));
-    
-            var yParameter = y.HasValue ?
-                new ObjectParameter("Y", y) :
-                new ObjectParameter("Y", typeof(decimal));
-    
-            var unitParameter = unit != null ?
-                new ObjectParameter("Unit", unit) :
-                new ObjectParameter("Unit", typeof(string));
-    
-            var angleParameter = angle.HasValue ?
-                new ObjectParameter("Angle", angle) :
-                new ObjectParameter("Angle", typeof(decimal));
-    
-            var rXParameter = rX.HasValue ?
-                new ObjectParameter("RX", rX) :
-                new ObjectParameter("RX", typeof(decimal));
-    
-            var rYParameter = rY.HasValue ?
-                new ObjectParameter("RY", rY) :
-                new ObjectParameter("RY", typeof(decimal));
-    
-            var remarksParameter = remarks != null ?
-                new ObjectParameter("Remarks", remarks) :
-                new ObjectParameter("Remarks", typeof(string));
-    
-            var creatorParameter = creator != null ?
-                new ObjectParameter("Creator", creator) :
-                new ObjectParameter("Creator", typeof(string));
-    
-            var modifierParameter = modifier != null ?
-                new ObjectParameter("Modifier", modifier) :
-                new ObjectParameter("Modifier", typeof(string));
-    
-            var standardCodeParameter = standardCode != null ?
-                new ObjectParameter("StandardCode", standardCode) :
-                new ObjectParameter("StandardCode", typeof(string));
-    
-            var standardRotationParameter = standardRotation.HasValue ?
-                new ObjectParameter("StandardRotation", standardRotation) :
-                new ObjectParameter("StandardRotation", typeof(decimal));
-    
-            var sizeParameter = size != null ?
-                new ObjectParameter("Size", size) :
-                new ObjectParameter("Size", typeof(string));
-    
-            var lcrTypeParameter = lcrType != null ?
-                new ObjectParameter("LcrType", lcrType) :
-                new ObjectParameter("LcrType", typeof(string));
-    
-            var isDefinedParameter = isDefined != null ?
-                new ObjectParameter("IsDefined", isDefined) :
-                new ObjectParameter("IsDefined", typeof(string));
-    
-            var oXParameter = oX.HasValue ?
-                new ObjectParameter("OX", oX) :
-                new ObjectParameter("OX", typeof(decimal));
-    
-            var oYParameter = oY.HasValue ?
-                new ObjectParameter("OY", oY) :
-                new ObjectParameter("OY", typeof(decimal));
-    
-            var oAngleParameter = oAngle.HasValue ?
-                new ObjectParameter("OAngle", oAngle) :
-                new ObjectParameter("OAngle", typeof(decimal));
-    
-            var rowParameter = row.HasValue ?
-                new ObjectParameter("Row", row) :
-                new ObjectParameter("Row", typeof(int));
-    
-            var lXParameter = lX.HasValue ?
-                new ObjectParameter("LX", lX) :
-                new ObjectParameter("LX", typeof(decimal));
-    
-            var lYParameter = lY.HasValue ?
-                new ObjectParameter("LY", lY) :
-                new ObjectParameter("LY", typeof(decimal));
-    
-            var isMergeParameter = isMerge != null ?
-                new ObjectParameter("IsMerge", isMerge) :
-                new ObjectParameter("IsMerge", typeof(string));
-    
-            var standardImageParameter = standardImage != null ?
-                new ObjectParameter("StandardImage", standardImage) :
-                new ObjectParameter("StandardImage", typeof(byte[]));
-    
-            var sequenceParameter = sequence.HasValue ?
-                new ObjectParameter("Sequence", sequence) :
-                new ObjectParameter("Sequence", typeof(int));
-    
-            var furnaceLcrStandardValueParameter = furnaceLcrStandardValue.HasValue ?
-                new ObjectParameter("FurnaceLcrStandardValue", furnaceLcrStandardValue) :
-                new ObjectParameter("FurnaceLcrStandardValue", typeof(decimal));
-    
-            var furnaceLcrUnitCodeParameter = furnaceLcrUnitCode != null ?
-                new ObjectParameter("FurnaceLcrUnitCode", furnaceLcrUnitCode) :
-                new ObjectParameter("FurnaceLcrUnitCode", typeof(string));
-    
-            var furnaceLcrMaxValueParameter = furnaceLcrMaxValue.HasValue ?
-                new ObjectParameter("FurnaceLcrMaxValue", furnaceLcrMaxValue) :
-                new ObjectParameter("FurnaceLcrMaxValue", typeof(decimal));
-    
-            var furnaceLcrMinValueParameter = furnaceLcrMinValue.HasValue ?
-                new ObjectParameter("FurnaceLcrMinValue", furnaceLcrMinValue) :
-                new ObjectParameter("FurnaceLcrMinValue", typeof(decimal));
-    
-            var lXCompensationParameter = lXCompensation.HasValue ?
-                new ObjectParameter("LXCompensation", lXCompensation) :
-                new ObjectParameter("LXCompensation", typeof(decimal));
-    
-            var lYCompensationParameter = lYCompensation.HasValue ?
-                new ObjectParameter("LYCompensation", lYCompensation) :
-                new ObjectParameter("LYCompensation", typeof(decimal));
-    
-            var componentPackagingParameter = componentPackaging != null ?
-                new ObjectParameter("ComponentPackaging", componentPackaging) :
-                new ObjectParameter("ComponentPackaging", typeof(string));
-    
-            var sXParameter = sX.HasValue ?
-                new ObjectParameter("SX", sX) :
-                new ObjectParameter("SX", typeof(decimal));
-    
-            var sYParameter = sY.HasValue ?
-                new ObjectParameter("SY", sY) :
-                new ObjectParameter("SY", typeof(decimal));
-    
-            var adjustedAngleParameter = adjustedAngle.HasValue ?
-                new ObjectParameter("AdjustedAngle", adjustedAngle) :
-                new ObjectParameter("AdjustedAngle", typeof(decimal));
-    
-            var groupsParameter = groups.HasValue ?
-                new ObjectParameter("Groups", groups) :
-                new ObjectParameter("Groups", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("P_Insert_Eng_XYData", productCodeParameter, positionParameter, boardIdParameter, boardSideParameter, isSMDParameter, materialCodeParameter, materialNameParameter, xParameter, yParameter, unitParameter, angleParameter, rXParameter, rYParameter, remarksParameter, creatorParameter, modifierParameter, standardCodeParameter, standardRotationParameter, sizeParameter, lcrTypeParameter, isDefinedParameter, oXParameter, oYParameter, oAngleParameter, rowParameter, lXParameter, lYParameter, isMergeParameter, standardImageParameter, sequenceParameter, furnaceLcrStandardValueParameter, furnaceLcrUnitCodeParameter, furnaceLcrMaxValueParameter, furnaceLcrMinValueParameter, lXCompensationParameter, lYCompensationParameter, componentPackagingParameter, sXParameter, sYParameter, adjustedAngleParameter, groupsParameter);
-        }
-    
-        public virtual ObjectResult<P_Search_Eng_Bom_Result> P_Search_Eng_Bom(string productCode)
-        {
-            var productCodeParameter = productCode != null ?
-                new ObjectParameter("ProductCode", productCode) :
-                new ObjectParameter("ProductCode", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<P_Search_Eng_Bom_Result>("P_Search_Eng_Bom", productCodeParameter);
-        }
-    
-        public virtual ObjectResult<P_Search_Eng_XYData_Result> P_Search_Eng_XYData(string productCode)
-        {
-            var productCodeParameter = productCode != null ?
-                new ObjectParameter("ProductCode", productCode) :
-                new ObjectParameter("ProductCode", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<P_Search_Eng_XYData_Result>("P_Search_Eng_XYData", productCodeParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("P_Bas_Material", typeParameter, customerCodeParameter, materialCodeParameter, materialNameParameter, lcrTypeParameter, lcrStandardValueParameter, lcrUnitCodeParameter, lcrMaxValueParameter, lcrMinValueParameter, sizeParameter, compensateValueParameter, pictureParameter, remarksParameter, creatorParameter, creationDateParameter, modifierParameter, modificationDateParameter, screenPrintingParameter, maxToleranceParameter, minToleranceParameter, toleranceTypeParameter, componentPackagingParameter, msg);
         }
     }
 }

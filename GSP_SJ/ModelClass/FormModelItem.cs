@@ -259,6 +259,5 @@ namespace GSP_SJ.ModelClass
             }
         }
 
-   
     }
 }

@@ -20,6 +20,18 @@ namespace GSP_SJ
             this.Load += UCAllReport_Load;
         }
 
+        /// <summary>
+        ///  避免窗体控件改变大小界面瞬间的叠影
+        /// </summary>
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                CreateParams cp = base.CreateParams;
+                cp.ExStyle |= 0x02000000; // Turn on WS_EX_COMPOSITED
+                return cp;
+            }
+        }
         private void UCAllReport_Load(object sender, EventArgs e)
         {
             //Search();

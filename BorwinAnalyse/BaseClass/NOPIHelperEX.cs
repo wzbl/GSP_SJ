@@ -89,6 +89,23 @@ namespace BorwinAnalyse.BaseClass
                                     if (isColumnName)
                                     {
                                         startRow = 1;//如果第一行是列名，则从第二行开始读取
+
+                                        IRow row = sheet.GetRow(0);
+                                        if (IsNullRow(row))
+                                        {
+                                            int CellNum = row.FirstCellNum;
+                                            if (CellNum < 0) { CellNum = 0; }
+                                            for (int j = CellNum; j < cellCount; j++)
+                                            {
+                                                if (row.GetCell(j) != null) //同理，没有数据的单元格都默认是null
+                                                {
+                                                    if (!dataTable.Columns.Contains(row.GetCell(j).ToString()))
+                                                    {
+                                                        dataTable.Columns.Add(row.GetCell(j).ToString());
+                                                    }
+                                                }
+                                            }
+                                        }else
                                         for (int i = firstRow.FirstCellNum; i < cellCount; ++i)
                                         {
                                             ICell cell = firstRow.GetCell(i);

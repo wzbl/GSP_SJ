@@ -812,6 +812,7 @@ namespace BorwinAnalyse.UCControls
                  analyseResult.MaxValue,
                  analyseResult.MinValue,
                  analyseResult.Size,
+                 "",
                 "Test",
                  gradeDecimal,
                  gradeDecimal,

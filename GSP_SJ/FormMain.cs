@@ -22,8 +22,8 @@ namespace GSP_SJ
         {
             InitializeComponent();
             this.Shown += FormMain_Shown;
+         
         }
-
         private void FormMain_Shown(object sender, EventArgs e)
         {
             //kryptonPage1.Controls.Add(new UCAllProgram());
@@ -32,10 +32,29 @@ namespace GSP_SJ
             {
                 if (x != null)
                 {
-                    kryptonNavigator1.Pages.Add(new KryptonPage(x.产品编号));
-                    UCProgram uCProgram = new UCProgram(x);
-                    kryptonNavigator1.Pages[kryptonNavigator1.Pages.Count - 1].Controls.Add(uCProgram);
-                    kryptonNavigator1.SelectedPage=kryptonNavigator1.Pages[kryptonNavigator1.Pages.Count - 1];
+
+                    string text = x.产品编号;
+
+                    if (kryptonNavigator1.Pages.Where(x1 => x1.Text == text).Count() == 0)
+                    {
+                        kryptonNavigator1.Pages.Add(new KryptonPage(x.产品编号));
+                        UCProgram uCProgram = new UCProgram(x);
+                        kryptonNavigator1.Pages[kryptonNavigator1.Pages.Count - 1].Controls.Add(uCProgram);
+                        kryptonNavigator1.SelectedPage = kryptonNavigator1.Pages[kryptonNavigator1.Pages.Count - 1];
+                    }
+                    else
+                    {
+                        //所有程序
+                        for (int i = 0; i < kryptonNavigator1.Pages.Count; i++)
+                        {
+                            if (kryptonNavigator1.Pages[i].Text == text)
+                            {
+                                kryptonNavigator1.SelectedPage = kryptonNavigator1.Pages[i];
+                                break;
+                            }
+                        }
+                    }
+                  
                 }
             };
         }

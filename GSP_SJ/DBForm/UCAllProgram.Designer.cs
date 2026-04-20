@@ -59,7 +59,7 @@
             this.tableLayoutPanel2.ColumnCount = 3;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 49.67742F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.32258F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 388F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 390F));
             this.tableLayoutPanel2.Controls.Add(this.btnRefresh, 2, 0);
             this.tableLayoutPanel2.Controls.Add(this.btnDel, 1, 0);
             this.tableLayoutPanel2.Controls.Add(this.btnAdd, 0, 0);
@@ -74,9 +74,9 @@
             // btnRefresh
             // 
             this.btnRefresh.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnRefresh.Location = new System.Drawing.Point(620, 3);
+            this.btnRefresh.Location = new System.Drawing.Point(618, 3);
             this.btnRefresh.Name = "btnRefresh";
-            this.btnRefresh.Size = new System.Drawing.Size(383, 52);
+            this.btnRefresh.Size = new System.Drawing.Size(385, 52);
             this.btnRefresh.TabIndex = 2;
             this.btnRefresh.Values.Image = global::GSP_SJ.Properties.Resources._186;
             this.btnRefresh.Values.Text = "刷新";
@@ -85,9 +85,9 @@
             // btnDel
             // 
             this.btnDel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnDel.Location = new System.Drawing.Point(310, 3);
+            this.btnDel.Location = new System.Drawing.Point(309, 3);
             this.btnDel.Name = "btnDel";
-            this.btnDel.Size = new System.Drawing.Size(304, 52);
+            this.btnDel.Size = new System.Drawing.Size(303, 52);
             this.btnDel.TabIndex = 1;
             this.btnDel.Values.Image = global::GSP_SJ.Properties.Resources._2;
             this.btnDel.Values.Text = "删除程序";
@@ -98,7 +98,7 @@
             this.btnAdd.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnAdd.Location = new System.Drawing.Point(3, 3);
             this.btnAdd.Name = "btnAdd";
-            this.btnAdd.Size = new System.Drawing.Size(301, 52);
+            this.btnAdd.Size = new System.Drawing.Size(300, 52);
             this.btnAdd.TabIndex = 0;
             this.btnAdd.Values.Image = global::GSP_SJ.Properties.Resources._160;
             this.btnAdd.Values.Text = "新增程序";
@@ -106,10 +106,15 @@
             // 
             // dgvProgram
             // 
+            this.dgvProgram.AllowUserToAddRows = false;
+            this.dgvProgram.AllowUserToDeleteRows = false;
+            this.dgvProgram.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvProgram.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvProgram.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvProgram.Location = new System.Drawing.Point(3, 67);
             this.dgvProgram.Name = "dgvProgram";
+            this.dgvProgram.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.Office2007Blue;
+            this.dgvProgram.RowHeadersVisible = false;
             this.dgvProgram.RowHeadersWidth = 53;
             this.dgvProgram.RowTemplate.Height = 28;
             this.dgvProgram.Size = new System.Drawing.Size(1006, 591);

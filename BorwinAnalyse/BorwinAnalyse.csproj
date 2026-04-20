@@ -187,6 +187,26 @@
     <Compile Include="Forms\FormBomSet.Designer.cs">
       <DependentUpon>FormBomSet.cs</DependentUpon>
     </Compile>
+    <Compile Include="ImportBom\AnaylseDataManager.cs" />
+    <Compile Include="ImportBom\BomDataControl.cs" />
+    <Compile Include="ImportBom\FormAddRule.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ImportBom\FormAddRule.Designer.cs">
+      <DependentUpon>FormAddRule.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ImportBom\FormBomTitle.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ImportBom\FormBomTitle.Designer.cs">
+      <DependentUpon>FormBomTitle.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ImportBom\FormCheckBom.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ImportBom\FormCheckBom.Designer.cs">
+      <DependentUpon>FormCheckBom.cs</DependentUpon>
+    </Compile>
     <Compile Include="ImportBom\FormImPortBom.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -203,12 +223,19 @@
     <Compile Include="BaseClass\NOPIHelperEX.cs" />
     <Compile Include="BaseClass\SQLConnect.cs" />
     <Compile Include="BaseClass\SqlLiteManager.cs" />
+    <Compile Include="ImportBom\FormXYTitle.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ImportBom\FormXYTitle.Designer.cs">
+      <DependentUpon>FormXYTitle.cs</DependentUpon>
+    </Compile>
     <Compile Include="ImportBom\UCTilleConfig.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="ImportBom\UCTilleConfig.Designer.cs">
       <DependentUpon>UCTilleConfig.cs</DependentUpon>
     </Compile>
+    <Compile Include="ImportBom\XYDataControl.cs" />
     <Compile Include="Model\BomDataModel.cs" />
     <Compile Include="Forms\AnalyseMainForm.cs">
       <SubType>Form</SubType>
@@ -256,8 +283,20 @@
     <EmbeddedResource Include="Forms\FormBomSet.resx">
       <DependentUpon>FormBomSet.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ImportBom\FormAddRule.resx">
+      <DependentUpon>FormAddRule.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ImportBom\FormBomTitle.resx">
+      <DependentUpon>FormBomTitle.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ImportBom\FormCheckBom.resx">
+      <DependentUpon>FormCheckBom.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ImportBom\FormImPortBom.resx">
       <DependentUpon>FormImPortBom.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ImportBom\FormXYTitle.resx">
+      <DependentUpon>FormXYTitle.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ImportBom\UCTilleConfig.resx">
       <DependentUpon>UCTilleConfig.cs</DependentUpon>
@@ -386,6 +425,21 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\002_19.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\160.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\168.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Open_24px.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\186.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Download_24px.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

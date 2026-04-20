@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -577,9 +578,115 @@ namespace SqlHelper
         }
 
 
+        /// <summary>
+        /// 压缩图像
+        /// </summary>
+        /// <param name="inputPath">源图像路径 (ImageA)</param>
+        /// <param name="outputPath">目标路径 (ImageB)</param>
+        /// <param name="quality">JPEG 压缩质量 (1-100, 数值越小文件越小但画质越差)</param>
+        /// <param name="maxWidth">最大宽度（等比例缩放，若为0则不缩放）</param>
+        /// <param name="maxHeight">最大高度（等比例缩放，若为0则不缩放）</param>
+        public static byte[] CompressImage(Image srcImage, string outputPath, int quality = 80, int maxWidth = 0, int maxHeight = 0)
+        {
+
+            // 1. 计算缩放后的尺寸
+            int newWidth = srcImage.Width;
+            int newHeight = srcImage.Height;
+            if (maxWidth > 0 && maxHeight > 0)
+            {
+                var ratioX = (double)maxWidth / srcImage.Width;
+                var ratioY = (double)maxHeight / srcImage.Height;
+                var ratio = Math.Min(ratioX, ratioY);
+                newWidth = (int)(srcImage.Width * ratio);
+                newHeight = (int)(srcImage.Height * ratio);
+            }
+
+            // 2. 创建新位图（缩放后的图像）
+            using (var bmp = new Bitmap(newWidth, newHeight))
+            using (var g = Graphics.FromImage(bmp))
+            {
+                g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+                g.DrawImage(srcImage, 0, 0, newWidth, newHeight);
+                // 3. 设置 JPEG 压缩质量
+                var encoderParams = new EncoderParameters(1);
+                encoderParams.Param[0] = new EncoderParameter(System.Drawing.Imaging.Encoder.Quality, quality);
+                // 获取 JPEG 编码器
+                ImageCodecInfo jpegCodec = GetEncoderInfo("image/jpeg");
+                // 4. 保存为 ImageB
+                if (!string.IsNullOrEmpty(outputPath))
+                    bmp.Save(outputPath, jpegCodec, encoderParams);
+                using (var ms = new MemoryStream())
+                {
+                    srcImage.Save(ms, jpegCodec, encoderParams);
+                    return ms.ToArray();
+                }
+            }
+
+        }
+
+        private static ImageCodecInfo GetEncoderInfo(string mimeType)
+        {
+            var encoders = ImageCodecInfo.GetImageEncoders();
+            foreach (var encoder in encoders)
+                if (encoder.MimeType == mimeType)
+                    return encoder;
+            return null;
+        }
+
+
+        public static byte[] CompressImage(Image original, long quality = 30L)
+        {
+            using (var ms = new MemoryStream())
+            {
+                var encoderParameters = new EncoderParameters(1);
+                encoderParameters.Param[0] = new EncoderParameter(System.Drawing.Imaging.Encoder.Quality, quality);
+                var jpegCodec = ImageCodecInfo.GetImageEncoders()
+                    .First(c => c.MimeType == "image/jpeg");
+                original.Save(ms, jpegCodec, encoderParameters);
+                return ms.ToArray();
+            }
+        }
+        public Bitmap ResizeImage(Image image, int maxWidth, int maxHeight)
+        {
+            try
+            {
+                double ratio = Math.Min((double)maxWidth / image.Width, (double)maxHeight / image.Height);
+                int newWidth = (int)(image.Width * ratio);
+                int newHeight = (int)(image.Height * ratio);
+
+                var destImage = new Bitmap(newWidth, newHeight);
+                using (var graphics = Graphics.FromImage(destImage))
+                {
+                    //graphics.CompositingQuality = CompositingQuality.HighQuality;
+                    //graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                    //graphics.SmoothingMode = SmoothingMode.HighQuality;
+                    graphics.DrawImage(image, 0, 0, newWidth, newHeight);
+                }
+                return destImage;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+
+        }
+
+        public static byte[] ImageToByteArray(Image image, ImageFormat format = null)
+        {
+            if (image == null) throw new ArgumentNullException(nameof(image));
+            if (format == null) format = ImageFormat.Png; // 默认格式
+
+            using (var ms = new MemoryStream())
+            {
+                image.Save(ms, format);
+                return ms.ToArray();
+            }
+        }
+
+
         public static Bitmap ByteToBitmap(byte[] ImageByte)
         {
-            Bitmap bitmap = null; 
+            Bitmap bitmap = null;
             using (MemoryStream stream = new MemoryStream(ImageByte))
             {
                 bitmap = new Bitmap((Image)new Bitmap(stream));

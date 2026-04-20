@@ -30,40 +30,54 @@
         {
             this.kryptonNavigator1 = new ComponentFactory.Krypton.Navigator.KryptonNavigator();
             this.kryptonPage1 = new ComponentFactory.Krypton.Navigator.KryptonPage();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
+            this.DataGridView_BOM = new ComponentFactory.Krypton.Toolkit.KryptonDataGridView();
+            this.kryptonRichTextBox1 = new ComponentFactory.Krypton.Toolkit.KryptonRichTextBox();
+            this.kryptonPanel3 = new ComponentFactory.Krypton.Toolkit.KryptonPanel();
+            this.btnExportBom = new ComponentFactory.Krypton.Toolkit.KryptonButton();
+            this.kryptonPanel2 = new ComponentFactory.Krypton.Toolkit.KryptonPanel();
+            this.btnSetRule = new ComponentFactory.Krypton.Toolkit.KryptonButton();
+            this.comBomRule = new ComponentFactory.Krypton.Toolkit.KryptonComboBox();
+            this.kryptonLabel5 = new ComponentFactory.Krypton.Toolkit.KryptonLabel();
             this.kryptonPage2 = new ComponentFactory.Krypton.Navigator.KryptonPage();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.dgvXYData = new ComponentFactory.Krypton.Toolkit.KryptonDataGridView();
             this.kryptonPanel1 = new ComponentFactory.Krypton.Toolkit.KryptonPanel();
+            this.btnExportXYData = new ComponentFactory.Krypton.Toolkit.KryptonButton();
             this.kryptonPage3 = new ComponentFactory.Krypton.Navigator.KryptonPage();
             this.kryptonSplitContainer1 = new ComponentFactory.Krypton.Toolkit.KryptonSplitContainer();
+            this.ComSide = new ComponentFactory.Krypton.Toolkit.KryptonComboBox();
+            this.btnAddReport = new ComponentFactory.Krypton.Toolkit.KryptonButton();
+            this.btnAnalyse = new ComponentFactory.Krypton.Toolkit.KryptonButton();
             this.txtCustom = new ComponentFactory.Krypton.Toolkit.KryptonTextBox();
             this.kryptonLabel4 = new ComponentFactory.Krypton.Toolkit.KryptonLabel();
             this.btnSave = new ComponentFactory.Krypton.Toolkit.KryptonButton();
             this.btnExportData = new ComponentFactory.Krypton.Toolkit.KryptonButton();
-            this.txtBoardSide = new ComponentFactory.Krypton.Toolkit.KryptonTextBox();
             this.kryptonLabel3 = new ComponentFactory.Krypton.Toolkit.KryptonLabel();
             this.txtProductName = new ComponentFactory.Krypton.Toolkit.KryptonTextBox();
             this.kryptonLabel2 = new ComponentFactory.Krypton.Toolkit.KryptonLabel();
             this.txtProductCode = new ComponentFactory.Krypton.Toolkit.KryptonTextBox();
             this.kryptonLabel1 = new ComponentFactory.Krypton.Toolkit.KryptonLabel();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.DataGridView_BOM = new ComponentFactory.Krypton.Toolkit.KryptonDataGridView();
-            this.kryptonPanel2 = new ComponentFactory.Krypton.Toolkit.KryptonPanel();
-            this.kryptonLabel5 = new ComponentFactory.Krypton.Toolkit.KryptonLabel();
-            this.comBomRule = new ComponentFactory.Krypton.Toolkit.KryptonComboBox();
-            this.btnSetRule = new ComponentFactory.Krypton.Toolkit.KryptonButton();
-            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-            this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
-            this.kryptonRichTextBox1 = new ComponentFactory.Krypton.Toolkit.KryptonRichTextBox();
-            this.kryptonPanel3 = new ComponentFactory.Krypton.Toolkit.KryptonPanel();
-            this.btnExportBom = new ComponentFactory.Krypton.Toolkit.KryptonButton();
-            this.kryptonButton1 = new ComponentFactory.Krypton.Toolkit.KryptonButton();
-            this.btnAnalyse = new ComponentFactory.Krypton.Toolkit.KryptonButton();
-            this.btnAddReport = new ComponentFactory.Krypton.Toolkit.KryptonButton();
+            this.btnReplaceCode = new ComponentFactory.Krypton.Toolkit.KryptonButton();
+            this.btnAddBasMaterial = new ComponentFactory.Krypton.Toolkit.KryptonButton();
+            this.kryptonButton2 = new ComponentFactory.Krypton.Toolkit.KryptonButton();
+            this.kryptonButton3 = new ComponentFactory.Krypton.Toolkit.KryptonButton();
+            this.kryptonButton4 = new ComponentFactory.Krypton.Toolkit.KryptonButton();
             ((System.ComponentModel.ISupportInitialize)(this.kryptonNavigator1)).BeginInit();
             this.kryptonNavigator1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.kryptonPage1)).BeginInit();
             this.kryptonPage1.SuspendLayout();
+            this.tableLayoutPanel1.SuspendLayout();
+            this.tableLayoutPanel2.SuspendLayout();
+            this.tableLayoutPanel4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.DataGridView_BOM)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.kryptonPanel3)).BeginInit();
+            this.kryptonPanel3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.kryptonPanel2)).BeginInit();
+            this.kryptonPanel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.comBomRule)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.kryptonPage2)).BeginInit();
             this.kryptonPage2.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
@@ -77,20 +91,24 @@
             ((System.ComponentModel.ISupportInitialize)(this.kryptonSplitContainer1.Panel2)).BeginInit();
             this.kryptonSplitContainer1.Panel2.SuspendLayout();
             this.kryptonSplitContainer1.SuspendLayout();
-            this.tableLayoutPanel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.DataGridView_BOM)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.kryptonPanel2)).BeginInit();
-            this.kryptonPanel2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.comBomRule)).BeginInit();
-            this.tableLayoutPanel2.SuspendLayout();
-            this.tableLayoutPanel4.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.kryptonPanel3)).BeginInit();
-            this.kryptonPanel3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ComSide)).BeginInit();
             this.SuspendLayout();
             // 
             // kryptonNavigator1
             // 
+            this.kryptonNavigator1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.kryptonNavigator1.Bar.BarMapImage = ComponentFactory.Krypton.Navigator.MapKryptonPageImage.LargeMedium;
+            this.kryptonNavigator1.Bar.BarMinimumHeight = 30;
+            this.kryptonNavigator1.Bar.BarMultiline = ComponentFactory.Krypton.Navigator.BarMultiline.Exactline;
+            this.kryptonNavigator1.Bar.CheckButtonStyle = ComponentFactory.Krypton.Toolkit.ButtonStyle.ButtonSpec;
+            this.kryptonNavigator1.Bar.ItemAlignment = ComponentFactory.Krypton.Toolkit.RelativePositionAlign.Center;
+            this.kryptonNavigator1.Bar.ItemMinimumSize = new System.Drawing.Size(30, 30);
+            this.kryptonNavigator1.Bar.ItemSizing = ComponentFactory.Krypton.Navigator.BarItemSizing.Individual;
+            this.kryptonNavigator1.Bar.TabBorderStyle = ComponentFactory.Krypton.Toolkit.TabBorderStyle.SlantOutsizeBoth;
+            this.kryptonNavigator1.Button.CloseButtonDisplay = ComponentFactory.Krypton.Navigator.ButtonDisplay.Hide;
             this.kryptonNavigator1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.kryptonNavigator1.Group.GroupBackStyle = ComponentFactory.Krypton.Toolkit.PaletteBackStyle.ContextMenuItemSplit;
+            this.kryptonNavigator1.Group.GroupBorderStyle = ComponentFactory.Krypton.Toolkit.PaletteBorderStyle.ContextMenuItemSplit;
             this.kryptonNavigator1.Location = new System.Drawing.Point(0, 0);
             this.kryptonNavigator1.Name = "kryptonNavigator1";
             this.kryptonNavigator1.Pages.AddRange(new ComponentFactory.Krypton.Navigator.KryptonPage[] {
@@ -111,10 +129,145 @@
             this.kryptonPage1.LastVisibleSet = true;
             this.kryptonPage1.MinimumSize = new System.Drawing.Size(50, 50);
             this.kryptonPage1.Name = "kryptonPage1";
-            this.kryptonPage1.Size = new System.Drawing.Size(1309, 507);
+            this.kryptonPage1.Size = new System.Drawing.Size(1311, 508);
             this.kryptonPage1.Text = "BOM";
             this.kryptonPage1.ToolTipTitle = "Page ToolTip";
             this.kryptonPage1.UniqueName = "841071AD2ACE4B030CAE1325B45DBC3E";
+            // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.ColumnCount = 1;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel2, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.kryptonPanel2, 0, 0);
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 2;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 70F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1311, 508);
+            this.tableLayoutPanel1.TabIndex = 2;
+            // 
+            // tableLayoutPanel2
+            // 
+            this.tableLayoutPanel2.ColumnCount = 2;
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 150F));
+            this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanel4, 0, 0);
+            this.tableLayoutPanel2.Controls.Add(this.kryptonPanel3, 1, 0);
+            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 73);
+            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
+            this.tableLayoutPanel2.RowCount = 1;
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(1305, 432);
+            this.tableLayoutPanel2.TabIndex = 10;
+            // 
+            // tableLayoutPanel4
+            // 
+            this.tableLayoutPanel4.ColumnCount = 1;
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel4.Controls.Add(this.DataGridView_BOM, 0, 0);
+            this.tableLayoutPanel4.Controls.Add(this.kryptonRichTextBox1, 0, 1);
+            this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel4.Location = new System.Drawing.Point(3, 3);
+            this.tableLayoutPanel4.Name = "tableLayoutPanel4";
+            this.tableLayoutPanel4.RowCount = 2;
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 150F));
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(1149, 426);
+            this.tableLayoutPanel4.TabIndex = 11;
+            // 
+            // DataGridView_BOM
+            // 
+            this.DataGridView_BOM.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.DataGridView_BOM.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.DataGridView_BOM.Location = new System.Drawing.Point(3, 3);
+            this.DataGridView_BOM.Name = "DataGridView_BOM";
+            this.DataGridView_BOM.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.Office2007Blue;
+            this.DataGridView_BOM.RowHeadersWidth = 53;
+            this.DataGridView_BOM.RowTemplate.Height = 28;
+            this.DataGridView_BOM.Size = new System.Drawing.Size(1143, 270);
+            this.DataGridView_BOM.TabIndex = 0;
+            this.DataGridView_BOM.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView_BOM_CellClick);
+            // 
+            // kryptonRichTextBox1
+            // 
+            this.kryptonRichTextBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.kryptonRichTextBox1.Location = new System.Drawing.Point(3, 279);
+            this.kryptonRichTextBox1.Name = "kryptonRichTextBox1";
+            this.kryptonRichTextBox1.Size = new System.Drawing.Size(1143, 144);
+            this.kryptonRichTextBox1.TabIndex = 1;
+            this.kryptonRichTextBox1.Text = "";
+            // 
+            // kryptonPanel3
+            // 
+            this.kryptonPanel3.Controls.Add(this.kryptonButton4);
+            this.kryptonPanel3.Controls.Add(this.kryptonButton3);
+            this.kryptonPanel3.Controls.Add(this.kryptonButton2);
+            this.kryptonPanel3.Controls.Add(this.btnAddBasMaterial);
+            this.kryptonPanel3.Controls.Add(this.btnReplaceCode);
+            this.kryptonPanel3.Controls.Add(this.btnExportBom);
+            this.kryptonPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.kryptonPanel3.Location = new System.Drawing.Point(1158, 3);
+            this.kryptonPanel3.Name = "kryptonPanel3";
+            this.kryptonPanel3.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.Office2007Blue;
+            this.kryptonPanel3.Size = new System.Drawing.Size(144, 426);
+            this.kryptonPanel3.TabIndex = 12;
+            // 
+            // btnExportBom
+            // 
+            this.btnExportBom.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnExportBom.Location = new System.Drawing.Point(0, 0);
+            this.btnExportBom.Name = "btnExportBom";
+            this.btnExportBom.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.Office2007Blue;
+            this.btnExportBom.Size = new System.Drawing.Size(144, 46);
+            this.btnExportBom.TabIndex = 8;
+            this.btnExportBom.Values.Image = global::GSP_SJ.Properties.Resources._89;
+            this.btnExportBom.Values.Text = "导出";
+            this.btnExportBom.Click += new System.EventHandler(this.btnExportBom_Click);
+            // 
+            // kryptonPanel2
+            // 
+            this.kryptonPanel2.Controls.Add(this.btnSetRule);
+            this.kryptonPanel2.Controls.Add(this.comBomRule);
+            this.kryptonPanel2.Controls.Add(this.kryptonLabel5);
+            this.kryptonPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.kryptonPanel2.Location = new System.Drawing.Point(3, 3);
+            this.kryptonPanel2.Name = "kryptonPanel2";
+            this.kryptonPanel2.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.Office2007Blue;
+            this.kryptonPanel2.Size = new System.Drawing.Size(1305, 64);
+            this.kryptonPanel2.TabIndex = 1;
+            // 
+            // btnSetRule
+            // 
+            this.btnSetRule.Location = new System.Drawing.Point(219, 9);
+            this.btnSetRule.Name = "btnSetRule";
+            this.btnSetRule.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.Office2007Blue;
+            this.btnSetRule.Size = new System.Drawing.Size(111, 46);
+            this.btnSetRule.TabIndex = 7;
+            this.btnSetRule.Values.Text = "查看规则";
+            this.btnSetRule.Click += new System.EventHandler(this.btnSetRule_Click);
+            // 
+            // comBomRule
+            // 
+            this.comBomRule.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comBomRule.DropDownWidth = 117;
+            this.comBomRule.Location = new System.Drawing.Point(96, 18);
+            this.comBomRule.Name = "comBomRule";
+            this.comBomRule.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.Office2007Blue;
+            this.comBomRule.Size = new System.Drawing.Size(117, 27);
+            this.comBomRule.TabIndex = 1;
+            // 
+            // kryptonLabel5
+            // 
+            this.kryptonLabel5.Location = new System.Drawing.Point(9, 19);
+            this.kryptonLabel5.Name = "kryptonLabel5";
+            this.kryptonLabel5.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.Office2007Blue;
+            this.kryptonLabel5.Size = new System.Drawing.Size(81, 26);
+            this.kryptonLabel5.TabIndex = 0;
+            this.kryptonLabel5.Values.Text = "分析规则";
             // 
             // kryptonPage2
             // 
@@ -124,7 +277,7 @@
             this.kryptonPage2.LastVisibleSet = true;
             this.kryptonPage2.MinimumSize = new System.Drawing.Size(50, 50);
             this.kryptonPage2.Name = "kryptonPage2";
-            this.kryptonPage2.Size = new System.Drawing.Size(1309, 507);
+            this.kryptonPage2.Size = new System.Drawing.Size(1311, 508);
             this.kryptonPage2.Text = "XY数据";
             this.kryptonPage2.ToolTipTitle = "Page ToolTip";
             this.kryptonPage2.UniqueName = "3C74FAC8D3354B44E4B9F8B7F7807FD8";
@@ -141,7 +294,7 @@
             this.tableLayoutPanel3.RowCount = 2;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 70F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(1309, 507);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(1311, 508);
             this.tableLayoutPanel3.TabIndex = 1;
             // 
             // dgvXYData
@@ -153,18 +306,30 @@
             this.dgvXYData.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.Office2007Blue;
             this.dgvXYData.RowHeadersWidth = 53;
             this.dgvXYData.RowTemplate.Height = 28;
-            this.dgvXYData.Size = new System.Drawing.Size(1303, 431);
+            this.dgvXYData.Size = new System.Drawing.Size(1305, 432);
             this.dgvXYData.TabIndex = 0;
             // 
             // kryptonPanel1
             // 
-            this.kryptonPanel1.Controls.Add(this.kryptonButton1);
+            this.kryptonPanel1.Controls.Add(this.btnExportXYData);
             this.kryptonPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.kryptonPanel1.Location = new System.Drawing.Point(3, 3);
             this.kryptonPanel1.Name = "kryptonPanel1";
             this.kryptonPanel1.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.Office2007Blue;
-            this.kryptonPanel1.Size = new System.Drawing.Size(1303, 64);
+            this.kryptonPanel1.Size = new System.Drawing.Size(1305, 64);
             this.kryptonPanel1.TabIndex = 1;
+            // 
+            // btnExportXYData
+            // 
+            this.btnExportXYData.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnExportXYData.Location = new System.Drawing.Point(1180, 0);
+            this.btnExportXYData.Name = "btnExportXYData";
+            this.btnExportXYData.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.Office2007Blue;
+            this.btnExportXYData.Size = new System.Drawing.Size(125, 64);
+            this.btnExportXYData.TabIndex = 9;
+            this.btnExportXYData.Values.Image = global::GSP_SJ.Properties.Resources._89;
+            this.btnExportXYData.Values.Text = "导出";
+            this.btnExportXYData.Click += new System.EventHandler(this.btnExportXYData_Click_1);
             // 
             // kryptonPage3
             // 
@@ -173,7 +338,7 @@
             this.kryptonPage3.LastVisibleSet = true;
             this.kryptonPage3.MinimumSize = new System.Drawing.Size(50, 50);
             this.kryptonPage3.Name = "kryptonPage3";
-            this.kryptonPage3.Size = new System.Drawing.Size(1309, 507);
+            this.kryptonPage3.Size = new System.Drawing.Size(1311, 508);
             this.kryptonPage3.Text = "位号图";
             this.kryptonPage3.ToolTipTitle = "Page ToolTip";
             this.kryptonPage3.UniqueName = "8F25848C27CF420A54A79CCD3824BFD5";
@@ -188,13 +353,13 @@
             // 
             // kryptonSplitContainer1.Panel1
             // 
+            this.kryptonSplitContainer1.Panel1.Controls.Add(this.ComSide);
             this.kryptonSplitContainer1.Panel1.Controls.Add(this.btnAddReport);
             this.kryptonSplitContainer1.Panel1.Controls.Add(this.btnAnalyse);
             this.kryptonSplitContainer1.Panel1.Controls.Add(this.txtCustom);
             this.kryptonSplitContainer1.Panel1.Controls.Add(this.kryptonLabel4);
             this.kryptonSplitContainer1.Panel1.Controls.Add(this.btnSave);
             this.kryptonSplitContainer1.Panel1.Controls.Add(this.btnExportData);
-            this.kryptonSplitContainer1.Panel1.Controls.Add(this.txtBoardSide);
             this.kryptonSplitContainer1.Panel1.Controls.Add(this.kryptonLabel3);
             this.kryptonSplitContainer1.Panel1.Controls.Add(this.txtProductName);
             this.kryptonSplitContainer1.Panel1.Controls.Add(this.kryptonLabel2);
@@ -209,240 +374,178 @@
             this.kryptonSplitContainer1.SplitterDistance = 84;
             this.kryptonSplitContainer1.TabIndex = 1;
             // 
+            // ComSide
+            // 
+            this.ComSide.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.ComSide.DropDownWidth = 134;
+            this.ComSide.Items.AddRange(new object[] {
+            "单面",
+            "双面(坐标合并)",
+            "双面(坐标分开)"});
+            this.ComSide.Location = new System.Drawing.Point(413, 7);
+            this.ComSide.Name = "ComSide";
+            this.ComSide.Size = new System.Drawing.Size(134, 27);
+            this.ComSide.TabIndex = 12;
+            // 
+            // btnAddReport
+            // 
+            this.btnAddReport.Location = new System.Drawing.Point(1094, 7);
+            this.btnAddReport.Name = "btnAddReport";
+            this.btnAddReport.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.Office2007Blue;
+            this.btnAddReport.Size = new System.Drawing.Size(208, 64);
+            this.btnAddReport.TabIndex = 11;
+            this.btnAddReport.Values.Image = global::GSP_SJ.Properties.Resources._160;
+            this.btnAddReport.Values.Text = "新建报告";
+            this.btnAddReport.Click += new System.EventHandler(this.btnAddReport_Click);
+            // 
+            // btnAnalyse
+            // 
+            this.btnAnalyse.Location = new System.Drawing.Point(785, 7);
+            this.btnAnalyse.Name = "btnAnalyse";
+            this.btnAnalyse.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.Office2007Blue;
+            this.btnAnalyse.Size = new System.Drawing.Size(145, 64);
+            this.btnAnalyse.TabIndex = 10;
+            this.btnAnalyse.Values.Image = global::GSP_SJ.Properties.Resources._186;
+            this.btnAnalyse.Values.Text = "分析";
+            this.btnAnalyse.Click += new System.EventHandler(this.btnAnalyse_Click);
+            // 
             // txtCustom
             // 
-            this.txtCustom.Location = new System.Drawing.Point(319, 42);
+            this.txtCustom.Location = new System.Drawing.Point(413, 45);
             this.txtCustom.Name = "txtCustom";
-            this.txtCustom.Size = new System.Drawing.Size(134, 29);
+            this.txtCustom.Size = new System.Drawing.Size(134, 35);
+            this.txtCustom.StateCommon.Content.Font = new System.Drawing.Font("宋体", 13.824F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.txtCustom.TabIndex = 9;
             // 
             // kryptonLabel4
             // 
-            this.kryptonLabel4.Location = new System.Drawing.Point(267, 45);
+            this.kryptonLabel4.Location = new System.Drawing.Point(333, 43);
             this.kryptonLabel4.Name = "kryptonLabel4";
-            this.kryptonLabel4.Size = new System.Drawing.Size(46, 26);
+            this.kryptonLabel4.Size = new System.Drawing.Size(74, 38);
+            this.kryptonLabel4.StateCommon.ShortText.Font = new System.Drawing.Font("宋体", 16.128F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.kryptonLabel4.TabIndex = 8;
             this.kryptonLabel4.Values.Text = "客户";
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(803, 15);
+            this.btnSave.Location = new System.Drawing.Point(936, 7);
             this.btnSave.Name = "btnSave";
             this.btnSave.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.Office2007Blue;
-            this.btnSave.Size = new System.Drawing.Size(111, 46);
+            this.btnSave.Size = new System.Drawing.Size(152, 64);
             this.btnSave.TabIndex = 7;
-            this.btnSave.Values.Text = "保存数据";
+            this.btnSave.Values.Image = global::GSP_SJ.Properties.Resources._002_07;
+            this.btnSave.Values.Text = "保存";
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // btnExportData
             // 
-            this.btnExportData.Location = new System.Drawing.Point(570, 15);
+            this.btnExportData.Location = new System.Drawing.Point(610, 7);
             this.btnExportData.Name = "btnExportData";
             this.btnExportData.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.Office2007Blue;
-            this.btnExportData.Size = new System.Drawing.Size(111, 46);
+            this.btnExportData.Size = new System.Drawing.Size(169, 64);
             this.btnExportData.TabIndex = 6;
-            this.btnExportData.Values.Text = "导入数据";
+            this.btnExportData.Values.Image = global::GSP_SJ.Properties.Resources.Edit_24px;
+            this.btnExportData.Values.Text = "导入";
             this.btnExportData.Click += new System.EventHandler(this.btnExportXYData_Click);
-            // 
-            // txtBoardSide
-            // 
-            this.txtBoardSide.Location = new System.Drawing.Point(319, 10);
-            this.txtBoardSide.Name = "txtBoardSide";
-            this.txtBoardSide.Size = new System.Drawing.Size(134, 29);
-            this.txtBoardSide.TabIndex = 5;
             // 
             // kryptonLabel3
             // 
-            this.kryptonLabel3.Location = new System.Drawing.Point(267, 13);
+            this.kryptonLabel3.Location = new System.Drawing.Point(333, 6);
             this.kryptonLabel3.Name = "kryptonLabel3";
-            this.kryptonLabel3.Size = new System.Drawing.Size(46, 26);
+            this.kryptonLabel3.Size = new System.Drawing.Size(74, 38);
+            this.kryptonLabel3.StateCommon.ShortText.Font = new System.Drawing.Font("宋体", 16.128F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.kryptonLabel3.TabIndex = 4;
             this.kryptonLabel3.Values.Text = "板面";
             // 
             // txtProductName
             // 
-            this.txtProductName.Location = new System.Drawing.Point(99, 42);
+            this.txtProductName.Location = new System.Drawing.Point(149, 45);
             this.txtProductName.Name = "txtProductName";
-            this.txtProductName.Size = new System.Drawing.Size(134, 29);
+            this.txtProductName.Size = new System.Drawing.Size(161, 35);
+            this.txtProductName.StateCommon.Content.Font = new System.Drawing.Font("宋体", 13.824F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.txtProductName.TabIndex = 3;
             // 
             // kryptonLabel2
             // 
             this.kryptonLabel2.Location = new System.Drawing.Point(12, 45);
             this.kryptonLabel2.Name = "kryptonLabel2";
-            this.kryptonLabel2.Size = new System.Drawing.Size(81, 26);
+            this.kryptonLabel2.Size = new System.Drawing.Size(131, 38);
+            this.kryptonLabel2.StateCommon.ShortText.Font = new System.Drawing.Font("宋体", 16.128F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.kryptonLabel2.TabIndex = 2;
             this.kryptonLabel2.Values.Text = "产品名称";
             // 
             // txtProductCode
             // 
-            this.txtProductCode.Location = new System.Drawing.Point(99, 10);
+            this.txtProductCode.Location = new System.Drawing.Point(149, 6);
             this.txtProductCode.Name = "txtProductCode";
-            this.txtProductCode.Size = new System.Drawing.Size(134, 29);
+            this.txtProductCode.Size = new System.Drawing.Size(161, 35);
+            this.txtProductCode.StateCommon.Content.Font = new System.Drawing.Font("宋体", 13.824F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.txtProductCode.TabIndex = 1;
             // 
             // kryptonLabel1
             // 
-            this.kryptonLabel1.Location = new System.Drawing.Point(12, 13);
+            this.kryptonLabel1.Location = new System.Drawing.Point(12, 6);
             this.kryptonLabel1.Name = "kryptonLabel1";
-            this.kryptonLabel1.Size = new System.Drawing.Size(81, 26);
+            this.kryptonLabel1.Size = new System.Drawing.Size(131, 38);
+            this.kryptonLabel1.StateCommon.ShortText.Font = new System.Drawing.Font("宋体", 16.128F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.kryptonLabel1.TabIndex = 0;
             this.kryptonLabel1.Values.Text = "产品编码";
             // 
-            // tableLayoutPanel1
+            // btnReplaceCode
             // 
-            this.tableLayoutPanel1.ColumnCount = 1;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel2, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.kryptonPanel2, 0, 0);
-            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 2;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 70F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1309, 507);
-            this.tableLayoutPanel1.TabIndex = 2;
+            this.btnReplaceCode.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnReplaceCode.Location = new System.Drawing.Point(0, 46);
+            this.btnReplaceCode.Name = "btnReplaceCode";
+            this.btnReplaceCode.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.Office2007Blue;
+            this.btnReplaceCode.Size = new System.Drawing.Size(144, 46);
+            this.btnReplaceCode.TabIndex = 9;
+            this.btnReplaceCode.Values.Image = global::GSP_SJ.Properties.Resources._50;
+            this.btnReplaceCode.Values.Text = "替代料";
             // 
-            // DataGridView_BOM
+            // btnAddBasMaterial
             // 
-            this.DataGridView_BOM.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.DataGridView_BOM.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.DataGridView_BOM.Location = new System.Drawing.Point(3, 3);
-            this.DataGridView_BOM.Name = "DataGridView_BOM";
-            this.DataGridView_BOM.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.Office2007Blue;
-            this.DataGridView_BOM.RowHeadersWidth = 53;
-            this.DataGridView_BOM.RowTemplate.Height = 28;
-            this.DataGridView_BOM.Size = new System.Drawing.Size(1191, 269);
-            this.DataGridView_BOM.TabIndex = 0;
+            this.btnAddBasMaterial.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnAddBasMaterial.Location = new System.Drawing.Point(0, 92);
+            this.btnAddBasMaterial.Name = "btnAddBasMaterial";
+            this.btnAddBasMaterial.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.Office2007Blue;
+            this.btnAddBasMaterial.Size = new System.Drawing.Size(144, 46);
+            this.btnAddBasMaterial.TabIndex = 10;
+            this.btnAddBasMaterial.Values.Image = global::GSP_SJ.Properties.Resources._110;
+            this.btnAddBasMaterial.Values.Text = "资料库";
+            this.btnAddBasMaterial.Click += new System.EventHandler(this.kryptonButton1_Click);
             // 
-            // kryptonPanel2
+            // kryptonButton2
             // 
-            this.kryptonPanel2.Controls.Add(this.btnSetRule);
-            this.kryptonPanel2.Controls.Add(this.comBomRule);
-            this.kryptonPanel2.Controls.Add(this.kryptonLabel5);
-            this.kryptonPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.kryptonPanel2.Location = new System.Drawing.Point(3, 3);
-            this.kryptonPanel2.Name = "kryptonPanel2";
-            this.kryptonPanel2.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.Office2007Blue;
-            this.kryptonPanel2.Size = new System.Drawing.Size(1303, 64);
-            this.kryptonPanel2.TabIndex = 1;
+            this.kryptonButton2.Dock = System.Windows.Forms.DockStyle.Top;
+            this.kryptonButton2.Location = new System.Drawing.Point(0, 138);
+            this.kryptonButton2.Name = "kryptonButton2";
+            this.kryptonButton2.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.Office2007Blue;
+            this.kryptonButton2.Size = new System.Drawing.Size(144, 46);
+            this.kryptonButton2.TabIndex = 11;
+            this.kryptonButton2.Values.Image = global::GSP_SJ.Properties.Resources._110;
+            this.kryptonButton2.Values.Text = "添加物料";
             // 
-            // kryptonLabel5
+            // kryptonButton3
             // 
-            this.kryptonLabel5.Location = new System.Drawing.Point(9, 19);
-            this.kryptonLabel5.Name = "kryptonLabel5";
-            this.kryptonLabel5.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.Office2007Blue;
-            this.kryptonLabel5.Size = new System.Drawing.Size(81, 26);
-            this.kryptonLabel5.TabIndex = 0;
-            this.kryptonLabel5.Values.Text = "分析规则";
+            this.kryptonButton3.Dock = System.Windows.Forms.DockStyle.Top;
+            this.kryptonButton3.Location = new System.Drawing.Point(0, 184);
+            this.kryptonButton3.Name = "kryptonButton3";
+            this.kryptonButton3.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.Office2007Blue;
+            this.kryptonButton3.Size = new System.Drawing.Size(144, 46);
+            this.kryptonButton3.TabIndex = 12;
+            this.kryptonButton3.Values.Image = global::GSP_SJ.Properties.Resources._168;
+            this.kryptonButton3.Values.Text = "删除物料";
             // 
-            // comBomRule
+            // kryptonButton4
             // 
-            this.comBomRule.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comBomRule.DropDownWidth = 117;
-            this.comBomRule.Location = new System.Drawing.Point(96, 18);
-            this.comBomRule.Name = "comBomRule";
-            this.comBomRule.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.Office2007Blue;
-            this.comBomRule.Size = new System.Drawing.Size(117, 27);
-            this.comBomRule.TabIndex = 1;
-            // 
-            // btnSetRule
-            // 
-            this.btnSetRule.Location = new System.Drawing.Point(219, 9);
-            this.btnSetRule.Name = "btnSetRule";
-            this.btnSetRule.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.Office2007Blue;
-            this.btnSetRule.Size = new System.Drawing.Size(111, 46);
-            this.btnSetRule.TabIndex = 7;
-            this.btnSetRule.Values.Text = "查看规则";
-            this.btnSetRule.Click += new System.EventHandler(this.btnSetRule_Click);
-            // 
-            // tableLayoutPanel2
-            // 
-            this.tableLayoutPanel2.ColumnCount = 2;
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
-            this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanel4, 0, 0);
-            this.tableLayoutPanel2.Controls.Add(this.kryptonPanel3, 1, 0);
-            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 73);
-            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-            this.tableLayoutPanel2.RowCount = 1;
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(1303, 431);
-            this.tableLayoutPanel2.TabIndex = 10;
-            // 
-            // tableLayoutPanel4
-            // 
-            this.tableLayoutPanel4.ColumnCount = 1;
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel4.Controls.Add(this.DataGridView_BOM, 0, 0);
-            this.tableLayoutPanel4.Controls.Add(this.kryptonRichTextBox1, 0, 1);
-            this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel4.Location = new System.Drawing.Point(3, 3);
-            this.tableLayoutPanel4.Name = "tableLayoutPanel4";
-            this.tableLayoutPanel4.RowCount = 2;
-            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 150F));
-            this.tableLayoutPanel4.Size = new System.Drawing.Size(1197, 425);
-            this.tableLayoutPanel4.TabIndex = 11;
-            // 
-            // kryptonRichTextBox1
-            // 
-            this.kryptonRichTextBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.kryptonRichTextBox1.Location = new System.Drawing.Point(3, 278);
-            this.kryptonRichTextBox1.Name = "kryptonRichTextBox1";
-            this.kryptonRichTextBox1.Size = new System.Drawing.Size(1191, 144);
-            this.kryptonRichTextBox1.TabIndex = 1;
-            this.kryptonRichTextBox1.Text = "";
-            // 
-            // kryptonPanel3
-            // 
-            this.kryptonPanel3.Controls.Add(this.btnExportBom);
-            this.kryptonPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.kryptonPanel3.Location = new System.Drawing.Point(1206, 3);
-            this.kryptonPanel3.Name = "kryptonPanel3";
-            this.kryptonPanel3.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.Office2007Blue;
-            this.kryptonPanel3.Size = new System.Drawing.Size(94, 425);
-            this.kryptonPanel3.TabIndex = 12;
-            // 
-            // btnExportBom
-            // 
-            this.btnExportBom.Location = new System.Drawing.Point(12, 144);
-            this.btnExportBom.Name = "btnExportBom";
-            this.btnExportBom.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.Office2007Blue;
-            this.btnExportBom.Size = new System.Drawing.Size(75, 46);
-            this.btnExportBom.TabIndex = 8;
-            this.btnExportBom.Values.Text = "导出";
-            // 
-            // kryptonButton1
-            // 
-            this.kryptonButton1.Location = new System.Drawing.Point(692, 9);
-            this.kryptonButton1.Name = "kryptonButton1";
-            this.kryptonButton1.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.Office2007Blue;
-            this.kryptonButton1.Size = new System.Drawing.Size(75, 46);
-            this.kryptonButton1.TabIndex = 9;
-            this.kryptonButton1.Values.Text = "导出";
-            // 
-            // btnAnalyse
-            // 
-            this.btnAnalyse.Location = new System.Drawing.Point(686, 15);
-            this.btnAnalyse.Name = "btnAnalyse";
-            this.btnAnalyse.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.Office2007Blue;
-            this.btnAnalyse.Size = new System.Drawing.Size(111, 46);
-            this.btnAnalyse.TabIndex = 10;
-            this.btnAnalyse.Values.Text = "分析数据";
-            this.btnAnalyse.Click += new System.EventHandler(this.btnAnalyse_Click);
-            // 
-            // btnAddReport
-            // 
-            this.btnAddReport.Location = new System.Drawing.Point(918, 15);
-            this.btnAddReport.Name = "btnAddReport";
-            this.btnAddReport.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.Office2007Blue;
-            this.btnAddReport.Size = new System.Drawing.Size(111, 46);
-            this.btnAddReport.TabIndex = 11;
-            this.btnAddReport.Values.Text = "新建报告";
-            this.btnAddReport.Click += new System.EventHandler(this.btnAddReport_Click);
+            this.kryptonButton4.Dock = System.Windows.Forms.DockStyle.Top;
+            this.kryptonButton4.Location = new System.Drawing.Point(0, 230);
+            this.kryptonButton4.Name = "kryptonButton4";
+            this.kryptonButton4.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.Office2007Blue;
+            this.kryptonButton4.Size = new System.Drawing.Size(144, 46);
+            this.kryptonButton4.TabIndex = 13;
+            this.kryptonButton4.Values.Image = global::GSP_SJ.Properties.Resources._125;
+            this.kryptonButton4.Values.Text = "更改物料";
             // 
             // UCProgram
             // 
@@ -455,6 +558,16 @@
             this.kryptonNavigator1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.kryptonPage1)).EndInit();
             this.kryptonPage1.ResumeLayout(false);
+            this.tableLayoutPanel1.ResumeLayout(false);
+            this.tableLayoutPanel2.ResumeLayout(false);
+            this.tableLayoutPanel4.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.DataGridView_BOM)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.kryptonPanel3)).EndInit();
+            this.kryptonPanel3.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.kryptonPanel2)).EndInit();
+            this.kryptonPanel2.ResumeLayout(false);
+            this.kryptonPanel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.comBomRule)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.kryptonPage2)).EndInit();
             this.kryptonPage2.ResumeLayout(false);
             this.tableLayoutPanel3.ResumeLayout(false);
@@ -469,16 +582,7 @@
             this.kryptonSplitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.kryptonSplitContainer1)).EndInit();
             this.kryptonSplitContainer1.ResumeLayout(false);
-            this.tableLayoutPanel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.DataGridView_BOM)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.kryptonPanel2)).EndInit();
-            this.kryptonPanel2.ResumeLayout(false);
-            this.kryptonPanel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.comBomRule)).EndInit();
-            this.tableLayoutPanel2.ResumeLayout(false);
-            this.tableLayoutPanel4.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.kryptonPanel3)).EndInit();
-            this.kryptonPanel3.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.ComSide)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -494,7 +598,6 @@
         private ComponentFactory.Krypton.Toolkit.KryptonLabel kryptonLabel2;
         private ComponentFactory.Krypton.Toolkit.KryptonTextBox txtProductCode;
         private ComponentFactory.Krypton.Toolkit.KryptonLabel kryptonLabel1;
-        private ComponentFactory.Krypton.Toolkit.KryptonTextBox txtBoardSide;
         private ComponentFactory.Krypton.Toolkit.KryptonLabel kryptonLabel3;
         private ComponentFactory.Krypton.Toolkit.KryptonDataGridView dgvXYData;
         private ComponentFactory.Krypton.Toolkit.KryptonButton btnExportData;
@@ -514,8 +617,14 @@
         private ComponentFactory.Krypton.Toolkit.KryptonRichTextBox kryptonRichTextBox1;
         private ComponentFactory.Krypton.Toolkit.KryptonPanel kryptonPanel3;
         private ComponentFactory.Krypton.Toolkit.KryptonButton btnExportBom;
-        private ComponentFactory.Krypton.Toolkit.KryptonButton kryptonButton1;
+        private ComponentFactory.Krypton.Toolkit.KryptonButton btnExportXYData;
         private ComponentFactory.Krypton.Toolkit.KryptonButton btnAddReport;
         private ComponentFactory.Krypton.Toolkit.KryptonButton btnAnalyse;
+        private ComponentFactory.Krypton.Toolkit.KryptonComboBox ComSide;
+        private ComponentFactory.Krypton.Toolkit.KryptonButton btnReplaceCode;
+        private ComponentFactory.Krypton.Toolkit.KryptonButton btnAddBasMaterial;
+        private ComponentFactory.Krypton.Toolkit.KryptonButton kryptonButton4;
+        private ComponentFactory.Krypton.Toolkit.KryptonButton kryptonButton3;
+        private ComponentFactory.Krypton.Toolkit.KryptonButton kryptonButton2;
     }
 }

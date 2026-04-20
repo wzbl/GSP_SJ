@@ -51,9 +51,9 @@ namespace GSP_SJ
                 this.panel2.Controls.Add(pictureBoxZoom1);
 
                 pictureBoxZoom2 = new ZoomablePictureBox();
-                Bitmap image2 = new Bitmap("C:\\Users\\14802\\Desktop\\2.jpg");
-                pictureBoxZoom2.Image = image2;
-                panel3.Controls.Add(pictureBoxZoom2);
+                //Bitmap image2 = image;
+                //pictureBoxZoom2.Image = image2;
+                //panel3.Controls.Add(pictureBoxZoom2);
 
                 dataGridView1.DataSource = eng_XYData_Results;
                 foreach (var item in eng_XYData_Results)

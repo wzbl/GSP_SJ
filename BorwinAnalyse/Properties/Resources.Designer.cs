@@ -93,6 +93,36 @@ namespace BorwinAnalyse.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
+        internal static System.Drawing.Bitmap _160 {
+            get {
+                object obj = ResourceManager.GetObject("160", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap _168 {
+            get {
+                object obj = ResourceManager.GetObject("168", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap _186 {
+            get {
+                object obj = ResourceManager.GetObject("186", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
         internal static System.Drawing.Bitmap _32 {
             get {
                 object obj = ResourceManager.GetObject("32", resourceCulture);
@@ -106,6 +136,16 @@ namespace BorwinAnalyse.Properties {
         internal static System.Drawing.Bitmap config_circle_32px {
             get {
                 object obj = ResourceManager.GetObject("config_circle_32px", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap Download_24px {
+            get {
+                object obj = ResourceManager.GetObject("Download_24px", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -306,6 +346,16 @@ namespace BorwinAnalyse.Properties {
         internal static System.Drawing.Bitmap icons8_暂停_80 {
             get {
                 object obj = ResourceManager.GetObject("icons8_暂停_80", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap Open_24px {
+            get {
+                object obj = ResourceManager.GetObject("Open_24px", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

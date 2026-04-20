@@ -1830,6 +1830,31 @@
         <Function Name="IsInteger" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="bit">
           <Parameter Name="Value" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="P_Bas_Material" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="type" Type="int" Mode="In" />
+          <Parameter Name="CustomerCode" Type="varchar" Mode="In" />
+          <Parameter Name="MaterialCode" Type="varchar" Mode="In" />
+          <Parameter Name="MaterialName" Type="varchar" Mode="In" />
+          <Parameter Name="LcrType" Type="varchar" Mode="In" />
+          <Parameter Name="LcrStandardValue" Type="numeric" Mode="In" />
+          <Parameter Name="LcrUnitCode" Type="varchar" Mode="In" />
+          <Parameter Name="LcrMaxValue" Type="numeric" Mode="In" />
+          <Parameter Name="LcrMinValue" Type="numeric" Mode="In" />
+          <Parameter Name="Size" Type="varchar" Mode="In" />
+          <Parameter Name="CompensateValue" Type="numeric" Mode="In" />
+          <Parameter Name="Picture" Type="image" Mode="In" />
+          <Parameter Name="Remarks" Type="varchar" Mode="In" />
+          <Parameter Name="Creator" Type="varchar" Mode="In" />
+          <Parameter Name="CreationDate" Type="datetime" Mode="In" />
+          <Parameter Name="Modifier" Type="varchar" Mode="In" />
+          <Parameter Name="ModificationDate" Type="datetime" Mode="In" />
+          <Parameter Name="ScreenPrinting" Type="varchar" Mode="In" />
+          <Parameter Name="MaxTolerance" Type="decimal" Mode="In" />
+          <Parameter Name="MinTolerance" Type="decimal" Mode="In" />
+          <Parameter Name="ToleranceType" Type="varchar" Mode="In" />
+          <Parameter Name="ComponentPackaging" Type="varchar" Mode="In" />
+          <Parameter Name="msg" Type="varchar" Mode="InOut" />
+        </Function>
         <Function Name="P_Eng_BOMCheck" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ProductCode" Type="varchar" Mode="In" />
           <Parameter Name="RetVal" Type="int" Mode="InOut" />
@@ -2161,6 +2186,11 @@
         <Function Name="P_Sys_DataClear" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="P_Sys_GetHelpCode" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="HelpCode" Type="varchar" Mode="InOut" />
+        </Function>
+        <Function Name="P_Update_Eng_ProgramOption" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ProductCode" Type="varchar" Mode="In" />
+          <Parameter Name="BoardSide" Type="varchar" Mode="In" />
+          <Parameter Name="Picture" Type="image" Mode="In" />
         </Function>
         <Function Name="SplitStr" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="SourceSql" Type="varchar(max)" Mode="In" />
@@ -3816,6 +3846,94 @@
           <Property Name="Content" Type="String" MaxLength="800" FixedLength="false" Unicode="false" />
           <Property Name="OperationDate" Type="DateTime" Precision="3" />
         </EntityType>
+        <EntityType Name="View_Bas_CompensationValue">
+          <Key>
+            <PropertyRef Name="行" />
+          </Key>
+          <Property Name="行" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="范围最大值" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="范围最小值" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="调整值加" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="调整值减" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="精度" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="单位" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="启用" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="View_Bas_Material">
+          <Key>
+            <PropertyRef Name="物料编码" />
+          </Key>
+          <Property Name="物料编码" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="物料名称" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="元件类型" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="标准值" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="单位" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="最大值" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="最小值" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="尺寸" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="公差上限" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="公差下限" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="公差类别" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="备注" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="View_ComponentSize">
+          <Key>
+            <PropertyRef Name="尺寸" />
+          </Key>
+          <Property Name="尺寸" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="截图长度" Type="Int32" />
+          <Property Name="截图宽度" Type="Int32" />
+          <Property Name="物理长度" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="物理宽度" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="OCR" Type="Boolean" />
+          <Property Name="备注" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="View_Eng_MeterOptionItem">
+          <Key>
+            <PropertyRef Name="行" />
+            <PropertyRef Name="操作码" />
+          </Key>
+          <Property Name="行" Type="Int32" Nullable="false" />
+          <Property Name="操作码" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="元件类型" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="最小值" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="最小值单位" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="最大值" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="最大值单位" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="测试类型" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="测试频率" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="测试电压" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="量程类型" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="量程" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="失败次数" Type="Int32" />
+          <Property Name="测量速度" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="测试内阻" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="取值次数" Type="Int32" />
+          <Property Name="波动区间" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="有效值下限" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="下限单位" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="有效值上限" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="上限单位" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="备注" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="View_Eng_Program">
+          <Key>
+            <PropertyRef Name="产品编号" />
+          </Key>
+          <Property Name="产品编号" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="产品名称" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="客户" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="板面" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="分析规则" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="状态" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="备注" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="使用次数" Type="Int32" />
+          <Property Name="最后一次使用时间" Type="DateTime" Precision="3" />
+          <Property Name="创建人" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="创建时间" Type="DateTime" Precision="3" />
+          <Property Name="修改人" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="修改时间" Type="DateTime" Precision="3" />
+        </EntityType>
         <Association Name="FK_Bas_DicItem_Bas_DicIndex">
           <End Role="Bas_DicIndex" Type="Self.Bas_DicIndex" Multiplicity="1" />
           <End Role="Bas_DicItem" Type="Self.Bas_DicItem" Multiplicity="*" />
@@ -4202,6 +4320,11 @@
           <EntitySet Name="Sys_RolePower" EntityType="Self.Sys_RolePower" />
           <EntitySet Name="Sys_User" EntityType="Self.Sys_User" />
           <EntitySet Name="Sys_UserLog" EntityType="Self.Sys_UserLog" />
+          <EntitySet Name="View_Bas_CompensationValue" EntityType="Self.View_Bas_CompensationValue" />
+          <EntitySet Name="View_Bas_Material" EntityType="Self.View_Bas_Material" />
+          <EntitySet Name="View_ComponentSize" EntityType="Self.View_ComponentSize" />
+          <EntitySet Name="View_Eng_MeterOptionItem" EntityType="Self.View_Eng_MeterOptionItem" />
+          <EntitySet Name="View_Eng_Program" EntityType="Self.View_Eng_Program" />
           <AssociationSet Name="FK_Bas_DicItem_Bas_DicIndex" Association="Self.FK_Bas_DicItem_Bas_DicIndex">
             <End Role="Bas_DicIndex" EntitySet="Bas_DicIndex" />
             <End Role="Bas_DicItem" EntitySet="Bas_DicItem" />
@@ -4458,6 +4581,84 @@
             <Parameter Name="RetVal" Mode="InOut" Type="Int32" />
             <Parameter Name="RetMsg" Mode="InOut" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="P_Insert_Eng_Bom">
+            <Parameter Name="ProductCode" Mode="In" Type="String" />
+            <Parameter Name="Row" Mode="In" Type="Int32" />
+            <Parameter Name="MaterialCode" Mode="In" Type="String" />
+            <Parameter Name="MaterialName" Mode="In" Type="String" />
+            <Parameter Name="Quantity" Mode="In" Type="Int32" />
+            <Parameter Name="Position" Mode="In" Type="String" />
+            <Parameter Name="AllowSubstitute" Mode="In" Type="String" />
+            <Parameter Name="LcrType" Mode="In" Type="String" />
+            <Parameter Name="LcrStandardValue" Mode="In" Type="Decimal" />
+            <Parameter Name="LcrUnitCode" Mode="In" Type="String" />
+            <Parameter Name="LcrMaxValue" Mode="In" Type="Decimal" />
+            <Parameter Name="LcrMinValue" Mode="In" Type="Decimal" />
+            <Parameter Name="Size" Mode="In" Type="String" />
+            <Parameter Name="Remarks" Mode="In" Type="String" />
+            <Parameter Name="Creator" Mode="In" Type="String" />
+            <Parameter Name="Modifier" Mode="In" Type="String" />
+            <Parameter Name="MaxTolerance" Mode="In" Type="Decimal" />
+            <Parameter Name="MinTolerance" Mode="In" Type="Decimal" />
+            <Parameter Name="Status" Mode="In" Type="String" />
+            <Parameter Name="ScreenPrinting" Mode="In" Type="String" />
+            <Parameter Name="ToleranceType" Mode="In" Type="String" />
+            <Parameter Name="ComponentPackaging" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="P_Insert_Eng_Program">
+            <Parameter Name="ProductCode" Mode="In" Type="String" />
+            <Parameter Name="ProductName" Mode="In" Type="String" />
+            <Parameter Name="CustomerCode" Mode="In" Type="String" />
+            <Parameter Name="BoardSide" Mode="In" Type="String" />
+            <Parameter Name="RuleCode" Mode="In" Type="String" />
+            <Parameter Name="Status" Mode="In" Type="String" />
+            <Parameter Name="Remarks" Mode="In" Type="String" />
+            <Parameter Name="Creator" Mode="In" Type="String" />
+            <Parameter Name="Modifier" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="P_Insert_Eng_XYData">
+            <Parameter Name="ProductCode" Mode="In" Type="String" />
+            <Parameter Name="Position" Mode="In" Type="String" />
+            <Parameter Name="BoardId" Mode="In" Type="Int32" />
+            <Parameter Name="BoardSide" Mode="In" Type="String" />
+            <Parameter Name="IsSMD" Mode="In" Type="String" />
+            <Parameter Name="MaterialCode" Mode="In" Type="String" />
+            <Parameter Name="MaterialName" Mode="In" Type="String" />
+            <Parameter Name="X" Mode="In" Type="Decimal" />
+            <Parameter Name="Y" Mode="In" Type="Decimal" />
+            <Parameter Name="Unit" Mode="In" Type="String" />
+            <Parameter Name="Angle" Mode="In" Type="Decimal" />
+            <Parameter Name="RX" Mode="In" Type="Decimal" />
+            <Parameter Name="RY" Mode="In" Type="Decimal" />
+            <Parameter Name="Remarks" Mode="In" Type="String" />
+            <Parameter Name="Creator" Mode="In" Type="String" />
+            <Parameter Name="Modifier" Mode="In" Type="String" />
+            <Parameter Name="StandardCode" Mode="In" Type="String" />
+            <Parameter Name="StandardRotation" Mode="In" Type="Decimal" />
+            <Parameter Name="Size" Mode="In" Type="String" />
+            <Parameter Name="LcrType" Mode="In" Type="String" />
+            <Parameter Name="IsDefined" Mode="In" Type="String" />
+            <Parameter Name="OX" Mode="In" Type="Decimal" />
+            <Parameter Name="OY" Mode="In" Type="Decimal" />
+            <Parameter Name="OAngle" Mode="In" Type="Decimal" />
+            <Parameter Name="Row" Mode="In" Type="Int32" />
+            <Parameter Name="LX" Mode="In" Type="Decimal" />
+            <Parameter Name="LY" Mode="In" Type="Decimal" />
+            <Parameter Name="IsMerge" Mode="In" Type="String" />
+            <Parameter Name="StandardImage" Mode="In" Type="Binary" />
+            <Parameter Name="Sequence" Mode="In" Type="Int32" />
+            <Parameter Name="FurnaceLcrStandardValue" Mode="In" Type="Decimal" />
+            <Parameter Name="FurnaceLcrUnitCode" Mode="In" Type="String" />
+            <Parameter Name="FurnaceLcrMaxValue" Mode="In" Type="Decimal" />
+            <Parameter Name="FurnaceLcrMinValue" Mode="In" Type="Decimal" />
+            <Parameter Name="LXCompensation" Mode="In" Type="Decimal" />
+            <Parameter Name="LYCompensation" Mode="In" Type="Decimal" />
+            <Parameter Name="ComponentPackaging" Mode="In" Type="String" />
+            <Parameter Name="SX" Mode="In" Type="Decimal" />
+            <Parameter Name="SY" Mode="In" Type="Decimal" />
+            <Parameter Name="AdjustedAngle" Mode="In" Type="Decimal" />
+            <Parameter Name="Groups" Mode="In" Type="Int32" />
+          </FunctionImport>
           <FunctionImport Name="P_Man_DeleteBoardMergeData">
             <Parameter Name="ProductCode" Mode="In" Type="String" />
             <Parameter Name="ReportCode" Mode="In" Type="String" />
@@ -4529,6 +4730,13 @@
             <Parameter Name="RetVal" Mode="InOut" Type="Int32" />
             <Parameter Name="RetMsg" Mode="InOut" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="P_Search_Eng_Bom" ReturnType="Collection(FAI_NewModel.P_Search_Eng_Bom_Result)">
+          <Parameter Name="ProductCode" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="P_Search_Eng_Program" ReturnType="Collection(FAI_NewModel.P_Search_Eng_Program_Result)" />
+          <FunctionImport Name="P_Search_Eng_XYData" ReturnType="Collection(FAI_NewModel.P_Search_Eng_XYData_Result)">
+          <Parameter Name="ProductCode" Mode="In" Type="String" />
+          </FunctionImport>
           <FunctionImport Name="P_Sys_ChangePassword">
             <Parameter Name="UserCode" Mode="In" Type="String" />
             <Parameter Name="PassWord" Mode="In" Type="String" />
@@ -4552,97 +4760,59 @@
           <FunctionImport Name="P_Sys_GetHelpCode">
           <Parameter Name="HelpCode" Mode="InOut" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="P_Insert_Eng_Program">
+          <FunctionImport Name="P_Update_Eng_ProgramOption">
             <Parameter Name="ProductCode" Mode="In" Type="String" />
-            <Parameter Name="ProductName" Mode="In" Type="String" />
-            <Parameter Name="CustomerCode" Mode="In" Type="String" />
             <Parameter Name="BoardSide" Mode="In" Type="String" />
-            <Parameter Name="RuleCode" Mode="In" Type="String" />
-            <Parameter Name="Status" Mode="In" Type="String" />
-            <Parameter Name="Remarks" Mode="In" Type="String" />
-            <Parameter Name="Creator" Mode="In" Type="String" />
-            <Parameter Name="Modifier" Mode="In" Type="String" />
+            <Parameter Name="Picture" Mode="In" Type="Binary" />
           </FunctionImport>
-          <FunctionImport Name="P_Search_Eng_Program" ReturnType="Collection(FAI_NewModel.P_Search_Eng_Program_Result)" />
-          <EntitySet Name="View_Eng_Program" EntityType="FAI_NewModel.View_Eng_Program" />
-          <FunctionImport Name="P_Insert_Eng_Bom">
-            <Parameter Name="ProductCode" Mode="In" Type="String" />
-            <Parameter Name="Row" Mode="In" Type="Int32" />
+          <FunctionImport Name="P_Bas_Material">
+            <Parameter Name="type" Mode="In" Type="Int32" />
+            <Parameter Name="CustomerCode" Mode="In" Type="String" />
             <Parameter Name="MaterialCode" Mode="In" Type="String" />
             <Parameter Name="MaterialName" Mode="In" Type="String" />
-            <Parameter Name="Quantity" Mode="In" Type="Int32" />
-            <Parameter Name="Position" Mode="In" Type="String" />
-            <Parameter Name="AllowSubstitute" Mode="In" Type="String" />
             <Parameter Name="LcrType" Mode="In" Type="String" />
             <Parameter Name="LcrStandardValue" Mode="In" Type="Decimal" />
             <Parameter Name="LcrUnitCode" Mode="In" Type="String" />
             <Parameter Name="LcrMaxValue" Mode="In" Type="Decimal" />
             <Parameter Name="LcrMinValue" Mode="In" Type="Decimal" />
             <Parameter Name="Size" Mode="In" Type="String" />
+            <Parameter Name="CompensateValue" Mode="In" Type="Decimal" />
+            <Parameter Name="Picture" Mode="In" Type="Binary" />
             <Parameter Name="Remarks" Mode="In" Type="String" />
             <Parameter Name="Creator" Mode="In" Type="String" />
+            <Parameter Name="CreationDate" Mode="In" Type="DateTime" />
             <Parameter Name="Modifier" Mode="In" Type="String" />
+            <Parameter Name="ModificationDate" Mode="In" Type="DateTime" />
+            <Parameter Name="ScreenPrinting" Mode="In" Type="String" />
             <Parameter Name="MaxTolerance" Mode="In" Type="Decimal" />
             <Parameter Name="MinTolerance" Mode="In" Type="Decimal" />
-            <Parameter Name="Status" Mode="In" Type="String" />
-            <Parameter Name="ScreenPrinting" Mode="In" Type="String" />
             <Parameter Name="ToleranceType" Mode="In" Type="String" />
             <Parameter Name="ComponentPackaging" Mode="In" Type="String" />
+            <Parameter Name="msg" Mode="InOut" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="P_Insert_Eng_XYData">
-            <Parameter Name="ProductCode" Mode="In" Type="String" />
-            <Parameter Name="Position" Mode="In" Type="String" />
-            <Parameter Name="BoardId" Mode="In" Type="Int32" />
-            <Parameter Name="BoardSide" Mode="In" Type="String" />
-            <Parameter Name="IsSMD" Mode="In" Type="String" />
-            <Parameter Name="MaterialCode" Mode="In" Type="String" />
-            <Parameter Name="MaterialName" Mode="In" Type="String" />
-            <Parameter Name="X" Mode="In" Type="Decimal" />
-            <Parameter Name="Y" Mode="In" Type="Decimal" />
-            <Parameter Name="Unit" Mode="In" Type="String" />
-            <Parameter Name="Angle" Mode="In" Type="Decimal" />
-            <Parameter Name="RX" Mode="In" Type="Decimal" />
-            <Parameter Name="RY" Mode="In" Type="Decimal" />
-            <Parameter Name="Remarks" Mode="In" Type="String" />
-            <Parameter Name="Creator" Mode="In" Type="String" />
-            <Parameter Name="Modifier" Mode="In" Type="String" />
-            <Parameter Name="StandardCode" Mode="In" Type="String" />
-            <Parameter Name="StandardRotation" Mode="In" Type="Decimal" />
-            <Parameter Name="Size" Mode="In" Type="String" />
-            <Parameter Name="LcrType" Mode="In" Type="String" />
-            <Parameter Name="IsDefined" Mode="In" Type="String" />
-            <Parameter Name="OX" Mode="In" Type="Decimal" />
-            <Parameter Name="OY" Mode="In" Type="Decimal" />
-            <Parameter Name="OAngle" Mode="In" Type="Decimal" />
-            <Parameter Name="Row" Mode="In" Type="Int32" />
-            <Parameter Name="LX" Mode="In" Type="Decimal" />
-            <Parameter Name="LY" Mode="In" Type="Decimal" />
-            <Parameter Name="IsMerge" Mode="In" Type="String" />
-            <Parameter Name="StandardImage" Mode="In" Type="Binary" />
-            <Parameter Name="Sequence" Mode="In" Type="Int32" />
-            <Parameter Name="FurnaceLcrStandardValue" Mode="In" Type="Decimal" />
-            <Parameter Name="FurnaceLcrUnitCode" Mode="In" Type="String" />
-            <Parameter Name="FurnaceLcrMaxValue" Mode="In" Type="Decimal" />
-            <Parameter Name="FurnaceLcrMinValue" Mode="In" Type="Decimal" />
-            <Parameter Name="LXCompensation" Mode="In" Type="Decimal" />
-            <Parameter Name="LYCompensation" Mode="In" Type="Decimal" />
-            <Parameter Name="ComponentPackaging" Mode="In" Type="String" />
-            <Parameter Name="SX" Mode="In" Type="Decimal" />
-            <Parameter Name="SY" Mode="In" Type="Decimal" />
-            <Parameter Name="AdjustedAngle" Mode="In" Type="Decimal" />
-            <Parameter Name="Groups" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="P_Search_Eng_Bom" ReturnType="Collection(FAI_NewModel.P_Search_Eng_Bom_Result)">
-          <Parameter Name="ProductCode" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="P_Search_Eng_XYData" ReturnType="Collection(FAI_NewModel.P_Search_Eng_XYData_Result)">
-          <Parameter Name="ProductCode" Mode="In" Type="String" />
-          </FunctionImport>
-          <EntitySet Name="View_Bas_Material" EntityType="FAI_NewModel.View_Bas_Material" />
-          <EntitySet Name="View_ComponentSize" EntityType="FAI_NewModel.View_ComponentSize" />
-          <EntitySet Name="View_Bas_CompensationValue" EntityType="FAI_NewModel.View_Bas_CompensationValue" />
-          <EntitySet Name="View_Eng_MeterOptionItem" EntityType="FAI_NewModel.View_Eng_MeterOptionItem" />
         </EntityContainer>
+        <ComplexType Name="P_Search_Eng_Bom_Result">
+          <Property Type="String" Name="产品编码" Nullable="false" MaxLength="100" />
+          <Property Type="Int32" Name="序号" Nullable="false" />
+          <Property Type="String" Name="物料编码" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="物料描述" Nullable="true" MaxLength="1000" />
+          <Property Type="Int32" Name="用量" Nullable="true" />
+          <Property Type="String" Name="元件位置" Nullable="true" />
+          <Property Type="String" Name="元件类型" Nullable="true" MaxLength="10" />
+          <Property Type="Decimal" Name="标准值" Nullable="true" Precision="19" Scale="4" />
+          <Property Type="String" Name="单位" Nullable="true" MaxLength="10" />
+          <Property Type="Decimal" Name="最大值" Nullable="true" Precision="19" Scale="4" />
+          <Property Type="Decimal" Name="最小值" Nullable="true" Precision="19" Scale="4" />
+          <Property Type="String" Name="元件尺寸" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="替代料" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="创建者" Nullable="true" MaxLength="20" />
+          <Property Type="DateTime" Name="创建时间" Nullable="true" Precision="23" />
+          <Property Type="String" Name="修改者" Nullable="true" MaxLength="20" />
+          <Property Type="DateTime" Name="修改时间" Nullable="true" Precision="23" />
+          <Property Type="Decimal" Name="上限公差" Nullable="true" Precision="18" Scale="4" />
+          <Property Type="Decimal" Name="下限公差" Nullable="true" Precision="18" Scale="4" />
+          <Property Type="String" Name="公差类别" Nullable="true" MaxLength="10" />
+        </ComplexType>
         <ComplexType Name="P_Search_Eng_Program_Result">
           <Property Type="String" Name="产品编号" Nullable="false" MaxLength="100" />
           <Property Type="String" Name="产品名称" Nullable="true" MaxLength="200" />
@@ -4657,46 +4827,6 @@
           <Property Type="DateTime" Name="创建时间" Nullable="true" Precision="23" />
           <Property Type="String" Name="修改人" Nullable="true" MaxLength="20" />
           <Property Type="DateTime" Name="修改时间" Nullable="true" Precision="23" />
-        </ComplexType>
-        <EntityType Name="View_Eng_Program">
-          <Key>
-            <PropertyRef Name="产品编号" />
-          </Key>
-          <Property Name="产品编号" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="产品名称" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="客户" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="板面" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="分析规则" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="状态" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="备注" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="使用次数" Type="Int32" />
-          <Property Name="最后一次使用时间" Type="DateTime" Precision="3" />
-          <Property Name="创建人" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="创建时间" Type="DateTime" Precision="3" />
-          <Property Name="修改人" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="修改时间" Type="DateTime" Precision="3" />
-        </EntityType>
-        <ComplexType Name="P_Search_Eng_Bom_Result">
-          <Property Type="String" Name="产品编码" Nullable="false" MaxLength="100" />
-          <Property Type="Int32" Name="序号" Nullable="false" />
-          <Property Type="String" Name="物料编码" Nullable="false" MaxLength="100" />
-          <Property Type="String" Name="物料描述" Nullable="true" MaxLength="1000" />
-          <Property Type="Int32" Name="用量" Nullable="true" />
-          <Property Type="String" Name="元件位置" Nullable="true" />
-          <Property Type="String" Name="元件类型" Nullable="true" MaxLength="10" />
-          <Property Type="Decimal" Name="标准值" Nullable="true" Precision="19" Scale="4" />
-          <Property Type="String" Name="单位" Nullable="true" MaxLength="10" />
-          <Property Type="Decimal" Name="最大值" Nullable="true" Precision="19" Scale="4" />
-          <Property Type="Decimal" Name="最小值" Nullable="true" Precision="19" Scale="4" />
-          <Property Type="String" Name="元件尺寸" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="备注" Nullable="true" MaxLength="100" />
-          <Property Type="String" Name="创建者" Nullable="true" MaxLength="20" />
-          <Property Type="DateTime" Name="创建时间" Nullable="true" Precision="23" />
-          <Property Type="String" Name="修改者" Nullable="true" MaxLength="20" />
-          <Property Type="DateTime" Name="修改时间" Nullable="true" Precision="23" />
-          <Property Type="Decimal" Name="上限公差" Nullable="true" Precision="18" Scale="4" />
-          <Property Type="Decimal" Name="下限公差" Nullable="true" Precision="18" Scale="4" />
-          <Property Type="String" Name="公差类别" Nullable="true" MaxLength="10" />
         </ComplexType>
         <ComplexType Name="P_Search_Eng_XYData_Result">
           <Property Type="String" Name="产品编码" Nullable="false" MaxLength="100" />
@@ -4725,76 +4855,6 @@
           <Property Type="Decimal" Name="原始角度" Nullable="true" Precision="19" Scale="2" />
           <Property Type="Int32" Name="序号" Nullable="false" />
         </ComplexType>
-        <EntityType Name="View_Bas_Material">
-          <Key>
-            <PropertyRef Name="物料编码" />
-          </Key>
-          <Property Name="物料编码" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="物料名称" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
-          <Property Name="元件类型" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="标准值" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="单位" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="最大值" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="最小值" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="尺寸" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="公差上限" Type="Decimal" Precision="18" Scale="4" />
-          <Property Name="公差下限" Type="Decimal" Precision="18" Scale="4" />
-          <Property Name="公差类别" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="备注" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <EntityType Name="View_ComponentSize">
-          <Key>
-            <PropertyRef Name="尺寸" />
-          </Key>
-          <Property Name="尺寸" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="截图长度" Type="Int32" />
-          <Property Name="截图宽度" Type="Int32" />
-          <Property Name="物理长度" Type="Decimal" Precision="18" Scale="4" />
-          <Property Name="物理宽度" Type="Decimal" Precision="18" Scale="4" />
-          <Property Name="OCR" Type="Boolean" />
-          <Property Name="备注" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <EntityType Name="View_Bas_CompensationValue">
-          <Key>
-            <PropertyRef Name="行" />
-          </Key>
-          <Property Name="行" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="范围最大值" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="范围最小值" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="调整值加" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="调整值减" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="精度" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="单位" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="启用" Type="Boolean" />
-        </EntityType>
-        <EntityType Name="View_Eng_MeterOptionItem">
-          <Key>
-            <PropertyRef Name="行" />
-            <PropertyRef Name="操作码" />
-          </Key>
-          <Property Name="行" Type="Int32" Nullable="false" />
-          <Property Name="操作码" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="元件类型" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="最小值" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="最小值单位" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="最大值" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="最大值单位" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="测试类型" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="测试频率" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="测试电压" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="量程类型" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="量程" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="失败次数" Type="Int32" />
-          <Property Name="测量速度" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="测试内阻" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="取值次数" Type="Int32" />
-          <Property Name="波动区间" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="有效值下限" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="下限单位" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="有效值上限" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="上限单位" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="备注" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -6176,6 +6236,98 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="View_Bas_CompensationValue">
+            <EntityTypeMapping TypeName="FAI_NewModel.View_Bas_CompensationValue">
+              <MappingFragment StoreEntitySet="View_Bas_CompensationValue">
+                <ScalarProperty Name="行" ColumnName="行" />
+                <ScalarProperty Name="范围最大值" ColumnName="范围最大值" />
+                <ScalarProperty Name="范围最小值" ColumnName="范围最小值" />
+                <ScalarProperty Name="调整值加" ColumnName="调整值加" />
+                <ScalarProperty Name="调整值减" ColumnName="调整值减" />
+                <ScalarProperty Name="精度" ColumnName="精度" />
+                <ScalarProperty Name="单位" ColumnName="单位" />
+                <ScalarProperty Name="启用" ColumnName="启用" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="View_Bas_Material">
+            <EntityTypeMapping TypeName="FAI_NewModel.View_Bas_Material">
+              <MappingFragment StoreEntitySet="View_Bas_Material">
+                <ScalarProperty Name="物料编码" ColumnName="物料编码" />
+                <ScalarProperty Name="物料名称" ColumnName="物料名称" />
+                <ScalarProperty Name="元件类型" ColumnName="元件类型" />
+                <ScalarProperty Name="标准值" ColumnName="标准值" />
+                <ScalarProperty Name="单位" ColumnName="单位" />
+                <ScalarProperty Name="最大值" ColumnName="最大值" />
+                <ScalarProperty Name="最小值" ColumnName="最小值" />
+                <ScalarProperty Name="尺寸" ColumnName="尺寸" />
+                <ScalarProperty Name="公差上限" ColumnName="公差上限" />
+                <ScalarProperty Name="公差下限" ColumnName="公差下限" />
+                <ScalarProperty Name="公差类别" ColumnName="公差类别" />
+                <ScalarProperty Name="备注" ColumnName="备注" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="View_ComponentSize">
+            <EntityTypeMapping TypeName="FAI_NewModel.View_ComponentSize">
+              <MappingFragment StoreEntitySet="View_ComponentSize">
+                <ScalarProperty Name="尺寸" ColumnName="尺寸" />
+                <ScalarProperty Name="截图长度" ColumnName="截图长度" />
+                <ScalarProperty Name="截图宽度" ColumnName="截图宽度" />
+                <ScalarProperty Name="物理长度" ColumnName="物理长度" />
+                <ScalarProperty Name="物理宽度" ColumnName="物理宽度" />
+                <ScalarProperty Name="OCR" ColumnName="OCR" />
+                <ScalarProperty Name="备注" ColumnName="备注" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="View_Eng_MeterOptionItem">
+            <EntityTypeMapping TypeName="FAI_NewModel.View_Eng_MeterOptionItem">
+              <MappingFragment StoreEntitySet="View_Eng_MeterOptionItem">
+                <ScalarProperty Name="行" ColumnName="行" />
+                <ScalarProperty Name="操作码" ColumnName="操作码" />
+                <ScalarProperty Name="元件类型" ColumnName="元件类型" />
+                <ScalarProperty Name="最小值" ColumnName="最小值" />
+                <ScalarProperty Name="最小值单位" ColumnName="最小值单位" />
+                <ScalarProperty Name="最大值" ColumnName="最大值" />
+                <ScalarProperty Name="最大值单位" ColumnName="最大值单位" />
+                <ScalarProperty Name="测试类型" ColumnName="测试类型" />
+                <ScalarProperty Name="测试频率" ColumnName="测试频率" />
+                <ScalarProperty Name="测试电压" ColumnName="测试电压" />
+                <ScalarProperty Name="量程类型" ColumnName="量程类型" />
+                <ScalarProperty Name="量程" ColumnName="量程" />
+                <ScalarProperty Name="失败次数" ColumnName="失败次数" />
+                <ScalarProperty Name="测量速度" ColumnName="测量速度" />
+                <ScalarProperty Name="测试内阻" ColumnName="测试内阻" />
+                <ScalarProperty Name="取值次数" ColumnName="取值次数" />
+                <ScalarProperty Name="波动区间" ColumnName="波动区间" />
+                <ScalarProperty Name="有效值下限" ColumnName="有效值下限" />
+                <ScalarProperty Name="下限单位" ColumnName="下限单位" />
+                <ScalarProperty Name="有效值上限" ColumnName="有效值上限" />
+                <ScalarProperty Name="上限单位" ColumnName="上限单位" />
+                <ScalarProperty Name="备注" ColumnName="备注" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="View_Eng_Program">
+            <EntityTypeMapping TypeName="FAI_NewModel.View_Eng_Program">
+              <MappingFragment StoreEntitySet="View_Eng_Program">
+                <ScalarProperty Name="产品编号" ColumnName="产品编号" />
+                <ScalarProperty Name="产品名称" ColumnName="产品名称" />
+                <ScalarProperty Name="客户" ColumnName="客户" />
+                <ScalarProperty Name="板面" ColumnName="板面" />
+                <ScalarProperty Name="分析规则" ColumnName="分析规则" />
+                <ScalarProperty Name="状态" ColumnName="状态" />
+                <ScalarProperty Name="备注" ColumnName="备注" />
+                <ScalarProperty Name="使用次数" ColumnName="使用次数" />
+                <ScalarProperty Name="最后一次使用时间" ColumnName="最后一次使用时间" />
+                <ScalarProperty Name="创建人" ColumnName="创建人" />
+                <ScalarProperty Name="创建时间" ColumnName="创建时间" />
+                <ScalarProperty Name="修改人" ColumnName="修改人" />
+                <ScalarProperty Name="修改时间" ColumnName="修改时间" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <FunctionImportMapping FunctionName="FAI_NewModel.Store.GetPoints" FunctionImportName="GetPoints">
             <ResultMapping>
               <ComplexTypeMapping TypeName="FAI_NewModel.GetPoints_Result">
@@ -6218,6 +6370,9 @@
           <FunctionImportMapping FunctionImportName="P_Eng_XYDataItemAdd" FunctionName="FAI_NewModel.Store.P_Eng_XYDataItemAdd" />
           <FunctionImportMapping FunctionImportName="P_Eng_XYDataMaterialIdentify" FunctionName="FAI_NewModel.Store.P_Eng_XYDataMaterialIdentify" />
           <FunctionImportMapping FunctionImportName="P_Eng_XYDataQuantityCheck" FunctionName="FAI_NewModel.Store.P_Eng_XYDataQuantityCheck" />
+          <FunctionImportMapping FunctionImportName="P_Insert_Eng_Bom" FunctionName="FAI_NewModel.Store.P_Insert_Eng_Bom" />
+          <FunctionImportMapping FunctionImportName="P_Insert_Eng_Program" FunctionName="FAI_NewModel.Store.P_Insert_Eng_Program" />
+          <FunctionImportMapping FunctionImportName="P_Insert_Eng_XYData" FunctionName="FAI_NewModel.Store.P_Insert_Eng_XYData" />
           <FunctionImportMapping FunctionImportName="P_Man_DeleteBoardMergeData" FunctionName="FAI_NewModel.Store.P_Man_DeleteBoardMergeData" />
           <FunctionImportMapping FunctionImportName="P_Man_DoManualPassThisMaterials" FunctionName="FAI_NewModel.Store.P_Man_DoManualPassThisMaterials" />
           <FunctionImportMapping FunctionImportName="P_Man_GetPositionList" FunctionName="FAI_NewModel.Store.P_Man_GetPositionList" />
@@ -6227,12 +6382,32 @@
           <FunctionImportMapping FunctionImportName="P_Man_ReportItemAdd" FunctionName="FAI_NewModel.Store.P_Man_ReportItemAdd" />
           <FunctionImportMapping FunctionImportName="P_Man_ReportSynBom" FunctionName="FAI_NewModel.Store.P_Man_ReportSynBom" />
           <FunctionImportMapping FunctionImportName="P_Man_SynCoordinate" FunctionName="FAI_NewModel.Store.P_Man_SynCoordinate" />
-          <FunctionImportMapping FunctionImportName="P_Sys_ChangePassword" FunctionName="FAI_NewModel.Store.P_Sys_ChangePassword" />
-          <FunctionImportMapping FunctionImportName="P_Sys_CheckPower" FunctionName="FAI_NewModel.Store.P_Sys_CheckPower" />
-          <FunctionImportMapping FunctionImportName="P_Sys_CheckUser" FunctionName="FAI_NewModel.Store.P_Sys_CheckUser" />
-          <FunctionImportMapping FunctionImportName="P_Sys_DataClear" FunctionName="FAI_NewModel.Store.P_Sys_DataClear" />
-          <FunctionImportMapping FunctionImportName="P_Sys_GetHelpCode" FunctionName="FAI_NewModel.Store.P_Sys_GetHelpCode" />
-          <FunctionImportMapping FunctionImportName="P_Insert_Eng_Program" FunctionName="FAI_NewModel.Store.P_Insert_Eng_Program" />
+          <FunctionImportMapping FunctionImportName="P_Search_Eng_Bom" FunctionName="FAI_NewModel.Store.P_Search_Eng_Bom">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="FAI_NewModel.P_Search_Eng_Bom_Result">
+                <ScalarProperty Name="产品编码" ColumnName="产品编码" />
+                <ScalarProperty Name="序号" ColumnName="序号" />
+                <ScalarProperty Name="物料编码" ColumnName="物料编码" />
+                <ScalarProperty Name="物料描述" ColumnName="物料描述" />
+                <ScalarProperty Name="用量" ColumnName="用量" />
+                <ScalarProperty Name="元件位置" ColumnName="元件位置" />
+                <ScalarProperty Name="元件类型" ColumnName="元件类型" />
+                <ScalarProperty Name="标准值" ColumnName="标准值" />
+                <ScalarProperty Name="单位" ColumnName="单位" />
+                <ScalarProperty Name="最大值" ColumnName="最大值" />
+                <ScalarProperty Name="最小值" ColumnName="最小值" />
+                <ScalarProperty Name="元件尺寸" ColumnName="元件尺寸" />
+                <ScalarProperty Name="替代料" ColumnName="替代料" />
+                <ScalarProperty Name="创建者" ColumnName="创建者" />
+                <ScalarProperty Name="创建时间" ColumnName="创建时间" />
+                <ScalarProperty Name="修改者" ColumnName="修改者" />
+                <ScalarProperty Name="修改时间" ColumnName="修改时间" />
+                <ScalarProperty Name="上限公差" ColumnName="上限公差" />
+                <ScalarProperty Name="下限公差" ColumnName="下限公差" />
+                <ScalarProperty Name="公差类别" ColumnName="公差类别" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="P_Search_Eng_Program" FunctionName="FAI_NewModel.Store.P_Search_Eng_Program">
             <ResultMapping>
               <ComplexTypeMapping TypeName="FAI_NewModel.P_Search_Eng_Program_Result">
@@ -6249,53 +6424,6 @@
                 <ScalarProperty Name="创建时间" ColumnName="创建时间" />
                 <ScalarProperty Name="修改人" ColumnName="修改人" />
                 <ScalarProperty Name="修改时间" ColumnName="修改时间" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <EntitySetMapping Name="View_Eng_Program">
-            <EntityTypeMapping TypeName="FAI_NewModel.View_Eng_Program">
-              <MappingFragment StoreEntitySet="View_Eng_Program">
-                <ScalarProperty Name="修改时间" ColumnName="修改时间" />
-                <ScalarProperty Name="修改人" ColumnName="修改人" />
-                <ScalarProperty Name="创建时间" ColumnName="创建时间" />
-                <ScalarProperty Name="创建人" ColumnName="创建人" />
-                <ScalarProperty Name="最后一次使用时间" ColumnName="最后一次使用时间" />
-                <ScalarProperty Name="使用次数" ColumnName="使用次数" />
-                <ScalarProperty Name="备注" ColumnName="备注" />
-                <ScalarProperty Name="状态" ColumnName="状态" />
-                <ScalarProperty Name="分析规则" ColumnName="分析规则" />
-                <ScalarProperty Name="板面" ColumnName="板面" />
-                <ScalarProperty Name="客户" ColumnName="客户" />
-                <ScalarProperty Name="产品名称" ColumnName="产品名称" />
-                <ScalarProperty Name="产品编号" ColumnName="产品编号" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="P_Insert_Eng_Bom" FunctionName="FAI_NewModel.Store.P_Insert_Eng_Bom" />
-          <FunctionImportMapping FunctionImportName="P_Insert_Eng_XYData" FunctionName="FAI_NewModel.Store.P_Insert_Eng_XYData" />
-          <FunctionImportMapping FunctionImportName="P_Search_Eng_Bom" FunctionName="FAI_NewModel.Store.P_Search_Eng_Bom">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="FAI_NewModel.P_Search_Eng_Bom_Result">
-                <ScalarProperty Name="产品编码" ColumnName="产品编码" />
-                <ScalarProperty Name="序号" ColumnName="序号" />
-                <ScalarProperty Name="物料编码" ColumnName="物料编码" />
-                <ScalarProperty Name="物料描述" ColumnName="物料描述" />
-                <ScalarProperty Name="用量" ColumnName="用量" />
-                <ScalarProperty Name="元件位置" ColumnName="元件位置" />
-                <ScalarProperty Name="元件类型" ColumnName="元件类型" />
-                <ScalarProperty Name="标准值" ColumnName="标准值" />
-                <ScalarProperty Name="单位" ColumnName="单位" />
-                <ScalarProperty Name="最大值" ColumnName="最大值" />
-                <ScalarProperty Name="最小值" ColumnName="最小值" />
-                <ScalarProperty Name="元件尺寸" ColumnName="元件尺寸" />
-                <ScalarProperty Name="备注" ColumnName="备注" />
-                <ScalarProperty Name="创建者" ColumnName="创建者" />
-                <ScalarProperty Name="创建时间" ColumnName="创建时间" />
-                <ScalarProperty Name="修改者" ColumnName="修改者" />
-                <ScalarProperty Name="修改时间" ColumnName="修改时间" />
-                <ScalarProperty Name="上限公差" ColumnName="上限公差" />
-                <ScalarProperty Name="下限公差" ColumnName="下限公差" />
-                <ScalarProperty Name="公差类别" ColumnName="公差类别" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -6330,79 +6458,13 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <EntitySetMapping Name="View_Bas_Material">
-            <EntityTypeMapping TypeName="FAI_NewModel.View_Bas_Material">
-              <MappingFragment StoreEntitySet="View_Bas_Material">
-                <ScalarProperty Name="备注" ColumnName="备注" />
-                <ScalarProperty Name="公差类别" ColumnName="公差类别" />
-                <ScalarProperty Name="公差下限" ColumnName="公差下限" />
-                <ScalarProperty Name="公差上限" ColumnName="公差上限" />
-                <ScalarProperty Name="尺寸" ColumnName="尺寸" />
-                <ScalarProperty Name="最小值" ColumnName="最小值" />
-                <ScalarProperty Name="最大值" ColumnName="最大值" />
-                <ScalarProperty Name="单位" ColumnName="单位" />
-                <ScalarProperty Name="标准值" ColumnName="标准值" />
-                <ScalarProperty Name="元件类型" ColumnName="元件类型" />
-                <ScalarProperty Name="物料名称" ColumnName="物料名称" />
-                <ScalarProperty Name="物料编码" ColumnName="物料编码" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="View_ComponentSize">
-            <EntityTypeMapping TypeName="FAI_NewModel.View_ComponentSize">
-              <MappingFragment StoreEntitySet="View_ComponentSize">
-                <ScalarProperty Name="备注" ColumnName="备注" />
-                <ScalarProperty Name="OCR" ColumnName="OCR" />
-                <ScalarProperty Name="物理宽度" ColumnName="物理宽度" />
-                <ScalarProperty Name="物理长度" ColumnName="物理长度" />
-                <ScalarProperty Name="截图宽度" ColumnName="截图宽度" />
-                <ScalarProperty Name="截图长度" ColumnName="截图长度" />
-                <ScalarProperty Name="尺寸" ColumnName="尺寸" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="View_Bas_CompensationValue">
-            <EntityTypeMapping TypeName="FAI_NewModel.View_Bas_CompensationValue">
-              <MappingFragment StoreEntitySet="View_Bas_CompensationValue">
-                <ScalarProperty Name="启用" ColumnName="启用" />
-                <ScalarProperty Name="单位" ColumnName="单位" />
-                <ScalarProperty Name="精度" ColumnName="精度" />
-                <ScalarProperty Name="调整值减" ColumnName="调整值减" />
-                <ScalarProperty Name="调整值加" ColumnName="调整值加" />
-                <ScalarProperty Name="范围最小值" ColumnName="范围最小值" />
-                <ScalarProperty Name="范围最大值" ColumnName="范围最大值" />
-                <ScalarProperty Name="行" ColumnName="行" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="View_Eng_MeterOptionItem">
-            <EntityTypeMapping TypeName="FAI_NewModel.View_Eng_MeterOptionItem">
-              <MappingFragment StoreEntitySet="View_Eng_MeterOptionItem">
-                <ScalarProperty Name="备注" ColumnName="备注" />
-                <ScalarProperty Name="上限单位" ColumnName="上限单位" />
-                <ScalarProperty Name="有效值上限" ColumnName="有效值上限" />
-                <ScalarProperty Name="下限单位" ColumnName="下限单位" />
-                <ScalarProperty Name="有效值下限" ColumnName="有效值下限" />
-                <ScalarProperty Name="波动区间" ColumnName="波动区间" />
-                <ScalarProperty Name="取值次数" ColumnName="取值次数" />
-                <ScalarProperty Name="测试内阻" ColumnName="测试内阻" />
-                <ScalarProperty Name="测量速度" ColumnName="测量速度" />
-                <ScalarProperty Name="失败次数" ColumnName="失败次数" />
-                <ScalarProperty Name="量程" ColumnName="量程" />
-                <ScalarProperty Name="量程类型" ColumnName="量程类型" />
-                <ScalarProperty Name="测试电压" ColumnName="测试电压" />
-                <ScalarProperty Name="测试频率" ColumnName="测试频率" />
-                <ScalarProperty Name="测试类型" ColumnName="测试类型" />
-                <ScalarProperty Name="最大值单位" ColumnName="最大值单位" />
-                <ScalarProperty Name="最大值" ColumnName="最大值" />
-                <ScalarProperty Name="最小值单位" ColumnName="最小值单位" />
-                <ScalarProperty Name="最小值" ColumnName="最小值" />
-                <ScalarProperty Name="元件类型" ColumnName="元件类型" />
-                <ScalarProperty Name="操作码" ColumnName="操作码" />
-                <ScalarProperty Name="行" ColumnName="行" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="P_Sys_ChangePassword" FunctionName="FAI_NewModel.Store.P_Sys_ChangePassword" />
+          <FunctionImportMapping FunctionImportName="P_Sys_CheckPower" FunctionName="FAI_NewModel.Store.P_Sys_CheckPower" />
+          <FunctionImportMapping FunctionImportName="P_Sys_CheckUser" FunctionName="FAI_NewModel.Store.P_Sys_CheckUser" />
+          <FunctionImportMapping FunctionImportName="P_Sys_DataClear" FunctionName="FAI_NewModel.Store.P_Sys_DataClear" />
+          <FunctionImportMapping FunctionImportName="P_Sys_GetHelpCode" FunctionName="FAI_NewModel.Store.P_Sys_GetHelpCode" />
+          <FunctionImportMapping FunctionImportName="P_Update_Eng_ProgramOption" FunctionName="FAI_NewModel.Store.P_Update_Eng_ProgramOption" />
+          <FunctionImportMapping FunctionImportName="P_Bas_Material" FunctionName="FAI_NewModel.Store.P_Bas_Material" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -6418,7 +6480,7 @@
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
         <DesignerProperty Name="EnablePluralization" Value="false" />
-        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="无" />
       </DesignerInfoPropertySet>

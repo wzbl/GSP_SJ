@@ -13,6 +13,19 @@ namespace GSP_SJ
 {
     public partial class UCAllProgram : UserControl
     {
+        /// <summary>
+        ///  避免窗体控件改变大小界面瞬间的叠影
+        /// </summary>
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                CreateParams cp = base.CreateParams;
+                cp.ExStyle |= 0x02000000; // Turn on WS_EX_COMPOSITED
+                return cp;
+            }
+        }
+
         public UCAllProgram()
         {
             InitializeComponent();
@@ -44,10 +57,15 @@ namespace GSP_SJ
             Search();
         }
         List<View_Eng_Program> eng_Programs;
-        private void Search()
+        private async void Search()
         {
-            eng_Programs =  SQLDataControl.GetAllProgramm();
+            dgvProgram.DataSource = null;
+            await Task.Run(() =>
+            {
+                eng_Programs = SQLDataControl.GetAllProgramm();
+            });
             dgvProgram.DataSource = eng_Programs;
+            dgvProgram.Refresh();
         }
 
         private void btnAdd_Click(object sender, EventArgs e)

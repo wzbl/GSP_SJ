@@ -320,10 +320,38 @@
             // 
             // kryptonNavigator1
             // 
+            this.kryptonNavigator1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.kryptonNavigator1.Bar.BarMapImage = ComponentFactory.Krypton.Navigator.MapKryptonPageImage.Large;
+            this.kryptonNavigator1.Bar.BarMinimumHeight = 40;
+            this.kryptonNavigator1.Bar.BarMultiline = ComponentFactory.Krypton.Navigator.BarMultiline.Exactline;
+            this.kryptonNavigator1.Bar.CheckButtonStyle = ComponentFactory.Krypton.Toolkit.ButtonStyle.ButtonSpec;
+            this.kryptonNavigator1.Bar.ItemAlignment = ComponentFactory.Krypton.Toolkit.RelativePositionAlign.Center;
+            this.kryptonNavigator1.Bar.ItemMinimumSize = new System.Drawing.Size(40, 40);
+            this.kryptonNavigator1.Bar.ItemSizing = ComponentFactory.Krypton.Navigator.BarItemSizing.Individual;
+            this.kryptonNavigator1.Bar.TabBorderStyle = ComponentFactory.Krypton.Toolkit.TabBorderStyle.SlantOutsizeBoth;
+            this.kryptonNavigator1.Button.ButtonDisplayLogic = ComponentFactory.Krypton.Navigator.ButtonDisplayLogic.None;
+            // 
+            // 
+            // 
+            this.kryptonNavigator1.Button.CloseButton.Edge = ComponentFactory.Krypton.Toolkit.PaletteRelativeEdgeAlign.Near;
+            this.kryptonNavigator1.Button.CloseButton.Orientation = ComponentFactory.Krypton.Toolkit.PaletteButtonOrientation.FixedBottom;
+            this.kryptonNavigator1.Button.CloseButton.Style = ComponentFactory.Krypton.Toolkit.PaletteButtonStyle.Command;
+            this.kryptonNavigator1.Button.CloseButton.UniqueName = "BFADEE9B73D74FA30E9BEDD06A78B270";
+            this.kryptonNavigator1.Button.ContextButtonDisplay = ComponentFactory.Krypton.Navigator.ButtonDisplay.Hide;
+            this.kryptonNavigator1.Button.ContextMenuMapImage = ComponentFactory.Krypton.Navigator.MapKryptonPageImage.SmallMediumLarge;
+            this.kryptonNavigator1.Button.ContextMenuMapText = ComponentFactory.Krypton.Navigator.MapKryptonPageText.None;
+            this.kryptonNavigator1.Button.NextButtonAction = ComponentFactory.Krypton.Navigator.DirectionButtonAction.None;
             this.kryptonNavigator1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.kryptonNavigator1.Group.GroupBackStyle = ComponentFactory.Krypton.Toolkit.PaletteBackStyle.FormMain;
+            this.kryptonNavigator1.Group.GroupBorderStyle = ComponentFactory.Krypton.Toolkit.PaletteBorderStyle.ButtonButtonSpec;
+            this.kryptonNavigator1.Header.HeaderPositionSecondary = ComponentFactory.Krypton.Toolkit.VisualOrientation.Right;
+            this.kryptonNavigator1.Header.HeaderStyleBar = ComponentFactory.Krypton.Toolkit.HeaderStyle.DockActive;
+            this.kryptonNavigator1.Header.HeaderStylePrimary = ComponentFactory.Krypton.Toolkit.HeaderStyle.Form;
             this.kryptonNavigator1.Location = new System.Drawing.Point(0, 145);
             this.kryptonNavigator1.Name = "kryptonNavigator1";
+            this.kryptonNavigator1.PageBackStyle = ComponentFactory.Krypton.Toolkit.PaletteBackStyle.PanelClient;
             this.kryptonNavigator1.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.Office2007Blue;
+            this.kryptonNavigator1.Panel.PanelBackStyle = ComponentFactory.Krypton.Toolkit.PaletteBackStyle.GridHeaderColumnCustom1;
             this.kryptonNavigator1.Size = new System.Drawing.Size(1188, 503);
             this.kryptonNavigator1.TabIndex = 7;
             this.kryptonNavigator1.Text = "kryptonNavigator1";

@@ -1,25 +1,26 @@
-﻿using System;
+﻿using BarTender;
+using BorwinAnalyse.Model;
+using BrowApp.Language;
+using Newtonsoft.Json;
+using NPOI.SS.Formula.Eval;
+using NPOI.SS.Formula.Functions;
+using NPOI.Util;
+using NPOI.XSSF.Streaming.Values;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Runtime.Serialization.Formatters.Binary;
 using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Serialization;
-using Newtonsoft.Json;
-using System.Text.RegularExpressions;
-using NPOI.Util;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.Menu;
-using NPOI.SS.Formula.Functions;
-using NPOI.XSSF.Streaming.Values;
-using System.Diagnostics;
 using static System.Net.Mime.MediaTypeNames;
-using System.Globalization;
-using BorwinAnalyse.Model;
-using NPOI.SS.Formula.Eval;
-using BrowApp.Language;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Menu;
 
 namespace BorwinAnalyse.BaseClass
 {
@@ -128,11 +129,7 @@ namespace BorwinAnalyse.BaseClass
         public string ResGrade_ON_NO_Find = "0%";
         public string CapGrade_ON_NO_Find = "0%";
 
-        /// <summary>
-        /// 规则列表
-        /// </summary>
-        public List<string> Rules = new List<string>();
-
+      
         //string s_Grade = "CDFGJKMN";
 
         /// <summary>
@@ -216,8 +213,6 @@ namespace BorwinAnalyse.BaseClass
         public bool IsMergeDescription = false;
         public bool IsUseNormalRule = true;
 
-   
-
         public void Load(string Name="Default")
         {
             string savePath = @"Ini/"+Name+ ".json";
@@ -229,11 +224,6 @@ namespace BorwinAnalyse.BaseClass
             else
             {
                 instance = JsonConvert.DeserializeObject<CommonAnalyse>(File.ReadAllText(savePath));
-            }
-            if (instance.Rules.Count == 0)
-            {
-                instance.Rules.Add("Default");
-                Save();
             }
         }
         public void Save(string Name="Default")
@@ -601,12 +591,10 @@ namespace BorwinAnalyse.BaseClass
             List<string> specListBuf = new List<string>(); //物料描述分隔符处理后
             List<string> unitResList = ResistanceUnit.Split(',').ToList(); //电阻单位
             List<string> unitCapList = CapacitanceUnit.Split(',').ToList();//电容单位
-
+            description = description.ToUpper();
             string LCR_Type = "";
 
             bool hadIdentifyingDigits = false;
-
-           
 
             #region 删除首位
             if (IsDeleteString)
@@ -637,7 +625,8 @@ namespace BorwinAnalyse.BaseClass
             #endregion
 
             #region 去除长数字字符
-            for (int i = 0; i < specList.Count; i++) { 
+            for (int i = 0; i < specList.Count; i++)
+            {
                 if (IsNumeric(specList[i]) && (specList[i].Length > 7))
                 {
                     specList.RemoveAt(i);
@@ -664,49 +653,60 @@ namespace BorwinAnalyse.BaseClass
 
             #region 获取类型
             GetType(description, ref analyseResult, ref LCR_Type);
-            if (analyseResult.Type == "Other") return analyseResult;
+            if (analyseResult.Type == "Other")
+            {
+                return analyseResult;
+            }
             //去掉物料类型
             var typeList = specList.Where(u => u.Contains(LCR_Type)).ToList();
             foreach (var item in typeList)
             {
-                //specList.Remove(item);
+                specList.Remove(item);
             }
             #endregion
 
             #region 获取尺寸
             GetSize(description, ref analyseResult);
-            if (analyseResult.Size == "Error") return analyseResult;
-            //去掉尺寸
-            var sizeIndexList = specList.Where(u => u.Contains(analyseResult.Size)).ToList();
-            foreach (var item in sizeIndexList)
+            if (analyseResult.Size == "Error") 
             {
-                //判断是否有尺寸等级（例：J(0603)）
-                if (string.IsNullOrEmpty(analyseResult.Grade) && !description.Contains("%"))
+
+
+            }
+            else
+            {
+                //去掉尺寸
+                var sizeIndexList = specList.Where(u => u.Contains(analyseResult.Size)).ToList();
+                foreach (var item in sizeIndexList)
                 {
-                    var gradeResult = item.Where("CDFGJKMN".Contains).ToList();
-                    if (gradeResult?.Count > 0)
+                    //判断是否有尺寸等级（例：J(0603)）
+                    if (string.IsNullOrEmpty(analyseResult.Grade) && !description.Contains("%"))
                     {
-                        char Grade = gradeResult[0];
-                        if (GradeChanges.Where(x => x.Grade == Grade.ToString()).ToList().Count > 0)
+                        var gradeResult = item.Where("CDFGJKMN".Contains).ToList();
+                        if (gradeResult?.Count > 0)
                         {
-                            analyseResult.Grade = GradeChanges.Where(x => x.Grade == Grade.ToString()).ToList()[0].Percent;
+                            char Grade = gradeResult[0];
+                            if (GradeChanges.Where(x => x.Grade == Grade.ToString()).ToList().Count > 0)
+                            {
+                                analyseResult.Grade = GradeChanges.Where(x => x.Grade == Grade.ToString()).ToList()[0].Percent;
+                            }
                         }
                     }
+                    if (CommonAnalyse.Instance.IsMergeDescription)
+                    {
+                        description.Replace(analyseResult.Size, "");
+                    }
+                    else
+                    {
+                        specList.Remove(item);
+                    }
                 }
+
                 if (CommonAnalyse.Instance.IsMergeDescription)
                 {
                     description.Replace(analyseResult.Size, "");
                 }
-                else
-                {
-                    specList.Remove(item);
-                }
             }
-
-            if (CommonAnalyse.Instance.IsMergeDescription)
-            {
-                description.Replace(analyseResult.Size, "");
-            }
+         
 
             #endregion
 
@@ -714,11 +714,12 @@ namespace BorwinAnalyse.BaseClass
 
             if (CommonAnalyse.Instance.IsSearchGradeByPos)
             {
-                if(!String.IsNullOrEmpty(CommonAnalyse.Instance.txtStrAfterGrade) && !String.IsNullOrEmpty(CommonAnalyse.Instance.txtGradePos))
+                if (!String.IsNullOrEmpty(CommonAnalyse.Instance.txtStrAfterGrade) && !String.IsNullOrEmpty(CommonAnalyse.Instance.txtGradePos))
                 {
                     int pos = 0;
                     int index = 0;
-                    if (int.TryParse(CommonAnalyse.Instance.txtGradePos, out pos)) {
+                    if (int.TryParse(CommonAnalyse.Instance.txtGradePos, out pos))
+                    {
                         string[] strsAfterGrade = CommonAnalyse.Instance.txtStrAfterGrade.Split(',');
                         int lenstrsAfterGrade = strsAfterGrade.Length;
                         if (lenstrsAfterGrade > 0)
@@ -804,7 +805,8 @@ namespace BorwinAnalyse.BaseClass
                                 analyseResult.Unit = String.Empty;
                                 analyseResult.Value = String.Empty;
                             }
-                            if (!string.IsNullOrEmpty(analyseResult.Value)) { 
+                            if (!string.IsNullOrEmpty(analyseResult.Value))
+                            {
                                 string pow = analyseResult.Value.Substring(analyseResult.Value.Length - 1);
                                 if (IsIdentifyingDigits && analyseResult.Value.Length > 2 && int.TryParse(analyseResult.Value, out int res0) && int.TryParse(pow, out int res))
                                 {
@@ -815,13 +817,13 @@ namespace BorwinAnalyse.BaseClass
                                         hadIdentifyingDigits = true;
                                     }
                                 }
-                            }   
+                            }
                             double dValue = 0.0;
-                            if(double.TryParse(analyseResult.Value, out dValue))
+                            if (double.TryParse(analyseResult.Value, out dValue))
                             {
-                                if(analyseResult.Unit == "PF")
+                                if (analyseResult.Unit == "PF")
                                 {
-                                    if(dValue >= 1000000)
+                                    if (dValue >= 1000000)
                                     {
                                         analyseResult.Value = (dValue / 1000000).ToString();
                                         analyseResult.Unit = "UF";
@@ -884,7 +886,7 @@ namespace BorwinAnalyse.BaseClass
                             analyseResult.Grade = TheGrade(textValue);
                         }
                     }
-                    else if (IsValueContainsGrade && IsValueGrade(textValue)&&string.IsNullOrEmpty(analyseResult.Value))
+                    else if (IsValueContainsGrade && IsValueGrade(textValue) && string.IsNullOrEmpty(analyseResult.Value))
                     {
                         Regex r = new Regex(@"[a-zA-Z]+");
                         System.Text.RegularExpressions.Match m = r.Match(textValue);
@@ -957,7 +959,8 @@ namespace BorwinAnalyse.BaseClass
                             //    analyseResult.Value = Regex.Replace(result, @"[^0-9.]", "");
 
                             int nonDigitCount = Regex.Matches(textValue, @"[a-zA-Z]").Count;      //判断字母个数
-                            if(nonDigitCount == 1){
+                            if (nonDigitCount == 1)
+                            {
                                 string letter = Regex.Replace(textValue, @"[^a-zA-Z]", "");     //提取字母
                                 if (letter == "R" || letter == "P" || letter == "M" || letter == "K")
                                 {
@@ -1012,9 +1015,9 @@ namespace BorwinAnalyse.BaseClass
                 if (gradeResult?.Count > 0)
                 {
                     string Grade = gradeResult[0];
-                    analyseResult.Grade = Grade;   
+                    analyseResult.Grade = Grade;
                 }
-                    
+
                 else if (IsGrade_ON_NO_Find)
                 {
                     //自定义等级偏差
@@ -1033,7 +1036,7 @@ namespace BorwinAnalyse.BaseClass
             {
                 if (GradeChangesCustRes.Where(x => x.Grade == analyseResult.Grade).ToList().Count > 0)
                 {
-                    if (GradeChangesCustRes.Where(x => x.Grade == analyseResult.Grade).ToList()[0].Percent != "(null)" 
+                    if (GradeChangesCustRes.Where(x => x.Grade == analyseResult.Grade).ToList()[0].Percent != "(null)"
                         && GradeChangesCustRes.Where(x => x.Grade == analyseResult.Grade).ToList()[0].PercentLow == "(null)")
                     {
                         analyseResult.Grade = GradeChangesCustRes.Where(x => x.Grade == analyseResult.Grade).ToList()[0].Percent;
@@ -1044,7 +1047,7 @@ namespace BorwinAnalyse.BaseClass
             {
                 if (GradeChangesCustCap.Where(x => x.Grade == analyseResult.Grade).ToList().Count > 0)
                 {
-                    if(GradeChangesCustCap.Where(x => x.Grade == analyseResult.Grade).ToList()[0].Percent != "(null)"
+                    if (GradeChangesCustCap.Where(x => x.Grade == analyseResult.Grade).ToList()[0].Percent != "(null)"
                         && GradeChangesCustCap.Where(x => x.Grade == analyseResult.Grade).ToList()[0].PercentLow == "(null)")
                     {
                         analyseResult.Grade = GradeChangesCustCap.Where(x => x.Grade == analyseResult.Grade).ToList()[0].Percent;
@@ -1061,7 +1064,7 @@ namespace BorwinAnalyse.BaseClass
             }
             else if (analyseResult.Grade.Contains("%"))
             {
-                
+
             }
             else
             {
@@ -1168,7 +1171,7 @@ namespace BorwinAnalyse.BaseClass
                 if (resResult?.Count > 0)
                 {
                     analyseResult.Type = "电阻".tr();
-                    LCR_Type = resResult[0];
+                    LCR_Type = "电阻";
                     return;
                 }
             }
@@ -1179,7 +1182,7 @@ namespace BorwinAnalyse.BaseClass
                 if (resResult?.Count > 0)
                 {
                     analyseResult.Type = "电容".tr();
-                    LCR_Type = resResult[0];
+                    LCR_Type = "电容";
                     return;
                 }
             }
@@ -1213,7 +1216,7 @@ namespace BorwinAnalyse.BaseClass
                             if (regex.IsMatch(st))
                             {
                                 analyseResult.Type = "电阻".tr();
-                                LCR_Type = resResult[0];
+                                LCR_Type = "电阻";
                                 return;
                             }
                         }
@@ -1223,7 +1226,7 @@ namespace BorwinAnalyse.BaseClass
                             if (regex.IsMatch(st) || (regex.IsMatch(st.Substring(1,1)) && st.IndexOf(",") == 0))
                             {
                                 analyseResult.Type = "电阻".tr();
-                                LCR_Type = resResult[0];
+                                LCR_Type = "电阻";
                                 return;
                             }
                             else
@@ -1232,7 +1235,7 @@ namespace BorwinAnalyse.BaseClass
                                 if (regex.IsMatch(st))
                                 {
                                     analyseResult.Type = "电阻".tr();
-                                    LCR_Type = resResult[0];
+                                    LCR_Type = "电阻";
                                     return;
                                 }
                             }
@@ -1266,7 +1269,7 @@ namespace BorwinAnalyse.BaseClass
                             if (regex.IsMatch(st))
                             { 
                                 analyseResult.Type = "电容".tr();
-                                LCR_Type = resResult[0];
+                                LCR_Type = "电容";
                                 return;
                             }
                         }
@@ -1276,7 +1279,7 @@ namespace BorwinAnalyse.BaseClass
                             if (regex.IsMatch(st) || (regex.IsMatch(st.Substring(1, 1)) && st.IndexOf(",") == 0))
                             {
                                 analyseResult.Type = "电容".tr();
-                                LCR_Type = resResult[0];
+                                LCR_Type = "电容";
                                 return;
                             }
                             else
@@ -1285,7 +1288,7 @@ namespace BorwinAnalyse.BaseClass
                                 if (regex.IsMatch(st))
                                 {
                                     analyseResult.Type = "电容".tr();
-                                    LCR_Type = resResult[0];
+                                    LCR_Type = "电容";
                                     return;
                                 }
                             }
@@ -1678,6 +1681,8 @@ namespace BorwinAnalyse.BaseClass
         public string Grade { get; set; } = string.Empty;
         public string ReplaceCode { get; set; } = string.Empty;
 
+        public string ErrorMsg = "";
+
         /// <summary>
         /// 元件位置
         /// </summary>
@@ -1717,13 +1722,15 @@ namespace BorwinAnalyse.BaseClass
 
         public void Check()
         {
-            if (Type != "Other" && Size != "Error" && !string.IsNullOrEmpty(Value) && !string.IsNullOrEmpty(Unit) && !string.IsNullOrEmpty(Grade))
+            ErrorMsg = "";
+            if (Type != "Other"  && !string.IsNullOrEmpty(Value) && !string.IsNullOrEmpty(Unit) && !string.IsNullOrEmpty(Grade))
             {
                 bool chk = true;
                 double value = 0;
 
                 if(!double.TryParse(Value, out value))
                 {
+                    ErrorMsg = "值解析错误".tr();
                     chk = false;
                 }
 
@@ -1731,12 +1738,16 @@ namespace BorwinAnalyse.BaseClass
                 if (!Enum.TryParse<UnitType>(Unit.ToUpper(), true, out unit))
                 {
                     chk = false;
+                    ErrorMsg = "单位解析错误".tr();
                 }
 
                 SizeType size = SizeType.None;
-                if (!Enum.TryParse<SizeType>("Size" + Size, true, out size))
+                if(Size== "Error")// (!Enum.TryParse<SizeType>("Size" + Size, true, out size))
                 {
                     chk = false;
+                    //2010
+                    //2512
+                    ErrorMsg = "元件尺寸解析错误".tr();
                 }
 
                 if (chk)
@@ -1770,6 +1781,7 @@ namespace BorwinAnalyse.BaseClass
         Ω,
         kΩ,
         MΩ,
+        HΩ,
         PF,
         NF,
         UF,

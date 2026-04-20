@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="08948a4ea39a4adaaadc6223008f3fc4" Name="Diagram1">
+      <Diagram DiagramId="576c25724f50416a9e9573881673a97e" Name="Diagram1">
         <EntityTypeShape EntityType="FAI_NewModel.Bas_CompensationValue" Width="1.5" PointX="0.75" PointY="15.75" IsExpanded="true" />
         <EntityTypeShape EntityType="FAI_NewModel.Bas_Customer" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="FAI_NewModel.Bas_DicIndex" Width="1.5" PointX="22.75" PointY="8.5" IsExpanded="true" />
@@ -58,6 +58,11 @@
         <EntityTypeShape EntityType="FAI_NewModel.Sys_RolePower" Width="1.5" PointX="20" PointY="2.125" IsExpanded="true" />
         <EntityTypeShape EntityType="FAI_NewModel.Sys_User" Width="1.5" PointX="20" PointY="5.125" IsExpanded="true" />
         <EntityTypeShape EntityType="FAI_NewModel.Sys_UserLog" Width="1.5" PointX="27.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FAI_NewModel.View_Bas_CompensationValue" Width="1.5" PointX="27.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FAI_NewModel.View_Bas_Material" Width="1.5" PointX="11.75" PointY="27.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FAI_NewModel.View_ComponentSize" Width="1.5" PointX="28.75" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FAI_NewModel.View_Eng_MeterOptionItem" Width="1.5" PointX="28.75" PointY="14.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FAI_NewModel.View_Eng_Program" Width="1.5" PointX="28.75" PointY="20.75" IsExpanded="true" />
         <AssociationConnector Association="FAI_NewModel.FK_Bas_DicItem_Bas_DicIndex" ManuallyRouted="false" />
         <AssociationConnector Association="FAI_NewModel.FK_Eng_Bom_Eng_Program" ManuallyRouted="false" />
         <AssociationConnector Association="FAI_NewModel.FK_Eng_BomECN_Eng_BomECN" ManuallyRouted="false" />
@@ -82,11 +87,6 @@
         <AssociationConnector Association="FAI_NewModel.FK_Sys_RolePower_Sys_Power" ManuallyRouted="false" />
         <AssociationConnector Association="FAI_NewModel.FK_Sys_RolePower_Sys_Role" ManuallyRouted="false" />
         <AssociationConnector Association="FAI_NewModel.FK_Sys_User_Sys_Role" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="FAI_NewModel.View_Eng_Program" Width="1.5" PointX="27.375" PointY="6.75" />
-        <EntityTypeShape EntityType="FAI_NewModel.View_Bas_Material" Width="1.5" PointX="29.375" PointY="6.75" />
-        <EntityTypeShape EntityType="FAI_NewModel.View_ComponentSize" Width="1.5" PointX="29.375" PointY="11.75" />
-        <EntityTypeShape EntityType="FAI_NewModel.View_Bas_CompensationValue" Width="1.5" PointX="29.375" PointY="15.75" />
-        <EntityTypeShape EntityType="FAI_NewModel.View_Eng_MeterOptionItem" Width="1.5" PointX="29.375" PointY="19.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

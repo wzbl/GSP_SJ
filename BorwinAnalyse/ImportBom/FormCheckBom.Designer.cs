@@ -1,6 +1,6 @@
-﻿namespace BorwinAnalyse.Forms
+﻿namespace BorwinAnalyse.ImportBom
 {
-    partial class FormBomSet
+    partial class FormCheckBom
     {
         /// <summary>
         /// Required designer variable.
@@ -30,14 +30,13 @@
         {
             this.SuspendLayout();
             // 
-            // FormBomSet
+            // FormCheckBom
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1593, 1255);
-            this.Name = "FormBomSet";
-            this.Text = "FormBomSet";
-            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.ClientSize = new System.Drawing.Size(907, 613);
+            this.Name = "FormCheckBom";
+            this.Text = "设置信息";
             this.ResumeLayout(false);
 
         }

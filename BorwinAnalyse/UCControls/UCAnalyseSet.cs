@@ -1,4 +1,7 @@
 ﻿using BorwinAnalyse.BaseClass;
+using BorwinAnalyse.ImportBom;
+using BorwinAnalyse.Model;
+using BrowApp.Language;
 using ComponentFactory.Krypton.Toolkit;
 using System;
 using System.Collections.Generic;
@@ -9,8 +12,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using BorwinAnalyse.Model;
-using BrowApp.Language;
 
 namespace BorwinAnalyse.UCControls
 {
@@ -36,9 +37,9 @@ namespace BorwinAnalyse.UCControls
         public UCAnalyseSet(string ruleName) : this()
         {
             comBomRule.Items.Clear();
-            for (int i = 0; i < CommonAnalyse.Instance.Rules.Count; i++)
+            for (int i = 0; i < AnaylseDataManager.Instance.Rules.Count; i++)
             {
-                comBomRule.Items.Add(CommonAnalyse.Instance.Rules[i]);
+                comBomRule.Items.Add(AnaylseDataManager.Instance.Rules[i]);
             }
             comBomRule.Text = ruleName;
         }
@@ -165,6 +166,7 @@ namespace BorwinAnalyse.UCControls
         private void BtnSave_Click(object sender, EventArgs e)
         {
             Save();
+            btnLoadRule.Enabled = true;
         }
 
         private void Save()
@@ -438,7 +440,18 @@ namespace BorwinAnalyse.UCControls
 
         private void btnAddRule_Click(object sender, EventArgs e)
         {
-
+            FormAddRule formAddRule = new FormAddRule();
+            if (formAddRule.ShowDialog() == DialogResult.OK)
+            {
+                btnLoadRule.Enabled = false;
+                comBomRule.Items.Clear();
+                for (int i = 0; i < AnaylseDataManager.Instance.Rules.Count; i++)
+                {
+                    comBomRule.Items.Add(AnaylseDataManager.Instance.Rules[i]);
+                }
+                if (comBomRule.Items.Count > 0)
+                    comBomRule.SelectedIndex = comBomRule.Items.Count - 1;
+            }
         }
 
         private void btnLoadRule_Click(object sender, EventArgs e)
