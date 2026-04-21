@@ -89,6 +89,18 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="DBForm\FormBas_Custom.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DBForm\FormBas_Custom.Designer.cs">
+      <DependentUpon>FormBas_Custom.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DBForm\FormEng_SubBom.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DBForm\FormEng_SubBom.Designer.cs">
+      <DependentUpon>FormEng_SubBom.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormChart\Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -155,6 +167,12 @@
     <Compile Include="DBForm\FormSize.Designer.cs">
       <DependentUpon>FormSize.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormMeter.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormMeter.Designer.cs">
+      <DependentUpon>FormMeter.cs</DependentUpon>
+    </Compile>
     <Compile Include="Global.cs" />
     <Compile Include="ModelClass\DeepOCRHelper.cs" />
     <Compile Include="ModelClass\DirectionalROI.cs" />
@@ -216,6 +234,12 @@
     <Compile Include="FormChart\UCXYDataChart.Designer.cs">
       <DependentUpon>UCXYDataChart.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="DBForm\FormBas_Custom.resx">
+      <DependentUpon>FormBas_Custom.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DBForm\FormEng_SubBom.resx">
+      <DependentUpon>FormEng_SubBom.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormChart\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -245,6 +269,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="DBForm\FormSize.resx">
       <DependentUpon>FormSize.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormMeter.resx">
+      <DependentUpon>FormMeter.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ModelClass\FormModel.resx">
       <DependentUpon>FormModel.cs</DependentUpon>
@@ -375,6 +402,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\125.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\create1_24px.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\155.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

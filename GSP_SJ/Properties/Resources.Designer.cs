@@ -93,6 +93,16 @@ namespace GSP_SJ.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
+        internal static System.Drawing.Bitmap _155 {
+            get {
+                object obj = ResourceManager.GetObject("155", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
         internal static System.Drawing.Bitmap _160 {
             get {
                 object obj = ResourceManager.GetObject("160", resourceCulture);
@@ -133,6 +143,16 @@ namespace GSP_SJ.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
+        internal static System.Drawing.Bitmap _24 {
+            get {
+                object obj = ResourceManager.GetObject("24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
         internal static System.Drawing.Bitmap _50 {
             get {
                 object obj = ResourceManager.GetObject("50", resourceCulture);
@@ -156,6 +176,16 @@ namespace GSP_SJ.Properties {
         internal static System.Drawing.Bitmap _89 {
             get {
                 object obj = ResourceManager.GetObject("89", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap create1_24px {
+            get {
+                object obj = ResourceManager.GetObject("create1_24px", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

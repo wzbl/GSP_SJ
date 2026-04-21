@@ -23,6 +23,8 @@ namespace SqlHelper
         public string 备注 { get; set; }
         public Nullable<int> 使用次数 { get; set; }
         public Nullable<System.DateTime> 最后一次使用时间 { get; set; }
+        public string 版本 { get; set; }
+        public string 电桥参数 { get; set; }
         public string 创建人 { get; set; }
         public Nullable<System.DateTime> 创建时间 { get; set; }
         public string 修改人 { get; set; }

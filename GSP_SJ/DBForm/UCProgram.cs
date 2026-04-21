@@ -3,6 +3,7 @@ using BorwinAnalyse.Forms;
 using BorwinAnalyse.ImportBom;
 using BorwinAnalyse.UCControls;
 using ComponentFactory.Krypton.Ribbon;
+using GSP_SJ.DBForm;
 using GSP_SJ.ModelClass;
 using SqlHelper;
 using System;
@@ -24,6 +25,7 @@ namespace GSP_SJ
     {
         private string ProductCode = "";
         UCXYDataChart uCXYDataChart;
+
         public UCProgram()
         {
             InitializeComponent();
@@ -38,6 +40,30 @@ namespace GSP_SJ
             }
             if (AnaylseDataManager.Instance.Rules.Count > 0)
                 comBomRule.Text = AnaylseDataManager.Instance.Rules[0];
+
+            List<Bas_Customer> _Customers = SQLDataControl.GetBas_Custom();
+            for (int i = 0; i < _Customers.Count; i++)
+            {
+                if (comCustom.Items.Contains(_Customers[i].CustomerCode) == false)
+                    comCustom.Items.Add(_Customers[i].CustomerCode);
+            }
+
+            if (comCustom.Items.Count > 0)
+            {
+                comCustom.Text = comCustom.Items[0].ToString();
+            }
+
+            List<Eng_MeterOption> eng_MeterOptions = SQLDataControl.GetMeterOption();
+
+            for (int i = 0; i < eng_MeterOptions.Count; i++)
+            {
+                comCompensation.Items.Add(eng_MeterOptions[i].OptionName);
+            }
+
+            if (comCompensation.Items.Count > 0)
+            {
+                comCompensation.Text = comCompensation.Items[0].ToString();
+            }
         }
         public UCProgram(View_Eng_Program view_Eng_Program) : this()
         {
@@ -45,7 +71,7 @@ namespace GSP_SJ
             this.ProductCode = view_Eng_Program.产品编号;
             txtProductCode.Text = view_Eng_Program.产品编号;
             txtProductName.Text = view_Eng_Program.产品名称;
-            txtCustom.Text = view_Eng_Program.客户;
+            comCustom.Text = view_Eng_Program.客户;
             switch (view_Eng_Program.板面)
             {
                 case "S":
@@ -61,12 +87,25 @@ namespace GSP_SJ
                     ComSide.SelectedIndex = 0;
                     break;
             }
-
+            ComSide.Enabled = false;
             string ruleName = view_Eng_Program.分析规则;
             if (AnaylseDataManager.Instance.Rules.Contains(ruleName))
             {
                 comBomRule.Text = ruleName;
             }
+
+            string custom = view_Eng_Program.客户;
+            comCustom.Text = custom;
+            if (!string.IsNullOrEmpty(view_Eng_Program.电桥参数))
+            {
+                List<Eng_MeterOption> eng_MeterOptions = SQLDataControl.GetMeterOption();
+                Eng_MeterOption eng_Meter = eng_MeterOptions.Where(x => x.OptionCode == view_Eng_Program.电桥参数).FirstOrDefault();
+                if (eng_Meter != null)
+                {
+                    comCompensation.Text = eng_Meter.OptionName;
+                }
+            }
+            txtVision.Text = view_Eng_Program.版本;
         }
 
 
@@ -185,6 +224,7 @@ namespace GSP_SJ
             uCXYDataChart.Save();
             eng_XYData_Results = SQLDataControl.SearchXYData(txtProductCode.Text);
             dgvXYData.DataSource = eng_XYData_Results;
+            txtProductCode.Enabled = false;
             btnSave.Enabled = true;
         }
 
@@ -213,9 +253,19 @@ namespace GSP_SJ
                     {
                         rule = "Default";
                     }
+                    string compensation = "";
+                    List<Eng_MeterOption> eng_Meters= SQLDataControl.GetMeterOption().Where(x => x.OptionName == comCompensation.Text).ToList();
+                    if (eng_Meters.Count>0)
+                    {
+                        compensation = eng_Meters[0].OptionCode;
+                    }
+
+                        string customer = comCustom.Text;
+                    if (string.IsNullOrEmpty(customer) && comCustom.Items.Count > 0)
+                        customer = comCustom.Items[0].ToString();
 
                     SQLDataControl.AddProgram(txtProductCode.Text,
-              txtProductName.Text, txtCustom.Text, side, "test", rule);
+              txtProductName.Text, customer, side, "test", rule,txtVision.Text, compensation);
 
                     for (int i = 0; i < DataGridView_BOM.Rows.Count; i++)
                     {
@@ -565,14 +615,14 @@ namespace GSP_SJ
         {
             if (DataGridView_BOM.SelectedRows.Count == 0)
                 return;
-            string customerCode = "";
+            string customerCode = comCustom.Text;
             string materialCode = p_Search_Engs[DataGridView_BOM.SelectedRows[0].Index].物料编码;
             string materialName = p_Search_Engs[DataGridView_BOM.SelectedRows[0].Index].物料描述; ;
-            string lcrType = p_Search_Engs[DataGridView_BOM.SelectedRows[0].Index].元件类型; 
-            decimal lcrStandardValue = (decimal)p_Search_Engs[DataGridView_BOM.SelectedRows[0].Index].标准值; 
+            string lcrType = p_Search_Engs[DataGridView_BOM.SelectedRows[0].Index].元件类型;
+            decimal lcrStandardValue = (decimal)p_Search_Engs[DataGridView_BOM.SelectedRows[0].Index].标准值;
             string lcrUnitCode = p_Search_Engs[DataGridView_BOM.SelectedRows[0].Index].单位;
-            decimal lcrMaxValue = (decimal)p_Search_Engs[DataGridView_BOM.SelectedRows[0].Index].最大值; 
-            decimal lcrMinValue = (decimal)p_Search_Engs[DataGridView_BOM.SelectedRows[0].Index].最小值; 
+            decimal lcrMaxValue = (decimal)p_Search_Engs[DataGridView_BOM.SelectedRows[0].Index].最大值;
+            decimal lcrMinValue = (decimal)p_Search_Engs[DataGridView_BOM.SelectedRows[0].Index].最小值;
             string size = p_Search_Engs[DataGridView_BOM.SelectedRows[0].Index].元件尺寸; ;
             decimal compensateValue = 0;
             byte[] picture = null;
@@ -580,7 +630,7 @@ namespace GSP_SJ
             string creator = "";
             DateTime creationDate = DateTime.Now;
             string modifier = "";
-            DateTime modificationDate= DateTime.Now;
+            DateTime modificationDate = DateTime.Now;
             string screenPrinting = "";
             decimal maxTolerance = (decimal)p_Search_Engs[DataGridView_BOM.SelectedRows[0].Index].上限公差;
             decimal minTolerance = (decimal)p_Search_Engs[DataGridView_BOM.SelectedRows[0].Index].下限公差;
@@ -594,9 +644,49 @@ namespace GSP_SJ
                 return;
             }
 
-            if(MessageBox.Show(msg+",是否替换?", "提示", MessageBoxButtons.OKCancel) == DialogResult.OK)
+            if (MessageBox.Show(msg + ",是否替换?", "提示", MessageBoxButtons.OKCancel) == DialogResult.OK)
             {
                 SQLDataControl.UpdateBas_Material(2, customerCode, materialCode, materialName, lcrType, lcrStandardValue, lcrUnitCode, lcrMaxValue, lcrMinValue, size, compensateValue, picture, remarks, creator, creationDate, modifier, modificationDate, screenPrinting, maxTolerance, minTolerance, toleranceType, componentPackaging, out msg);
+            }
+        }
+
+        private void btnDeleteMaterial_Click(object sender, EventArgs e)
+        {
+            if (DataGridView_BOM.SelectedRows.Count == 0)
+                return;
+            string materialCode = p_Search_Engs[DataGridView_BOM.SelectedRows[0].Index].物料编码;
+            if (MessageBox.Show("是否删除物料" + materialCode + "?", "提示", MessageBoxButtons.OKCancel) == DialogResult.OK)
+            {
+                SQLDataControl.DeleteMaterialCode(txtProductCode.Text, materialCode);
+                RefreshBomData();
+            }
+        }
+
+        private void btnReplaceCode_Click(object sender, EventArgs e)
+        {
+            if (DataGridView_BOM.SelectedRows.Count == 0)
+                return;
+            string materialCode = p_Search_Engs[DataGridView_BOM.SelectedRows[0].Index].物料编码;
+            string materialdes = p_Search_Engs[DataGridView_BOM.SelectedRows[0].Index].物料描述;
+
+            FormEng_SubBom eng_SubBom = new FormEng_SubBom(txtProductCode.Text, materialCode, materialdes);
+            eng_SubBom.ShowDialog();
+        }
+
+        /// <summary>
+        /// 客户管理
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnCustomManager_Click(object sender, EventArgs e)
+        {
+            FormBas_Custom formBas_Custom = new FormBas_Custom();
+            formBas_Custom.ShowDialog();
+            List<Bas_Customer> _Customers = SQLDataControl.GetBas_Custom();
+            for (int i = 0; i < _Customers.Count; i++)
+            {
+                if (comCustom.Items.Contains(_Customers[i].CustomerCode) == false)
+                    comCustom.Items.Add(_Customers[i].CustomerCode);
             }
         }
     }

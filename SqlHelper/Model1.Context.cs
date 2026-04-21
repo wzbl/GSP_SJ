@@ -165,7 +165,7 @@ namespace SqlHelper
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("P_Eng_BomItemAdd", productCodeParameter, materialCodeParameter, materialNameParameter, quantityParameter, positionParameter, remarksParameter, operatorParameter, retVal, retMsg);
         }
     
-        public virtual int P_Eng_BomItemSubAdd(string productCode, string materialCode, string subMatCode, string subMatName, string @operator, ObjectParameter retVal, ObjectParameter retMsg)
+        public virtual int P_Eng_BomItemSubAdd(string productCode, string materialCode, string subMatCode, string subMatName, string @operator, Nullable<int> type, ObjectParameter retVal, ObjectParameter retMsg)
         {
             var productCodeParameter = productCode != null ?
                 new ObjectParameter("ProductCode", productCode) :
@@ -187,7 +187,11 @@ namespace SqlHelper
                 new ObjectParameter("Operator", @operator) :
                 new ObjectParameter("Operator", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("P_Eng_BomItemSubAdd", productCodeParameter, materialCodeParameter, subMatCodeParameter, subMatNameParameter, operatorParameter, retVal, retMsg);
+            var typeParameter = type.HasValue ?
+                new ObjectParameter("type", type) :
+                new ObjectParameter("type", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("P_Eng_BomItemSubAdd", productCodeParameter, materialCodeParameter, subMatCodeParameter, subMatNameParameter, operatorParameter, typeParameter, retVal, retMsg);
         }
     
         public virtual int P_Eng_BomPositionRepeatCheck(string productCode)
@@ -584,7 +588,7 @@ namespace SqlHelper
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("P_Insert_Eng_Bom", productCodeParameter, rowParameter, materialCodeParameter, materialNameParameter, quantityParameter, positionParameter, allowSubstituteParameter, lcrTypeParameter, lcrStandardValueParameter, lcrUnitCodeParameter, lcrMaxValueParameter, lcrMinValueParameter, sizeParameter, remarksParameter, creatorParameter, modifierParameter, maxToleranceParameter, minToleranceParameter, statusParameter, screenPrintingParameter, toleranceTypeParameter, componentPackagingParameter);
         }
     
-        public virtual int P_Insert_Eng_Program(string productCode, string productName, string customerCode, string boardSide, string ruleCode, string status, string remarks, string creator, string modifier)
+        public virtual int P_Insert_Eng_Program(string productCode, string productName, string customerCode, string boardSide, string ruleCode, string status, string remarks, string creator, string modifier, string bomVersion, string optionCode)
         {
             var productCodeParameter = productCode != null ?
                 new ObjectParameter("ProductCode", productCode) :
@@ -622,7 +626,15 @@ namespace SqlHelper
                 new ObjectParameter("Modifier", modifier) :
                 new ObjectParameter("Modifier", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("P_Insert_Eng_Program", productCodeParameter, productNameParameter, customerCodeParameter, boardSideParameter, ruleCodeParameter, statusParameter, remarksParameter, creatorParameter, modifierParameter);
+            var bomVersionParameter = bomVersion != null ?
+                new ObjectParameter("BomVersion", bomVersion) :
+                new ObjectParameter("BomVersion", typeof(string));
+    
+            var optionCodeParameter = optionCode != null ?
+                new ObjectParameter("OptionCode", optionCode) :
+                new ObjectParameter("OptionCode", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("P_Insert_Eng_Program", productCodeParameter, productNameParameter, customerCodeParameter, boardSideParameter, ruleCodeParameter, statusParameter, remarksParameter, creatorParameter, modifierParameter, bomVersionParameter, optionCodeParameter);
         }
     
         public virtual int P_Insert_Eng_XYData(string productCode, string position, Nullable<int> boardId, string boardSide, string isSMD, string materialCode, string materialName, Nullable<decimal> x, Nullable<decimal> y, string unit, Nullable<decimal> angle, Nullable<decimal> rX, Nullable<decimal> rY, string remarks, string creator, string modifier, string standardCode, Nullable<decimal> standardRotation, string size, string lcrType, string isDefined, Nullable<decimal> oX, Nullable<decimal> oY, Nullable<decimal> oAngle, Nullable<int> row, Nullable<decimal> lX, Nullable<decimal> lY, string isMerge, byte[] standardImage, Nullable<int> sequence, Nullable<decimal> furnaceLcrStandardValue, string furnaceLcrUnitCode, Nullable<decimal> furnaceLcrMaxValue, Nullable<decimal> furnaceLcrMinValue, Nullable<decimal> lXCompensation, Nullable<decimal> lYCompensation, string componentPackaging, Nullable<decimal> sX, Nullable<decimal> sY, Nullable<decimal> adjustedAngle, Nullable<int> groups)

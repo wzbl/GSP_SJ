@@ -27,9 +27,9 @@ namespace SqlHelper
             return db.View_Eng_Program.AsNoTracking().ToList();
         }
 
-        public static void AddProgram(string productCode, string programName, string customerCode, string boardSide, string creator, string ruleCode)
+        public static void AddProgram(string productCode, string programName, string customerCode, string boardSide, string creator, string ruleCode,string vision,string options)
         {
-            db.P_Insert_Eng_Program(productCode, programName, customerCode, boardSide, ruleCode, "NORMAL", "", creator, creator);
+            db.P_Insert_Eng_Program(productCode, programName, customerCode, boardSide, ruleCode, "NORMAL", "", creator, creator, vision, options);
         }
 
         public static void DeleteProgram(string productCode)
@@ -64,6 +64,16 @@ namespace SqlHelper
         public static void DeleteBom(string productCode)
         {
             int i = db.Database.ExecuteSqlCommand("DELETE FROM Eng_Bom WHERE ProductCode = {0}", productCode);
+            db.Database.ExecuteSqlCommand("DELETE FROM Eng_Bom WHERE ProductCode = {0}", productCode);
+            db.Database.ExecuteSqlCommand("DELETE FROM Eng_BomSub WHERE ProductCode = {0}", productCode);
+            db.Database.ExecuteSqlCommand("DELETE FROM Eng_XYData WHERE ProductCode = {0}", productCode);
+            db.SaveChanges();
+        }
+
+        public static void DeleteMaterialCode(string productCode, string MaterialCode)
+        {
+            int i = db.Database.ExecuteSqlCommand("DELETE FROM Eng_Bom WHERE ProductCode = {0} and MaterialCode = {1}", productCode, MaterialCode);
+            DeleteEng_BomSub(productCode, MaterialCode);
             db.SaveChanges();
         }
 
@@ -291,6 +301,13 @@ namespace SqlHelper
             return db.Eng_ModelItem.AsNoTracking().Where(x => x.ProductCode == productCode && x.MaterialCode == materialCode).ToList();
         }
 
+        #region 电桥参数
+
+        public static List<Eng_MeterOptionItem> GetMeterOptionItem(string OptionName)
+        {
+            string optionCode = GetMeterOption().Where(x=>x.OptionName== OptionName).ToList()[0].OptionCode;
+            return db.Eng_MeterOptionItem.AsNoTracking().Where(x=>x.OptionCode== optionCode).ToList();
+        }
 
         public static List<View_Eng_MeterOptionItem> View_Eng_MeterOptionItem()
         {
@@ -302,11 +319,56 @@ namespace SqlHelper
             return db.View_ComponentSize.AsNoTracking().ToList();
         }
 
-
         public static List<View_Bas_CompensationValue> View_Bas_CompensationValue()
         {
             return db.View_Bas_CompensationValue.AsNoTracking().ToList();
         }
+
+        /// <summary>
+        /// 获取电桥参数
+        /// </summary>
+        /// <returns></returns>
+        public static List<Eng_MeterOption> GetMeterOption()
+        {
+            return db.Eng_MeterOption.AsNoTracking().Where(x => x.IsVisible == "YES").ToList();
+        }
+
+        /// <summary>
+        /// 删除电桥参数
+        /// </summary>
+        /// <param name="OptionCode"></param>
+        public static void DeleteMeterOption(string OptionCode)
+        {
+            ObjectParameter retVal = new ObjectParameter("retVal", 0);
+            ObjectParameter retMsg = new ObjectParameter("retMsg", "");
+            string optionCode = GetMeterOption().Where(x => x.OptionName == OptionCode).ToList()[0].OptionCode;
+            db.P_Eng_MeterOptionDelete(optionCode, retVal, retMsg);
+            db.SaveChanges();
+        }
+
+        /// <summary>
+        /// 重命名电桥参数
+        /// </summary>
+        /// <param name="OptionCode"></param>
+        public static void RenameMeterOption(string OptionCode, string OptionName)
+        {
+            ObjectParameter retVal = new ObjectParameter("retVal", 0);
+            ObjectParameter retMsg = new ObjectParameter("retMsg", "");
+            string optionCode = GetMeterOption().Where(x => x.OptionName == OptionName).ToList()[0].OptionCode;
+            db.P_Eng_MeterOptionRename(optionCode, OptionCode, retVal, retMsg);
+            db.SaveChanges();
+        }
+
+
+        public static void CopyMeterOption(string newName, string SourceName)
+        {
+            ObjectParameter retVal = new ObjectParameter("retVal", 0);
+            ObjectParameter retMsg = new ObjectParameter("retMsg", "");
+            string optionCode = GetMeterOption().Where(x => x.OptionName == SourceName).ToList()[0].OptionCode;
+            db.P_Eng_MeterOptionCopy(newName, optionCode, retVal, retMsg);
+        }
+
+        #endregion
 
         #region 资料库
 
@@ -332,9 +394,117 @@ namespace SqlHelper
                 lcrUnitCode,
                 lcrMaxValue,
                 lcrMinValue, size, compensateValue, picture, remarks, creator, creationDate, modifier, modificationDate, screenPrinting, maxTolerance, minTolerance, toleranceType, componentPackaging, msgObj);
-                msg = msgObj.Value.ToString();
+            msg = msgObj.Value.ToString();
         }
 
+        #endregion
+
+        #region 替代料
+        /// <summary>
+        /// 更新替代料
+        /// </summary>
+        /// <param name="productCode"></param>
+        /// <param name="materialCode"></param>
+        /// <param name="subMatCode"></param>
+        /// <param name="subMatName"></param>
+        /// <param name="creater"></param>
+        /// <param name="type"></param>
+        /// <param name="msg"></param>
+        public static void Eng_BomSubAdd(string productCode, string materialCode, string subMatCode, string subMatName, string creater, int type, out string msg)
+        {
+            msg = "";
+            try
+            {
+                ObjectParameter retVal = new ObjectParameter("retVal", 0);
+                ObjectParameter retMsg = new ObjectParameter("retMsg", "");
+                db.P_Eng_BomItemSubAdd(productCode, materialCode, subMatCode, subMatName, creater, type, retVal, retMsg);
+                if (type == 0 && retVal.Value.ToString() != "1")
+                {
+                    msg = retMsg.Value.ToString();
+                }
+            }
+            catch (Exception ex)
+            {
+                msg = ex.Message;
+            }
+        }
+
+        /// <summary>
+        /// 搜索替代料
+        /// </summary>
+        /// <param name="productCode"></param>
+        /// <param name="materialCode"></param>
+        /// <returns></returns>
+        public static List<Eng_BomSub> SearchEng_BomSub(string productCode, string materialCode)
+        {
+            return db.Eng_BomSub.AsNoTracking().Where(x => x.ProductCode == productCode && x.MaterialCode == materialCode).ToList();
+        }
+
+        public static void UpdatateEng_BomSub(string productCode, string materialCode, string subMatCode, string subMatName)
+        {
+            try
+            {
+                int i = db.Database.ExecuteSqlCommand("update Eng_BomSub set SubMatName={0}  where ProductCode={1} and MaterialCode = {2} and subMatCode ={3}", subMatName, productCode, materialCode, subMatName);
+                db.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+        public static void DeleteEng_BomSub(string productCode, string materialCode)
+        {
+            try
+            {
+                int i = db.Database.ExecuteSqlCommand("delete from Eng_BomSub where ProductCode={0} and MaterialCode = {1}", productCode, materialCode);
+                db.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+        #endregion
+
+        #region 客户管理
+        /// <summary>
+        /// 获取客户
+        /// </summary>
+        /// <returns></returns>
+        public static List<Bas_Customer> GetBas_Custom()
+        {
+            return db.Bas_Customer.AsNoTracking().ToList();
+        }
+
+        /// <summary>
+        /// 更新客户
+        /// </summary>
+        /// <param name="customerCode"></param>
+        public static void UpdateBas_Custom(int row, string customerCode, string customerName)
+        {
+            db.Database.ExecuteSqlCommand("update Bas_Customer set CustomerName ={0} , CustomerCode={1} where Row={2}", customerName, customerCode, row);
+            db.SaveChanges();
+        }
+
+        /// <summary>
+        /// 添加客户
+        /// </summary>
+        /// <param name="customerCode"></param>
+        /// <param name="customerName"></param>
+        /// <param name="isDefault"></param>
+        public static void AddBas_Custom(int row, string customerCode, string customerName)
+        {
+            db.Database.ExecuteSqlCommand("insert into Bas_Customer(Row,customerCode,customerName) values ({0},{1},{2})", row, customerCode, customerName);
+            db.SaveChanges();
+        }
+
+        public static void DeleteBas_Custom(int row)
+        {
+            db.Database.ExecuteSqlCommand("delete from Bas_Customer where Row={0}", row);
+            db.SaveChanges();
+        }
         #endregion
     }
 }
