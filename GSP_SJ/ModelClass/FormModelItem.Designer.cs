@@ -29,19 +29,20 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
-            this.btnDeleteRoi = new System.Windows.Forms.Button();
-            this.btnAddRoi = new System.Windows.Forms.Button();
+            this.btnSaveModel = new ComponentFactory.Krypton.Toolkit.KryptonButton();
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel4 = new System.Windows.Forms.Panel();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.roiPictureBox1 = new GSP_SJ.ModelClass.DirectionalROIPictureBox();
             this.panel3 = new System.Windows.Forms.Panel();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.trackcontrack = new System.Windows.Forms.TrackBar();
-            this.label2 = new System.Windows.Forms.Label();
-            this.trackLight = new System.Windows.Forms.TrackBar();
-            this.label1 = new System.Windows.Forms.Label();
+            this.dataGridView1 = new ComponentFactory.Krypton.Toolkit.KryptonDataGridView();
+            this.btnDeleteRoi = new ComponentFactory.Krypton.Toolkit.KryptonButton();
+            this.btnSave = new ComponentFactory.Krypton.Toolkit.KryptonButton();
+            this.kryptonLabel1 = new ComponentFactory.Krypton.Toolkit.KryptonLabel();
+            this.kryptonLabel2 = new ComponentFactory.Krypton.Toolkit.KryptonLabel();
+            this.trackLight = new ComponentFactory.Krypton.Toolkit.KryptonTrackBar();
+            this.trackcontrack = new ComponentFactory.Krypton.Toolkit.KryptonTrackBar();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel4.SuspendLayout();
@@ -55,14 +56,13 @@
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackcontrack)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackLight)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.btnSave);
             this.panel1.Controls.Add(this.btnDeleteRoi);
-            this.panel1.Controls.Add(this.btnAddRoi);
+            this.panel1.Controls.Add(this.btnSaveModel);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Margin = new System.Windows.Forms.Padding(4);
@@ -70,27 +70,16 @@
             this.panel1.Size = new System.Drawing.Size(1579, 93);
             this.panel1.TabIndex = 0;
             // 
-            // btnDeleteRoi
+            // btnSaveModel
             // 
-            this.btnDeleteRoi.Location = new System.Drawing.Point(1044, 16);
-            this.btnDeleteRoi.Margin = new System.Windows.Forms.Padding(4);
-            this.btnDeleteRoi.Name = "btnDeleteRoi";
-            this.btnDeleteRoi.Size = new System.Drawing.Size(100, 49);
-            this.btnDeleteRoi.TabIndex = 1;
-            this.btnDeleteRoi.Text = "删除ROI";
-            this.btnDeleteRoi.UseVisualStyleBackColor = true;
-            this.btnDeleteRoi.Click += new System.EventHandler(this.btnDeleteRoi_Click);
-            // 
-            // btnAddRoi
-            // 
-            this.btnAddRoi.Location = new System.Drawing.Point(887, 16);
-            this.btnAddRoi.Margin = new System.Windows.Forms.Padding(4);
-            this.btnAddRoi.Name = "btnAddRoi";
-            this.btnAddRoi.Size = new System.Drawing.Size(100, 49);
-            this.btnAddRoi.TabIndex = 0;
-            this.btnAddRoi.Text = "新增ROI";
-            this.btnAddRoi.UseVisualStyleBackColor = true;
-            this.btnAddRoi.Click += new System.EventHandler(this.btnAddRoi_Click);
+            this.btnSaveModel.Location = new System.Drawing.Point(707, 12);
+            this.btnSaveModel.Name = "btnSaveModel";
+            this.btnSaveModel.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.Office2007Blue;
+            this.btnSaveModel.Size = new System.Drawing.Size(180, 53);
+            this.btnSaveModel.TabIndex = 2;
+            this.btnSaveModel.Values.Image = global::GSP_SJ.Properties.Resources._110;
+            this.btnSaveModel.Values.Text = "添加ROI";
+            this.btnSaveModel.Click += new System.EventHandler(this.btnAddRoi_Click);
             // 
             // panel2
             // 
@@ -133,7 +122,7 @@
             // 
             this.roiPictureBox1.DrawingType = GSP_SJ.ModelClass.ROIType.Rectangle;
             this.roiPictureBox1.Image = null;
-            this.roiPictureBox1.Location = new System.Drawing.Point(134, 4);
+            this.roiPictureBox1.Location = new System.Drawing.Point(4, 4);
             this.roiPictureBox1.Margin = new System.Windows.Forms.Padding(4);
             this.roiPictureBox1.Mode = GSP_SJ.ModelClass.ROIMode.Select;
             this.roiPictureBox1.Name = "roiPictureBox1";
@@ -167,9 +156,9 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.trackcontrack);
-            this.splitContainer1.Panel2.Controls.Add(this.label2);
             this.splitContainer1.Panel2.Controls.Add(this.trackLight);
-            this.splitContainer1.Panel2.Controls.Add(this.label1);
+            this.splitContainer1.Panel2.Controls.Add(this.kryptonLabel2);
+            this.splitContainer1.Panel2.Controls.Add(this.kryptonLabel1);
             this.splitContainer1.Size = new System.Drawing.Size(527, 1164);
             this.splitContainer1.SplitterDistance = 354;
             this.splitContainer1.SplitterWidth = 5;
@@ -180,55 +169,74 @@
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridView1.Location = new System.Drawing.Point(0, 0);
-            this.dataGridView1.Margin = new System.Windows.Forms.Padding(4);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersWidth = 53;
-            this.dataGridView1.RowTemplate.Height = 23;
+            this.dataGridView1.RowTemplate.Height = 28;
             this.dataGridView1.Size = new System.Drawing.Size(527, 354);
             this.dataGridView1.TabIndex = 0;
-            this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
             // 
-            // trackcontrack
+            // btnDeleteRoi
             // 
-            this.trackcontrack.Location = new System.Drawing.Point(93, 79);
-            this.trackcontrack.Margin = new System.Windows.Forms.Padding(4);
-            this.trackcontrack.Maximum = 255;
-            this.trackcontrack.Minimum = -255;
-            this.trackcontrack.Name = "trackcontrack";
-            this.trackcontrack.Size = new System.Drawing.Size(308, 58);
-            this.trackcontrack.TabIndex = 3;
-            this.trackcontrack.Scroll += new System.EventHandler(this.trackcontrack_Scroll);
+            this.btnDeleteRoi.Location = new System.Drawing.Point(906, 12);
+            this.btnDeleteRoi.Name = "btnDeleteRoi";
+            this.btnDeleteRoi.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.Office2007Blue;
+            this.btnDeleteRoi.Size = new System.Drawing.Size(180, 53);
+            this.btnDeleteRoi.TabIndex = 3;
+            this.btnDeleteRoi.Values.Image = global::GSP_SJ.Properties.Resources._2;
+            this.btnDeleteRoi.Values.Text = "删除ROI";
+            this.btnDeleteRoi.Click += new System.EventHandler(this.btnDeleteRoi_Click);
             // 
-            // label2
+            // btnSave
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(33, 92);
-            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(55, 16);
-            this.label2.TabIndex = 2;
-            this.label2.Text = "对比度";
+            this.btnSave.Location = new System.Drawing.Point(36, 12);
+            this.btnSave.Name = "btnSave";
+            this.btnSave.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.Office2007Blue;
+            this.btnSave.Size = new System.Drawing.Size(180, 53);
+            this.btnSave.TabIndex = 4;
+            this.btnSave.Values.Image = global::GSP_SJ.Properties.Resources._002_07;
+            this.btnSave.Values.Text = "保存";
+            // 
+            // kryptonLabel1
+            // 
+            this.kryptonLabel1.Location = new System.Drawing.Point(21, 50);
+            this.kryptonLabel1.Name = "kryptonLabel1";
+            this.kryptonLabel1.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.Office2007Blue;
+            this.kryptonLabel1.Size = new System.Drawing.Size(46, 26);
+            this.kryptonLabel1.TabIndex = 4;
+            this.kryptonLabel1.Values.Text = "亮度";
+            // 
+            // kryptonLabel2
+            // 
+            this.kryptonLabel2.Location = new System.Drawing.Point(21, 82);
+            this.kryptonLabel2.Name = "kryptonLabel2";
+            this.kryptonLabel2.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.Office2007Blue;
+            this.kryptonLabel2.Size = new System.Drawing.Size(64, 26);
+            this.kryptonLabel2.TabIndex = 5;
+            this.kryptonLabel2.Values.Text = "对比度";
             // 
             // trackLight
             // 
-            this.trackLight.Location = new System.Drawing.Point(93, 35);
-            this.trackLight.Margin = new System.Windows.Forms.Padding(4);
+            this.trackLight.DrawBackground = true;
+            this.trackLight.Location = new System.Drawing.Point(98, 50);
             this.trackLight.Maximum = 128;
             this.trackLight.Minimum = -128;
             this.trackLight.Name = "trackLight";
-            this.trackLight.Size = new System.Drawing.Size(308, 58);
-            this.trackLight.TabIndex = 1;
+            this.trackLight.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.Office2007Blue;
+            this.trackLight.Size = new System.Drawing.Size(303, 27);
+            this.trackLight.TabIndex = 6;
             this.trackLight.Scroll += new System.EventHandler(this.trackLight_Scroll);
             // 
-            // label1
+            // trackcontrack
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(47, 52);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(39, 16);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "亮度";
+            this.trackcontrack.DrawBackground = true;
+            this.trackcontrack.Location = new System.Drawing.Point(98, 83);
+            this.trackcontrack.Maximum = 128;
+            this.trackcontrack.Minimum = -128;
+            this.trackcontrack.Name = "trackcontrack";
+            this.trackcontrack.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.Office2007Blue;
+            this.trackcontrack.Size = new System.Drawing.Size(303, 27);
+            this.trackcontrack.TabIndex = 7;
+            this.trackcontrack.Scroll += new System.EventHandler(this.trackcontrack_Scroll);
             // 
             // FormModelItem
             // 
@@ -239,7 +247,7 @@
             this.Controls.Add(this.panel1);
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "FormModelItem";
-            this.Text = "FormModelItem";
+            this.Text = "设置模版";
             this.panel1.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.panel4.ResumeLayout(false);
@@ -254,8 +262,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackcontrack)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackLight)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -267,14 +273,15 @@
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.SplitContainer splitContainer1;
-        private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.SplitContainer splitContainer2;
-        private System.Windows.Forms.Button btnDeleteRoi;
-        private System.Windows.Forms.Button btnAddRoi;
         private DirectionalROIPictureBox roiPictureBox1;
-        private System.Windows.Forms.TrackBar trackcontrack;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TrackBar trackLight;
-        private System.Windows.Forms.Label label1;
+        private ComponentFactory.Krypton.Toolkit.KryptonButton btnSaveModel;
+        private ComponentFactory.Krypton.Toolkit.KryptonDataGridView dataGridView1;
+        private ComponentFactory.Krypton.Toolkit.KryptonButton btnDeleteRoi;
+        private ComponentFactory.Krypton.Toolkit.KryptonButton btnSave;
+        private ComponentFactory.Krypton.Toolkit.KryptonTrackBar trackcontrack;
+        private ComponentFactory.Krypton.Toolkit.KryptonTrackBar trackLight;
+        private ComponentFactory.Krypton.Toolkit.KryptonLabel kryptonLabel2;
+        private ComponentFactory.Krypton.Toolkit.KryptonLabel kryptonLabel1;
     }
 }

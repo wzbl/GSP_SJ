@@ -67,10 +67,14 @@ namespace GSP_SJ.ModelClass
                 }
 
                 HOperatorSet.ReduceDomain(gray, ho_findCircleRoi, out ho_image);
-                //HOperatorSet.CropDomain(ho_image,  out ho_image);
+                HOperatorSet.ChangeDomain(ho_image, ho_findCircleRoi, out HObject ho_ImageReduced2);
+                HOperatorSet.CropDomain(ho_ImageReduced2, out HObject ho_ImageReduced3);
                 DeepOCRHelper.FindOCR(new HImage(ho_image), out string text);
+                //new HImage(ho_image).WriteImage("bmp",0, @"D:\ocr.bmp");
+                //new HImage(ho_ImageReduced2).WriteImage("bmp",0, @"D:\ocr2.bmp");
                 txtOCRText.Text = text;
-
+                ho_ImageReduced2.Dispose();
+                ho_ImageReduced3.Dispose();
                 ho_findCircleRoi.Dispose();
                 gray.Dispose();
 
@@ -185,8 +189,8 @@ namespace GSP_SJ.ModelClass
             else
             {
                 //执行ocr
-                DeepOCRHelper.FindOCR(new HImage(ho_image), out string text);
-                txtOCRText.Text = text;
+                //DeepOCRHelper.FindOCR(new HImage(ho_image), out string text);
+                //txtOCRText.Text = text;
             }
         }
 

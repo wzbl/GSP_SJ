@@ -261,7 +261,7 @@ namespace GSP_SJ
             ToolStripButton toolStrip13 = new ToolStripButton("图像界面");
             toolStrip13.Click += (s, e) =>
             {
-                Form3 form3 = new Form3(canvas);
+                FormAction form3 = new FormAction(canvas);
                 form3.ShowDialog();
             };
 
@@ -330,7 +330,7 @@ namespace GSP_SJ
 
         private void button2_Click(object sender, EventArgs e)
         {
-            Form3 form3 = new Form3(canvas);
+            FormAction form3 = new FormAction(canvas);
             form3.Show();
         }
     }
@@ -1245,7 +1245,7 @@ namespace GSP_SJ
                 //string cmd = "update Eng_XYData set RX='" + screenPos1.X + "' ,RY= '" + screenPos1.Y + "' where ProductCode = " + ProductCode + " and Position='" + component.Designator + "'";
                 //SqlHelper.SQL.ExecuteQuery(cmd);
                 //跟新屏幕坐标到数据库
-                if (saveScraw)
+                //if (saveScraw)
                     SQLDataControl.UpdateXYData_RXY(ProductCode, component.Designator, (decimal)screenPos1.X, (decimal)screenPos1.Y);
                 // 绘制元件矩形
                 using (Pen pen = new Pen(component.Color, 1.0f))

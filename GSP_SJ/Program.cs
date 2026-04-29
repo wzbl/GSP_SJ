@@ -1,5 +1,6 @@
 ﻿using BorwinAnalyse.BaseClass;
 using BorwinAnalyse.ImportBom;
+using GSP_SJ.DBForm;
 using GSP_SJ.ModelClass;
 using System;
 using System.Collections.Generic;
@@ -17,12 +18,22 @@ namespace GSP_SJ
         [STAThread]
         static void Main()
         {
+            // 强制跳过 iTextSharp 授权验证（解决你报的错误）
+            System.Reflection.FieldInfo field = typeof(iTextSharp.text.io.StreamUtil).GetField("FONT_TEMP_DIR", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static);
+            if (field != null)
+            {
+                field.SetValue(null, Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData));
+            }
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             CommonAnalyse.Instance.Load();
             AnaylseDataManager.Instance.Load();
             DeepOCRHelper.Init();
-            Application.Run(new FormMain());
+            FormLogin formLogin = new FormLogin();
+            if (formLogin.ShowDialog() == DialogResult.OK)
+                Application.Run(new FormMain());
+
+
         }
     }
 }

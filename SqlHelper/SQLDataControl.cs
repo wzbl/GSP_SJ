@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Emgu.CV.Structure;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Core.Common.CommandTrees.ExpressionBuilder;
@@ -11,12 +12,15 @@ using System.Linq;
 using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading.Tasks;
+using static Emgu.CV.Stitching.Stitcher;
 
 namespace SqlHelper
 {
     public class SQLDataControl
     {
         private static FAI_NewEntities db = new FAI_NewEntities();
+
+        #region 程序
 
         /// <summary>
         /// 获取所有程序
@@ -27,7 +31,12 @@ namespace SqlHelper
             return db.View_Eng_Program.AsNoTracking().ToList();
         }
 
-        public static void AddProgram(string productCode, string programName, string customerCode, string boardSide, string creator, string ruleCode,string vision,string options)
+        public static View_Eng_Program GetProgramm(string productCode)
+        {
+            return db.View_Eng_Program.AsNoTracking().Where(x => x.产品编号 == productCode).First();
+        }
+
+        public static void AddProgram(string productCode, string programName, string customerCode, string boardSide, string creator, string ruleCode, string vision, string options)
         {
             db.P_Insert_Eng_Program(productCode, programName, customerCode, boardSide, ruleCode, "NORMAL", "", creator, creator, vision, options);
         }
@@ -40,10 +49,148 @@ namespace SqlHelper
             db.SaveChanges();
         }
 
+        #endregion
+
+        #region 测试报告
+
+        public static List<P_Man_Report_Search_Result> SearchMan_Report(DateTime start, DateTime end, string line, string result, string status)
+        {
+            return db.P_Man_Report_Search(start, end, status, result, line).ToList();
+        }
+        public static void DeleteMan_Report(string reportCode)
+        {
+            db.Database.ExecuteSqlCommand("delete from Man_Report where ReportCode={0}", reportCode);
+            db.SaveChanges();
+        }
+
         public static List<Man_Report> GetAllReport()
         {
             return db.Man_Report.AsNoTracking().ToList();
         }
+
+        public static void AddMan_Report(Man_Report report)
+        {
+            db.P_Man_ReportAdd
+                (
+                 report.ReportCode,
+                 report.BoardSide,
+                 report.PLCode,
+                 report.ProductCode,
+                 report.ProductName,
+                 report.WoCode,
+                 report.LotNumber,
+                 report.BatchQty,
+                 report.BoardQty,
+                 report.IsCheckNoSMD,
+                 report.Remarks,
+                 report.Creator,
+                 report.Modifier,
+                 report.OptionCode,
+                 report.Barcode,
+                 report.@class,
+                 report.CheckType,
+                 report.PCBVersion,
+                 report.BomVersion,
+                 report.DeviceName);
+
+        }
+
+        /// <summary>
+        /// 修改测试报告
+        /// </summary>
+        /// <param name="ReportCode"></param>
+        /// <param name="Barcode"></param>
+        /// <param name="OptionCode"></param>
+        /// <param name="LotNumber"></param>
+        /// <param name="PLCode"></param>
+        /// <param name="CheckType"></param>
+        /// <param name="_Class"></param>
+        /// <param name="BatchQty"></param>
+        /// <param name="WoCode"></param>
+        /// <param name="PCBVersion"></param>
+        public static void UpdateMan_Report(string ReportCode, string Barcode, string OptionCode, string LotNumber, string PLCode, string CheckType, string _Class, int BatchQty, string WoCode, string PCBVersion, string Modifier, string Remark)
+        {
+            try
+            {
+                int i = db.Database.ExecuteSqlCommand("update Man_Report set Barcode={0},OptionCode={1},LotNumber={2},PLCode={3},CheckType={4},class={5},BatchQty={6},WoCode={7},PCBVersion={8},Modifier={9} ,ModificationDate={10},Remarks={11} where ReportCode={12}", Barcode, OptionCode, LotNumber, PLCode, CheckType, _Class, BatchQty, WoCode, PCBVersion, Modifier, DateTime.Now, Remark, ReportCode);
+                db.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+        }
+
+
+        public static void FinishMan_Report(string ReportCode, string finishBy)
+        {
+            int i = db.Database.ExecuteSqlCommand("update Man_Report set Status={0},CheckResult={1}, FinishedBy={2},FinishedDate={3} where ReportCode={4}", "CLOSE", "PASS", finishBy, DateTime.Now, ReportCode);
+            db.SaveChanges();
+        }
+
+
+        public static void SetQAMan_Report(string ReportCode, string QAChecker)
+        {
+            int i = db.Database.ExecuteSqlCommand("update Man_Report set IsQACheck={0},QAChecker={1}, QACheckTimer={2} where ReportCode={3}", "YES", QAChecker, DateTime.Now, ReportCode);
+            db.SaveChanges();
+        }
+
+
+        public static List<Man_ReportItem> Search_Man_ReportItem(string reportCode)
+        {
+            return db.Man_ReportItem.AsNoTracking().Where(x => x.ReportCode == reportCode).ToList();
+        }
+
+        public static void AddMan_ReportItem(Man_ReportItem item)
+        {
+            try
+            {
+                db.Database.ExecuteSqlCommand("insert into " +
+           "Man_ReportItem " +
+           "(ReportCode," +
+           "Position," +
+           "BoardId," +
+           //"Sequence," +
+           "BomSequence," +
+           "MaterialCode," +
+           "MaterialName," +
+           "LcrType," +
+           "LcrStandardValue," +
+           "LcrUnitCode," +
+           "LcrMaxValue," +
+           "LcrMinValue," +
+           "MaxTolerance," +
+           "MinTolerance," +
+           "Size," +
+           "X,Y,Angle,IsSMD,LX,LY,RX,RY,Status," +
+           "IsDefined,OLcrStandardValue,OLcrMaxValue,OLcrMinValue,ToleranceType,OLcrUnitCode,XYGroups,ErrorBoard)" +
+           "values({0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13},{14},{15},{16},{17},{18},{19},{20},{21},{22},{23},{24},{25},{26},{27},{28},{29},{30})",
+           item.ReportCode,
+           item.Position,
+           item.BoardId,
+           item.BomSequence,
+           item.MaterialCode,
+           item.MaterialName,
+           item.LcrType,
+           item.LcrStandardValue,
+           item.LcrUnitCode,
+           item.LcrMaxValue,
+           item.LcrMinValue,
+           item.MaxTolerance,
+           item.MinTolerance,
+           item.Size, item.X, item.Y, item.Angle, item.IsSMD, item.LX, item.LY, item.RX, item.RY, item.Status,
+           item.IsDefined, item.OLcrStandardValue, item.OLcrMaxValue, item.OLcrMinValue, item.ToleranceType, item.OLcrUnitCode, item.XYGroups, item.ErrorBoard);
+            }
+            catch (Exception)
+            {
+
+            }
+
+        }
+        #endregion
+
+        #region BOM
 
         /// <summary>
         /// 搜索BOM
@@ -53,6 +200,11 @@ namespace SqlHelper
         public static List<P_Search_Eng_Bom_Result> SearchBom(string productCode)
         {
             return db.P_Search_Eng_Bom(productCode).ToList();
+        }
+
+        public static List<Eng_Bom> GetBomByProductCode(string productCode, string MaterialCode)
+        {
+            return db.Eng_Bom.AsNoTracking().Where(x => x.ProductCode == productCode && x.MaterialCode == MaterialCode).ToList();
         }
 
         public static void AddBom(Eng_Bom bom)
@@ -186,9 +338,17 @@ namespace SqlHelper
 
         }
 
+        #endregion
+
+        #region XYData
         public static List<P_Search_Eng_XYData_Result> SearchXYData(string productCode)
         {
             return db.P_Search_Eng_XYData(productCode).ToList();
+        }
+
+        public static List<Eng_XYData> GetEng_XYDatas(string productCode)
+        {
+            return db.Eng_XYData.Where(x => x.ProductCode == productCode).ToList();
         }
 
         public static void DeleteXYData(string productCode)
@@ -253,6 +413,13 @@ namespace SqlHelper
             db.SaveChanges();
         }
 
+
+        public static void UpdateXYData_LXY(string productCode, string position, decimal px, decimal py)
+        {
+            int i = db.Database.ExecuteSqlCommand("update Eng_XYData set LX={0} ,LY ={1} where ProductCode={2} and Position = {3}", px, py, productCode, position);
+            db.SaveChanges();
+        }
+
         public static void UpdateProgramOptionPicture(string productCode, string BoardSide, byte[] img)
         {
             db.P_Update_Eng_ProgramOption(productCode, BoardSide, img);
@@ -271,7 +438,9 @@ namespace SqlHelper
                 return null;
             }
         }
+        #endregion
 
+        #region 模板
 
         /// <summary>
         /// 获取所有公共模板库
@@ -280,6 +449,20 @@ namespace SqlHelper
         public static List<Eng_PubModel> GetAllEng_PubModel()
         {
             return db.Eng_PubModel.AsNoTracking().ToList();
+        }
+
+        public static void DeleteEng_PubModel(string MaterialCode)
+        {
+            db.Database.ExecuteSqlCommand("delete from Eng_PubModel where MaterialCode={0}", MaterialCode);
+            db.Database.ExecuteSqlCommand("delete from Eng_PubModelItem where MaterialCode={0}", MaterialCode);
+            db.SaveChanges();
+        }
+
+        public static void DeleteAllEng_PubModel()
+        {
+            db.Database.ExecuteSqlCommand("delete from Eng_PubModel");
+            db.Database.ExecuteSqlCommand("delete from Eng_PubModelItem");
+            db.SaveChanges();
         }
 
         /// <summary>
@@ -300,13 +483,33 @@ namespace SqlHelper
         {
             return db.Eng_ModelItem.AsNoTracking().Where(x => x.ProductCode == productCode && x.MaterialCode == materialCode).ToList();
         }
+        #endregion
 
         #region 电桥参数
+        public static string GetMeterOptionCode(string Optioncode)
+        {
+            List<Eng_MeterOption> eng_MeterOptions = GetMeterOption().Where(x => x.OptionCode == Optioncode).ToList();
+            if (eng_MeterOptions != null && eng_MeterOptions.Count > 0)
+            {
+                return eng_MeterOptions[0].OptionName;
+            }
+            return Optioncode;
+        }
+
+        public static string GetMeterOptionName(string OptionName)
+        {
+            List<Eng_MeterOption> eng_MeterOptions = GetMeterOption().Where(x => x.OptionName == OptionName).ToList();
+            if (eng_MeterOptions != null && eng_MeterOptions.Count > 0)
+            {
+                return eng_MeterOptions[0].OptionCode;
+            }
+            return OptionName;
+        }
 
         public static List<Eng_MeterOptionItem> GetMeterOptionItem(string OptionName)
         {
-            string optionCode = GetMeterOption().Where(x=>x.OptionName== OptionName).ToList()[0].OptionCode;
-            return db.Eng_MeterOptionItem.AsNoTracking().Where(x=>x.OptionCode== optionCode).ToList();
+            string optionCode = GetMeterOption().Where(x => x.OptionName == OptionName).ToList()[0].OptionCode;
+            return db.Eng_MeterOptionItem.AsNoTracking().Where(x => x.OptionCode == optionCode).ToList();
         }
 
         public static List<View_Eng_MeterOptionItem> View_Eng_MeterOptionItem()
@@ -368,6 +571,101 @@ namespace SqlHelper
             db.P_Eng_MeterOptionCopy(newName, optionCode, retVal, retMsg);
         }
 
+        /// <summary>
+        /// 获取电桥数据
+        /// </summary>
+        /// <param name="Sort">
+        /// LcrType:元件类型
+        /// RUnit：电阻单位
+        /// CUnit：电容单位
+        /// LUnit：电感单位
+        /// DCRUnit：DCR单位
+        /// LEDUnit：LED单位
+        /// RFunctionType：电阻测试类型
+        /// CFunctionType：电容测试类型
+        /// LFunctionType：电感测试类型
+        /// DCRFunctionType：DCR测试类型
+        /// LEDFunctionType：LED测试类型
+        /// Frequency：测试频率
+        /// Voltage：测试电压
+        /// RangeType：量程类别
+        /// Range：量程
+        /// Speed：测试速度
+        /// Resistance：测试内阻
+        /// </param>
+        /// <returns></returns>
+        public static List<Eng_Meter> GetEng_MeterBySort(string Sort)
+        {
+            return db.Eng_Meter.AsNoTracking().Where(x => x.Sort == Sort).ToList();
+        }
+
+
+        public static string GetEng_MeterByShowValue(string Sort, string ShowValue)
+        {
+            List<Eng_Meter> _Meters = db.Eng_Meter.AsNoTracking().Where(x => x.Sort == Sort && x.ShowValue == ShowValue).ToList();
+            if (_Meters != null && _Meters.Count > 0)
+            {
+                return _Meters[0].SaveValue;
+            }
+            else
+            {
+                return ShowValue;
+            }
+        }
+
+        public static string GetEng_MeterBySaveValue(string Sort, string SaveValue)
+        {
+            List<Eng_Meter> _Meters = db.Eng_Meter.AsNoTracking().Where(x => x.Sort == Sort && x.SaveValue == SaveValue).ToList();
+            if (_Meters != null && _Meters.Count > 0)
+            {
+                return _Meters[0].ShowValue;
+            }
+            else
+            {
+                return SaveValue;
+            }
+        }
+
+        public static void DeleteEng_MeterOptionItem(string optionName, int row)
+        {
+            try
+            {
+                string optionCode = GetMeterOption().Where(x => x.OptionName == optionName).ToList()[0].OptionCode;
+                int i = db.Database.ExecuteSqlCommand("delete from Eng_MeterOptionItem where OptionCode ={0} and Row = {1}", optionCode, row);
+                db.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+        #endregion
+
+        #region 电桥配置
+        public static void DeleteBas_CompensationValue(int row)
+        {
+            db.Database.ExecuteSqlCommand("delete from Bas_CompensationValue where Sort = {0}", row);
+        }
+
+        public static List<Bas_CompensationValue> SearchBas_CompensationValue()
+        {
+            return db.Bas_CompensationValue.AsNoTracking().ToList();
+        }
+
+        public static void AddBas_CompensationValue(Bas_CompensationValue compensationValue)
+        {
+            if (SearchBas_CompensationValue().Where(x => x.Sort == compensationValue.Sort).Count() == 0)
+            {
+                //添加
+                int i = db.Database.ExecuteSqlCommand("insert into Bas_CompensationValue(Sort,LcrMinValue,LcrMaxValue,LcrUnitCode,LcrPrecision,LcrCompensationMaxValue,LcrCompensationMinValue,IsEnabled,Creator,CreationDate,Modifier,ModificationDate) values({0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11})", compensationValue.Sort, compensationValue.LcrMinValue, compensationValue.LcrMaxValue, compensationValue.LcrUnitCode, compensationValue.LcrPrecision, compensationValue.LcrCompensationMaxValue, compensationValue.LcrCompensationMinValue, compensationValue.IsEnabled, compensationValue.Creator, compensationValue.CreationDate, compensationValue.Modifier, compensationValue.ModificationDate);
+            }
+            else
+            {
+                //修改
+                int i = db.Database.ExecuteSqlCommand("update Bas_CompensationValue set LcrMinValue = {0},LcrMaxValue = {1},LcrUnitCode = {2},LcrPrecision = {3},LcrCompensationMaxValue = {4},LcrCompensationMinValue = {5},IsEnabled = {6},Modifier = {7},ModificationDate = {8} where Sort = {9}", compensationValue.LcrMinValue, compensationValue.LcrMaxValue, compensationValue.LcrUnitCode, compensationValue.LcrPrecision, compensationValue.LcrCompensationMaxValue, compensationValue.LcrCompensationMinValue, compensationValue.IsEnabled, compensationValue.Modifier, compensationValue.ModificationDate, compensationValue.Sort);
+            }
+        }
         #endregion
 
         #region 资料库
@@ -503,6 +801,103 @@ namespace SqlHelper
         public static void DeleteBas_Custom(int row)
         {
             db.Database.ExecuteSqlCommand("delete from Bas_Customer where Row={0}", row);
+            db.SaveChanges();
+        }
+
+        public static void AddEng_MeterOptionItem(string optionName, int row, string lcrType, decimal? minValue, string minValueUnit, decimal? maxValue, string maxValueUnit, string functionType, string frequency, string voltage, string rangeType, string range, int? holdTimes, string speed, string resistance, int? readCount, decimal? fRValue, decimal? minValidValue, string minValidValueUnit, decimal? maxValidValue, string maxValidValueUnit, string remarks)
+        {
+            string optionCode = GetMeterOption().Where(x => x.OptionName == optionName).ToList()[0].OptionCode;
+            db.P_Eng_MeterOptionItem(optionCode, row, 1, lcrType, minValue, minValueUnit, maxValue, maxValueUnit, functionType, frequency, voltage, rangeType, range, holdTimes, speed, resistance, readCount, fRValue, minValidValue, minValidValueUnit, maxValidValue, maxValidValueUnit, remarks);
+        }
+        #endregion
+
+        #region 用户管理
+
+        /// <summary>
+        /// 获取用户
+        /// </summary>
+        /// <returns></returns>
+        public static List<Sys_User> GetUser()
+        {
+            return db.Sys_User.AsNoTracking().ToList();
+        }
+
+        /// <summary>
+        /// 登录
+        /// </summary>
+        /// <param name="userCode"></param>
+        /// <param name="passWord"></param>
+        /// <returns></returns>
+        public static bool Login(string userCode, string passWord, out string Msg)
+        {
+            ObjectParameter retVal = new ObjectParameter("retVal", 0);
+            ObjectParameter retMsg = new ObjectParameter("retMsg", "");
+            db.P_Sys_CheckUser(userCode, passWord, retVal, retMsg);
+            Msg = retMsg.Value.ToString();
+            if (retVal.Value.ToString() == "1")
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        public static void AddUser(string userCode, string userName, string passWord, string roleCode, string status, string creator)
+        {
+            db.P_sys_UserAdd(userCode, userName, passWord, roleCode, status, creator);
+        }
+
+        public static void DeleteUser(string userCode)
+        {
+            if (userCode != "0000")
+            {
+                db.Database.ExecuteSqlCommand("delete from Sys_User where UserCode={0}", userCode);
+                db.SaveChanges();
+            }
+
+        }
+
+        public static bool ChangePassword(string userCode, string oldPassWord, string newPassWord, out string Msg)
+        {
+            ObjectParameter retVal = new ObjectParameter("retVal", 0);
+            ObjectParameter retMsg = new ObjectParameter("retMsg", "");
+            db.P_Sys_ChangePassword(userCode, oldPassWord, newPassWord, retVal, retMsg);
+            Msg = retMsg.Value.ToString();
+            return retVal.Value.ToString() == "1";
+        }
+
+        #endregion
+
+        #region 尺寸管理
+
+        public static List<Man_ComponentSize> GetMan_ComponentSize()
+        {
+            return db.Man_ComponentSize.AsNoTracking().ToList();
+        }
+
+        public static void AddMan_ComponentSize(int SizeId, string SizeCode, int PixelWidth, int PixelHeight, decimal PhysicalSizeLength, decimal PhysicalSizeWidth, bool IsOCR, string Remark)
+        {
+            if (db.Man_ComponentSize.AsNoTracking().Where(x => x.SizeId == SizeId).ToList().Count == 0)
+            {
+                int i = db.Database.ExecuteSqlCommand("insert into Man_ComponentSize(SizeCode,PixelWidth,PixelHeight,PhysicalSizeLength,PhysicalSizeWidth,IsOCR,Remark) values ({0},{1},{2},{3},{4},{5},{6})", SizeCode, PixelWidth, PixelHeight, PhysicalSizeLength, PhysicalSizeWidth, IsOCR, Remark);
+            }
+
+            else
+                UpdateMan_ComponentSize(SizeId, SizeCode, PixelWidth, PixelHeight, PhysicalSizeLength, PhysicalSizeWidth, IsOCR, Remark);
+            db.SaveChanges();
+        }
+
+        public static void DeleteMan_ComponentSize(int SizeId)
+        {
+            db.Database.ExecuteSqlCommand("delete from Man_ComponentSize where SizeId={0}", SizeId);
+            db.SaveChanges();
+        }
+
+
+        public static void UpdateMan_ComponentSize(int SizeId, string SizeCode, int PixelWidth, int PixelHeight, decimal PhysicalSizeLength, decimal PhysicalSizeWidth, bool IsOCR, string Remark)
+        {
+            int i = db.Database.ExecuteSqlCommand("update Man_ComponentSize set SizeCode={0},PixelWidth={1},PixelHeight={2},PhysicalSizeLength={3},PhysicalSizeWidth={4},IsOCR={5},Remark={6} where SizeId={7}", SizeCode, PixelWidth, PixelHeight, PhysicalSizeLength, PhysicalSizeWidth, IsOCR, Remark, SizeId);
+
             db.SaveChanges();
         }
         #endregion

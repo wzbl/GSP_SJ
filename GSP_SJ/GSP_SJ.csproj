@@ -101,28 +101,46 @@
     <Compile Include="DBForm\FormEng_SubBom.Designer.cs">
       <DependentUpon>FormEng_SubBom.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormChart\Form1.cs">
+    <Compile Include="DBForm\FormLogin.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormChart\Form1.Designer.cs">
+    <Compile Include="DBForm\FormLogin.Designer.cs">
+      <DependentUpon>FormLogin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DBForm\FormSetPasswork.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DBForm\FormSetPasswork.Designer.cs">
+      <DependentUpon>FormSetPasswork.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DBForm\FormUserManager.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DBForm\FormUserManager.Designer.cs">
+      <DependentUpon>FormUserManager.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_Chart\Form1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_Chart\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormChart\Form2.cs">
+    <Compile Include="Form_Chart\Form2.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormChart\Form2.Designer.cs">
+    <Compile Include="Form_Chart\Form2.Designer.cs">
       <DependentUpon>Form2.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormChart\Form3.cs">
+    <Compile Include="Form_Chart\FormAction.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormChart\Form3.Designer.cs">
-      <DependentUpon>Form3.cs</DependentUpon>
+    <Compile Include="Form_Chart\FormAction.Designer.cs">
+      <DependentUpon>FormAction.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormChart\Form4.cs">
+    <Compile Include="Form_Chart\Form4.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormChart\Form4.Designer.cs">
+    <Compile Include="Form_Chart\Form4.Designer.cs">
       <DependentUpon>Form4.cs</DependentUpon>
     </Compile>
     <Compile Include="DBForm\FormBasMaterial.cs">
@@ -131,10 +149,10 @@
     <Compile Include="DBForm\FormBasMaterial.Designer.cs">
       <DependentUpon>FormBasMaterial.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormChart\FormChart.cs">
+    <Compile Include="Form_Chart\FormChart.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormChart\FormChart.Designer.cs">
+    <Compile Include="Form_Chart\FormChart.Designer.cs">
       <DependentUpon>FormChart.cs</DependentUpon>
     </Compile>
     <Compile Include="DBForm\FormCompensationParam.cs">
@@ -148,6 +166,12 @@
     </Compile>
     <Compile Include="DBForm\FormCompensationSet.Designer.cs">
       <DependentUpon>FormCompensationSet.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_Chart\FormLocation_Point.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_Chart\FormLocation_Point.Designer.cs">
+      <DependentUpon>FormLocation_Point.cs</DependentUpon>
     </Compile>
     <Compile Include="FormMain.cs">
       <SubType>Form</SubType>
@@ -173,7 +197,17 @@
     <Compile Include="FormMeter.Designer.cs">
       <DependentUpon>FormMeter.cs</DependentUpon>
     </Compile>
+    <Compile Include="Form_Chart\UCZoom.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Form_Chart\UCZoom.Designer.cs">
+      <DependentUpon>UCZoom.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_Chart\ZoomablePictureBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Global.cs" />
+    <Compile Include="Location_Point.cs" />
     <Compile Include="ModelClass\DeepOCRHelper.cs" />
     <Compile Include="ModelClass\DirectionalROI.cs" />
     <Compile Include="ModelClass\FormModel.cs">
@@ -196,12 +230,13 @@
     <Compile Include="ModelClass\UCOCRModel.Designer.cs">
       <DependentUpon>UCOCRModel.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormChart\PictureBoxZoom.cs">
+    <Compile Include="Form_Chart\PictureBoxZoom.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="FormChart\PictureBoxZoom.Designer.cs">
+    <Compile Include="Form_Chart\PictureBoxZoom.Designer.cs">
       <DependentUpon>PictureBoxZoom.cs</DependentUpon>
     </Compile>
+    <Compile Include="PDFHepler.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DBForm\UCAllProgram.cs">
@@ -228,10 +263,10 @@
     <Compile Include="DBForm\UCReport.Designer.cs">
       <DependentUpon>UCReport.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormChart\UCXYDataChart.cs">
+    <Compile Include="Form_Chart\UCXYDataChart.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="FormChart\UCXYDataChart.Designer.cs">
+    <Compile Include="Form_Chart\UCXYDataChart.Designer.cs">
       <DependentUpon>UCXYDataChart.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="DBForm\FormBas_Custom.resx">
@@ -240,19 +275,28 @@
     <EmbeddedResource Include="DBForm\FormEng_SubBom.resx">
       <DependentUpon>FormEng_SubBom.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormChart\Form1.resx">
+    <EmbeddedResource Include="DBForm\FormLogin.resx">
+      <DependentUpon>FormLogin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DBForm\FormSetPasswork.resx">
+      <DependentUpon>FormSetPasswork.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DBForm\FormUserManager.resx">
+      <DependentUpon>FormUserManager.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_Chart\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormChart\Form2.resx">
+    <EmbeddedResource Include="Form_Chart\Form2.resx">
       <DependentUpon>Form2.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormChart\Form3.resx">
-      <DependentUpon>Form3.cs</DependentUpon>
+    <EmbeddedResource Include="Form_Chart\FormAction.resx">
+      <DependentUpon>FormAction.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DBForm\FormBasMaterial.resx">
       <DependentUpon>FormBasMaterial.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormChart\FormChart.resx">
+    <EmbeddedResource Include="Form_Chart\FormChart.resx">
       <DependentUpon>FormChart.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DBForm\FormCompensationParam.resx">
@@ -260,6 +304,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="DBForm\FormCompensationSet.resx">
       <DependentUpon>FormCompensationSet.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_Chart\FormLocation_Point.resx">
+      <DependentUpon>FormLocation_Point.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
@@ -272,6 +319,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormMeter.resx">
       <DependentUpon>FormMeter.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_Chart\UCZoom.resx">
+      <DependentUpon>UCZoom.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ModelClass\FormModel.resx">
       <DependentUpon>FormModel.cs</DependentUpon>
@@ -301,7 +351,7 @@
     <EmbeddedResource Include="DBForm\UCReport.resx">
       <DependentUpon>UCReport.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormChart\UCXYDataChart.resx">
+    <EmbeddedResource Include="Form_Chart\UCXYDataChart.resx">
       <DependentUpon>UCXYDataChart.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Connected Services\ServiceReference1\item.xsd">
@@ -366,6 +416,9 @@
     <PackageReference Include="EntityFramework.zh-Hans">
       <Version>6.2.0</Version>
     </PackageReference>
+    <PackageReference Include="iTextSharp">
+      <Version>5.5.10</Version>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
@@ -411,6 +464,42 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\155.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\47.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\46.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\130.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\241.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons8-铅笔橡皮-48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\exit_3_24px1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Update_24px.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\002_01.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\21.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\002_61.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\51.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\145.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -567,7 +567,7 @@ namespace BorwinAnalyse.BaseClass
         /// 导出dataTable
         /// </summary>
         /// <param name="TableName"></param>
-        public static void ExportDataToExcel(DataTable TableName)
+        public static void ExportDataToExcel(DataTable TableName,string fileName="")
         {
             SaveFileDialog saveFileDialog = new SaveFileDialog();
             //设置文件标题
@@ -580,7 +580,7 @@ namespace BorwinAnalyse.BaseClass
             saveFileDialog.AddExtension = true;
             //是否记忆上次打开的目录
             saveFileDialog.RestoreDirectory = true;
-
+            saveFileDialog.FileName = fileName;
             //按下确定选择的按钮  
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
             {

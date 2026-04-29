@@ -1,5 +1,6 @@
 ﻿using BorwinAnalyse.BaseClass;
 using BorwinAnalyse.ImportBom;
+using BrowLib.Static;
 using ComponentFactory.Krypton.Toolkit;
 using SqlHelper;
 using System;
@@ -179,10 +180,7 @@ namespace BorwinAnalyse.Forms
                     {
                         _Bom_Result.替代料 = "";
                     }
-                    if (_Bom_Result.物料编码 == "M.01.03.2047")
-                    {
 
-                    }
                     AnalyseResult analyseResult = CommonAnalyse.Instance.AnalyseMethod_copy(_Bom_Result.物料描述);
                     switch (analyseResult.Type)
                     {
@@ -271,7 +269,7 @@ namespace BorwinAnalyse.Forms
                         }
                         if (_Bom_Result.元件类型 != "O")
                         {
-                            ErrorLog.Add(_Bom_Result.序号, analyseResult.DefaultFormat()+","+ analyseResult.ErrorMsg);
+                            ErrorLog.Add(_Bom_Result.序号, analyseResult.DefaultFormat() + "," + analyseResult.ErrorMsg);
                         }
                     }
 
@@ -334,6 +332,7 @@ namespace BorwinAnalyse.Forms
                     P_Search_Eng_XYData_Result _XY_Result = new P_Search_Eng_XYData_Result();
                     _XY_Result.序号 = i + 1;
                     _XY_Result.产品编码 = productCode;
+                    _XY_Result.拼板 = 1;
                     if (colDic.ContainsKey("元件位置"))
                     {
                         _XY_Result.元件位置 = dt.Rows[i][colDic["元件位置"]].ToString();
@@ -344,7 +343,13 @@ namespace BorwinAnalyse.Forms
                     }
                     if (colDic.ContainsKey("X坐标"))
                     {
-                        _XY_Result.X坐标 = decimal.Parse(dt.Rows[i][colDic["X坐标"]].ToString());
+                        int value = colDic["X坐标"];
+                        if (decimal.TryParse(dt.Rows[i][value].ToString(), out decimal x))
+                        {
+                            _XY_Result.X坐标 = x;
+                        }
+                        else
+                            _XY_Result.X坐标 = 0;
                     }
                     else if (dt.Rows[i].ItemArray.Length > 1)
                     {
@@ -361,7 +366,9 @@ namespace BorwinAnalyse.Forms
                     }
                     if (colDic.ContainsKey("角度"))
                     {
-                        _XY_Result.角度 = decimal.Parse(dt.Rows[i][colDic["角度"]].ToString());
+
+                        if (decimal.TryParse(dt.Rows[i][colDic["角度"]].ToString(), out decimal angle))
+                            _XY_Result.角度 = angle;
                     }
                     else if (dt.Rows[i].ItemArray.Length > 3)
                     {
@@ -378,8 +385,9 @@ namespace BorwinAnalyse.Forms
                     _XY_Result.板面 = side;
                     foreach (var item in p_Search_Engs)
                     {
-                        List<string> res = item.元件位置.Split(',').ToList();
-                        if (res != null)
+                           string _pos = item.元件位置.Replace(" ", ",");
+                           List<string> res = _pos.Split(',').ToList();
+                            if (res != null)
                             if (res.Where(x => x == _XY_Result.元件位置).ToList().Count > 0)
                             {
                                 _XY_Result.物料描述 = item.物料描述;
@@ -393,6 +401,11 @@ namespace BorwinAnalyse.Forms
                     }
 
                     eng_XYData_Results.Add(_XY_Result);
+                    _XY_Result.拼板 = 1;
+                    if (_XY_Result.元件位置.ToUpper().Contains("MARK"))
+                        _XY_Result.是否贴装 = "NO";
+                    else
+                        _XY_Result.是否贴装 = "YES";
                 }
 
             }
@@ -430,6 +443,14 @@ namespace BorwinAnalyse.Forms
         private void BindXYData()
         {
             dgvXYData.DataSource = eng_XYData_Results;
+
+            for (int i = 0; i < dgvXYData.RowCount; i++)
+            {
+                if (dgvXYData.Rows[i].Cells[5].Value == null||string.IsNullOrEmpty(dgvXYData.Rows[i].Cells[5].Value.ToString()))
+                {
+                    dgvXYData.Rows[i].Cells[5].Style.BackColor = Color.Red;
+                }
+            }
         }
 
         private void RefreshLog()

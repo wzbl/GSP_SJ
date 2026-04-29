@@ -1,4 +1,5 @@
-﻿using HalconDotNet;
+﻿using ComponentFactory.Krypton.Toolkit;
+using HalconDotNet;
 using SqlHelper;
 using System;
 using System.Collections.Generic;
@@ -15,7 +16,7 @@ using System.Windows.Forms;
 
 namespace GSP_SJ.ModelClass
 {
-    public partial class FormModelItem : Form
+    public partial class FormModelItem : KryptonForm
     {
         private string MaterialCode = "";
 
@@ -50,7 +51,7 @@ namespace GSP_SJ.ModelClass
                     dataGridView1.DataSource = eng_ModelItems;
                 }
             }
-
+            dataGridView1.CellClick += dataGridView1_CellClick;
         }
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -210,7 +211,7 @@ namespace GSP_SJ.ModelClass
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void trackLight_Scroll(object sender, EventArgs e)
+        private async void trackLight_Scroll(object sender, EventArgs e)
         {
             lock (lockObj)
             {
@@ -221,10 +222,12 @@ namespace GSP_SJ.ModelClass
         private void ScaleImage()
         {
             double factor = 3;
+
             if (trackLight.Value < 0)
             {
                 factor = 0.001;
             }
+
             using (HImage hImage = HalconImageConverter.BitmapToHImageRGB(new Bitmap(org)))
             {
                 HalconDotNet.HOperatorSet.ScaleImage(hImage, out HObject imageScaled, factor, (int)Math.Abs(trackLight.Value));
@@ -240,7 +243,7 @@ namespace GSP_SJ.ModelClass
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void trackcontrack_Scroll(object sender, EventArgs e)
+        private async void trackcontrack_Scroll(object sender, EventArgs e)
         {
             lock (lockObj)
             {
@@ -258,6 +261,5 @@ namespace GSP_SJ.ModelClass
                 RefreshOcvData();
             }
         }
-
     }
 }

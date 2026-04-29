@@ -29,13 +29,17 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             this.kryptonSplitContainer1 = new ComponentFactory.Krypton.Toolkit.KryptonSplitContainer();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.保存ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnLoadRule = new ComponentFactory.Krypton.Toolkit.KryptonButton();
+            this.btnAddRule = new ComponentFactory.Krypton.Toolkit.KryptonButton();
+            this.comBomRule = new ComponentFactory.Krypton.Toolkit.KryptonComboBox();
+            this.kryptonLabel5 = new ComponentFactory.Krypton.Toolkit.KryptonLabel();
             this.IsMergeDescription = new ComponentFactory.Krypton.Toolkit.KryptonCheckBox();
             this.IsTitleRow = new ComponentFactory.Krypton.Toolkit.KryptonCheckBox();
             this.kryptonWrapLabel10 = new ComponentFactory.Krypton.Toolkit.KryptonWrapLabel();
@@ -131,10 +135,6 @@
             this.buttonSpecAny2 = new ComponentFactory.Krypton.Toolkit.ButtonSpecAny();
             this.buttonSpecAny3 = new ComponentFactory.Krypton.Toolkit.ButtonSpecAny();
             this.buttonSpecAny4 = new ComponentFactory.Krypton.Toolkit.ButtonSpecAny();
-            this.btnAddRule = new ComponentFactory.Krypton.Toolkit.KryptonButton();
-            this.comBomRule = new ComponentFactory.Krypton.Toolkit.KryptonComboBox();
-            this.kryptonLabel5 = new ComponentFactory.Krypton.Toolkit.KryptonLabel();
-            this.btnLoadRule = new ComponentFactory.Krypton.Toolkit.KryptonButton();
             ((System.ComponentModel.ISupportInitialize)(this.kryptonSplitContainer1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.kryptonSplitContainer1.Panel1)).BeginInit();
             this.kryptonSplitContainer1.Panel1.SuspendLayout();
@@ -142,6 +142,7 @@
             this.kryptonSplitContainer1.Panel2.SuspendLayout();
             this.kryptonSplitContainer1.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.comBomRule)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.kryptonNavigator2)).BeginInit();
             this.kryptonNavigator2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.kryptonPage2)).BeginInit();
@@ -170,7 +171,6 @@
             this.kryptonNavigator1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.kryptonPage1)).BeginInit();
             this.kryptonPage1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.comBomRule)).BeginInit();
             this.SuspendLayout();
             // 
             // kryptonSplitContainer1
@@ -179,7 +179,7 @@
             this.kryptonSplitContainer1.Cursor = System.Windows.Forms.Cursors.Default;
             this.kryptonSplitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.kryptonSplitContainer1.Location = new System.Drawing.Point(0, 0);
-            this.kryptonSplitContainer1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.kryptonSplitContainer1.Margin = new System.Windows.Forms.Padding(4);
             this.kryptonSplitContainer1.Name = "kryptonSplitContainer1";
             this.kryptonSplitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
@@ -231,6 +231,7 @@
             this.kryptonSplitContainer1.Panel1.Controls.Add(this.txtCAP);
             this.kryptonSplitContainer1.Panel1.Controls.Add(this.lbCAP);
             this.kryptonSplitContainer1.Panel1.Controls.Add(this.lbRes);
+            this.kryptonSplitContainer1.Panel1.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.Office2007Blue;
             // 
             // kryptonSplitContainer1.Panel2
             // 
@@ -255,10 +256,49 @@
             this.保存ToolStripMenuItem.Text = "保存";
             this.保存ToolStripMenuItem.Click += new System.EventHandler(this.BtnSave_Click);
             // 
+            // btnLoadRule
+            // 
+            this.btnLoadRule.Location = new System.Drawing.Point(371, 4);
+            this.btnLoadRule.Name = "btnLoadRule";
+            this.btnLoadRule.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.Office2007Blue;
+            this.btnLoadRule.Size = new System.Drawing.Size(111, 46);
+            this.btnLoadRule.TabIndex = 146;
+            this.btnLoadRule.Values.Text = "加载规则";
+            this.btnLoadRule.Click += new System.EventHandler(this.btnLoadRule_Click);
+            // 
+            // btnAddRule
+            // 
+            this.btnAddRule.Location = new System.Drawing.Point(252, 3);
+            this.btnAddRule.Name = "btnAddRule";
+            this.btnAddRule.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.Office2007Blue;
+            this.btnAddRule.Size = new System.Drawing.Size(111, 46);
+            this.btnAddRule.TabIndex = 145;
+            this.btnAddRule.Values.Text = "新建规则";
+            this.btnAddRule.Click += new System.EventHandler(this.btnAddRule_Click);
+            // 
+            // comBomRule
+            // 
+            this.comBomRule.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comBomRule.DropDownWidth = 117;
+            this.comBomRule.Location = new System.Drawing.Point(129, 12);
+            this.comBomRule.Name = "comBomRule";
+            this.comBomRule.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.Office2007Blue;
+            this.comBomRule.Size = new System.Drawing.Size(117, 27);
+            this.comBomRule.TabIndex = 144;
+            // 
+            // kryptonLabel5
+            // 
+            this.kryptonLabel5.Location = new System.Drawing.Point(42, 13);
+            this.kryptonLabel5.Name = "kryptonLabel5";
+            this.kryptonLabel5.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.Office2007Blue;
+            this.kryptonLabel5.Size = new System.Drawing.Size(81, 26);
+            this.kryptonLabel5.TabIndex = 143;
+            this.kryptonLabel5.Values.Text = "分析规则";
+            // 
             // IsMergeDescription
             // 
             this.IsMergeDescription.Location = new System.Drawing.Point(495, 509);
-            this.IsMergeDescription.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.IsMergeDescription.Margin = new System.Windows.Forms.Padding(4);
             this.IsMergeDescription.Name = "IsMergeDescription";
             this.IsMergeDescription.Size = new System.Drawing.Size(215, 26);
             this.IsMergeDescription.TabIndex = 130;
@@ -267,7 +307,7 @@
             // IsTitleRow
             // 
             this.IsTitleRow.Location = new System.Drawing.Point(1004, 464);
-            this.IsTitleRow.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.IsTitleRow.Margin = new System.Windows.Forms.Padding(4);
             this.IsTitleRow.Name = "IsTitleRow";
             this.IsTitleRow.Size = new System.Drawing.Size(94, 26);
             this.IsTitleRow.TabIndex = 117;
@@ -288,7 +328,7 @@
             // txtReplaceCodeSep
             // 
             this.txtReplaceCodeSep.Location = new System.Drawing.Point(371, 439);
-            this.txtReplaceCodeSep.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtReplaceCodeSep.Margin = new System.Windows.Forms.Padding(4);
             this.txtReplaceCodeSep.Name = "txtReplaceCodeSep";
             this.txtReplaceCodeSep.Size = new System.Drawing.Size(47, 29);
             this.txtReplaceCodeSep.TabIndex = 105;
@@ -297,7 +337,7 @@
             // IsHadReplaceCodeCol
             // 
             this.IsHadReplaceCodeCol.Location = new System.Drawing.Point(67, 443);
-            this.IsHadReplaceCodeCol.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.IsHadReplaceCodeCol.Margin = new System.Windows.Forms.Padding(4);
             this.IsHadReplaceCodeCol.Name = "IsHadReplaceCodeCol";
             this.IsHadReplaceCodeCol.Size = new System.Drawing.Size(163, 26);
             this.IsHadReplaceCodeCol.TabIndex = 104;
@@ -306,7 +346,7 @@
             // IsSameLocationRule
             // 
             this.IsSameLocationRule.Location = new System.Drawing.Point(67, 475);
-            this.IsSameLocationRule.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.IsSameLocationRule.Margin = new System.Windows.Forms.Padding(4);
             this.IsSameLocationRule.Name = "IsSameLocationRule";
             this.IsSameLocationRule.Size = new System.Drawing.Size(215, 26);
             this.IsSameLocationRule.TabIndex = 103;
@@ -315,7 +355,7 @@
             // IsHadReplaceCode
             // 
             this.IsHadReplaceCode.Location = new System.Drawing.Point(36, 416);
-            this.IsHadReplaceCode.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.IsHadReplaceCode.Margin = new System.Windows.Forms.Padding(4);
             this.IsHadReplaceCode.Name = "IsHadReplaceCode";
             this.IsHadReplaceCode.Size = new System.Drawing.Size(128, 26);
             this.IsHadReplaceCode.TabIndex = 102;
@@ -324,7 +364,7 @@
             // txtGradePos
             // 
             this.txtGradePos.Location = new System.Drawing.Point(828, 459);
-            this.txtGradePos.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtGradePos.Margin = new System.Windows.Forms.Padding(4);
             this.txtGradePos.Name = "txtGradePos";
             this.txtGradePos.Size = new System.Drawing.Size(97, 29);
             this.txtGradePos.TabIndex = 90;
@@ -345,7 +385,7 @@
             // txtStrAfterGrade
             // 
             this.txtStrAfterGrade.Location = new System.Drawing.Point(589, 459);
-            this.txtStrAfterGrade.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtStrAfterGrade.Margin = new System.Windows.Forms.Padding(4);
             this.txtStrAfterGrade.Name = "txtStrAfterGrade";
             this.txtStrAfterGrade.Size = new System.Drawing.Size(129, 29);
             this.txtStrAfterGrade.TabIndex = 89;
@@ -366,7 +406,7 @@
             // IsSearchGradeByPos
             // 
             this.IsSearchGradeByPos.Location = new System.Drawing.Point(495, 431);
-            this.IsSearchGradeByPos.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.IsSearchGradeByPos.Margin = new System.Windows.Forms.Padding(4);
             this.IsSearchGradeByPos.Name = "IsSearchGradeByPos";
             this.IsSearchGradeByPos.Size = new System.Drawing.Size(197, 26);
             this.IsSearchGradeByPos.TabIndex = 86;
@@ -387,13 +427,14 @@
             this.kryptonNavigator2.Button.PreviousButtonDisplay = ComponentFactory.Krypton.Navigator.ButtonDisplay.Logic;
             this.kryptonNavigator2.Dock = System.Windows.Forms.DockStyle.Right;
             this.kryptonNavigator2.Location = new System.Drawing.Point(1456, 0);
-            this.kryptonNavigator2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.kryptonNavigator2.Margin = new System.Windows.Forms.Padding(4);
             this.kryptonNavigator2.Name = "kryptonNavigator2";
             this.kryptonNavigator2.NavigatorMode = ComponentFactory.Krypton.Navigator.NavigatorMode.BarTabGroup;
             this.kryptonNavigator2.Pages.AddRange(new ComponentFactory.Krypton.Navigator.KryptonPage[] {
             this.kryptonPage2,
             this.PageGridRuleCustResGrade,
             this.PageRuleCustCapGrade});
+            this.kryptonNavigator2.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.Office2007Blue;
             this.kryptonNavigator2.SelectedIndex = 0;
             this.kryptonNavigator2.Size = new System.Drawing.Size(446, 594);
             this.kryptonNavigator2.TabIndex = 85;
@@ -405,7 +446,7 @@
             this.kryptonPage2.Controls.Add(this.dataGridRule3);
             this.kryptonPage2.Flags = 65534;
             this.kryptonPage2.LastVisibleSet = true;
-            this.kryptonPage2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.kryptonPage2.Margin = new System.Windows.Forms.Padding(4);
             this.kryptonPage2.MinimumSize = new System.Drawing.Size(67, 67);
             this.kryptonPage2.Name = "kryptonPage2";
             this.kryptonPage2.Size = new System.Drawing.Size(444, 561);
@@ -423,8 +464,9 @@
             this.dataGridRule3.ContextMenuStrip = this.contextMenuStrip4;
             this.dataGridRule3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridRule3.Location = new System.Drawing.Point(0, 0);
-            this.dataGridRule3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dataGridRule3.Margin = new System.Windows.Forms.Padding(4);
             this.dataGridRule3.Name = "dataGridRule3";
+            this.dataGridRule3.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.Office2007Blue;
             this.dataGridRule3.RowHeadersWidth = 53;
             this.dataGridRule3.RowTemplate.Height = 23;
             this.dataGridRule3.Size = new System.Drawing.Size(444, 561);
@@ -435,14 +477,14 @@
             this.kryptonDataGridViewTextBoxColumn1.HeaderText = "等级";
             this.kryptonDataGridViewTextBoxColumn1.MinimumWidth = 7;
             this.kryptonDataGridViewTextBoxColumn1.Name = "kryptonDataGridViewTextBoxColumn1";
-            this.kryptonDataGridViewTextBoxColumn1.Width = 195;
+            this.kryptonDataGridViewTextBoxColumn1.Width = 196;
             // 
             // kryptonDataGridViewTextBoxColumn2
             // 
             this.kryptonDataGridViewTextBoxColumn2.HeaderText = "百分比";
             this.kryptonDataGridViewTextBoxColumn2.MinimumWidth = 7;
             this.kryptonDataGridViewTextBoxColumn2.Name = "kryptonDataGridViewTextBoxColumn2";
-            this.kryptonDataGridViewTextBoxColumn2.Width = 196;
+            this.kryptonDataGridViewTextBoxColumn2.Width = 195;
             // 
             // contextMenuStrip4
             // 
@@ -466,7 +508,7 @@
             this.PageGridRuleCustResGrade.Controls.Add(this.tableLayoutPanel1);
             this.PageGridRuleCustResGrade.Flags = 65534;
             this.PageGridRuleCustResGrade.LastVisibleSet = true;
-            this.PageGridRuleCustResGrade.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.PageGridRuleCustResGrade.Margin = new System.Windows.Forms.Padding(4);
             this.PageGridRuleCustResGrade.MinimumSize = new System.Drawing.Size(67, 67);
             this.PageGridRuleCustResGrade.Name = "PageGridRuleCustResGrade";
             this.PageGridRuleCustResGrade.Size = new System.Drawing.Size(444, 561);
@@ -482,7 +524,7 @@
             this.tableLayoutPanel1.Controls.Add(this.IsUseCustomerResGrade, 0, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 33F));
@@ -547,7 +589,7 @@
             this.IsUseCustomerResGrade.AutoSize = true;
             this.IsUseCustomerResGrade.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.IsUseCustomerResGrade.Location = new System.Drawing.Point(4, 4);
-            this.IsUseCustomerResGrade.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.IsUseCustomerResGrade.Margin = new System.Windows.Forms.Padding(4);
             this.IsUseCustomerResGrade.Name = "IsUseCustomerResGrade";
             this.IsUseCustomerResGrade.Size = new System.Drawing.Size(192, 25);
             this.IsUseCustomerResGrade.TabIndex = 0;
@@ -560,7 +602,7 @@
             this.PageRuleCustCapGrade.Controls.Add(this.tableLayoutPanel2);
             this.PageRuleCustCapGrade.Flags = 65534;
             this.PageRuleCustCapGrade.LastVisibleSet = true;
-            this.PageRuleCustCapGrade.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.PageRuleCustCapGrade.Margin = new System.Windows.Forms.Padding(4);
             this.PageRuleCustCapGrade.MinimumSize = new System.Drawing.Size(67, 67);
             this.PageRuleCustCapGrade.Name = "PageRuleCustCapGrade";
             this.PageRuleCustCapGrade.Size = new System.Drawing.Size(444, 561);
@@ -576,7 +618,7 @@
             this.tableLayoutPanel2.Controls.Add(this.IsUseCustomerCapGrade, 0, 0);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 2;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 33F));
@@ -609,14 +651,14 @@
             this.kryptonDataGridViewTextBoxColumn5.HeaderText = "等级";
             this.kryptonDataGridViewTextBoxColumn5.MinimumWidth = 7;
             this.kryptonDataGridViewTextBoxColumn5.Name = "kryptonDataGridViewTextBoxColumn5";
-            this.kryptonDataGridViewTextBoxColumn5.Width = 73;
+            this.kryptonDataGridViewTextBoxColumn5.Width = 78;
             // 
             // kryptonDataGridViewTextBoxColumn6
             // 
             this.kryptonDataGridViewTextBoxColumn6.HeaderText = "百分比";
             this.kryptonDataGridViewTextBoxColumn6.MinimumWidth = 7;
             this.kryptonDataGridViewTextBoxColumn6.Name = "kryptonDataGridViewTextBoxColumn6";
-            this.kryptonDataGridViewTextBoxColumn6.Width = 80;
+            this.kryptonDataGridViewTextBoxColumn6.Width = 78;
             // 
             // dataGridViewTextBoxColumn1
             // 
@@ -641,7 +683,7 @@
             this.IsUseCustomerCapGrade.AutoSize = true;
             this.IsUseCustomerCapGrade.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.IsUseCustomerCapGrade.Location = new System.Drawing.Point(4, 4);
-            this.IsUseCustomerCapGrade.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.IsUseCustomerCapGrade.Margin = new System.Windows.Forms.Padding(4);
             this.IsUseCustomerCapGrade.Name = "IsUseCustomerCapGrade";
             this.IsUseCustomerCapGrade.Size = new System.Drawing.Size(192, 25);
             this.IsUseCustomerCapGrade.TabIndex = 0;
@@ -651,7 +693,7 @@
             // txtExcludeContext
             // 
             this.txtExcludeContext.Location = new System.Drawing.Point(517, 396);
-            this.txtExcludeContext.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtExcludeContext.Margin = new System.Windows.Forms.Padding(4);
             this.txtExcludeContext.Name = "txtExcludeContext";
             this.txtExcludeContext.Size = new System.Drawing.Size(557, 29);
             this.txtExcludeContext.TabIndex = 75;
@@ -659,7 +701,7 @@
             // IsExcludeContext
             // 
             this.IsExcludeContext.Location = new System.Drawing.Point(495, 368);
-            this.IsExcludeContext.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.IsExcludeContext.Margin = new System.Windows.Forms.Padding(4);
             this.IsExcludeContext.Name = "IsExcludeContext";
             this.IsExcludeContext.Size = new System.Drawing.Size(353, 26);
             this.IsExcludeContext.TabIndex = 74;
@@ -668,7 +710,7 @@
             // IsIdentifyingDigits
             // 
             this.IsIdentifyingDigits.Location = new System.Drawing.Point(495, 337);
-            this.IsIdentifyingDigits.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.IsIdentifyingDigits.Margin = new System.Windows.Forms.Padding(4);
             this.IsIdentifyingDigits.Name = "IsIdentifyingDigits";
             this.IsIdentifyingDigits.Size = new System.Drawing.Size(111, 26);
             this.IsIdentifyingDigits.TabIndex = 54;
@@ -677,7 +719,7 @@
             // txtResDefaultUnit
             // 
             this.txtResDefaultUnit.Location = new System.Drawing.Point(745, 299);
-            this.txtResDefaultUnit.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtResDefaultUnit.Margin = new System.Windows.Forms.Padding(4);
             this.txtResDefaultUnit.Name = "txtResDefaultUnit";
             this.txtResDefaultUnit.Size = new System.Drawing.Size(97, 29);
             this.txtResDefaultUnit.TabIndex = 44;
@@ -686,7 +728,7 @@
             // IsResDefaultUnit
             // 
             this.IsResDefaultUnit.Location = new System.Drawing.Point(495, 307);
-            this.IsResDefaultUnit.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.IsResDefaultUnit.Margin = new System.Windows.Forms.Padding(4);
             this.IsResDefaultUnit.Name = "IsResDefaultUnit";
             this.IsResDefaultUnit.Size = new System.Drawing.Size(163, 26);
             this.IsResDefaultUnit.TabIndex = 34;
@@ -695,7 +737,7 @@
             // IsValueContainsGrade
             // 
             this.IsValueContainsGrade.Location = new System.Drawing.Point(495, 275);
-            this.IsValueContainsGrade.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.IsValueContainsGrade.Margin = new System.Windows.Forms.Padding(4);
             this.IsValueContainsGrade.Name = "IsValueContainsGrade";
             this.IsValueContainsGrade.Size = new System.Drawing.Size(180, 26);
             this.IsValueContainsGrade.TabIndex = 33;
@@ -704,7 +746,7 @@
             // txtCapGrade_ON_NO_Find
             // 
             this.txtCapGrade_ON_NO_Find.Location = new System.Drawing.Point(840, 235);
-            this.txtCapGrade_ON_NO_Find.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtCapGrade_ON_NO_Find.Margin = new System.Windows.Forms.Padding(4);
             this.txtCapGrade_ON_NO_Find.Name = "txtCapGrade_ON_NO_Find";
             this.txtCapGrade_ON_NO_Find.Size = new System.Drawing.Size(97, 29);
             this.txtCapGrade_ON_NO_Find.TabIndex = 31;
@@ -725,7 +767,7 @@
             // IsIntermediateUnit
             // 
             this.IsIntermediateUnit.Location = new System.Drawing.Point(495, 183);
-            this.IsIntermediateUnit.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.IsIntermediateUnit.Margin = new System.Windows.Forms.Padding(4);
             this.IsIntermediateUnit.Name = "IsIntermediateUnit";
             this.IsIntermediateUnit.Size = new System.Drawing.Size(634, 26);
             this.IsIntermediateUnit.TabIndex = 29;
@@ -734,7 +776,7 @@
             // txtResGrade_ON_NO_Find
             // 
             this.txtResGrade_ON_NO_Find.Location = new System.Drawing.Point(619, 236);
-            this.txtResGrade_ON_NO_Find.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtResGrade_ON_NO_Find.Margin = new System.Windows.Forms.Padding(4);
             this.txtResGrade_ON_NO_Find.Name = "txtResGrade_ON_NO_Find";
             this.txtResGrade_ON_NO_Find.Size = new System.Drawing.Size(97, 29);
             this.txtResGrade_ON_NO_Find.TabIndex = 28;
@@ -755,7 +797,7 @@
             // IsGrade_ON_NO_Find
             // 
             this.IsGrade_ON_NO_Find.Location = new System.Drawing.Point(495, 212);
-            this.IsGrade_ON_NO_Find.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.IsGrade_ON_NO_Find.Margin = new System.Windows.Forms.Padding(4);
             this.IsGrade_ON_NO_Find.Name = "IsGrade_ON_NO_Find";
             this.IsGrade_ON_NO_Find.Size = new System.Drawing.Size(242, 26);
             this.IsGrade_ON_NO_Find.TabIndex = 25;
@@ -764,7 +806,7 @@
             // txtSuffixNumber
             // 
             this.txtSuffixNumber.Location = new System.Drawing.Point(709, 137);
-            this.txtSuffixNumber.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtSuffixNumber.Margin = new System.Windows.Forms.Padding(4);
             this.txtSuffixNumber.Name = "txtSuffixNumber";
             this.txtSuffixNumber.Size = new System.Drawing.Size(97, 29);
             this.txtSuffixNumber.TabIndex = 24;
@@ -773,7 +815,7 @@
             // txtPrefixNumber
             // 
             this.txtPrefixNumber.Location = new System.Drawing.Point(709, 101);
-            this.txtPrefixNumber.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtPrefixNumber.Margin = new System.Windows.Forms.Padding(4);
             this.txtPrefixNumber.Name = "txtPrefixNumber";
             this.txtPrefixNumber.Size = new System.Drawing.Size(97, 29);
             this.txtPrefixNumber.TabIndex = 23;
@@ -806,7 +848,7 @@
             // IsDeleteString
             // 
             this.IsDeleteString.Location = new System.Drawing.Point(495, 71);
-            this.IsDeleteString.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.IsDeleteString.Margin = new System.Windows.Forms.Padding(4);
             this.IsDeleteString.Name = "IsDeleteString";
             this.IsDeleteString.Size = new System.Drawing.Size(128, 26);
             this.IsDeleteString.TabIndex = 19;
@@ -815,8 +857,9 @@
             // btnSave
             // 
             this.btnSave.Location = new System.Drawing.Point(505, 4);
-            this.btnSave.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnSave.Margin = new System.Windows.Forms.Padding(4);
             this.btnSave.Name = "btnSave";
+            this.btnSave.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.Office2007Blue;
             this.btnSave.Size = new System.Drawing.Size(100, 46);
             this.btnSave.StateCommon.Back.ImageStyle = ComponentFactory.Krypton.Toolkit.PaletteImageStyle.Stretch;
             this.btnSave.StateCommon.Content.ShortText.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
@@ -830,7 +873,7 @@
             // txtResUnit
             // 
             this.txtResUnit.Location = new System.Drawing.Point(36, 299);
-            this.txtResUnit.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtResUnit.Margin = new System.Windows.Forms.Padding(4);
             this.txtResUnit.Name = "txtResUnit";
             this.txtResUnit.Size = new System.Drawing.Size(357, 29);
             this.txtResUnit.TabIndex = 9;
@@ -839,7 +882,7 @@
             // txtCapUnit
             // 
             this.txtCapUnit.Location = new System.Drawing.Point(36, 369);
-            this.txtCapUnit.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtCapUnit.Margin = new System.Windows.Forms.Padding(4);
             this.txtCapUnit.Name = "txtCapUnit";
             this.txtCapUnit.Size = new System.Drawing.Size(357, 29);
             this.txtCapUnit.TabIndex = 10;
@@ -868,7 +911,7 @@
             // txtSize
             // 
             this.txtSize.Location = new System.Drawing.Point(36, 231);
-            this.txtSize.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtSize.Margin = new System.Windows.Forms.Padding(4);
             this.txtSize.Name = "txtSize";
             this.txtSize.Size = new System.Drawing.Size(357, 29);
             this.txtSize.TabIndex = 6;
@@ -887,7 +930,7 @@
             // txtRes
             // 
             this.txtRes.Location = new System.Drawing.Point(36, 99);
-            this.txtRes.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtRes.Margin = new System.Windows.Forms.Padding(4);
             this.txtRes.Name = "txtRes";
             this.txtRes.Size = new System.Drawing.Size(357, 29);
             this.txtRes.TabIndex = 2;
@@ -896,7 +939,7 @@
             // txtCAP
             // 
             this.txtCAP.Location = new System.Drawing.Point(36, 163);
-            this.txtCAP.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtCAP.Margin = new System.Windows.Forms.Padding(4);
             this.txtCAP.Name = "txtCAP";
             this.txtCAP.Size = new System.Drawing.Size(357, 29);
             this.txtCAP.TabIndex = 3;
@@ -927,7 +970,7 @@
             this.kryptonSplitContainer2.Cursor = System.Windows.Forms.Cursors.Default;
             this.kryptonSplitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.kryptonSplitContainer2.Location = new System.Drawing.Point(0, 0);
-            this.kryptonSplitContainer2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.kryptonSplitContainer2.Margin = new System.Windows.Forms.Padding(4);
             this.kryptonSplitContainer2.Name = "kryptonSplitContainer2";
             // 
             // kryptonSplitContainer2.Panel1
@@ -957,8 +1000,9 @@
             this.dataGridRule1.ContextMenuStrip = this.contextMenuStrip2;
             this.dataGridRule1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridRule1.Location = new System.Drawing.Point(0, 33);
-            this.dataGridRule1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dataGridRule1.Margin = new System.Windows.Forms.Padding(4);
             this.dataGridRule1.Name = "dataGridRule1";
+            this.dataGridRule1.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.Office2007Blue;
             this.dataGridRule1.RowHeadersWidth = 53;
             this.dataGridRule1.RowTemplate.Height = 23;
             this.dataGridRule1.Size = new System.Drawing.Size(1135, 478);
@@ -984,9 +1028,9 @@
             // 
             // Column3
             // 
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.NullValue = false;
-            this.Column3.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle5.NullValue = false;
+            this.Column3.DefaultCellStyle = dataGridViewCellStyle5;
             this.Column3.FalseValue = null;
             this.Column3.HeaderText = "启用";
             this.Column3.IndeterminateValue = null;
@@ -996,9 +1040,9 @@
             // 
             // Column4
             // 
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.NullValue = false;
-            this.Column4.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle6.NullValue = false;
+            this.Column4.DefaultCellStyle = dataGridViewCellStyle6;
             this.Column4.FalseValue = null;
             this.Column4.HeaderText = "区分大小写";
             this.Column4.IndeterminateValue = null;
@@ -1008,9 +1052,9 @@
             // 
             // Column5
             // 
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.NullValue = false;
-            this.Column5.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle7.NullValue = false;
+            this.Column5.DefaultCellStyle = dataGridViewCellStyle7;
             this.Column5.FalseValue = null;
             this.Column5.HeaderText = "区分全半角";
             this.Column5.IndeterminateValue = null;
@@ -1045,8 +1089,9 @@
             // 
             this.IsSubstitutionRules.Dock = System.Windows.Forms.DockStyle.Top;
             this.IsSubstitutionRules.Location = new System.Drawing.Point(0, 0);
-            this.IsSubstitutionRules.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.IsSubstitutionRules.Margin = new System.Windows.Forms.Padding(4);
             this.IsSubstitutionRules.Name = "IsSubstitutionRules";
+            this.IsSubstitutionRules.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.Office2007Blue;
             this.IsSubstitutionRules.Size = new System.Drawing.Size(1135, 33);
             this.IsSubstitutionRules.StateNormal.ShortText.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.IsSubstitutionRules.StateNormal.ShortText.ImageStyle = ComponentFactory.Krypton.Toolkit.PaletteImageStyle.Inherit;
@@ -1066,8 +1111,9 @@
             this.dataGridRule2.ContextMenuStrip = this.contextMenuStrip3;
             this.dataGridRule2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridRule2.Location = new System.Drawing.Point(0, 33);
-            this.dataGridRule2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dataGridRule2.Margin = new System.Windows.Forms.Padding(4);
             this.dataGridRule2.Name = "dataGridRule2";
+            this.dataGridRule2.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.Office2007Blue;
             this.dataGridRule2.RowHeadersWidth = 53;
             this.dataGridRule2.RowTemplate.Height = 23;
             this.dataGridRule2.Size = new System.Drawing.Size(762, 478);
@@ -1075,9 +1121,9 @@
             // 
             // Column7
             // 
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle4.NullValue = false;
-            this.Column7.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle8.NullValue = false;
+            this.Column7.DefaultCellStyle = dataGridViewCellStyle8;
             this.Column7.FalseValue = null;
             this.Column7.FillWeight = 40.30286F;
             this.Column7.HeaderText = "启用";
@@ -1129,7 +1175,7 @@
             // 
             this.IsSeparator.Dock = System.Windows.Forms.DockStyle.Top;
             this.IsSeparator.Location = new System.Drawing.Point(0, 0);
-            this.IsSeparator.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.IsSeparator.Margin = new System.Windows.Forms.Padding(4);
             this.IsSeparator.Name = "IsSeparator";
             this.IsSeparator.Size = new System.Drawing.Size(762, 33);
             this.IsSeparator.StateNormal.ShortText.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
@@ -1165,11 +1211,12 @@
             this.kryptonNavigator1.Button.PreviousButtonDisplay = ComponentFactory.Krypton.Navigator.ButtonDisplay.Logic;
             this.kryptonNavigator1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.kryptonNavigator1.Location = new System.Drawing.Point(0, 0);
-            this.kryptonNavigator1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.kryptonNavigator1.Margin = new System.Windows.Forms.Padding(4);
             this.kryptonNavigator1.Name = "kryptonNavigator1";
             this.kryptonNavigator1.NavigatorMode = ComponentFactory.Krypton.Navigator.NavigatorMode.BarTabGroup;
             this.kryptonNavigator1.Pages.AddRange(new ComponentFactory.Krypton.Navigator.KryptonPage[] {
             this.kryptonPage1});
+            this.kryptonNavigator1.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.Office2007Blue;
             this.kryptonNavigator1.SelectedIndex = 0;
             this.kryptonNavigator1.Size = new System.Drawing.Size(1904, 1143);
             this.kryptonNavigator1.TabIndex = 1;
@@ -1181,7 +1228,7 @@
             this.kryptonPage1.Controls.Add(this.kryptonSplitContainer1);
             this.kryptonPage1.Flags = 65534;
             this.kryptonPage1.LastVisibleSet = true;
-            this.kryptonPage1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.kryptonPage1.Margin = new System.Windows.Forms.Padding(4);
             this.kryptonPage1.MinimumSize = new System.Drawing.Size(67, 67);
             this.kryptonPage1.Name = "kryptonPage1";
             this.kryptonPage1.Size = new System.Drawing.Size(1902, 1110);
@@ -1217,51 +1264,12 @@
             this.buttonSpecAny4.Type = ComponentFactory.Krypton.Toolkit.PaletteButtonSpecStyle.Generic;
             this.buttonSpecAny4.UniqueName = "36EF95A540F847F1D0BFDAD41991F1BA";
             // 
-            // btnAddRule
-            // 
-            this.btnAddRule.Location = new System.Drawing.Point(252, 3);
-            this.btnAddRule.Name = "btnAddRule";
-            this.btnAddRule.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.Office2007Blue;
-            this.btnAddRule.Size = new System.Drawing.Size(111, 46);
-            this.btnAddRule.TabIndex = 145;
-            this.btnAddRule.Values.Text = "新建规则";
-            this.btnAddRule.Click += new System.EventHandler(this.btnAddRule_Click);
-            // 
-            // comBomRule
-            // 
-            this.comBomRule.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comBomRule.DropDownWidth = 117;
-            this.comBomRule.Location = new System.Drawing.Point(129, 12);
-            this.comBomRule.Name = "comBomRule";
-            this.comBomRule.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.Office2007Blue;
-            this.comBomRule.Size = new System.Drawing.Size(117, 27);
-            this.comBomRule.TabIndex = 144;
-            // 
-            // kryptonLabel5
-            // 
-            this.kryptonLabel5.Location = new System.Drawing.Point(42, 13);
-            this.kryptonLabel5.Name = "kryptonLabel5";
-            this.kryptonLabel5.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.Office2007Blue;
-            this.kryptonLabel5.Size = new System.Drawing.Size(81, 26);
-            this.kryptonLabel5.TabIndex = 143;
-            this.kryptonLabel5.Values.Text = "分析规则";
-            // 
-            // btnLoadRule
-            // 
-            this.btnLoadRule.Location = new System.Drawing.Point(371, 4);
-            this.btnLoadRule.Name = "btnLoadRule";
-            this.btnLoadRule.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.Office2007Blue;
-            this.btnLoadRule.Size = new System.Drawing.Size(111, 46);
-            this.btnLoadRule.TabIndex = 146;
-            this.btnLoadRule.Values.Text = "加载规则";
-            this.btnLoadRule.Click += new System.EventHandler(this.btnLoadRule_Click);
-            // 
             // UCAnalyseSet
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.kryptonNavigator1);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "UCAnalyseSet";
             this.Size = new System.Drawing.Size(1904, 1143);
             ((System.ComponentModel.ISupportInitialize)(this.kryptonSplitContainer1.Panel1)).EndInit();
@@ -1272,6 +1280,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.kryptonSplitContainer1)).EndInit();
             this.kryptonSplitContainer1.ResumeLayout(false);
             this.contextMenuStrip1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.comBomRule)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.kryptonNavigator2)).EndInit();
             this.kryptonNavigator2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.kryptonPage2)).EndInit();
@@ -1304,7 +1313,6 @@
             this.kryptonNavigator1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.kryptonPage1)).EndInit();
             this.kryptonPage1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.comBomRule)).EndInit();
             this.ResumeLayout(false);
 
         }

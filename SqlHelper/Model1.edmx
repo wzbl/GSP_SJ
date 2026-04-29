@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="FAI_NewModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="FAI_NewModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Bas_CompensationValue">
           <Key>
             <PropertyRef Name="Row" />
@@ -1938,6 +1938,31 @@
           <Parameter Name="RetVal" Type="int" Mode="InOut" />
           <Parameter Name="RetMsg" Type="varchar" Mode="InOut" />
         </Function>
+        <Function Name="P_Eng_MeterOptionItem" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="OptionCode" Type="varchar" Mode="In" />
+          <Parameter Name="Row" Type="int" Mode="In" />
+          <Parameter Name="PRI" Type="int" Mode="In" />
+          <Parameter Name="LcrType" Type="varchar" Mode="In" />
+          <Parameter Name="MinValue" Type="numeric" Mode="In" />
+          <Parameter Name="MinValueUnit" Type="varchar" Mode="In" />
+          <Parameter Name="MaxValue" Type="numeric" Mode="In" />
+          <Parameter Name="MaxValueUnit" Type="varchar" Mode="In" />
+          <Parameter Name="FunctionType" Type="varchar" Mode="In" />
+          <Parameter Name="Frequency" Type="varchar" Mode="In" />
+          <Parameter Name="Voltage" Type="varchar" Mode="In" />
+          <Parameter Name="RangeType" Type="varchar" Mode="In" />
+          <Parameter Name="Range" Type="varchar" Mode="In" />
+          <Parameter Name="HoldTimes" Type="int" Mode="In" />
+          <Parameter Name="Speed" Type="varchar" Mode="In" />
+          <Parameter Name="Resistance" Type="varchar" Mode="In" />
+          <Parameter Name="ReadCount" Type="int" Mode="In" />
+          <Parameter Name="FRValue" Type="numeric" Mode="In" />
+          <Parameter Name="MinValidValue" Type="numeric" Mode="In" />
+          <Parameter Name="MinValidValueUnit" Type="varchar" Mode="In" />
+          <Parameter Name="MaxValidValue" Type="numeric" Mode="In" />
+          <Parameter Name="MaxValidValueUnit" Type="varchar" Mode="In" />
+          <Parameter Name="Remarks" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="P_Eng_MeterOptionRename" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="OptionCode" Type="varchar" Mode="In" />
           <Parameter Name="OptionName" Type="varchar" Mode="In" />
@@ -2123,6 +2148,35 @@
         <Function Name="P_Man_GetSTCode" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="STCode" Type="varchar" Mode="InOut" />
         </Function>
+        <Function Name="P_Man_Report_Search" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="StartTime" Type="datetime" Mode="In" />
+          <Parameter Name="EndTime" Type="datetime" Mode="In" />
+          <Parameter Name="Status" Type="varchar" Mode="In" />
+          <Parameter Name="CheckResult" Type="varchar" Mode="In" />
+          <Parameter Name="PLCode" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="P_Man_ReportAdd" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ReportCode" Type="varchar" Mode="In" />
+          <Parameter Name="BoardSide" Type="varchar" Mode="In" />
+          <Parameter Name="PLCode" Type="varchar" Mode="In" />
+          <Parameter Name="ProductCode" Type="varchar" Mode="In" />
+          <Parameter Name="ProductName" Type="varchar" Mode="In" />
+          <Parameter Name="WoCode" Type="varchar" Mode="In" />
+          <Parameter Name="LotNumber" Type="varchar" Mode="In" />
+          <Parameter Name="BatchQty" Type="int" Mode="In" />
+          <Parameter Name="BoardQty" Type="int" Mode="In" />
+          <Parameter Name="IsCheckNoSMD" Type="varchar" Mode="In" />
+          <Parameter Name="Remarks" Type="varchar" Mode="In" />
+          <Parameter Name="Creator" Type="varchar" Mode="In" />
+          <Parameter Name="Modifier" Type="varchar" Mode="In" />
+          <Parameter Name="OptionCode" Type="varchar" Mode="In" />
+          <Parameter Name="Barcode" Type="varchar" Mode="In" />
+          <Parameter Name="class" Type="varchar" Mode="In" />
+          <Parameter Name="CheckType" Type="varchar" Mode="In" />
+          <Parameter Name="PCBVersion" Type="varchar" Mode="In" />
+          <Parameter Name="BomVersion" Type="varchar" Mode="In" />
+          <Parameter Name="DeviceName" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="P_Man_ReportClose" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="FBCCode" Type="varchar" Mode="In" />
           <Parameter Name="IsForce" Type="varchar" Mode="In" />
@@ -2191,6 +2245,14 @@
         <Function Name="P_Sys_DataClear" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="P_Sys_GetHelpCode" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="HelpCode" Type="varchar" Mode="InOut" />
+        </Function>
+        <Function Name="P_sys_UserAdd" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserCode" Type="varchar" Mode="In" />
+          <Parameter Name="UserName" Type="varchar" Mode="In" />
+          <Parameter Name="Password" Type="varchar" Mode="In" />
+          <Parameter Name="RoleCode" Type="varchar" Mode="In" />
+          <Parameter Name="Status" Type="varchar" Mode="In" />
+          <Parameter Name="Creator" Type="varchar" Mode="In" />
         </Function>
         <Function Name="P_Update_Eng_ProgramOption" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ProductCode" Type="varchar" Mode="In" />
@@ -2443,7 +2505,8 @@
             <End Role="Sys_User" EntitySet="Sys_User" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="FAI_NewModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -3923,6 +3986,26 @@
           <Property Name="上限单位" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="备注" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
+        <EntityType Name="View_Eng_Program">
+          <Key>
+            <PropertyRef Name="产品编号" />
+          </Key>
+          <Property Name="产品编号" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="产品名称" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="客户" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="板面" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="分析规则" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="状态" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="备注" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="使用次数" Type="Int32" />
+          <Property Name="最后一次使用时间" Type="DateTime" Precision="3" />
+          <Property Name="版本" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="电桥参数" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="创建人" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="创建时间" Type="DateTime" Precision="3" />
+          <Property Name="修改人" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="修改时间" Type="DateTime" Precision="3" />
+        </EntityType>
         <Association Name="FK_Bas_DicItem_Bas_DicIndex">
           <End Role="Bas_DicIndex" Type="Self.Bas_DicIndex" Multiplicity="1" />
           <End Role="Bas_DicItem" Type="Self.Bas_DicItem" Multiplicity="*" />
@@ -4313,6 +4396,7 @@
           <EntitySet Name="View_Bas_Material" EntityType="Self.View_Bas_Material" />
           <EntitySet Name="View_ComponentSize" EntityType="Self.View_ComponentSize" />
           <EntitySet Name="View_Eng_MeterOptionItem" EntityType="Self.View_Eng_MeterOptionItem" />
+          <EntitySet Name="View_Eng_Program" EntityType="Self.View_Eng_Program" />
           <AssociationSet Name="FK_Bas_DicItem_Bas_DicIndex" Association="Self.FK_Bas_DicItem_Bas_DicIndex">
             <End Role="Bas_DicIndex" EntitySet="Bas_DicIndex" />
             <End Role="Bas_DicItem" EntitySet="Bas_DicItem" />
@@ -4410,11 +4494,36 @@
             <End Role="Sys_User" EntitySet="Sys_User" />
           </AssociationSet>
           <FunctionImport Name="GetPoints" IsComposable="true" ReturnType="Collection(FAI_NewModel.GetPoints_Result)">
-          <Parameter Name="BgId" Mode="In" Type="String" />
+            <Parameter Name="BgId" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SplitStr" IsComposable="true" ReturnType="Collection(FAI_NewModel.SplitStr_Result)">
             <Parameter Name="SourceSql" Mode="In" Type="String" />
             <Parameter Name="StrSeprate" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="P_Bas_Material">
+            <Parameter Name="type" Mode="In" Type="Int32" />
+            <Parameter Name="CustomerCode" Mode="In" Type="String" />
+            <Parameter Name="MaterialCode" Mode="In" Type="String" />
+            <Parameter Name="MaterialName" Mode="In" Type="String" />
+            <Parameter Name="LcrType" Mode="In" Type="String" />
+            <Parameter Name="LcrStandardValue" Mode="In" Type="Decimal" />
+            <Parameter Name="LcrUnitCode" Mode="In" Type="String" />
+            <Parameter Name="LcrMaxValue" Mode="In" Type="Decimal" />
+            <Parameter Name="LcrMinValue" Mode="In" Type="Decimal" />
+            <Parameter Name="Size" Mode="In" Type="String" />
+            <Parameter Name="CompensateValue" Mode="In" Type="Decimal" />
+            <Parameter Name="Picture" Mode="In" Type="Binary" />
+            <Parameter Name="Remarks" Mode="In" Type="String" />
+            <Parameter Name="Creator" Mode="In" Type="String" />
+            <Parameter Name="CreationDate" Mode="In" Type="DateTime" />
+            <Parameter Name="Modifier" Mode="In" Type="String" />
+            <Parameter Name="ModificationDate" Mode="In" Type="DateTime" />
+            <Parameter Name="ScreenPrinting" Mode="In" Type="String" />
+            <Parameter Name="MaxTolerance" Mode="In" Type="Decimal" />
+            <Parameter Name="MinTolerance" Mode="In" Type="Decimal" />
+            <Parameter Name="ToleranceType" Mode="In" Type="String" />
+            <Parameter Name="ComponentPackaging" Mode="In" Type="String" />
+            <Parameter Name="msg" Mode="InOut" Type="String" />
           </FunctionImport>
           <FunctionImport Name="P_Eng_BOMCheck">
             <Parameter Name="ProductCode" Mode="In" Type="String" />
@@ -4447,7 +4556,7 @@
             <Parameter Name="RetMsg" Mode="InOut" Type="String" />
           </FunctionImport>
           <FunctionImport Name="P_Eng_BomPositionRepeatCheck">
-          <Parameter Name="ProductCode" Mode="In" Type="String" />
+            <Parameter Name="ProductCode" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="P_Eng_BomQuantityCheck">
             <Parameter Name="ProductCode" Mode="In" Type="String" />
@@ -4481,10 +4590,10 @@
             <Parameter Name="CustomerId" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="P_Eng_GetXYCode">
-          <Parameter Name="XYCode" Mode="InOut" Type="String" />
+            <Parameter Name="XYCode" Mode="InOut" Type="String" />
           </FunctionImport>
           <FunctionImport Name="P_Eng_MatchMaterialCode">
-          <Parameter Name="ProductCode" Mode="In" Type="String" />
+            <Parameter Name="ProductCode" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="P_Eng_MeterOptionCopy">
             <Parameter Name="NewOptionName" Mode="In" Type="String" />
@@ -4496,6 +4605,31 @@
             <Parameter Name="OptionCode" Mode="In" Type="String" />
             <Parameter Name="RetVal" Mode="InOut" Type="Int32" />
             <Parameter Name="RetMsg" Mode="InOut" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="P_Eng_MeterOptionItem">
+            <Parameter Name="OptionCode" Mode="In" Type="String" />
+            <Parameter Name="Row" Mode="In" Type="Int32" />
+            <Parameter Name="PRI" Mode="In" Type="Int32" />
+            <Parameter Name="LcrType" Mode="In" Type="String" />
+            <Parameter Name="MinValue" Mode="In" Type="Decimal" />
+            <Parameter Name="MinValueUnit" Mode="In" Type="String" />
+            <Parameter Name="MaxValue" Mode="In" Type="Decimal" />
+            <Parameter Name="MaxValueUnit" Mode="In" Type="String" />
+            <Parameter Name="FunctionType" Mode="In" Type="String" />
+            <Parameter Name="Frequency" Mode="In" Type="String" />
+            <Parameter Name="Voltage" Mode="In" Type="String" />
+            <Parameter Name="RangeType" Mode="In" Type="String" />
+            <Parameter Name="Range" Mode="In" Type="String" />
+            <Parameter Name="HoldTimes" Mode="In" Type="Int32" />
+            <Parameter Name="Speed" Mode="In" Type="String" />
+            <Parameter Name="Resistance" Mode="In" Type="String" />
+            <Parameter Name="ReadCount" Mode="In" Type="Int32" />
+            <Parameter Name="FRValue" Mode="In" Type="Decimal" />
+            <Parameter Name="MinValidValue" Mode="In" Type="Decimal" />
+            <Parameter Name="MinValidValueUnit" Mode="In" Type="String" />
+            <Parameter Name="MaxValidValue" Mode="In" Type="Decimal" />
+            <Parameter Name="MaxValidValueUnit" Mode="In" Type="String" />
+            <Parameter Name="Remarks" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="P_Eng_MeterOptionRename">
             <Parameter Name="OptionCode" Mode="In" Type="String" />
@@ -4546,7 +4680,7 @@
             <Parameter Name="RetMsg" Mode="InOut" Type="String" />
           </FunctionImport>
           <FunctionImport Name="P_Eng_XYDataCompare">
-          <Parameter Name="XYCode" Mode="In" Type="String" />
+            <Parameter Name="XYCode" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="P_Eng_XYDataItemAdd">
             <Parameter Name="XYCode" Mode="In" Type="String" />
@@ -4674,13 +4808,42 @@
             <Parameter Name="RetMsg" Mode="InOut" Type="String" />
           </FunctionImport>
           <FunctionImport Name="P_Man_GetPositionList">
-          <Parameter Name="STCode" Mode="In" Type="String" />
+            <Parameter Name="STCode" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="P_Man_GetReportCode">
-          <Parameter Name="ReportCode" Mode="InOut" Type="String" />
+            <Parameter Name="ReportCode" Mode="InOut" Type="String" />
           </FunctionImport>
           <FunctionImport Name="P_Man_GetSTCode">
-          <Parameter Name="STCode" Mode="InOut" Type="String" />
+            <Parameter Name="STCode" Mode="InOut" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="P_Man_Report_Search" ReturnType="Collection(FAI_NewModel.P_Man_Report_Search_Result)">
+            <Parameter Name="StartTime" Mode="In" Type="DateTime" />
+            <Parameter Name="EndTime" Mode="In" Type="DateTime" />
+            <Parameter Name="Status" Mode="In" Type="String" />
+            <Parameter Name="CheckResult" Mode="In" Type="String" />
+            <Parameter Name="PLCode" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="P_Man_ReportAdd">
+            <Parameter Name="ReportCode" Mode="In" Type="String" />
+            <Parameter Name="BoardSide" Mode="In" Type="String" />
+            <Parameter Name="PLCode" Mode="In" Type="String" />
+            <Parameter Name="ProductCode" Mode="In" Type="String" />
+            <Parameter Name="ProductName" Mode="In" Type="String" />
+            <Parameter Name="WoCode" Mode="In" Type="String" />
+            <Parameter Name="LotNumber" Mode="In" Type="String" />
+            <Parameter Name="BatchQty" Mode="In" Type="Int32" />
+            <Parameter Name="BoardQty" Mode="In" Type="Int32" />
+            <Parameter Name="IsCheckNoSMD" Mode="In" Type="String" />
+            <Parameter Name="Remarks" Mode="In" Type="String" />
+            <Parameter Name="Creator" Mode="In" Type="String" />
+            <Parameter Name="Modifier" Mode="In" Type="String" />
+            <Parameter Name="OptionCode" Mode="In" Type="String" />
+            <Parameter Name="Barcode" Mode="In" Type="String" />
+            <Parameter Name="class" Mode="In" Type="String" />
+            <Parameter Name="CheckType" Mode="In" Type="String" />
+            <Parameter Name="PCBVersion" Mode="In" Type="String" />
+            <Parameter Name="BomVersion" Mode="In" Type="String" />
+            <Parameter Name="DeviceName" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="P_Man_ReportClose">
             <Parameter Name="FBCCode" Mode="In" Type="String" />
@@ -4722,11 +4885,11 @@
             <Parameter Name="RetMsg" Mode="InOut" Type="String" />
           </FunctionImport>
           <FunctionImport Name="P_Search_Eng_Bom" ReturnType="Collection(FAI_NewModel.P_Search_Eng_Bom_Result)">
-          <Parameter Name="ProductCode" Mode="In" Type="String" />
+            <Parameter Name="ProductCode" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="P_Search_Eng_Program" ReturnType="Collection(FAI_NewModel.P_Search_Eng_Program_Result)" />
           <FunctionImport Name="P_Search_Eng_XYData" ReturnType="Collection(FAI_NewModel.P_Search_Eng_XYData_Result)">
-          <Parameter Name="ProductCode" Mode="In" Type="String" />
+            <Parameter Name="ProductCode" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="P_Sys_ChangePassword">
             <Parameter Name="UserCode" Mode="In" Type="String" />
@@ -4749,40 +4912,71 @@
           </FunctionImport>
           <FunctionImport Name="P_Sys_DataClear" />
           <FunctionImport Name="P_Sys_GetHelpCode">
-          <Parameter Name="HelpCode" Mode="InOut" Type="String" />
+            <Parameter Name="HelpCode" Mode="InOut" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="P_sys_UserAdd">
+            <Parameter Name="UserCode" Mode="In" Type="String" />
+            <Parameter Name="UserName" Mode="In" Type="String" />
+            <Parameter Name="Password" Mode="In" Type="String" />
+            <Parameter Name="RoleCode" Mode="In" Type="String" />
+            <Parameter Name="Status" Mode="In" Type="String" />
+            <Parameter Name="Creator" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="P_Update_Eng_ProgramOption">
             <Parameter Name="ProductCode" Mode="In" Type="String" />
             <Parameter Name="BoardSide" Mode="In" Type="String" />
             <Parameter Name="Picture" Mode="In" Type="Binary" />
           </FunctionImport>
-          <FunctionImport Name="P_Bas_Material">
-            <Parameter Name="type" Mode="In" Type="Int32" />
-            <Parameter Name="CustomerCode" Mode="In" Type="String" />
-            <Parameter Name="MaterialCode" Mode="In" Type="String" />
-            <Parameter Name="MaterialName" Mode="In" Type="String" />
-            <Parameter Name="LcrType" Mode="In" Type="String" />
-            <Parameter Name="LcrStandardValue" Mode="In" Type="Decimal" />
-            <Parameter Name="LcrUnitCode" Mode="In" Type="String" />
-            <Parameter Name="LcrMaxValue" Mode="In" Type="Decimal" />
-            <Parameter Name="LcrMinValue" Mode="In" Type="Decimal" />
-            <Parameter Name="Size" Mode="In" Type="String" />
-            <Parameter Name="CompensateValue" Mode="In" Type="Decimal" />
-            <Parameter Name="Picture" Mode="In" Type="Binary" />
-            <Parameter Name="Remarks" Mode="In" Type="String" />
-            <Parameter Name="Creator" Mode="In" Type="String" />
-            <Parameter Name="CreationDate" Mode="In" Type="DateTime" />
-            <Parameter Name="Modifier" Mode="In" Type="String" />
-            <Parameter Name="ModificationDate" Mode="In" Type="DateTime" />
-            <Parameter Name="ScreenPrinting" Mode="In" Type="String" />
-            <Parameter Name="MaxTolerance" Mode="In" Type="Decimal" />
-            <Parameter Name="MinTolerance" Mode="In" Type="Decimal" />
-            <Parameter Name="ToleranceType" Mode="In" Type="String" />
-            <Parameter Name="ComponentPackaging" Mode="In" Type="String" />
-            <Parameter Name="msg" Mode="InOut" Type="String" />
-          </FunctionImport>
-          <EntitySet Name="View_Eng_Program" EntityType="FAI_NewModel.View_Eng_Program" />
         </EntityContainer>
+        <ComplexType Name="P_Man_Report_Search_Result">
+          <Property Type="String" Name="ReportCode" Nullable="false" MaxLength="15" />
+          <Property Type="String" Name="BoardSide" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="PLCode" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="ProductCode" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="ProductName" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="WoCode" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="LotNumber" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="BoardQty" Nullable="true" />
+          <Property Type="String" Name="CheckResult" Nullable="true" MaxLength="10" />
+          <Property Type="Int32" Name="TotalQty" Nullable="true" />
+          <Property Type="Int32" Name="AutomationQty" Nullable="true" />
+          <Property Type="Int32" Name="ManualQty" Nullable="true" />
+          <Property Type="Int32" Name="PassQty" Nullable="true" />
+          <Property Type="Int32" Name="FailQty" Nullable="true" />
+          <Property Type="Int32" Name="MissQty" Nullable="true" />
+          <Property Type="String" Name="IsForceFinish" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="FinishedBy" Nullable="true" MaxLength="20" />
+          <Property Type="DateTime" Name="FinishedDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="Status" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="Remarks" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Creator" Nullable="true" MaxLength="20" />
+          <Property Type="DateTime" Name="CreationDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="Modifier" Nullable="true" MaxLength="20" />
+          <Property Type="DateTime" Name="ModificationDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="OptionCode" Nullable="true" MaxLength="30" />
+          <Property Type="Int32" Name="CheckTime" Nullable="true" />
+          <Property Type="String" Name="Barcode" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="class" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="BatchQty" Nullable="true" />
+          <Property Type="String" Name="CheckType" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="PCBVersion" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="BomVersion" Nullable="true" MaxLength="30" />
+          <Property Type="Boolean" Name="IsFurnace" Nullable="true" />
+          <Property Type="String" Name="IsQACheck" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="DeviceName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Remarks2" Nullable="true" MaxLength="1000" />
+          <Property Type="String" Name="PicturePath" Nullable="true" MaxLength="200" />
+          <Property Type="Int32" Name="RQty" Nullable="true" />
+          <Property Type="Int32" Name="CQty" Nullable="true" />
+          <Property Type="Int32" Name="LQty" Nullable="true" />
+          <Property Type="Int32" Name="DQty" Nullable="true" />
+          <Property Type="Int32" Name="BQty" Nullable="true" />
+          <Property Type="Int32" Name="OQty" Nullable="true" />
+          <Property Type="Int32" Name="TQty" Nullable="true" />
+          <Property Type="Int32" Name="IQty" Nullable="true" />
+          <Property Type="String" Name="IsCheckNoSMD" Nullable="true" MaxLength="10" />
+          <Property Type="Int32" Name="SmdQty" Nullable="true" />
+        </ComplexType>
         <ComplexType Name="P_Search_Eng_Bom_Result">
           <Property Type="String" Name="产品编码" Nullable="false" MaxLength="100" />
           <Property Type="Int32" Name="序号" Nullable="false" />
@@ -4847,26 +5041,6 @@
           <Property Type="Decimal" Name="原始角度" Nullable="true" Precision="19" Scale="2" />
           <Property Type="Int32" Name="序号" Nullable="false" />
         </ComplexType>
-        <EntityType Name="View_Eng_Program">
-          <Key>
-            <PropertyRef Name="产品编号" />
-          </Key>
-          <Property Name="产品编号" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="产品名称" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="客户" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="板面" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="分析规则" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="状态" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="备注" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="使用次数" Type="Int32" />
-          <Property Name="最后一次使用时间" Type="DateTime" Precision="3" />
-          <Property Name="版本" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="电桥参数" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="创建人" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="创建时间" Type="DateTime" Precision="3" />
-          <Property Name="修改人" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="修改时间" Type="DateTime" Precision="3" />
-        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -6321,6 +6495,27 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="View_Eng_Program">
+            <EntityTypeMapping TypeName="FAI_NewModel.View_Eng_Program">
+              <MappingFragment StoreEntitySet="View_Eng_Program">
+                <ScalarProperty Name="产品编号" ColumnName="产品编号" />
+                <ScalarProperty Name="产品名称" ColumnName="产品名称" />
+                <ScalarProperty Name="客户" ColumnName="客户" />
+                <ScalarProperty Name="板面" ColumnName="板面" />
+                <ScalarProperty Name="分析规则" ColumnName="分析规则" />
+                <ScalarProperty Name="状态" ColumnName="状态" />
+                <ScalarProperty Name="备注" ColumnName="备注" />
+                <ScalarProperty Name="使用次数" ColumnName="使用次数" />
+                <ScalarProperty Name="最后一次使用时间" ColumnName="最后一次使用时间" />
+                <ScalarProperty Name="版本" ColumnName="版本" />
+                <ScalarProperty Name="电桥参数" ColumnName="电桥参数" />
+                <ScalarProperty Name="创建人" ColumnName="创建人" />
+                <ScalarProperty Name="创建时间" ColumnName="创建时间" />
+                <ScalarProperty Name="修改人" ColumnName="修改人" />
+                <ScalarProperty Name="修改时间" ColumnName="修改时间" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <FunctionImportMapping FunctionName="FAI_NewModel.Store.GetPoints" FunctionImportName="GetPoints">
             <ResultMapping>
               <ComplexTypeMapping TypeName="FAI_NewModel.GetPoints_Result">
@@ -6338,6 +6533,7 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="P_Bas_Material" FunctionName="FAI_NewModel.Store.P_Bas_Material" />
           <FunctionImportMapping FunctionImportName="P_Eng_BOMCheck" FunctionName="FAI_NewModel.Store.P_Eng_BOMCheck" />
           <FunctionImportMapping FunctionImportName="P_Eng_BOMCompare" FunctionName="FAI_NewModel.Store.P_Eng_BOMCompare" />
           <FunctionImportMapping FunctionImportName="P_Eng_BomItemAdd" FunctionName="FAI_NewModel.Store.P_Eng_BomItemAdd" />
@@ -6352,6 +6548,7 @@
           <FunctionImportMapping FunctionImportName="P_Eng_MatchMaterialCode" FunctionName="FAI_NewModel.Store.P_Eng_MatchMaterialCode" />
           <FunctionImportMapping FunctionImportName="P_Eng_MeterOptionCopy" FunctionName="FAI_NewModel.Store.P_Eng_MeterOptionCopy" />
           <FunctionImportMapping FunctionImportName="P_Eng_MeterOptionDelete" FunctionName="FAI_NewModel.Store.P_Eng_MeterOptionDelete" />
+          <FunctionImportMapping FunctionImportName="P_Eng_MeterOptionItem" FunctionName="FAI_NewModel.Store.P_Eng_MeterOptionItem" />
           <FunctionImportMapping FunctionImportName="P_Eng_MeterOptionRename" FunctionName="FAI_NewModel.Store.P_Eng_MeterOptionRename" />
           <FunctionImportMapping FunctionImportName="P_Eng_ParseRuleDelete" FunctionName="FAI_NewModel.Store.P_Eng_ParseRuleDelete" />
           <FunctionImportMapping FunctionImportName="P_Eng_ParseRuleRename" FunctionName="FAI_NewModel.Store.P_Eng_ParseRuleRename" />
@@ -6371,6 +6568,60 @@
           <FunctionImportMapping FunctionImportName="P_Man_GetPositionList" FunctionName="FAI_NewModel.Store.P_Man_GetPositionList" />
           <FunctionImportMapping FunctionImportName="P_Man_GetReportCode" FunctionName="FAI_NewModel.Store.P_Man_GetReportCode" />
           <FunctionImportMapping FunctionImportName="P_Man_GetSTCode" FunctionName="FAI_NewModel.Store.P_Man_GetSTCode" />
+          <FunctionImportMapping FunctionImportName="P_Man_Report_Search" FunctionName="FAI_NewModel.Store.P_Man_Report_Search">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="FAI_NewModel.P_Man_Report_Search_Result">
+                <ScalarProperty Name="ReportCode" ColumnName="ReportCode" />
+                <ScalarProperty Name="BoardSide" ColumnName="BoardSide" />
+                <ScalarProperty Name="PLCode" ColumnName="PLCode" />
+                <ScalarProperty Name="ProductCode" ColumnName="ProductCode" />
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+                <ScalarProperty Name="WoCode" ColumnName="WoCode" />
+                <ScalarProperty Name="LotNumber" ColumnName="LotNumber" />
+                <ScalarProperty Name="BoardQty" ColumnName="BoardQty" />
+                <ScalarProperty Name="CheckResult" ColumnName="CheckResult" />
+                <ScalarProperty Name="TotalQty" ColumnName="TotalQty" />
+                <ScalarProperty Name="AutomationQty" ColumnName="AutomationQty" />
+                <ScalarProperty Name="ManualQty" ColumnName="ManualQty" />
+                <ScalarProperty Name="PassQty" ColumnName="PassQty" />
+                <ScalarProperty Name="FailQty" ColumnName="FailQty" />
+                <ScalarProperty Name="MissQty" ColumnName="MissQty" />
+                <ScalarProperty Name="IsForceFinish" ColumnName="IsForceFinish" />
+                <ScalarProperty Name="FinishedBy" ColumnName="FinishedBy" />
+                <ScalarProperty Name="FinishedDate" ColumnName="FinishedDate" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="Creator" ColumnName="Creator" />
+                <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
+                <ScalarProperty Name="Modifier" ColumnName="Modifier" />
+                <ScalarProperty Name="ModificationDate" ColumnName="ModificationDate" />
+                <ScalarProperty Name="OptionCode" ColumnName="OptionCode" />
+                <ScalarProperty Name="CheckTime" ColumnName="CheckTime" />
+                <ScalarProperty Name="Barcode" ColumnName="Barcode" />
+                <ScalarProperty Name="class" ColumnName="class" />
+                <ScalarProperty Name="BatchQty" ColumnName="BatchQty" />
+                <ScalarProperty Name="CheckType" ColumnName="CheckType" />
+                <ScalarProperty Name="PCBVersion" ColumnName="PCBVersion" />
+                <ScalarProperty Name="BomVersion" ColumnName="BomVersion" />
+                <ScalarProperty Name="IsFurnace" ColumnName="IsFurnace" />
+                <ScalarProperty Name="IsQACheck" ColumnName="IsQACheck" />
+                <ScalarProperty Name="DeviceName" ColumnName="DeviceName" />
+                <ScalarProperty Name="Remarks2" ColumnName="Remarks2" />
+                <ScalarProperty Name="PicturePath" ColumnName="PicturePath" />
+                <ScalarProperty Name="RQty" ColumnName="RQty" />
+                <ScalarProperty Name="CQty" ColumnName="CQty" />
+                <ScalarProperty Name="LQty" ColumnName="LQty" />
+                <ScalarProperty Name="DQty" ColumnName="DQty" />
+                <ScalarProperty Name="BQty" ColumnName="BQty" />
+                <ScalarProperty Name="OQty" ColumnName="OQty" />
+                <ScalarProperty Name="TQty" ColumnName="TQty" />
+                <ScalarProperty Name="IQty" ColumnName="IQty" />
+                <ScalarProperty Name="IsCheckNoSMD" ColumnName="IsCheckNoSMD" />
+                <ScalarProperty Name="SmdQty" ColumnName="SmdQty" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="P_Man_ReportAdd" FunctionName="FAI_NewModel.Store.P_Man_ReportAdd" />
           <FunctionImportMapping FunctionImportName="P_Man_ReportClose" FunctionName="FAI_NewModel.Store.P_Man_ReportClose" />
           <FunctionImportMapping FunctionImportName="P_Man_ReportItemAdd" FunctionName="FAI_NewModel.Store.P_Man_ReportItemAdd" />
           <FunctionImportMapping FunctionImportName="P_Man_ReportSynBom" FunctionName="FAI_NewModel.Store.P_Man_ReportSynBom" />
@@ -6456,29 +6707,8 @@
           <FunctionImportMapping FunctionImportName="P_Sys_CheckUser" FunctionName="FAI_NewModel.Store.P_Sys_CheckUser" />
           <FunctionImportMapping FunctionImportName="P_Sys_DataClear" FunctionName="FAI_NewModel.Store.P_Sys_DataClear" />
           <FunctionImportMapping FunctionImportName="P_Sys_GetHelpCode" FunctionName="FAI_NewModel.Store.P_Sys_GetHelpCode" />
+          <FunctionImportMapping FunctionImportName="P_sys_UserAdd" FunctionName="FAI_NewModel.Store.P_sys_UserAdd" />
           <FunctionImportMapping FunctionImportName="P_Update_Eng_ProgramOption" FunctionName="FAI_NewModel.Store.P_Update_Eng_ProgramOption" />
-          <FunctionImportMapping FunctionImportName="P_Bas_Material" FunctionName="FAI_NewModel.Store.P_Bas_Material" />
-          <EntitySetMapping Name="View_Eng_Program">
-            <EntityTypeMapping TypeName="FAI_NewModel.View_Eng_Program">
-              <MappingFragment StoreEntitySet="View_Eng_Program">
-                <ScalarProperty Name="修改时间" ColumnName="修改时间" />
-                <ScalarProperty Name="修改人" ColumnName="修改人" />
-                <ScalarProperty Name="创建时间" ColumnName="创建时间" />
-                <ScalarProperty Name="创建人" ColumnName="创建人" />
-                <ScalarProperty Name="电桥参数" ColumnName="电桥参数" />
-                <ScalarProperty Name="版本" ColumnName="版本" />
-                <ScalarProperty Name="最后一次使用时间" ColumnName="最后一次使用时间" />
-                <ScalarProperty Name="使用次数" ColumnName="使用次数" />
-                <ScalarProperty Name="备注" ColumnName="备注" />
-                <ScalarProperty Name="状态" ColumnName="状态" />
-                <ScalarProperty Name="分析规则" ColumnName="分析规则" />
-                <ScalarProperty Name="板面" ColumnName="板面" />
-                <ScalarProperty Name="客户" ColumnName="客户" />
-                <ScalarProperty Name="产品名称" ColumnName="产品名称" />
-                <ScalarProperty Name="产品编号" ColumnName="产品编号" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

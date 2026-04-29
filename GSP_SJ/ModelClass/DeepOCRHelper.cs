@@ -1668,16 +1668,16 @@ namespace GSP_SJ.ModelClass
         public static void FindOCR(HImage ho_Image, out string text)
         {
             text = "";
-            HObject ho_ImageWord, ho_ImagePreprocessed;
-            HObject ho_ImagePreprocessedPadded;
+            HObject ho_ImageWord;//, ho_ImagePreprocessed;
+            //HObject ho_ImagePreprocessedPadded;
 
             HTuple hv_WindowHandle = new HTuple();
             HTuple hv_DeepOcrResult = new HTuple(), hv_WindowHandlePreprocessed1 = new HTuple();
             HTuple hv_RecognitionImageWidth = new HTuple();
             // Initialize local and output iconic variables 
             HOperatorSet.GenEmptyObj(out ho_ImageWord);
-            HOperatorSet.GenEmptyObj(out ho_ImagePreprocessed);
-            HOperatorSet.GenEmptyObj(out ho_ImagePreprocessedPadded);
+            //HOperatorSet.GenEmptyObj(out ho_ImagePreprocessed);
+            //HOperatorSet.GenEmptyObj(out ho_ImagePreprocessedPadded);
             try
             {
                 ho_ImageWord.Dispose();
@@ -1686,11 +1686,10 @@ namespace GSP_SJ.ModelClass
                 hv_DeepOcrResult.Dispose();
                 HOperatorSet.ApplyDeepOcr(ho_ImageWord, hv_DeepOcrHandle, "auto", out hv_DeepOcrResult);
 
-                ho_ImagePreprocessed.Dispose();
-                HOperatorSet.GetDictObject(out ho_ImagePreprocessed, hv_DeepOcrResult, "image");
-                ho_ImagePreprocessedPadded.Dispose();
-                HOperatorSet.ChangeFormat(ho_ImagePreprocessed, out ho_ImagePreprocessedPadded,
-                    500, 32);
+                //ho_ImagePreprocessed.Dispose();
+                //HOperatorSet.GetDictObject(out ho_ImagePreprocessed, hv_DeepOcrResult, "image");
+                //ho_ImagePreprocessedPadded.Dispose();
+                //HOperatorSet.ChangeFormat(ho_ImagePreprocessed, out ho_ImagePreprocessedPadded, 500, 32);
                 HOperatorSet.GetDictTuple(hv_DeepOcrResult, "words", out HTuple hv_Words);
                 HOperatorSet.GetDictTuple(hv_Words, "row", out HTuple hv_Row);
                 if ((int)(new HTuple((new HTuple(hv_Row.TupleLength())).TupleGreater(0))) != 0)
@@ -1709,8 +1708,8 @@ namespace GSP_SJ.ModelClass
             {
                 ho_Image.Dispose();
                 ho_ImageWord.Dispose();
-                ho_ImagePreprocessed.Dispose();
-                ho_ImagePreprocessedPadded.Dispose();
+                //ho_ImagePreprocessed.Dispose();
+                //ho_ImagePreprocessedPadded.Dispose();
 
                 hv_WindowHandle.Dispose();
                 hv_DeepOcrResult.Dispose();
@@ -1721,8 +1720,8 @@ namespace GSP_SJ.ModelClass
             }
             ho_Image.Dispose();
             ho_ImageWord.Dispose();
-            ho_ImagePreprocessed.Dispose();
-            ho_ImagePreprocessedPadded.Dispose();
+            //ho_ImagePreprocessed.Dispose();
+            //ho_ImagePreprocessedPadded.Dispose();
 
             hv_WindowHandle.Dispose();
             hv_DeepOcrResult.Dispose();

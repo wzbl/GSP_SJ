@@ -246,12 +246,13 @@ namespace GSP_SJ
             };
 
 
-            ToolStripButton toolStrip13 = new ToolStripButton("图像界面");
-            toolStrip13.Click += (s, e) =>
-            {
-                Form3 form3 = new Form3(eng_XYData_Results);
-                form3.ShowDialog();
-            };
+            //ToolStripButton toolStrip13 = new ToolStripButton("图像界面");
+            //toolStrip13.Click += (s, e) =>
+            //{
+            //    eng_XYData_Results = SQLDataControl.SearchXYData(canvas.ProductCode);
+            //    FormAction form3 = new FormAction(eng_XYData_Results);
+            //    form3.ShowDialog();
+            //};
 
             ToolStripButton toolStrip14 = new ToolStripButton("保存数据");
             toolStrip14.Click += (s, e) =>
@@ -275,7 +276,7 @@ namespace GSP_SJ
              toolStrip10,
              toolStrip11,
              toolStrip12,
-             toolStrip13,
+             //toolStrip13,
              toolStrip14
             });
 

@@ -8,178 +8,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using static System.Windows.Forms.AxHost;
 
-namespace GSP_SJ
+namespace GSP_SJ.Form_Chart
 {
-    public partial class PictureBoxZoom : PictureBox
-    {
-        public PictureBoxZoom()
-        {
-            InitializeComponent();
-            this.DoubleBuffered = true;
-            this.SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.UserPaint | ControlStyles.AllPaintingInWmPaint, true);
-            this.Resize += (s, e) => Reset();
-            SizeMode = PictureBoxSizeMode.AutoSize;
-
-        }
-
-
-        private float _zoom = 1.0f;
-        private Point _panPosition = Point.Empty;
-        private Point _lastMousePosition;
-        private bool _isPanning;
-
-
-
-        public float Zoom
-        {
-            get => _zoom;
-            set
-            {
-                _zoom = Math.Max(0.1f, Math.Min(value, 10f));
-                Invalidate();
-            }
-        }
-
-
-
-        protected override void OnPaint(PaintEventArgs e)
-        {
-            base.OnPaint(e);
-
-            if (Image == null) return;
-
-            e.Graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
-            e.Graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
-
-            // 计算缩放后的图像尺寸
-            int scaledWidth = (int)(Image.Width * _zoom);
-            int scaledHeight = (int)(Image.Height * _zoom);
-
-            // 计算绘制位置（居中显示）
-            Rectangle destRect = new Rectangle(
-                _panPosition.X + (this.Width - scaledWidth) / 2,
-                _panPosition.Y + (this.Height - scaledHeight) / 2,
-                scaledWidth,
-                scaledHeight);
-
-            // 绘制图像
-            e.Graphics.DrawImage(Image, destRect, new Rectangle(0, 0, Image.Width, Image.Height), GraphicsUnit.Pixel);
-
-
-        }
-
-        // 其他原有方法保持不变 (OnMouseWheel, OnMouseDown, OnMouseUp, OnMouseMove)
-        protected override void OnMouseWheel(MouseEventArgs e)
-        {
-            base.OnMouseWheel(e);
-
-            // 获取鼠标相对于控件的坐标
-            Point mousePos = e.Location;
-
-            // 获取鼠标相对于图像的位置（在缩放前）
-            Point imagePosBeforeZoom = ScreenToImage(mousePos);
-
-            // 调整缩放级别
-            float zoomFactor = e.Delta > 0 ? 1.2f : 1 / 1.2f;
-            Zoom *= zoomFactor;
-
-            // 获取鼠标相对于图像的位置（在缩放后）
-            Point imagePosAfterZoom = ScreenToImage(mousePos);
-
-            // 调整平移位置以保持鼠标下的点不变
-            _panPosition.X += (int)((imagePosAfterZoom.X - imagePosBeforeZoom.X) * _zoom);
-            _panPosition.Y += (int)((imagePosAfterZoom.Y - imagePosBeforeZoom.Y) * _zoom);
-
-            Invalidate();
-        }
-
-        protected override void OnMouseDown(MouseEventArgs e)
-        {
-            base.OnMouseDown(e);
-
-            if (e.Button == MouseButtons.Left)
-            {
-                _isPanning = true;
-                _lastMousePosition = e.Location;
-                this.Cursor = Cursors.Hand;
-            }
-        }
-
-        protected override void OnMouseUp(MouseEventArgs e)
-        {
-            base.OnMouseUp(e);
-
-            if (e.Button == MouseButtons.Left)
-            {
-                _isPanning = false;
-                this.Cursor = Cursors.Default;
-            }
-        }
-
-        protected override void OnMouseMove(MouseEventArgs e)
-        {
-            base.OnMouseMove(e);
-
-            if (_isPanning)
-            {
-                Point delta = new Point(e.X - _lastMousePosition.X, e.Y - _lastMousePosition.Y);
-                _panPosition.X += delta.X;
-                _panPosition.Y += delta.Y;
-                _lastMousePosition = e.Location;
-                Invalidate();
-            }
-        }
-        public void Reset()
-        {
-            if (Image == null) return;
-
-            // 计算适合控件大小的缩放比例
-            float zoomX = (float)this.Width / Image.Width;
-            float zoomY = (float)this.Height / Image.Height;
-
-            _zoom = Math.Min(zoomX, zoomY);
-            _panPosition = Point.Empty;
-
-            Invalidate();
-        }
-
-        // 图像坐标转换为屏幕坐标
-        private Rectangle ImageToScreen(Rectangle imageRect)
-        {
-            int scaledWidth = (int)(Image.Width * _zoom);
-            int scaledHeight = (int)(Image.Height * _zoom);
-
-            // 计算图像在屏幕上的位置
-            int imageLeft = _panPosition.X + (this.Width - scaledWidth) / 2;
-            int imageTop = _panPosition.Y + (this.Height - scaledHeight) / 2;
-
-            // 转换ROI坐标
-            return new Rectangle(
-                imageLeft + (int)(imageRect.X * _zoom),
-                imageTop + (int)(imageRect.Y * _zoom),
-                (int)(imageRect.Width * _zoom),
-                (int)(imageRect.Height * _zoom));
-        }
-
-        // 屏幕坐标转换为图像坐标
-        private Point ScreenToImage(Point screenPoint)
-        {
-            int scaledWidth = (int)(Image.Width * _zoom);
-            int scaledHeight = (int)(Image.Height * _zoom);
-
-            int imageX = screenPoint.X - (this.Width - scaledWidth) / 2 - _panPosition.X;
-            int imageY = screenPoint.Y - (this.Height - scaledHeight) / 2 - _panPosition.Y;
-
-            return new Point((int)(imageX / _zoom), (int)(imageY / _zoom));
-        }
-
-
-    }
-
-
-
     public class ZoomablePictureBox : PictureBox
     {
         private Image originalImage;
@@ -187,12 +18,12 @@ namespace GSP_SJ
         private Point dragStart;
         private Point imagePosition = Point.Empty;
         private bool isDragging = false;
-        private const float ZOOM_FACTOR = 1.2f;
+        private const float ZOOM_FACTOR = 1.1f;
         private const float MIN_ZOOM = 0.1f;
-        private const float MAX_ZOOM = 1.2f;
+        private const float MAX_ZOOM = 1.1f;
 
-
-        public List<Component> components =new List<Component>();
+        private Type_Window type_Window = Type_Window.None;
+        public List<Component> components = new List<Component>();
 
         public float Zoom
         {
@@ -224,6 +55,51 @@ namespace GSP_SJ
             this.MouseDown += ZoomablePictureBox_MouseDown;
             this.MouseMove += ZoomablePictureBox_MouseMove;
             this.MouseUp += ZoomablePictureBox_MouseUp;
+            this.MouseDoubleClick += ZoomablePictureBox_MouseDoubleClick;
+        }
+
+        public ZoomablePictureBox(Type_Window type_Window)
+        {
+            this.SizeMode = PictureBoxSizeMode.AutoSize;
+            this.MouseWheel += ZoomablePictureBox_MouseWheel;
+            this.MouseDown += ZoomablePictureBox_MouseDown;
+            this.MouseMove += ZoomablePictureBox_MouseMove;
+            this.MouseUp += ZoomablePictureBox_MouseUp;
+            this.MouseDoubleClick += ZoomablePictureBox_MouseDoubleClick;
+            this.type_Window = type_Window;
+        }
+
+        private void ZoomablePictureBox_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left && originalImage != null)
+            {
+                IsSelectCompont = false;
+                if (IsPointInImage(e.Location))
+                {
+                    PointF worldPos = ScreenToImagePoint(e.Location);
+                    // 查找点击的元件 - 使用改进的检测方法
+                    clickedComponent = FindComponentAt(worldPos);
+                    if (clickedComponent != null)
+                    {
+                        IsSelectCompont = true;
+                        if (type_Window == Type_Window.Screen)
+                        {
+                            Global.SelectComponent?.Invoke(clickedComponent.Designator);
+                        }
+                    }
+
+                }
+                Invalidate();
+            }
+        }
+
+        /// <summary>
+        /// 获取鼠标点击的像素点
+        /// </summary>
+        /// <returns></returns>
+        public PointF PixPoint()
+        {
+            return ScreenToImagePoint(dragStart);
         }
 
         PointF movePoint;
@@ -250,7 +126,7 @@ namespace GSP_SJ
                     {
                         //pe.Graphics.DrawRectangle(pen,new Rectangle(point.X-20, point.Y-20, 40, 40));
                         RectangleF rect = new RectangleF(
-                             point.X-20,
+                             point.X - 20,
                          point.Y - 20,
                         40,
                         40
@@ -265,9 +141,9 @@ namespace GSP_SJ
                     }
                 }
 
-                
-
                 DrawStatus(pe.Graphics);
+                //Point p = ScreenToImagePoint(new Point((int)movePoint.X, (int)movePoint.Y));
+                //pe.Graphics.DrawString("X:"+p.X+",Y:"+p.Y, new Font("Arial", 20), Brushes.Red, 150, Height - 200);
             }
             else
             {
@@ -279,9 +155,9 @@ namespace GSP_SJ
         {
             string status = $"缩放: {zoom:F2}x | 坐标: X={mouseWorldPos.X:F2}, Y={-mouseWorldPos.Y:F2}|屏幕坐标: X={movePoint.X:F2}, Y={movePoint.Y:F2}";
             using (Brush brush = new SolidBrush(Color.Black))
-            using (Font font = new Font("Arial", 9))
+            using (Font font = new Font("Arial", 100))
             {
-                g.DrawString(status, font, brush, 10, Height - 25);
+                g.DrawString(status, font, brush, 10, Height - 100);
             }
 
         }
@@ -484,7 +360,7 @@ namespace GSP_SJ
 
             return new Rectangle(x, y, scaledWidth, scaledHeight);
         }
- 
+
 
         private void ZoomablePictureBox_MouseWheel(object sender, MouseEventArgs e)
         {
@@ -508,7 +384,11 @@ namespace GSP_SJ
             Invalidate();
         }
         bool IsSelectCompont = false;
-        Component clickedComponent = null;
+
+        /// <summary>
+        /// 选中元件
+        /// </summary>
+        public Component clickedComponent = null;
         private void ZoomablePictureBox_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left && originalImage != null)
@@ -525,10 +405,10 @@ namespace GSP_SJ
                 //    if (clickedComponent != null)
                 //    {
                 //        IsSelectCompont = true;
-                //        //MessageBox.Show($"点击的元件：{clickedComponent.Designator}");
+
                 //    }
                 //}
-              
+
             }
             Invalidate();
         }
@@ -553,11 +433,11 @@ namespace GSP_SJ
             return null;
         }
 
-  
+
         private void ZoomablePictureBox_MouseMove(object sender, MouseEventArgs e)
         {
-            movePoint =e.Location;
-            mouseWorldPos=new PointF(0,0);
+            movePoint = e.Location;
+            mouseWorldPos = new PointF(0, 0);
             if (isDragging && originalImage != null)
             {
                 // 计算拖动距离并更新图像位置

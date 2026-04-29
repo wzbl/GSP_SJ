@@ -40,19 +40,7 @@
             this.kryptonRibbonGroupTriple4 = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupTriple();
             this.btnAllProduce = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton();
             this.btnAllReport = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton();
-            this.kryptonRibbonGroupSeparator3 = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupSeparator();
-            this.kryptonRibbonGroupTriple10 = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupTriple();
-            this.kryptonRibbonGroupButton3 = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton();
-            this.kryptonRibbonGroupButton16 = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton();
-            this.kryptonRibbonGroupButton17 = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton();
-            this.kryptonRibbonGroupTriple9 = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupTriple();
-            this.btnModel = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton();
-            this.kryptonRibbonGroupButton18 = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton();
-            this.kryptonRibbonGroupButton19 = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton();
             this.kryptonRibbonGroupSeparator4 = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupSeparator();
-            this.kryptonRibbonGroupTriple15 = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupTriple();
-            this.kryptonRibbonGroupButton15 = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton();
-            this.kryptonRibbonGroupSeparator5 = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupSeparator();
             this.kryptonRibbonGroupTriple13 = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupTriple();
             this.kryptonRibbonGroupButton24 = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton();
             this.kryptonRibbonGroupSeparator7 = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupSeparator();
@@ -120,12 +108,7 @@
             this.kryptonRibbonGroupTriple1,
             this.kryptonRibbonGroupSeparator2,
             this.kryptonRibbonGroupTriple4,
-            this.kryptonRibbonGroupSeparator3,
-            this.kryptonRibbonGroupTriple10,
-            this.kryptonRibbonGroupTriple9,
             this.kryptonRibbonGroupSeparator4,
-            this.kryptonRibbonGroupTriple15,
-            this.kryptonRibbonGroupSeparator5,
             this.kryptonRibbonGroupTriple13,
             this.kryptonRibbonGroupSeparator7,
             this.kryptonRibbonGroupTriple5});
@@ -171,64 +154,6 @@
             this.btnAllReport.ImageLarge = global::GSP_SJ.Properties.Resources._77;
             this.btnAllReport.TextLine1 = "所有报告";
             this.btnAllReport.Click += new System.EventHandler(this.btnAllReport_Click);
-            // 
-            // kryptonRibbonGroupTriple10
-            // 
-            this.kryptonRibbonGroupTriple10.Items.AddRange(new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupItem[] {
-            this.kryptonRibbonGroupButton3,
-            this.kryptonRibbonGroupButton16,
-            this.kryptonRibbonGroupButton17});
-            // 
-            // kryptonRibbonGroupButton3
-            // 
-            this.kryptonRibbonGroupButton3.ImageSmall = null;
-            this.kryptonRibbonGroupButton3.Tag = "2";
-            this.kryptonRibbonGroupButton3.TextLine1 = "资料库";
-            this.kryptonRibbonGroupButton3.Click += new System.EventHandler(this.资料库ToolStripMenuItem1_Click);
-            // 
-            // kryptonRibbonGroupButton16
-            // 
-            this.kryptonRibbonGroupButton16.TextLine1 = "尺寸管理";
-            this.kryptonRibbonGroupButton16.Click += new System.EventHandler(this.尺寸管理ToolStripMenuItem_Click);
-            // 
-            // kryptonRibbonGroupButton17
-            // 
-            this.kryptonRibbonGroupButton17.TextLine1 = "电桥配置";
-            this.kryptonRibbonGroupButton17.Click += new System.EventHandler(this.电桥配置ToolStripMenuItem_Click);
-            // 
-            // kryptonRibbonGroupTriple9
-            // 
-            this.kryptonRibbonGroupTriple9.Items.AddRange(new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupItem[] {
-            this.btnModel,
-            this.kryptonRibbonGroupButton18,
-            this.kryptonRibbonGroupButton19});
-            // 
-            // btnModel
-            // 
-            this.btnModel.TextLine1 = "电桥参数";
-            this.btnModel.Click += new System.EventHandler(this.电桥参数ToolStripMenuItem_Click);
-            // 
-            // kryptonRibbonGroupButton18
-            // 
-            this.kryptonRibbonGroupButton18.TextLine1 = "分析规则";
-            this.kryptonRibbonGroupButton18.Click += new System.EventHandler(this.分析规则ToolStripMenuItem_Click);
-            // 
-            // kryptonRibbonGroupButton19
-            // 
-            this.kryptonRibbonGroupButton19.TextLine1 = "系统参数";
-            this.kryptonRibbonGroupButton19.Click += new System.EventHandler(this.系统参数ToolStripMenuItem_Click);
-            // 
-            // kryptonRibbonGroupTriple15
-            // 
-            this.kryptonRibbonGroupTriple15.Items.AddRange(new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupItem[] {
-            this.kryptonRibbonGroupButton15});
-            // 
-            // kryptonRibbonGroupButton15
-            // 
-            this.kryptonRibbonGroupButton15.ImageSmall = null;
-            this.kryptonRibbonGroupButton15.Tag = "3";
-            this.kryptonRibbonGroupButton15.TextLine1 = "模版库";
-            this.kryptonRibbonGroupButton15.Click += new System.EventHandler(this.模板库ToolStripMenuItem_Click);
             // 
             // kryptonRibbonGroupTriple13
             // 
@@ -337,6 +262,7 @@
             this.kryptonNavigator1.Button.CloseButton.Orientation = ComponentFactory.Krypton.Toolkit.PaletteButtonOrientation.FixedBottom;
             this.kryptonNavigator1.Button.CloseButton.Style = ComponentFactory.Krypton.Toolkit.PaletteButtonStyle.Command;
             this.kryptonNavigator1.Button.CloseButton.UniqueName = "BFADEE9B73D74FA30E9BEDD06A78B270";
+            this.kryptonNavigator1.Button.CloseButtonDisplay = ComponentFactory.Krypton.Navigator.ButtonDisplay.Hide;
             this.kryptonNavigator1.Button.ContextButtonDisplay = ComponentFactory.Krypton.Navigator.ButtonDisplay.Hide;
             this.kryptonNavigator1.Button.ContextMenuMapImage = ComponentFactory.Krypton.Navigator.MapKryptonPageImage.SmallMediumLarge;
             this.kryptonNavigator1.Button.ContextMenuMapText = ComponentFactory.Krypton.Navigator.MapKryptonPageText.None;
@@ -385,15 +311,7 @@
         private ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupSeparator kryptonRibbonGroupSeparator2;
         private ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupTriple kryptonRibbonGroupTriple4;
         private ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton btnAllProduce;
-        private ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupSeparator kryptonRibbonGroupSeparator3;
-        private ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupTriple kryptonRibbonGroupTriple10;
-        private ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton kryptonRibbonGroupButton3;
-        private ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupTriple kryptonRibbonGroupTriple9;
-        private ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton btnModel;
         private ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupSeparator kryptonRibbonGroupSeparator4;
-        private ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupTriple kryptonRibbonGroupTriple15;
-        private ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton kryptonRibbonGroupButton15;
-        private ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupSeparator kryptonRibbonGroupSeparator5;
         private ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupTriple kryptonRibbonGroupTriple13;
         private ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton kryptonRibbonGroupButton24;
         private ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupSeparator kryptonRibbonGroupSeparator7;
@@ -413,10 +331,6 @@
         private ComponentFactory.Krypton.Ribbon.KryptonRibbonGroup kryptonRibbonGroup6;
         private ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton btnAddReport;
         private ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton btnAllReport;
-        private ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton kryptonRibbonGroupButton16;
-        private ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton kryptonRibbonGroupButton17;
-        private ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton kryptonRibbonGroupButton18;
-        private ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton kryptonRibbonGroupButton19;
         private ComponentFactory.Krypton.Navigator.KryptonNavigator kryptonNavigator1;
     }
 }

@@ -220,10 +220,10 @@ namespace GSP_SJ
             {
                 save();
             });
-            uCXYDataChart.RefreshData(eng_XYData_Results);
-            uCXYDataChart.Save();
             eng_XYData_Results = SQLDataControl.SearchXYData(txtProductCode.Text);
             dgvXYData.DataSource = eng_XYData_Results;
+            uCXYDataChart.RefreshData(eng_XYData_Results);
+            uCXYDataChart.Save();
             txtProductCode.Enabled = false;
             btnSave.Enabled = true;
         }
@@ -254,18 +254,18 @@ namespace GSP_SJ
                         rule = "Default";
                     }
                     string compensation = "";
-                    List<Eng_MeterOption> eng_Meters= SQLDataControl.GetMeterOption().Where(x => x.OptionName == comCompensation.Text).ToList();
-                    if (eng_Meters.Count>0)
+                    List<Eng_MeterOption> eng_Meters = SQLDataControl.GetMeterOption().Where(x => x.OptionName == comCompensation.Text).ToList();
+                    if (eng_Meters.Count > 0)
                     {
                         compensation = eng_Meters[0].OptionCode;
                     }
 
-                        string customer = comCustom.Text;
+                    string customer = comCustom.Text;
                     if (string.IsNullOrEmpty(customer) && comCustom.Items.Count > 0)
                         customer = comCustom.Items[0].ToString();
 
                     SQLDataControl.AddProgram(txtProductCode.Text,
-              txtProductName.Text, customer, side, "test", rule,txtVision.Text, compensation);
+              txtProductName.Text, customer, side, "test", rule, txtVision.Text, compensation);
 
                     for (int i = 0; i < DataGridView_BOM.Rows.Count; i++)
                     {
@@ -379,7 +379,7 @@ namespace GSP_SJ
 
         }
 
-        private void btnSetRule_Click(object sender, EventArgs e)
+        private async void btnSetRule_Click(object sender, EventArgs e)
         {
             FormAnalySeting formAnalySeting = new FormAnalySeting(comBomRule.Text);
             formAnalySeting.ShowDialog();
@@ -581,7 +581,7 @@ namespace GSP_SJ
         {
             try
             {
-                NOPIHelperEX.ExportDataToExcel(NOPIHelperEX.ToDataTable(DataGridView_BOM));
+                NOPIHelperEX.ExportDataToExcel(NOPIHelperEX.ToDataTable(DataGridView_BOM), txtProductCode.Text + "-BOM");
             }
             catch (Exception ex)
             {
@@ -596,7 +596,7 @@ namespace GSP_SJ
         {
             try
             {
-                NOPIHelperEX.ExportDataToExcel(NOPIHelperEX.ToDataTable(dgvXYData));
+                NOPIHelperEX.ExportDataToExcel(NOPIHelperEX.ToDataTable(dgvXYData), txtProductCode.Text + "-XY");
             }
             catch (Exception)
             {

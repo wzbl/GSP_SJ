@@ -1,0 +1,62 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace GSP_SJ.Form_Chart
+{
+    public partial class UCZoom : UserControl
+    {
+        ZoomablePictureBox zoomablePictureBox1;
+        public UCZoom()
+        {
+            InitializeComponent();
+            Dock = DockStyle.Fill;
+        }
+
+        public UCZoom(Type_Window type_Window):this()
+        {
+            zoomablePictureBox1=new ZoomablePictureBox(type_Window);
+            kryptonPanel1.Controls.Add(zoomablePictureBox1);
+        }
+
+        public void SetImage(Image image)
+        {
+            zoomablePictureBox1.Image = image;
+        }
+
+
+        private void toolStripComboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            zoomablePictureBox1.setSelectCompont(toolStripComboBox1.Text, kryptonPanel1.Width, kryptonPanel1.Height);
+        }
+
+        public void SetSelectCompont(string name)
+        {
+            zoomablePictureBox1.setSelectCompont(name, kryptonPanel1.Width, kryptonPanel1.Height);
+
+            toolStripComboBox1.Text = name;
+        }
+
+        public void AddComponent(Component component)
+        {
+            zoomablePictureBox1.components.Add(component);
+            toolStripComboBox1.Items.Add(component.Designator);
+        }
+
+        public void UpdateComponent(string position, PointF point )
+        {
+            zoomablePictureBox1.components.Where(D => D.Designator == position).FirstOrDefault().Position = new PointF(point.X, point.Y);
+        }
+
+        public PointF PixPoint()
+        {
+           return zoomablePictureBox1.PixPoint();
+        }
+    }
+}
