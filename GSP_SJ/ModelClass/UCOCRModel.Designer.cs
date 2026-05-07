@@ -27,38 +27,24 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
             this.txtOCRText = new System.Windows.Forms.TextBox();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.picImg = new System.Windows.Forms.PictureBox();
             this.hWindowControl1 = new HalconDotNet.HWindowControl();
+            this.picImg = new System.Windows.Forms.PictureBox();
+            this.kryptonPanel1 = new ComponentFactory.Krypton.Toolkit.KryptonPanel();
+            this.kryptonLabel1 = new ComponentFactory.Krypton.Toolkit.KryptonLabel();
+            this.kryptonLabel2 = new ComponentFactory.Krypton.Toolkit.KryptonLabel();
             ((System.ComponentModel.ISupportInitialize)(this.picImg)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.kryptonPanel1)).BeginInit();
+            this.kryptonPanel1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(39, 24);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(29, 12);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "方法";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(39, 52);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(47, 12);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "OCR字符";
             // 
             // txtOCRText
             // 
-            this.txtOCRText.Location = new System.Drawing.Point(102, 49);
+            this.txtOCRText.Location = new System.Drawing.Point(133, 63);
+            this.txtOCRText.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtOCRText.Name = "txtOCRText";
-            this.txtOCRText.Size = new System.Drawing.Size(115, 21);
+            this.txtOCRText.Size = new System.Drawing.Size(152, 26);
             this.txtOCRText.TabIndex = 2;
             // 
             // comboBox1
@@ -67,56 +53,90 @@
             this.comboBox1.Items.AddRange(new object[] {
             "OCV",
             "OCR"});
-            this.comboBox1.Location = new System.Drawing.Point(102, 16);
+            this.comboBox1.Location = new System.Drawing.Point(133, 19);
+            this.comboBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(115, 20);
+            this.comboBox1.Size = new System.Drawing.Size(152, 24);
             this.comboBox1.TabIndex = 3;
             this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
-            // 
-            // picImg
-            // 
-            this.picImg.Location = new System.Drawing.Point(223, 3);
-            this.picImg.Name = "picImg";
-            this.picImg.Size = new System.Drawing.Size(116, 67);
-            this.picImg.TabIndex = 4;
-            this.picImg.TabStop = false;
             // 
             // hWindowControl1
             // 
             this.hWindowControl1.BackColor = System.Drawing.Color.Black;
             this.hWindowControl1.BorderColor = System.Drawing.Color.Black;
             this.hWindowControl1.ImagePart = new System.Drawing.Rectangle(0, 0, 640, 480);
-            this.hWindowControl1.Location = new System.Drawing.Point(348, 1);
+            this.hWindowControl1.Location = new System.Drawing.Point(461, 2);
+            this.hWindowControl1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.hWindowControl1.Name = "hWindowControl1";
-            this.hWindowControl1.Size = new System.Drawing.Size(119, 71);
+            this.hWindowControl1.Size = new System.Drawing.Size(159, 95);
             this.hWindowControl1.TabIndex = 5;
-            this.hWindowControl1.WindowSize = new System.Drawing.Size(119, 71);
+            this.hWindowControl1.WindowSize = new System.Drawing.Size(159, 95);
+            // 
+            // picImg
+            // 
+            this.picImg.Location = new System.Drawing.Point(294, 2);
+            this.picImg.Margin = new System.Windows.Forms.Padding(4);
+            this.picImg.Name = "picImg";
+            this.picImg.Size = new System.Drawing.Size(155, 94);
+            this.picImg.TabIndex = 4;
+            this.picImg.TabStop = false;
+            // 
+            // kryptonPanel1
+            // 
+            this.kryptonPanel1.Controls.Add(this.kryptonLabel2);
+            this.kryptonPanel1.Controls.Add(this.kryptonLabel1);
+            this.kryptonPanel1.Controls.Add(this.hWindowControl1);
+            this.kryptonPanel1.Controls.Add(this.picImg);
+            this.kryptonPanel1.Controls.Add(this.txtOCRText);
+            this.kryptonPanel1.Controls.Add(this.comboBox1);
+            this.kryptonPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.kryptonPanel1.Location = new System.Drawing.Point(0, 0);
+            this.kryptonPanel1.Name = "kryptonPanel1";
+            this.kryptonPanel1.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.Office2007Blue;
+            this.kryptonPanel1.Size = new System.Drawing.Size(856, 99);
+            this.kryptonPanel1.TabIndex = 6;
+            // 
+            // kryptonLabel1
+            // 
+            this.kryptonLabel1.Location = new System.Drawing.Point(17, 19);
+            this.kryptonLabel1.Name = "kryptonLabel1";
+            this.kryptonLabel1.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.Office2007Blue;
+            this.kryptonLabel1.Size = new System.Drawing.Size(46, 26);
+            this.kryptonLabel1.TabIndex = 6;
+            this.kryptonLabel1.Values.Text = "方法";
+            // 
+            // kryptonLabel2
+            // 
+            this.kryptonLabel2.Location = new System.Drawing.Point(3, 63);
+            this.kryptonLabel2.Name = "kryptonLabel2";
+            this.kryptonLabel2.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.Office2007Blue;
+            this.kryptonLabel2.Size = new System.Drawing.Size(79, 26);
+            this.kryptonLabel2.TabIndex = 7;
+            this.kryptonLabel2.Values.Text = "OCR字符";
             // 
             // UCOCRModel
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.hWindowControl1);
-            this.Controls.Add(this.picImg);
-            this.Controls.Add(this.comboBox1);
-            this.Controls.Add(this.txtOCRText);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.kryptonPanel1);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "UCOCRModel";
-            this.Size = new System.Drawing.Size(642, 74);
+            this.Size = new System.Drawing.Size(856, 99);
             ((System.ComponentModel.ISupportInitialize)(this.picImg)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.kryptonPanel1)).EndInit();
+            this.kryptonPanel1.ResumeLayout(false);
+            this.kryptonPanel1.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox txtOCRText;
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.PictureBox picImg;
         private HalconDotNet.HWindowControl hWindowControl1;
+        private ComponentFactory.Krypton.Toolkit.KryptonPanel kryptonPanel1;
+        private ComponentFactory.Krypton.Toolkit.KryptonLabel kryptonLabel2;
+        private ComponentFactory.Krypton.Toolkit.KryptonLabel kryptonLabel1;
     }
 }

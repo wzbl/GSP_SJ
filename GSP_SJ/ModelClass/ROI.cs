@@ -138,8 +138,8 @@ namespace GSP_SJ.ModelClass
             return Bounds.Contains(point) ? HandleType.Move : HandleType.None;
         }
     }
-    
-     public class RectangularROI : DirectionalROI
+
+    public class RectangularROI : DirectionalROI
     {
         public RectangularROI(Rectangle bounds, string name = "") : base(bounds, name)
         {
@@ -306,6 +306,7 @@ namespace GSP_SJ.ModelClass
         // 添加ROI
         public void AddROI(DirectionalROI roi)
         {
+            roi.Name = rois.Count.ToString();
             rois.Add(roi);
             Invalidate();
         }

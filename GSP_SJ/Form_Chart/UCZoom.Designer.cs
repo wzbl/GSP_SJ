@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.toolSelect = new System.Windows.Forms.ToolStripButton();
+            this.toolROI = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripComboBox1 = new System.Windows.Forms.ToolStripComboBox();
@@ -42,6 +44,8 @@
             this.toolStrip1.Font = new System.Drawing.Font("Segoe UI", 9.216F);
             this.toolStrip1.ImageScalingSize = new System.Drawing.Size(21, 21);
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolSelect,
+            this.toolROI,
             this.toolStripButton1,
             this.toolStripLabel1,
             this.toolStripComboBox1});
@@ -51,25 +55,47 @@
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
             // 
+            // toolSelect
+            // 
+            this.toolSelect.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolSelect.Image = global::GSP_SJ.Properties.Resources.Select;
+            this.toolSelect.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolSelect.Name = "toolSelect";
+            this.toolSelect.Size = new System.Drawing.Size(30, 29);
+            this.toolSelect.Text = "toolStripButton2";
+            this.toolSelect.Visible = false;
+            this.toolSelect.Click += new System.EventHandler(this.toolSelect_Click);
+            // 
+            // toolROI
+            // 
+            this.toolROI.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolROI.Image = global::GSP_SJ.Properties.Resources.ROIRect;
+            this.toolROI.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolROI.Name = "toolROI";
+            this.toolROI.Size = new System.Drawing.Size(30, 29);
+            this.toolROI.Text = "toolStripButton3";
+            this.toolROI.Visible = false;
+            this.toolROI.Click += new System.EventHandler(this.toolROI_Click);
+            // 
             // toolStripButton1
             // 
             this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.toolStripButton1.Image = global::GSP_SJ.Properties.Resources._89;
             this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(30, 25);
+            this.toolStripButton1.Size = new System.Drawing.Size(30, 29);
             this.toolStripButton1.Text = "toolStripButton1";
             // 
             // toolStripLabel1
             // 
             this.toolStripLabel1.Name = "toolStripLabel1";
-            this.toolStripLabel1.Size = new System.Drawing.Size(44, 25);
+            this.toolStripLabel1.Size = new System.Drawing.Size(44, 29);
             this.toolStripLabel1.Text = "定位";
             // 
             // toolStripComboBox1
             // 
             this.toolStripComboBox1.Name = "toolStripComboBox1";
-            this.toolStripComboBox1.Size = new System.Drawing.Size(121, 29);
+            this.toolStripComboBox1.Size = new System.Drawing.Size(121, 33);
             this.toolStripComboBox1.SelectedIndexChanged += new System.EventHandler(this.toolStripComboBox1_SelectedIndexChanged);
             // 
             // kryptonPanel1
@@ -104,5 +130,7 @@
         private System.Windows.Forms.ToolStripLabel toolStripLabel1;
         private System.Windows.Forms.ToolStripComboBox toolStripComboBox1;
         private ComponentFactory.Krypton.Toolkit.KryptonPanel kryptonPanel1;
+        private System.Windows.Forms.ToolStripButton toolSelect;
+        private System.Windows.Forms.ToolStripButton toolROI;
     }
 }

@@ -337,6 +337,9 @@ namespace GSP_SJ
 
     public class Component
     {
+        public string ProductCode { get; set; }
+        public string MaterialCode { get; set; }
+        public string MaterialName { get; set; }
         public string Designator { get; set; }
         public PointF Position { get; set; }
         public SizeF Size { get; set; }
@@ -347,6 +350,9 @@ namespace GSP_SJ
         public float TextRadio = 1f;
 
         public static float radio = 0.8f;
+
+        public bool IsHaveModel = false;
+
         public Component(string designator, PointF position, SizeF size, float angle, string text, Color color)
         {
             Designator = designator;
@@ -355,7 +361,7 @@ namespace GSP_SJ
             Angle = angle;
             Text = text;
             Color = color;
-            TextRadio = (size.Width* 60f) / 133;
+            TextRadio = (size.Width * 60f) / 133;
         }
 
         // 获取元件的边界矩形（考虑旋转）
@@ -1246,7 +1252,7 @@ namespace GSP_SJ
                 //SqlHelper.SQL.ExecuteQuery(cmd);
                 //跟新屏幕坐标到数据库
                 //if (saveScraw)
-                    SQLDataControl.UpdateXYData_RXY(ProductCode, component.Designator, (decimal)screenPos1.X, (decimal)screenPos1.Y);
+                SQLDataControl.UpdateXYData_RXY(ProductCode, component.Designator, (decimal)screenPos1.X, (decimal)screenPos1.Y);
                 // 绘制元件矩形
                 using (Pen pen = new Pen(component.Color, 1.0f))
                 using (Brush fillBrush = new SolidBrush(Color.FromArgb(30, component.Color)))

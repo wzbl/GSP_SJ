@@ -8,9 +8,11 @@ using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Migrations;
 using System.Data.SqlClient;
 using System.Drawing;
+using System.IO.Ports;
 using System.Linq;
 using System.Net.NetworkInformation;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using static Emgu.CV.Stitching.Stitcher;
 
@@ -188,6 +190,12 @@ namespace SqlHelper
             }
 
         }
+
+        public static void UpdateMan_ReportItem_LXY(string ReportCode, string position, decimal px, decimal py)
+        {
+            int i = db.Database.ExecuteSqlCommand("update Man_ReportItem set LX={0} ,LY ={1} where ReportCode={2} and Position = {3}", px, py, ReportCode, position);
+        }
+
         #endregion
 
         #region BOM
@@ -417,7 +425,7 @@ namespace SqlHelper
         public static void UpdateXYData_LXY(string productCode, string position, decimal px, decimal py)
         {
             int i = db.Database.ExecuteSqlCommand("update Eng_XYData set LX={0} ,LY ={1} where ProductCode={2} and Position = {3}", px, py, productCode, position);
-            db.SaveChanges();
+
         }
 
         public static void UpdateProgramOptionPicture(string productCode, string BoardSide, byte[] img)
@@ -482,6 +490,46 @@ namespace SqlHelper
         public static List<Eng_ModelItem> GetEng_ModelItem(string productCode, string materialCode)
         {
             return db.Eng_ModelItem.AsNoTracking().Where(x => x.ProductCode == productCode && x.MaterialCode == materialCode).ToList();
+        }
+
+        public static void UpdateEng_Model(Eng_Model eng_Model)
+        {
+            if (db.Eng_ModelItem.AsNoTracking().Where(x => x.ProductCode == eng_Model.ProductCode && x.MaterialCode == eng_Model.MaterialCode).ToList().Count == 0)
+            {
+                int i = db.Database.ExecuteSqlCommand("insert into Eng_Model(ProductCode,MaterialCode,MaterialName,LCRType,Creator,CreationDate,Remarks) values ({0},{1},{2},{3},{4},{5},{6})", eng_Model.ProductCode, eng_Model.MaterialCode, eng_Model.MaterialName, eng_Model.LCRType, eng_Model.Creator, eng_Model.CreationDate, "");
+                db.SaveChanges();
+            }
+        }
+
+        public static void UpdateEng_ModelItem(Eng_ModelItem modelItem)
+        {
+            if (db.Eng_ModelItem.AsNoTracking().Where(x => x.ProductCode == modelItem.ProductCode && x.MaterialCode == modelItem.MaterialCode && x.Id == modelItem.Id).ToList().Count == 0)
+            {
+                int i = db.Database.ExecuteSqlCommand("insert into Eng_ModelItem(ProductCode,MaterialCode,mPicture,mPW,mPH,mZoomRatio,mDPI,Id,Groups,IsMain,Polarity,IsManual,LCy,HCy,NA,NB,XA,XB,P1,P2,P3,P4,P5,PLeft,PTop,Pw,Ph,PLeft2,PTop2,Pw2,Ph2,PLeft3,PTop3,Pw3,Ph3,Creator,CreationDate,Remarks) values ({0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13},{14},{15},{16},{17},{18},{19},{20},{21},{22},{23},{24},{25},{26},{27},{28},{29},{30},{31},{32},{33},{34},{35},{36},{37})",
+                    modelItem.ProductCode, modelItem.MaterialCode, modelItem.mPicture,
+                    modelItem.mPW, modelItem.mPH, modelItem.mZoomRatio, modelItem.mDPI, 
+                    modelItem.Id, modelItem.Groups, modelItem.IsMain, modelItem.Polarity, modelItem.IsManual,
+                    modelItem.LCy, modelItem.HCy, modelItem.NA, modelItem.NB, modelItem.XA, modelItem.XB, 
+                    modelItem.P1, modelItem.P2, modelItem.P3, modelItem.P4, modelItem.P5,
+                    modelItem.PLeft, modelItem.PTop, modelItem.Pw, modelItem.Ph,
+                    modelItem.PLeft2, modelItem.PTop2, modelItem.Pw2, modelItem.Ph2, 
+                    modelItem.PLeft3, modelItem.PTop3, modelItem.Pw3, modelItem.Ph3, 
+                    modelItem.Creator, modelItem.CreationDate, modelItem.Remarks);
+            }
+            else
+            {
+                int i = db.Database.ExecuteSqlCommand("update Eng_ModelItem set mPicture={0},mPW={1},mPH={2},mZoomRatio={3},mDPI={4},Id={5},Groups={6},IsMain={7},Polarity={8},IsManual={9},LCy={10},HCy={11},NA={12},NB={13},XA={14},XB={15},P1={16},P2={17},P3={18},P4={19},P5={20},PLeft={21},PTop={22},Pw={23},Ph={24},PLeft2={25},PTop2={26},Pw2={27},Ph2={28},PLeft3={29},PTop3={30},Pw3={31},Ph3={32},Remarks={33} where ProductCode = {34} and MaterialCode ={35} and Id={36}",
+                    modelItem.mPicture,
+                    modelItem.mPW,  modelItem.mPH,
+                    modelItem.mZoomRatio,  modelItem.mDPI,
+                    modelItem.Id, modelItem.Groups, modelItem.IsMain, modelItem.Polarity, modelItem.IsManual, 
+                    modelItem.LCy, modelItem.HCy, modelItem.NA, modelItem.NB, modelItem.XA, modelItem.XB, 
+                    modelItem.P1, modelItem.P2, modelItem.P3, modelItem.P4, modelItem.P5,
+                    modelItem.PLeft, modelItem.PTop, modelItem.Pw, modelItem.Ph, modelItem.PLeft2, modelItem.PTop2,
+                    modelItem.Pw2, modelItem.Ph2, modelItem.PLeft3, modelItem.PTop3, modelItem.Pw3, modelItem.Ph3, modelItem.Remarks,
+                    modelItem. ProductCode  , modelItem. MaterialCode , modelItem.Id);
+            }
+            db.SaveChanges();
         }
         #endregion
 

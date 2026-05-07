@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
@@ -701,6 +702,144 @@ namespace SqlHelper
             fs.Read(btye2, 0, Convert.ToInt32(fs.Length));
             fs.Close();
             return btye2;
+        }
+
+        /// <summary>
+        /// 旋转图像并返回新图像（完整显示，不裁剪）
+        /// </summary>
+        /// <param name="inputImage">输入原始图像</param>
+        /// <param name="angle">旋转角度（正数=逆时针，负数=顺时针）</param>
+        /// <param name="interpolation">插值方式：'constant' / 'linear' / 'nearest_neighbor'</param>
+        /// <returns>旋转后的新图像</returns>
+        public static HObject RotateImage(HObject inputImage, double angle, string interpolation = "constant")
+        {
+            HObject rotatedImage;
+
+            // 1. 获取图像宽高
+            HOperatorSet.GetImageSize(inputImage, out HTuple width, out HTuple height);
+
+            // 2. 计算图像中心点（以中心为轴旋转）
+            double centerX = width / 2.0;
+            double centerY = height / 2.0;
+
+            double angleRad = angle * Math.PI / 180.0;
+
+            HTuple homMat2D;
+            HOperatorSet.HomMat2dIdentity(out homMat2D);
+            HOperatorSet.HomMat2dRotate(homMat2D, -angleRad, centerY, centerX, out homMat2D);
+
+            // 4. 仿射变换旋转图像（自动扩展画布，不裁剪）
+            HOperatorSet.AffineTransImage(inputImage, out rotatedImage, homMat2D, interpolation, "false");
+
+            return rotatedImage;
+        }
+
+
+        /// <summary>
+        /// 旋转图像，自动扩大画布以适应旋转后的完整图像（背景透明）
+        /// </summary>
+        /// <param name="srcImage">原始图像</param>
+        /// <param name="angle">旋转角度（度，顺时针为正）</param>
+        /// <returns>旋转后的图像</returns>
+        public static Bitmap RotateImage(Image srcImage, float angle)
+        {
+            // 计算旋转后所需的新画布宽度和高度
+            double rad = angle * Math.PI / 180.0;
+            double sin = Math.Abs(Math.Sin(rad));
+            double cos = Math.Abs(Math.Cos(rad));
+            int srcW = srcImage.Width;
+            int srcH = srcImage.Height;
+            int newW = (int)(srcW * cos + srcH * sin);
+            int newH = (int)(srcW * sin + srcH * cos);
+
+            // 创建目标位图，分辨率与原图一致
+            Bitmap dstImage = new Bitmap(newW, newH, srcImage.PixelFormat);
+            dstImage.SetResolution(srcImage.HorizontalResolution, srcImage.VerticalResolution);
+
+            using (Graphics g = Graphics.FromImage(dstImage))
+            {
+                // 设置高质量插值模式与平滑模式
+                g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                g.SmoothingMode = SmoothingMode.HighQuality;
+                g.PixelOffsetMode = PixelOffsetMode.HighQuality;
+
+                // 设置背景色：默认透明（或根据需要设置为 Color.White）
+                g.Clear(Color.Transparent);
+
+                // 将绘制原点移动到新画布的中心
+                g.TranslateTransform(newW / 2, newH / 2);
+                // 旋转
+                g.RotateTransform(angle);
+                // 将原图像左上角坐标偏移，使其中心对准旋转中心
+                g.TranslateTransform(-srcW / 2, -srcH / 2);
+
+                // 绘制原始图像
+                g.DrawImage(srcImage, 0, 0);
+            }
+            return dstImage;
+        }
+
+
+        /// <summary>
+        /// 绕矩形中心旋转指定角度，返回轴对齐边界矩形 (RectangleF)
+        /// </summary>
+        /// <param name="rect">原始矩形</param>
+        /// <param name="angleDegrees">旋转角度（度）</param>
+        /// <returns>旋转后的轴对齐边界矩形</returns>
+        public static RectangleF RotateToAABB( RectangleF rect, float angleDegrees)
+        {
+            // 将角度转为弧度
+            double angleRad = angleDegrees * Math.PI / 180.0;
+            double cos = Math.Cos(angleRad);
+            double sin = Math.Sin(angleRad);
+
+            // 矩形中心点
+            float cx = rect.X + rect.Width / 2f;
+            float cy = rect.Y + rect.Height / 2f;
+
+            // 四个角点（相对于中心的偏移）
+            PointF[] corners = new PointF[4];
+            corners[0] = new PointF(-rect.Width / 2f, -rect.Height / 2f); // 左上
+            corners[1] = new PointF(rect.Width / 2f, -rect.Height / 2f); // 右上
+            corners[2] = new PointF(rect.Width / 2f, rect.Height / 2f); // 右下
+            corners[3] = new PointF(-rect.Width / 2f, rect.Height / 2f); // 左下
+
+            // 计算旋转后各角点的世界坐标
+            float minX = float.MaxValue, minY = float.MaxValue;
+            float maxX = float.MinValue, maxY = float.MinValue;
+
+            foreach (var corner in corners)
+            {
+                // 旋转局部坐标
+                double xRot = corner.X * cos - corner.Y * sin;
+                double yRot = corner.X * sin + corner.Y * cos;
+                // 变换到世界坐标
+                float xWorld = cx + (float)xRot;
+                float yWorld = cy + (float)yRot;
+
+                // 更新边界
+                if (xWorld < minX) minX = xWorld;
+                if (xWorld > maxX) maxX = xWorld;
+                if (yWorld < minY) minY = yWorld;
+                if (yWorld > maxY) maxY = yWorld;
+            }
+
+            return new RectangleF(minX, minY, maxX - minX, maxY - minY);
+        }
+
+        /// <summary>
+        /// 整数版本的扩展，返回 Rectangle（使用 Ceiling 确保完全包含）
+        /// </summary>
+        public static Rectangle RotateToAABB( Rectangle rect, float angleDegrees)
+        {
+            RectangleF rectF = new RectangleF(rect.X, rect.Y, rect.Width, rect.Height);
+            RectangleF resultF = RotateToAABB(rectF,angleDegrees);
+            return new Rectangle(
+                (int)Math.Floor(resultF.X),
+                (int)Math.Floor(resultF.Y),
+                (int)Math.Ceiling(resultF.Width),
+                (int)Math.Ceiling(resultF.Height)
+            );
         }
 
     }

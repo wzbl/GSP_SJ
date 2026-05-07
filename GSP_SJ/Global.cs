@@ -15,6 +15,8 @@ namespace GSP_SJ
         public static Action<P_Man_Report_Search_Result> ReportItem;
         public static Action<string> RefreshReport;
 
+        public static Action<Component> ShowComponentModel;
+
         /// <summary>
         /// 选择组件
         /// </summary>
@@ -74,5 +76,13 @@ namespace GSP_SJ
         }
 
         public static Sys_User User = null;
+
+        /// <summary>
+        /// 当前报告明细
+        /// </summary>
+        public static List<Man_ReportItem> man_ReportItems = new List<Man_ReportItem>();
+
+        public static bool IsShowCompoment = false;
+        public static bool IsShowComponentPos = false;
     }
 }

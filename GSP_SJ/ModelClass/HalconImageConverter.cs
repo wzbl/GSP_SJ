@@ -14,7 +14,327 @@ namespace GSP_SJ.ModelClass
     {
         [DllImport("kernel32.dll")]
         private static extern void CopyMemory(IntPtr dest, IntPtr src, int length);
+        /// <summary>
+        /// 将 HImage 转换为 Bitmap（支持灰度图和彩色图）
+        /// </summary>
+        /// <param name="hImage">Halcon 图像对象</param>
+        /// <returns>.NET Bitmap 对象</returns>
+        public static Bitmap ConvertToBitmap(HImage hImage)
+        {
+            if (hImage == null || !hImage.IsInitialized())
+                throw new ArgumentException("HImage 未初始化或为空");
 
+            try
+            {
+                // 获取图像类型和尺寸
+                HTuple type, width, height;
+                HOperatorSet.GetImageType(hImage, out type);
+                HOperatorSet.GetImageSize(hImage, out width, out height);
+
+                //// 根据图像类型处理
+                //if (type.S == "byte")
+                //{
+                //    return ConvertByteImage(hImage, width, height);
+                //}
+                //else if (type.S == "real")
+                //{
+                //    return ConvertRealImage(hImage, width, height);
+                //}
+                //else if (type.S == "uint2")
+                //{
+                //    return ConvertUint2Image(hImage, width, height);
+                //}
+                //else if (type.S.StartsWith("rgb"))
+                {
+                    return ConvertRgbImage(hImage, width, height);
+                }
+                //else
+                //{
+                //    throw new NotSupportedException($"不支持的图像类型: {type.S}");
+                //}
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("转换 HImage 到 Bitmap 失败", ex);
+            }
+        }
+
+        /// <summary>
+        /// 转换字节类型图像（8位灰度图）
+        /// </summary>
+        private static Bitmap ConvertByteImage(HImage hImage, HTuple width, HTuple height)
+        {
+            // 获取图像指针
+            HTuple pointer, type;
+            HOperatorSet.GetImagePointer1(hImage, out pointer, out type, out width, out height);
+
+            // 创建 Bitmap
+            Bitmap bitmap = new Bitmap(width.I, height.I, PixelFormat.Format8bppIndexed);
+
+            // 设置灰度调色板
+            ColorPalette palette = bitmap.Palette;
+            for (int i = 0; i < 256; i++)
+            {
+                palette.Entries[i] = Color.FromArgb(i, i, i);
+            }
+            bitmap.Palette = palette;
+
+            // 锁定 Bitmap 数据
+            BitmapData bitmapData = bitmap.LockBits(
+                new Rectangle(0, 0, width.I, height.I),
+                ImageLockMode.WriteOnly,
+                PixelFormat.Format8bppIndexed
+            );
+
+            try
+            {
+                // 复制数据
+                int size = width.I * height.I;
+                byte[] byteData = new byte[size];
+                Marshal.Copy(pointer.IP, byteData, 0, size);
+
+                Marshal.Copy(byteData, 0, bitmapData.Scan0, size);
+            }
+            finally
+            {
+                bitmap.UnlockBits(bitmapData);
+            }
+
+            return bitmap;
+        }
+
+        /// <summary>
+        /// 转换 RGB 图像
+        /// </summary>
+        private static Bitmap ConvertRgbImage(HImage hImage, HTuple width, HTuple height)
+        {
+            // 获取 RGB 通道指针
+            HTuple pointerR, pointerG, pointerB, type;
+            HOperatorSet.GetImagePointer3(hImage, out pointerR, out pointerG, out pointerB, out type, out width, out height);
+
+            // 创建 Bitmap
+            Bitmap bitmap = new Bitmap(width.I, height.I, PixelFormat.Format24bppRgb);
+
+            // 锁定 Bitmap 数据
+            BitmapData bitmapData = bitmap.LockBits(
+                new Rectangle(0, 0, width.I, height.I),
+                ImageLockMode.WriteOnly,
+                PixelFormat.Format24bppRgb
+            );
+
+            try
+            {
+                int stride = bitmapData.Stride;
+                int bytesPerPixel = 3; // 24bpp = 3 bytes per pixel
+                int size = width.I * height.I * bytesPerPixel;
+
+                // 创建临时缓冲区
+                byte[] buffer = new byte[size];
+
+                // 交错复制 R、G、B 通道数据
+                unsafe
+                {
+                    byte* rPtr = (byte*)pointerR.IP;
+                    byte* gPtr = (byte*)pointerG.IP;
+                    byte* bPtr = (byte*)pointerB.IP;
+
+                    fixed (byte* destPtr = buffer)
+                    {
+                        for (int y = 0; y < height.I; y++)
+                        {
+                            for (int x = 0; x < width.I; x++)
+                            {
+                                int srcIndex = y * width.I + x;
+                                int destIndex = y * stride + x * bytesPerPixel;
+
+                                destPtr[destIndex + 2] = rPtr[srcIndex];     // R
+                                destPtr[destIndex + 1] = gPtr[srcIndex];     // G
+                                destPtr[destIndex] = bPtr[srcIndex];         // B
+                            }
+                        }
+                    }
+                }
+
+                // 复制到 Bitmap
+                Marshal.Copy(buffer, 0, bitmapData.Scan0, size);
+            }
+            finally
+            {
+                bitmap.UnlockBits(bitmapData);
+            }
+
+            return bitmap;
+        }
+
+        /// <summary>
+        /// 转换实数类型图像（32位浮点）
+        /// </summary>
+        private static Bitmap ConvertRealImage(HImage hImage, HTuple width, HTuple height)
+        {
+            // 获取图像数据
+            HTuple pointer, type;
+            HOperatorSet.GetImagePointer1(hImage, out pointer, out type, out width, out height);
+
+            // 创建 Bitmap
+            Bitmap bitmap = new Bitmap(width.I, height.I, PixelFormat.Format8bppIndexed);
+
+            // 设置灰度调色板
+            ColorPalette palette = bitmap.Palette;
+            for (int i = 0; i < 256; i++)
+            {
+                palette.Entries[i] = Color.FromArgb(i, i, i);
+            }
+            bitmap.Palette = palette;
+
+            // 获取浮点数据并转换为字节
+            int size = width.I * height.I;
+            float[] floatData = new float[size];
+            Marshal.Copy(pointer.IP, floatData, 0, size);
+
+            // 找到最小和最大值以进行归一化
+            float min = float.MaxValue;
+            float max = float.MinValue;
+            foreach (float value in floatData)
+            {
+                if (value < min) min = value;
+                if (value > max) max = value;
+            }
+
+            float range = max - min;
+            if (range == 0) range = 1; // 避免除以零
+
+            // 转换为字节数据
+            byte[] byteData = new byte[size];
+            for (int i = 0; i < size; i++)
+            {
+                byteData[i] = (byte)(255 * (floatData[i] - min) / range);
+            }
+
+            // 锁定 Bitmap 数据
+            BitmapData bitmapData = bitmap.LockBits(
+                new Rectangle(0, 0, width.I, height.I),
+                ImageLockMode.WriteOnly,
+                PixelFormat.Format8bppIndexed
+            );
+
+            try
+            {
+                Marshal.Copy(byteData, 0, bitmapData.Scan0, size);
+            }
+            finally
+            {
+                bitmap.UnlockBits(bitmapData);
+            }
+
+            return bitmap;
+        }
+
+        /// <summary>
+        /// 转换 16 位无符号整数图像
+        /// </summary>
+        private static Bitmap ConvertUint2Image(HImage hImage, HTuple width, HTuple height)
+        {
+            // 获取图像数据
+            HTuple pointer, type;
+            HOperatorSet.GetImagePointer1(hImage, out pointer, out type, out width, out height);
+
+            // 创建 Bitmap
+            Bitmap bitmap = new Bitmap(width.I, height.I, PixelFormat.Format8bppIndexed);
+
+            // 设置灰度调色板
+            ColorPalette palette = bitmap.Palette;
+            for (int i = 0; i < 256; i++)
+            {
+                palette.Entries[i] = Color.FromArgb(i, i, i);
+            }
+            bitmap.Palette = palette;
+
+            // 获取 16 位数据并转换为字节
+            int size = width.I * height.I;
+            ushort[] ushortData = new ushort[size];
+            //Marshal.Copy(pointer.IP, null, 0, size);
+
+            // 找到最小和最大值以进行归一化
+            ushort min = ushort.MaxValue;
+            ushort max = ushort.MinValue;
+            foreach (ushort value in ushortData)
+            {
+                if (value < min) min = value;
+                if (value > max) max = value;
+            }
+
+            ushort range = (ushort)(max - min);
+            if (range == 0) range = 1; // 避免除以零
+
+            // 转换为字节数据
+            byte[] byteData = new byte[size];
+            for (int i = 0; i < size; i++)
+            {
+                byteData[i] = (byte)(255 * (ushortData[i] - min) / (float)range);
+            }
+
+            // 锁定 Bitmap 数据
+            BitmapData bitmapData = bitmap.LockBits(
+                new Rectangle(0, 0, width.I, height.I),
+                ImageLockMode.WriteOnly,
+                PixelFormat.Format8bppIndexed
+            );
+
+            try
+            {
+                Marshal.Copy(byteData, 0, bitmapData.Scan0, size);
+            }
+            finally
+            {
+                bitmap.UnlockBits(bitmapData);
+            }
+
+            return bitmap;
+        }
+
+
+        public static HObject BitmapToHImage(Bitmap bitmap)
+        {
+            HObject ho_Image = null;
+            try
+            {
+                // 将Bitmap锁定到内存
+                BitmapData bmpData = bitmap.LockBits(
+                    new Rectangle(0, 0, bitmap.Width, bitmap.Height),
+                    ImageLockMode.ReadOnly,
+                    bitmap.PixelFormat);
+
+                // 根据像素格式创建Halcon图像
+                if (bitmap.PixelFormat == PixelFormat.Format8bppIndexed)
+                {
+                    HOperatorSet.GenImage1(out ho_Image, "byte",
+                                         bitmap.Width, bitmap.Height,
+                                         bmpData.Scan0);
+                }
+                else if (bitmap.PixelFormat == PixelFormat.Format24bppRgb)
+                {
+                    HOperatorSet.GenImageInterleaved(out ho_Image, bmpData.Scan0,
+                                                   "bgr", bitmap.Width, bitmap.Height,
+                                                   -1, "byte", 0, 0, 0, 0, -1, 0);
+                }
+                else if (bitmap.PixelFormat == PixelFormat.Format32bppArgb)
+                {
+                    HOperatorSet.GenImageInterleaved(out ho_Image, bmpData.Scan0,
+                                                   "bgra", bitmap.Width, bitmap.Height,
+                                                   -1, "byte", 0, 0, 0, 0, -1, 0);
+                }
+
+                // 解锁Bitmap
+                bitmap.UnlockBits(bmpData);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"转换失败: {ex.Message}");
+                ho_Image?.Dispose();
+                ho_Image = null;
+            }
+            return ho_Image;
+        }
 
         public static Bitmap HImageToBitmap(HImage hImage)
         {
@@ -114,7 +434,7 @@ namespace GSP_SJ.ModelClass
             }
         }
 
-        public static HImage BitmapToHImage(Bitmap bitmap)
+        public static HImage BitmapToHImage2(Bitmap bitmap)
         {
             try
             {
@@ -131,6 +451,49 @@ namespace GSP_SJ.ModelClass
             {
                 throw new Exception("Bitmap转HImage失败: " + ex.Message);
             }
+        }
+
+        public static HObject BitmapToHObject(Bitmap bitmap)
+        {
+            HObject ho_Image = null;
+            try
+            {
+                // 将Bitmap锁定到内存
+                BitmapData bmpData = bitmap.LockBits(
+                    new Rectangle(0, 0, bitmap.Width, bitmap.Height),
+                    ImageLockMode.ReadOnly,
+                    bitmap.PixelFormat);
+
+                // 根据像素格式创建Halcon图像
+                if (bitmap.PixelFormat == PixelFormat.Format8bppIndexed)
+                {
+                    HOperatorSet.GenImage1(out ho_Image, "byte",
+                                         bitmap.Width, bitmap.Height,
+                                         bmpData.Scan0);
+                }
+                else if (bitmap.PixelFormat == PixelFormat.Format24bppRgb)
+                {
+                    HOperatorSet.GenImageInterleaved(out ho_Image, bmpData.Scan0,
+                                                   "bgr", bitmap.Width, bitmap.Height,
+                                                   -1, "byte", 0, 0, 0, 0, -1, 0);
+                }
+                else if (bitmap.PixelFormat == PixelFormat.Format32bppArgb)
+                {
+                    HOperatorSet.GenImageInterleaved(out ho_Image, bmpData.Scan0,
+                                                   "bgra", bitmap.Width, bitmap.Height,
+                                                   -1, "byte", 0, 0, 0, 0, -1, 0);
+                }
+
+                // 解锁Bitmap
+                bitmap.UnlockBits(bmpData);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"转换失败: {ex.Message}");
+                ho_Image?.Dispose();
+                ho_Image = null;
+            }
+            return ho_Image;
         }
 
         // 灰度图像转换

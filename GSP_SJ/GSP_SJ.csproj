@@ -222,6 +222,12 @@
     <Compile Include="ModelClass\FormModelItem.Designer.cs">
       <DependentUpon>FormModelItem.cs</DependentUpon>
     </Compile>
+    <Compile Include="ModelClass\FormResCheck.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ModelClass\FormResCheck.Designer.cs">
+      <DependentUpon>FormResCheck.cs</DependentUpon>
+    </Compile>
     <Compile Include="ModelClass\HalconImageConverter.cs" />
     <Compile Include="ModelClass\ROI.cs" />
     <Compile Include="ModelClass\UCOCRModel.cs">
@@ -328,6 +334,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ModelClass\FormModelItem.resx">
       <DependentUpon>FormModelItem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ModelClass\FormResCheck.resx">
+      <DependentUpon>FormResCheck.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ModelClass\UCOCRModel.resx">
+      <DependentUpon>UCOCRModel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -500,6 +512,60 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\145.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\35.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons8-自动-96.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons8-手动-96.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons8-switch-off-48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons8-switch-on-48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons8-开始-48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons8-暂停-48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons8-停止-48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\1551.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\83.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons8-报警-48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\002_29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\refresh_4_32px.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons8-delete-48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Select.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ROIRect.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons8-向左旋转-48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons8-向右旋转-48.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
