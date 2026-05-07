@@ -27,6 +27,8 @@ namespace GSP_SJ.ModelClass
 
         private string LCRType = "";
 
+   
+
         public FormModelItem(string MaterialCode, string description, string producerCode, Image image, string LCRType)
         {
             InitializeComponent();
@@ -37,7 +39,7 @@ namespace GSP_SJ.ModelClass
             roiPictureBox1.Width = image.Width; roiPictureBox1.Height = image.Height;
             org = image;
             //org = ResizeImage(image, roiPictureBox1.Width, roiPictureBox1.Height); ;
-          
+    
             this.LCRType = LCRType;
             MaterialName = description;
         }
@@ -60,11 +62,12 @@ namespace GSP_SJ.ModelClass
             IsManual.Checked = true;
             NB_0.Checked = true;
             Search();
+         
             if (dataGridView1.Rows.Count == 0 && org != null)
             {
                 roiPictureBox1.Image = org;
                 int w =  org.Width / 5;
-               int h = org.Height / 5;
+                int h = org.Height / 5;
                 Rectangle rectangle = new Rectangle(
                 w,
                 h,
@@ -115,19 +118,19 @@ namespace GSP_SJ.ModelClass
                             item.CreationDate);
                     }
 
-                    byte[] img = eng_ModelItems[0].mPicture;
+                    byte[] img = eng_ModelItems[eng_ModelItems.Count-1].mPicture;
                     MemoryStream memoryStream = new MemoryStream(img);
                     Image pic = Image.FromStream(memoryStream);
 
-                    roiPictureBox1.Width = (int)(eng_ModelItems[0].mPW * eng_ModelItems[0].mZoomRatio);
-                    roiPictureBox1.Height = (int)(eng_ModelItems[0].mPH * eng_ModelItems[0].mZoomRatio);
+                    roiPictureBox1.Width = (int)(eng_ModelItems[eng_ModelItems.Count - 1].mPW * eng_ModelItems[eng_ModelItems.Count - 1].mZoomRatio);
+                    roiPictureBox1.Height = (int)(eng_ModelItems[eng_ModelItems.Count - 1].mPH * eng_ModelItems[eng_ModelItems.Count - 1].mZoomRatio);
                     org = ResizeImage(pic, roiPictureBox1.Width, roiPictureBox1.Height);
                     roiPictureBox1.Image = org;
                     roiPictureBox1.ClearROIs();
-                    int left = eng_ModelItems[0].PLeft != null ? (int)eng_ModelItems[0].PLeft : 30;
-                    int top = eng_ModelItems[0].PTop != null ? (int)eng_ModelItems[0].PTop : 30;
-                    int pw = eng_ModelItems[0].Pw != null ? (int)eng_ModelItems[0].Pw : 100;
-                    int ph = eng_ModelItems[0].Ph != null ? (int)eng_ModelItems[0].Ph : 100;
+                    int left = eng_ModelItems[eng_ModelItems.Count - 1].PLeft != null ? (int)eng_ModelItems[eng_ModelItems.Count - 1].PLeft : 30;
+                    int top = eng_ModelItems[eng_ModelItems.Count - 1].PTop != null ? (int)eng_ModelItems[eng_ModelItems.Count - 1].PTop : 30;
+                    int pw = eng_ModelItems[eng_ModelItems.Count - 1].Pw != null ? (int)eng_ModelItems[eng_ModelItems.Count - 1].Pw : 100;
+                    int ph = eng_ModelItems[eng_ModelItems.Count - 1].Ph != null ? (int)eng_ModelItems[eng_ModelItems.Count - 1].Ph : 100;
                     Rectangle rectangle = new Rectangle(
                         left,
                         top,
@@ -136,7 +139,7 @@ namespace GSP_SJ.ModelClass
                     DirectionalROI rOI = new DirectionalROI(rectangle, "0");
                     roiPictureBox1.AddROI(rOI);
 
-                    DispPlayParam(eng_ModelItems[0]);
+                    DispPlayParam(eng_ModelItems[eng_ModelItems.Count - 1]);
 
                 }
             }
@@ -441,7 +444,7 @@ namespace GSP_SJ.ModelClass
                 eng_ModelItem.mZoomRatio = 1;
                 eng_ModelItem.mDPI = 300;
                 eng_ModelItem.Groups = 1;
-                eng_ModelItem.IsMain = true;
+                eng_ModelItem.IsMain = dataGridView1.SelectedRows.Count == 0 ? false : bool.Parse(dataGridView1.SelectedRows[0].Cells[1].Value.ToString());
                 eng_ModelItem.Polarity = IsPolarity.Checked;
                 eng_ModelItem.IsManual = IsManual.Checked;
                 for (int i = 0; i < roiPictureBox1.ROIs.Count; i++)
@@ -498,7 +501,6 @@ namespace GSP_SJ.ModelClass
                 eng_ModelItem.Remarks = remarks.Text;
                 eng_ModelItem.Creator = Global.User.UserName;
                 eng_ModelItem.CreationDate = DateTime.Now;
-
                 SQLDataControl.UpdateEng_ModelItem(eng_ModelItem);
             }
             Search();
@@ -525,5 +527,14 @@ namespace GSP_SJ.ModelClass
         }
 
         #endregion
+
+        private void btnDeleteModel_Click(object sender, EventArgs e)
+        {
+            if (dataGridView1.SelectedRows.Count > 0)
+            {
+                SQLDataControl.DeleteEng_ModelItem(ProducerCode, MaterialCode, int.Parse(dataGridView1.SelectedRows[0].Cells[0].Value.ToString()));
+                Search();
+            }
+        }
     }
 }

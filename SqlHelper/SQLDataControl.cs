@@ -65,9 +65,10 @@ namespace SqlHelper
             db.SaveChanges();
         }
 
-        public static List<Man_Report> GetAllReport()
+        public static DbRawSqlQuery<Man_Report> GetMan_Report(string ReportCode)
         {
-            return db.Man_Report.AsNoTracking().ToList();
+            DbRawSqlQuery<Man_Report> res = db.Database.SqlQuery<Man_Report>("select * from Man_Report where ReportCode = "+ ReportCode);
+            return res;
         }
 
         public static void AddMan_Report(Man_Report report)
@@ -529,6 +530,12 @@ namespace SqlHelper
                     modelItem.Pw2, modelItem.Ph2, modelItem.PLeft3, modelItem.PTop3, modelItem.Pw3, modelItem.Ph3, modelItem.Remarks,
                     modelItem. ProductCode  , modelItem. MaterialCode , modelItem.Id);
             }
+            db.SaveChanges();
+        }
+
+        public static void DeleteEng_ModelItem(string productCode, string materialCode, int id)
+        {
+            db.Database.ExecuteSqlCommand("delete from Eng_ModelItem where ProductCode={0} and MaterialCode={1} and id ={2}", productCode, materialCode,id);
             db.SaveChanges();
         }
         #endregion

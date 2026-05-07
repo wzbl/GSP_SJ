@@ -567,5 +567,8 @@
   <ItemGroup>
     <None Include="Resources\icons8-向右旋转-48.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\54.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

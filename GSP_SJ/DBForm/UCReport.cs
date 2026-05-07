@@ -256,7 +256,7 @@ namespace GSP_SJ
             txtDCRQTY.Text = DCRcount.ToString();
 
             txtTotalQty.Text = _ReportItems.Count.ToString();
-          
+
         }
 
         private void btnSearchProgramm_Click(object sender, EventArgs e)
@@ -486,6 +486,7 @@ namespace GSP_SJ
 
             if (IsAddReport)
             {
+                List<Eng_XYData> _XYDatas = SQLDataControl.GetEng_XYDatas(comProductCode.Text);
                 //添加
                 Man_Report report = new Man_Report();
                 report.ReportCode = txtReportCode.Text;
@@ -502,21 +503,31 @@ namespace GSP_SJ
                 report.Creator = Global.User.UserName;
                 report.Modifier = Global.User.UserName;
                 report.OptionCode = SQLDataControl.GetMeterOptionName(comOptionCode.Text);
-                report.Barcode = txtBarcode.Text; 
+                report.Barcode = txtBarcode.Text;
                 report.@class = _class;
                 report.CheckType = checkType;
                 report.PCBVersion = txtPCBVersion.Text;
                 report.BomVersion = txtBomVersion.Text;
                 report.DeviceName = "";
+                report.TotalQty = _XYDatas.Count;
+                report.RQty = _XYDatas.Where(x => x.LcrType == "R").Count();
+                report.CQty = _XYDatas.Where(x => x.LcrType == "C").Count();
+                report.LQty = _XYDatas.Where(x => x.LcrType == "L").Count();
+                report.DQty = _XYDatas.Where(x => x.LcrType == "D").Count();
+                report.BQty = _XYDatas.Where(x => x.LcrType == "B").Count();
+                report.OQty = _XYDatas.Where(x => x.LcrType == "O").Count();
+                report.TQty = _XYDatas.Where(x => x.LcrType == "T").Count();
+                report.IQty = _XYDatas.Where(x => x.LcrType == "I").Count();
+                report.SmdQty = report.TotalQty - 2;
+                report.NoSmdQty = report.TotalQty - report.SmdQty;
                 SQLDataControl.AddMan_Report(report);
                 IsAddReport = false;
                 btnStart.Enabled = false;
-                Add_ReportItem();
+                Add_ReportItem(_XYDatas);
             }
             else
             {
                 //修改
-
                 SQLDataControl.UpdateMan_Report
                     (
                     txtReportCode.Text,
@@ -541,9 +552,9 @@ namespace GSP_SJ
         /// <summary>
         /// 添加Man_ReportItem
         /// </summary>
-        private void Add_ReportItem()
+        private void Add_ReportItem(List<Eng_XYData> _XYDatas)
         {
-            List<Eng_XYData> _XYDatas = SQLDataControl.GetEng_XYDatas(comProductCode.Text);
+            _XYDatas = SQLDataControl.GetEng_XYDatas(comProductCode.Text);
             foreach (var item in _XYDatas)
             {
                 List<Eng_Bom> eng_Boms = SQLDataControl.GetBomByProductCode(comProductCode.Text, item.MaterialCode);
@@ -551,7 +562,7 @@ namespace GSP_SJ
                 man_ReportItem.ReportCode = txtReportCode.Text; //报告编号
                 man_ReportItem.Position = item.Position;     //元件位置
                 man_ReportItem.BoardId = int.Parse(numtxtBoardQty.Text); //拼板数
-                man_ReportItem.BomSequence = string.IsNullOrEmpty(item.MaterialCode) ?0: eng_Boms[0].Row;//bom序号
+                man_ReportItem.BomSequence = string.IsNullOrEmpty(item.MaterialCode) ? 0 : eng_Boms[0].Row;//bom序号
                 man_ReportItem.MaterialCode = string.IsNullOrEmpty(item.MaterialCode) ? "" : eng_Boms[0].MaterialCode;//料号
                 man_ReportItem.MaterialName = string.IsNullOrEmpty(item.MaterialCode) ? "" : eng_Boms[0].MaterialName;//物料描述
                 man_ReportItem.LcrType = string.IsNullOrEmpty(item.MaterialCode) ? "" : eng_Boms[0].LcrType;     //LCR类型
@@ -593,7 +604,7 @@ namespace GSP_SJ
 
         private void btnStart_Click(object sender, EventArgs e)
         {
-            FormAction form3 = new FormAction(txtReportCode.Text,comProductCode.Text);
+            FormAction form3 = new FormAction(txtReportCode.Text, comProductCode.Text);
             form3.ShowDialog();
         }
     }

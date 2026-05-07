@@ -93,9 +93,10 @@ namespace GSP_SJ.Form_Chart
             toolROI.Checked = true;
         }
 
-        public Image GetSelectComponentImage()
+      
+        public bool GetSelectComponent(out Image image, out Component component)
         {
-           return zoomablePictureBox1.GetSelectComponentImage();
+            return zoomablePictureBox1.GetSelectComponent(out image, out component);
         }
     }
 }

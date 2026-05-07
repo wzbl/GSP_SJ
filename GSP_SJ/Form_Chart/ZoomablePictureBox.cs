@@ -210,6 +210,22 @@ namespace GSP_SJ.Form_Chart
             }
         }
 
+
+        public bool GetSelectComponent(out Image image,out Component component)
+        {
+            image = null;
+            component = null;
+            if (!IsSelectCompont)
+            {
+                return false;
+            }
+            RoiImg();
+            component = clickedComponent;
+            if(hImage != null)
+                image = HalconImageConverter.HImageToBitmapRGB(hImage);
+            return true;
+        }
+        
         private void RoiImg()
         {
             hImage = null;
@@ -255,20 +271,7 @@ namespace GSP_SJ.Form_Chart
             ho_ImageReduced.Dispose();
         }
 
-        /// <summary>
-        /// 获取选中的元件图片
-        /// </summary>
-        /// <param name="name"></param>
-        /// <param name="width"></param>
-        /// <param name="height"></param>
-        public Image GetSelectComponentImage()
-        {
-            if (clickedComponent == null)
-                return null;
-            Bitmap bitmap = HalconImageConverter.HImageToBitmap(hImage);
-            return bitmap;
-        }
-
+       
         /// <summary>
         /// 获取鼠标点击的像素点
         /// </summary>

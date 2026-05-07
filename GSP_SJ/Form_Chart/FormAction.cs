@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.Entity.Infrastructure;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Linq;
@@ -145,10 +146,17 @@ namespace GSP_SJ
                 pictureBoxZoom1.SetSelectCompont(pos);
                 pictureBoxZoom2.SetSelectCompont(pos);
                 pictureBoxZoom3.SetSelectCompont(pos);
+                RefreshMaterial(0);
             }
             dgvBom.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvBom_CellClick);
             dgvdgvSub.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvdgvSub_CellClick);
-
+            txtReportCode.Text = reportCode;
+            txtProductCode.Text = productCode;
+            DbRawSqlQuery<Man_Report> _Reports = SQLDataControl.GetMan_Report(reportCode);
+            txtProductName.Text = _Reports.First().ProductName;
+            txtBoardSide.Text = _Reports.First().BoardSide;
+            txtBoardQty.Text = _Reports.First().BoardQty.ToString();
+            RefreshMessage();
         }
 
         #region 电性检测
@@ -163,6 +171,7 @@ namespace GSP_SJ
                 {
                     dataGridView1.ClearSelection();
                     dataGridView1.Rows[i].Selected = true;
+                    RefreshMaterial(i);
                     break;
                 }
             }
@@ -177,7 +186,7 @@ namespace GSP_SJ
                 string pos = dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString();
                 pictureBoxZoom1.SetSelectCompont(pos);
                 pictureBoxZoom2.SetSelectCompont(pos);
-
+                RefreshMaterial(e.RowIndex);
             }
         }
 
@@ -337,6 +346,45 @@ namespace GSP_SJ
         }
         #endregion
 
+        #region 信息统计
+
+        private void RefreshMaterial(int i)
+        {
+            txtMaterialCode.Text = Global.man_ReportItems[i].MaterialCode;
+            txtMaterialName.Text = Global.man_ReportItems[i].MaterialName;
+            txtPosition.Text = Global.man_ReportItems[i].Position;
+            txtBoardId.Text = Global.man_ReportItems[i].BoardId.ToString();
+            txtLcrType.Text = Global.man_ReportItems[i].LcrType;
+            txtLcrUnitCode.Text = Global.man_ReportItems[i].LcrUnitCode;
+            txtLcrStandardValue.Text = Global.man_ReportItems[i].LcrStandardValue.ToString();
+            txtSize.Text = Global.man_ReportItems[i].Size;
+            txtLcrMaxValue.Text = Global.man_ReportItems[i].LcrMaxValue.ToString();
+            txtLcrMinValue.Text = Global.man_ReportItems[i].LcrMinValue.ToString();
+            txtLcrCheckValue.Text = Global.man_ReportItems[i].LcrCheckValue.ToString();
+            txtIsDefined.Text = Global.man_ReportItems[i].IsDefined.ToString();
+            txtIsSMD.Text = Global.man_ReportItems[i].IsSMD.ToString();
+            txtStationCode.Text = Global.man_ReportItems[i].StationCode;
+        }
+        public void RefreshMessage()
+        {
+            DbRawSqlQuery<Man_Report> _Reports = SQLDataControl.GetMan_Report(reportCode);
+            txtTotalQty.Text = _Reports.First().TotalQty.ToString();
+            txtPassQty.Text = _Reports.First().PassQty.ToString();
+            txtFailQty.Text = _Reports.First().FailQty.ToString();
+            txtMissQty.Text = _Reports.First().MissQty.ToString();
+            txtNoSmdQty.Text = _Reports.First().NoSmdQty.ToString();
+            txtAutomationQty.Text = _Reports.First().AutomationQty.ToString();
+            txtRQty.Text = _Reports.First().RQty.ToString();
+            txtCQty.Text = _Reports.First().CQty.ToString();
+            txtLQty.Text = _Reports.First().LQty.ToString();
+            txtDQty.Text = _Reports.First().DQty.ToString();
+            txtBQty.Text = _Reports.First().BQty.ToString();
+            txtOQty.Text = _Reports.First().OQty.ToString();
+            txtTQty.Text = _Reports.First().TQty.ToString();
+            txtIQty.Text = _Reports.First().IQty.ToString();
+        }
+        #endregion
+
         #region 外观检测
 
         private void RefreshBom()
@@ -380,7 +428,7 @@ namespace GSP_SJ
 
                             break;
                         case 1:
-                            if (item.LcrType!="R")
+                            if (item.LcrType != "R")
                             {
                                 continue;
                             }
@@ -514,13 +562,71 @@ namespace GSP_SJ
             FormSize formSize = new FormSize();
             formSize.ShowDialog();
         }
-        #endregion
 
         private void btnOne_click_Detection_Click(object sender, EventArgs e)
         {
-            FormResCheck formResCheck = new FormResCheck(reportCode, productCode, image2,pictureBoxZoom3.Components);
+            FormResCheck formResCheck = new FormResCheck(reportCode, productCode, image2, pictureBoxZoom3.Components);
             formResCheck.ShowDialog();
         }
+
+        private void btnAddmodel_Click(object sender, EventArgs e)
+        {
+            if (pictureBoxZoom3.GetSelectComponent(out Image img, out Component clickedComponent))
+            {
+                Man_ReportItem item = Global.man_ReportItems.Where(x => x.Position == clickedComponent.Designator).First();
+
+                AddModel(item, clickedComponent, img);
+
+                FormModelItem formModelItem = new FormModelItem(item.MaterialCode, item.MaterialName, clickedComponent.ProductCode, img, item.LcrType);
+                formModelItem.ShowDialog();
+            }
+
+        }
+
+        private void AddModel(Man_ReportItem item, Component clickedComponent, Image img)
+        {
+            Eng_ModelItem eng_ModelItem = new Eng_ModelItem();
+            int w = img.Width / 5;
+            int h = img.Height / 5;
+            Rectangle rectangle = new Rectangle(
+            w,
+            h,
+            img.Width - (w * 2),
+            img.Height - (h * 2));
+
+            eng_ModelItem.ProductCode = productCode;
+            eng_ModelItem.MaterialCode = item.MaterialCode;
+            eng_ModelItem.Id = SQLDataControl.GetEng_ModelItem(productCode, item.MaterialCode).ToList().Count + 1;
+            eng_ModelItem.mPicture = PublicFunction.CompressImage(img, "", 100, img.Width, img.Height);
+            eng_ModelItem.mPW = img.Width;
+            eng_ModelItem.mPH = img.Height;
+            eng_ModelItem.mZoomRatio = 1;
+            eng_ModelItem.mDPI = 300;
+            eng_ModelItem.Groups = 1;
+            eng_ModelItem.IsMain = false;
+            eng_ModelItem.Polarity = false;
+            eng_ModelItem.IsManual = false;
+            eng_ModelItem.PLeft = rectangle.X;
+            eng_ModelItem.PTop = rectangle.Y;
+            eng_ModelItem.Pw = rectangle.Width;
+            eng_ModelItem.Ph = rectangle.Height;
+            eng_ModelItem.NA = 0;
+            eng_ModelItem.NB = 0;
+            eng_ModelItem.XA = 100;
+            eng_ModelItem.XB = 0;
+            eng_ModelItem.P1 = 20;
+            eng_ModelItem.P2 = 10;
+            eng_ModelItem.LCy = 85;
+            eng_ModelItem.HCy = 100;
+            eng_ModelItem.Remarks = "";
+            eng_ModelItem.Creator = Global.User.UserName;
+            eng_ModelItem.CreationDate = DateTime.Now;
+            SQLDataControl.UpdateEng_ModelItem(eng_ModelItem);
+        }
+
+        #endregion
+
+
     }
 
 }
