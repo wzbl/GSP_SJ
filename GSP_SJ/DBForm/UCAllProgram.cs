@@ -47,7 +47,7 @@ namespace GSP_SJ
         private void DgvProgram_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             string productCode = dgvProgram.Rows[e.RowIndex].Cells[0].Value.ToString();
-            Global.ProguceItem?.Invoke(eng_Programs.Where(x => x.产品编号 == productCode).First());
+            DBEventAction.ProguceItem?.Invoke(eng_Programs.Where(x => x.产品编号 == productCode).First());
             //FormProductItem form = new FormProductItem(eng_Programs.Where(x=>x.产品编号==productCode).First());
             //form.Show();
         }

@@ -25,6 +25,7 @@
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -36,6 +37,22 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BrowApp, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\BrowApp.dll</HintPath>
+    </Reference>
+    <Reference Include="BrowLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\BrowLib.dll</HintPath>
+    </Reference>
+    <Reference Include="CKVisionAppNet, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\CKVisionAppNet.dll</HintPath>
+    </Reference>
+    <Reference Include="ComponentFactory.Krypton.Docking, Version=4.6.0.0, Culture=neutral, PublicKeyToken=a87e673e9ecb6e8e, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\ComponentFactory.Krypton.Docking.dll</HintPath>
+    </Reference>
     <Reference Include="ComponentFactory.Krypton.Navigator">
       <HintPath>..\..\..\吸嘴清洗机\双轴换控件版\Bin\ComponentFactory.Krypton.Navigator.dll</HintPath>
     </Reference>
@@ -64,7 +81,16 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\halcondotnet.dll</HintPath>
     </Reference>
+    <Reference Include="LibLightController, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\LibLightController.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=13.0.1.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Activities" />
     <Reference Include="System.Configuration.Install" />
     <Reference Include="System.Core" />
     <Reference Include="System.Design" />
@@ -73,6 +99,10 @@
     <Reference Include="System.Security" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.ServiceProcess" />
+    <Reference Include="System.ValueTuple, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\System.ValueTuple.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -89,6 +119,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="CPK\CPKCalculator.cs" />
     <Compile Include="DBForm\FormBas_Custom.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -119,6 +150,13 @@
     <Compile Include="DBForm\FormUserManager.Designer.cs">
       <DependentUpon>FormUserManager.cs</DependentUpon>
     </Compile>
+    <Compile Include="FAI交互任务\AutoDetectionProcess.cs" />
+    <Compile Include="FAI交互任务\MccdPositioningProcess.cs" />
+    <Compile Include="FAI交互任务\OcrCaptureProcess.cs" />
+    <Compile Include="FAI交互任务\PatternFlowProcess.cs" />
+    <Compile Include="Flow\AutoRunManager.cs" />
+    <Compile Include="Flow\BaseStep.cs" />
+    <Compile Include="Flow\ProcessEntity .cs" />
     <Compile Include="Form_Chart\Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -191,11 +229,17 @@
     <Compile Include="DBForm\FormSize.Designer.cs">
       <DependentUpon>FormSize.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormMeter.cs">
+    <Compile Include="DBForm\FormMeter.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormMeter.Designer.cs">
+    <Compile Include="DBForm\FormMeter.Designer.cs">
       <DependentUpon>FormMeter.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_Chart\FormRotatePosition.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_Chart\FormRotatePosition.Designer.cs">
+      <DependentUpon>FormRotatePosition.cs</DependentUpon>
     </Compile>
     <Compile Include="Form_Chart\UCZoom.cs">
       <SubType>UserControl</SubType>
@@ -206,8 +250,41 @@
     <Compile Include="Form_Chart\ZoomablePictureBox.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Global.cs" />
-    <Compile Include="Location_Point.cs" />
+    <Compile Include="DBEventAction.cs" />
+    <Compile Include="Form_Chart\Location_Point.cs" />
+    <Compile Include="GSP\Algorithmic.cs" />
+    <Compile Include="GSP\AutoDetectionProcess.cs" />
+    <Compile Include="GSP\Compensate.cs" />
+    <Compile Include="GSP\FAI_Communicine.cs" />
+    <Compile Include="GSP\FlowControl.cs" />
+    <Compile Include="GSP\Global.cs" />
+    <Compile Include="GSP\HandFlow.cs" />
+    <Compile Include="GSP\MemoryHelper.cs" />
+    <Compile Include="GSP\MiddleLayer.cs" />
+    <Compile Include="GSP\PriorityBoostWakeup.cs" />
+    <Compile Include="GSP\TcpClass.cs" />
+    <Compile Include="GSP\UIHelper.cs" />
+    <Compile Include="GSP\VisionGlobal.cs" />
+    <Compile Include="GSP\WindowMessage.cs" />
+    <Compile Include="Laser\LaserEx.cs" />
+    <Compile Include="Light\HG_Light.cs" />
+    <Compile Include="Light\LBase.cs" />
+    <Compile Include="Light\LightControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Light\LightControl.Designer.cs">
+      <DependentUpon>LightControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Light\YC_Light.cs" />
+    <Compile Include="Mes\FtpFileManager.cs" />
+    <Compile Include="Mes\HttpHelper.cs" />
+    <Compile Include="Mes\MESControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Mes\MESControl.Designer.cs">
+      <DependentUpon>MESControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Mes\MesData.cs" />
     <Compile Include="ModelClass\DeepOCRHelper.cs" />
     <Compile Include="ModelClass\DirectionalROI.cs" />
     <Compile Include="ModelClass\FormModel.cs">
@@ -242,7 +319,7 @@
     <Compile Include="Form_Chart\PictureBoxZoom.Designer.cs">
       <DependentUpon>PictureBoxZoom.cs</DependentUpon>
     </Compile>
-    <Compile Include="PDFHepler.cs" />
+    <Compile Include="Form_Chart\PDFHepler.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DBForm\UCAllProgram.cs">
@@ -274,6 +351,119 @@
     </Compile>
     <Compile Include="Form_Chart\UCXYDataChart.Designer.cs">
       <DependentUpon>UCXYDataChart.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SystemData\BaseData.cs" />
+    <Compile Include="SystemData\CalibData.cs" />
+    <Compile Include="SystemData\MesConfig.cs" />
+    <Compile Include="SystemData\ParmData.cs" />
+    <Compile Include="SystemData\SystemData.cs" />
+    <Compile Include="UI\AboutForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\AboutForm.Designer.cs">
+      <DependentUpon>AboutForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\CalibFrom.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\CalibFrom.Designer.cs">
+      <DependentUpon>CalibFrom.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\CreateMode.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\CreateMode.Designer.cs">
+      <DependentUpon>CreateMode.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\HomeStart.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\HomeStart.Designer.cs">
+      <DependentUpon>HomeStart.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\LaserFrm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\LaserFrm.Designer.cs">
+      <DependentUpon>LaserFrm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\MarkForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\MarkForm.Designer.cs">
+      <DependentUpon>MarkForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\MarkRectify.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\MarkRectify.Designer.cs">
+      <DependentUpon>MarkRectify.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\MotionCtr.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\MotionCtr.Designer.cs">
+      <DependentUpon>MotionCtr.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\StartForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\StartForm.Designer.cs">
+      <DependentUpon>StartForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\UI_CalibForm.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\UI_CalibForm.Designer.cs">
+      <DependentUpon>UI_CalibForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\UI_Language.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\UI_Language.Designer.cs">
+      <DependentUpon>UI_Language.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\UI_MachineTest.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\UI_MachineTest.Designer.cs">
+      <DependentUpon>UI_MachineTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\UI_Prodution.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\UI_Prodution.Designer.cs">
+      <DependentUpon>UI_Prodution.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\UI_Program.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\UI_Program.Designer.cs">
+      <DependentUpon>UI_Program.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\UI_SystemData.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\UI_SystemData.Designer.cs">
+      <DependentUpon>UI_SystemData.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\UI_Vision.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\UI_Vision.Designer.cs">
+      <DependentUpon>UI_Vision.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\XYPoint.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\XYPoint.Designer.cs">
+      <DependentUpon>XYPoint.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\XYZPoint.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\XYZPoint.Designer.cs">
+      <DependentUpon>XYZPoint.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="DBForm\FormBas_Custom.resx">
       <DependentUpon>FormBas_Custom.cs</DependentUpon>
@@ -323,12 +513,22 @@
     <EmbeddedResource Include="DBForm\FormSize.resx">
       <DependentUpon>FormSize.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormMeter.resx">
+    <EmbeddedResource Include="DBForm\FormMeter.resx">
       <DependentUpon>FormMeter.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_Chart\FormRotatePosition.resx">
+      <DependentUpon>FormRotatePosition.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form_Chart\UCZoom.resx">
       <DependentUpon>UCZoom.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Light\LightControl.resx">
+      <DependentUpon>LightControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Mes\MESControl.resx">
+      <DependentUpon>MESControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Mes\MES_SET.resx" />
     <EmbeddedResource Include="ModelClass\FormModel.resx">
       <DependentUpon>FormModel.cs</DependentUpon>
     </EmbeddedResource>
@@ -366,6 +566,60 @@
     <EmbeddedResource Include="Form_Chart\UCXYDataChart.resx">
       <DependentUpon>UCXYDataChart.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UI\AboutForm.resx">
+      <DependentUpon>AboutForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\CalibFrom.resx">
+      <DependentUpon>CalibFrom.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\CreateMode.resx">
+      <DependentUpon>CreateMode.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\HomeStart.resx">
+      <DependentUpon>HomeStart.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\LaserFrm.resx">
+      <DependentUpon>LaserFrm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\MarkForm.resx">
+      <DependentUpon>MarkForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\MarkRectify.resx">
+      <DependentUpon>MarkRectify.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\MotionCtr.resx">
+      <DependentUpon>MotionCtr.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\StartForm.resx">
+      <DependentUpon>StartForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\UI_CalibForm.resx">
+      <DependentUpon>UI_CalibForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\UI_Language.resx">
+      <DependentUpon>UI_Language.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\UI_MachineTest.resx">
+      <DependentUpon>UI_MachineTest.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\UI_Prodution.resx">
+      <DependentUpon>UI_Prodution.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\UI_Program.resx">
+      <DependentUpon>UI_Program.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\UI_SystemData.resx">
+      <DependentUpon>UI_SystemData.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\UI_Vision.resx">
+      <DependentUpon>UI_Vision.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\XYZPoint.resx">
+      <DependentUpon>XYZPoint.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="Connected Services\ServiceReference1\GSP_SJ.ServiceReference1.CompositeType.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Connected Services\ServiceReference1\item.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -569,6 +823,32 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\54.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\23.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Mes\FAIlogo.png" />
+    <None Include="Resources\icons8-步进电机-48.png" />
+    <None Include="Resources\002_27.png" />
+    <None Include="Resources\icons8-100--30.png" />
+    <None Include="Resources\On.png" />
+    <None Include="Resources\Off.png" />
+    <None Include="Resources\70.png" />
+    <None Include="Resources\icons8-编程逻辑控制器-24.png" />
+    <None Include="Resources\icons8-language-48.png" />
+    <None Include="Resources\icons8-lan-48.png" />
+    <None Include="Resources\icons8-系统-48.png" />
+    <None Include="Resources\icons8-调整四方-48.png" />
+    <None Include="Resources\icons8-工作流程-48.png" />
+    <None Include="Resources\icons8-programming-48.png" />
+    <None Include="Resources\计算机视觉.png" />
+    <None Include="Resources\002_30.png" />
+    <None Include="Resources\icons8-报警-481.png" />
+    <None Include="Resources\icons8-删除男用户-48.png" />
+    <None Include="Resources\icons8-用户男性组-48.png" />
+    <None Include="Resources\167.png" />
+    <None Include="Resources\9.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

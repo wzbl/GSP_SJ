@@ -9,13 +9,18 @@ using System.Windows.Forms;
 
 namespace GSP_SJ
 {
-    public class Global
+    public class DBEventAction
     {
         public static Action<View_Eng_Program> ProguceItem;
         public static Action<P_Man_Report_Search_Result> ReportItem;
         public static Action<string> RefreshReport;
 
-        public static Action<Component> ShowComponentModel;
+        public static Action RefreshManReport;
+
+        /// <summary>
+        /// 切换图片
+        /// </summary>
+        public static Action<Type_Window> ChangeImg;
 
         /// <summary>
         /// 选择组件

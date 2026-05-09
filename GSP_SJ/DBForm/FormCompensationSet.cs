@@ -91,9 +91,9 @@ namespace GSP_SJ
                         LcrCompensationMaxValue = decimal.Parse(dgvProgram.Rows[i].Cells[5].Value.ToString()),
                         LcrCompensationMinValue = decimal.Parse(dgvProgram.Rows[i].Cells[6].Value.ToString()),
                         IsEnabled = bool.Parse(dgvProgram.Rows[i].Cells[7].Value.ToString()),
-                        Creator = Global.User.UserName,
+                        Creator = DBEventAction.User.UserName,
                         CreationDate = DateTime.Now,
-                        Modifier = Global.User.UserName,
+                        Modifier = DBEventAction.User.UserName,
                         ModificationDate = DateTime.Now
                     };
                     SQLDataControl.AddBas_CompensationValue(compensationValue);

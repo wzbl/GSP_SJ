@@ -22,6 +22,7 @@ namespace GSP_SJ
             this.Load += UCXYDataChart_Load;
             Dock = DockStyle.Fill;
         }
+
         List<P_Search_Eng_XYData_Result> eng_XYData_Results;
         public void RefreshData(List<P_Search_Eng_XYData_Result> eng_XYData_Results)
         {
@@ -95,7 +96,6 @@ namespace GSP_SJ
             {
 
             }
-          
         }
 
         public void Save()
@@ -111,7 +111,6 @@ namespace GSP_SJ
             // 添加工具栏
             AddToolbar();
         }
-
 
         private void AddToolbar()
         {

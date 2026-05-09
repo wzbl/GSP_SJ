@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="FAI_NewModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="FAI_NewModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Bas_CompensationValue">
           <Key>
             <PropertyRef Name="Row" />
@@ -1033,6 +1033,7 @@
           <Property Name="DeviceName" Type="varchar" MaxLength="50" />
           <Property Name="ProgramStatus" Type="varchar" MaxLength="20" />
           <Property Name="Remarks2" Type="varchar" MaxLength="1000" />
+          <Property Name="PositionImage" Type="image" />
         </EntityType>
         <EntityType Name="Man_ReportInspectionItems">
           <Key>
@@ -2505,8 +2506,7 @@
             <End Role="Sys_User" EntitySet="Sys_User" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="FAI_NewModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -3586,6 +3586,7 @@
           <NavigationProperty Name="Man_ReportItem" Relationship="Self.FK_Man_FirstBoardCheckItem_Man_FirstBoardCheck" FromRole="Man_Report" ToRole="Man_ReportItem" />
           <NavigationProperty Name="Man_ReportLog" Relationship="Self.FK_Man_FirstBoardCheckLog_Man_FirstBoardCheck" FromRole="Man_Report" ToRole="Man_ReportLog" />
           <NavigationProperty Name="Man_ReportInspectionItems" Relationship="Self.FK_Man_ReportInspectionItems_Man_Report" FromRole="Man_Report" ToRole="Man_ReportInspectionItems" />
+          <Property Name="PositionImage" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
         <EntityType Name="Man_ReportInspectionItems">
           <Key>
@@ -4494,7 +4495,7 @@
             <End Role="Sys_User" EntitySet="Sys_User" />
           </AssociationSet>
           <FunctionImport Name="GetPoints" IsComposable="true" ReturnType="Collection(FAI_NewModel.GetPoints_Result)">
-            <Parameter Name="BgId" Mode="In" Type="String" />
+          <Parameter Name="BgId" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SplitStr" IsComposable="true" ReturnType="Collection(FAI_NewModel.SplitStr_Result)">
             <Parameter Name="SourceSql" Mode="In" Type="String" />
@@ -4556,7 +4557,7 @@
             <Parameter Name="RetMsg" Mode="InOut" Type="String" />
           </FunctionImport>
           <FunctionImport Name="P_Eng_BomPositionRepeatCheck">
-            <Parameter Name="ProductCode" Mode="In" Type="String" />
+          <Parameter Name="ProductCode" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="P_Eng_BomQuantityCheck">
             <Parameter Name="ProductCode" Mode="In" Type="String" />
@@ -4590,10 +4591,10 @@
             <Parameter Name="CustomerId" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="P_Eng_GetXYCode">
-            <Parameter Name="XYCode" Mode="InOut" Type="String" />
+          <Parameter Name="XYCode" Mode="InOut" Type="String" />
           </FunctionImport>
           <FunctionImport Name="P_Eng_MatchMaterialCode">
-            <Parameter Name="ProductCode" Mode="In" Type="String" />
+          <Parameter Name="ProductCode" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="P_Eng_MeterOptionCopy">
             <Parameter Name="NewOptionName" Mode="In" Type="String" />
@@ -4680,7 +4681,7 @@
             <Parameter Name="RetMsg" Mode="InOut" Type="String" />
           </FunctionImport>
           <FunctionImport Name="P_Eng_XYDataCompare">
-            <Parameter Name="XYCode" Mode="In" Type="String" />
+          <Parameter Name="XYCode" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="P_Eng_XYDataItemAdd">
             <Parameter Name="XYCode" Mode="In" Type="String" />
@@ -4808,13 +4809,13 @@
             <Parameter Name="RetMsg" Mode="InOut" Type="String" />
           </FunctionImport>
           <FunctionImport Name="P_Man_GetPositionList">
-            <Parameter Name="STCode" Mode="In" Type="String" />
+          <Parameter Name="STCode" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="P_Man_GetReportCode">
-            <Parameter Name="ReportCode" Mode="InOut" Type="String" />
+          <Parameter Name="ReportCode" Mode="InOut" Type="String" />
           </FunctionImport>
           <FunctionImport Name="P_Man_GetSTCode">
-            <Parameter Name="STCode" Mode="InOut" Type="String" />
+          <Parameter Name="STCode" Mode="InOut" Type="String" />
           </FunctionImport>
           <FunctionImport Name="P_Man_Report_Search" ReturnType="Collection(FAI_NewModel.P_Man_Report_Search_Result)">
             <Parameter Name="StartTime" Mode="In" Type="DateTime" />
@@ -4885,11 +4886,11 @@
             <Parameter Name="RetMsg" Mode="InOut" Type="String" />
           </FunctionImport>
           <FunctionImport Name="P_Search_Eng_Bom" ReturnType="Collection(FAI_NewModel.P_Search_Eng_Bom_Result)">
-            <Parameter Name="ProductCode" Mode="In" Type="String" />
+          <Parameter Name="ProductCode" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="P_Search_Eng_Program" ReturnType="Collection(FAI_NewModel.P_Search_Eng_Program_Result)" />
           <FunctionImport Name="P_Search_Eng_XYData" ReturnType="Collection(FAI_NewModel.P_Search_Eng_XYData_Result)">
-            <Parameter Name="ProductCode" Mode="In" Type="String" />
+          <Parameter Name="ProductCode" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="P_Sys_ChangePassword">
             <Parameter Name="UserCode" Mode="In" Type="String" />
@@ -4912,7 +4913,7 @@
           </FunctionImport>
           <FunctionImport Name="P_Sys_DataClear" />
           <FunctionImport Name="P_Sys_GetHelpCode">
-            <Parameter Name="HelpCode" Mode="InOut" Type="String" />
+          <Parameter Name="HelpCode" Mode="InOut" Type="String" />
           </FunctionImport>
           <FunctionImport Name="P_sys_UserAdd">
             <Parameter Name="UserCode" Mode="In" Type="String" />
@@ -6008,6 +6009,7 @@
           <EntitySetMapping Name="Man_Report">
             <EntityTypeMapping TypeName="FAI_NewModel.Man_Report">
               <MappingFragment StoreEntitySet="Man_Report">
+                <ScalarProperty Name="PositionImage" ColumnName="PositionImage" />
                 <ScalarProperty Name="ReportCode" ColumnName="ReportCode" />
                 <ScalarProperty Name="BoardSide" ColumnName="BoardSide" />
                 <ScalarProperty Name="Picture" ColumnName="Picture" />

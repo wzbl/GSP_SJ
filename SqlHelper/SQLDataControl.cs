@@ -1,4 +1,5 @@
-﻿using Emgu.CV.Structure;
+﻿using Emgu.CV.CvEnum;
+using Emgu.CV.Structure;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -65,37 +66,45 @@ namespace SqlHelper
             db.SaveChanges();
         }
 
-        public static DbRawSqlQuery<Man_Report> GetMan_Report(string ReportCode)
+        public static Man_Report GetMan_Report(string ReportCode)
         {
-            DbRawSqlQuery<Man_Report> res = db.Database.SqlQuery<Man_Report>("select * from Man_Report where ReportCode = "+ ReportCode);
-            return res;
+            return db.Man_Report.AsNoTracking().Where(x => x.ReportCode == ReportCode).First();
         }
 
         public static void AddMan_Report(Man_Report report)
         {
-            db.P_Man_ReportAdd
-                (
-                 report.ReportCode,
-                 report.BoardSide,
-                 report.PLCode,
-                 report.ProductCode,
-                 report.ProductName,
-                 report.WoCode,
-                 report.LotNumber,
-                 report.BatchQty,
-                 report.BoardQty,
-                 report.IsCheckNoSMD,
-                 report.Remarks,
-                 report.Creator,
-                 report.Modifier,
-                 report.OptionCode,
-                 report.Barcode,
-                 report.@class,
-                 report.CheckType,
-                 report.PCBVersion,
-                 report.BomVersion,
-                 report.DeviceName);
+            int i = db.P_Man_ReportAdd
+                 (
+                  report.ReportCode,
+                  report.BoardSide,
+                  report.PLCode,
+                  report.ProductCode,
+                  report.ProductName,
+                  report.WoCode,
+                  report.LotNumber,
+                  report.BatchQty,
+                  report.BoardQty,
+                  report.IsCheckNoSMD,
+                  report.Remarks,
+                  report.Creator,
+                  report.Modifier,
+                  report.OptionCode,
+                  report.Barcode,
+                  report.@class,
+                  report.CheckType,
+                  report.PCBVersion,
+                  report.BomVersion,
+                  report.DeviceName);
 
+            //if (i > 0)
+            //{
+            //    db.Database.ExecuteSqlCommand("update Man_Report set PositionImage={0} where ReportCode={1}", report.PositionImage, report.ReportCode);
+            //}
+        }
+
+        public static async void UpdateMan_ReportPositionImage(string ReportCode, byte[] PositionImage)
+        {
+           await db.Database.ExecuteSqlCommandAsync("update Man_Report set PositionImage={0} where ReportCode={1}", PositionImage, ReportCode);
         }
 
         /// <summary>
@@ -125,7 +134,11 @@ namespace SqlHelper
 
         }
 
+        public static async void UpdateMan_Report(string ReportCode, byte[] Picture)
+        {
+            await db.Database.ExecuteSqlCommandAsync("update Man_Report set Picture={0} where ReportCode={1}", Picture, ReportCode);
 
+        }
         public static void FinishMan_Report(string ReportCode, string finishBy)
         {
             int i = db.Database.ExecuteSqlCommand("update Man_Report set Status={0},CheckResult={1}, FinishedBy={2},FinishedDate={3} where ReportCode={4}", "CLOSE", "PASS", finishBy, DateTime.Now, ReportCode);
@@ -195,6 +208,22 @@ namespace SqlHelper
         public static void UpdateMan_ReportItem_LXY(string ReportCode, string position, decimal px, decimal py)
         {
             int i = db.Database.ExecuteSqlCommand("update Man_ReportItem set LX={0} ,LY ={1} where ReportCode={2} and Position = {3}", px, py, ReportCode, position);
+        }
+
+        public static void UpdateMan_ReportItem_FailCause(string ReportCode, string position, string ResultType, string CheckResult, string FailCause, string creator, byte[] StandardImage, byte[] CurrentImage, string CheckType)
+        {
+            int i = db.Database.ExecuteSqlCommand("update Man_ReportItem set ResultType={0},CheckResult={1},FailCause={2},Creator={3},CreationDate={4},StandardImage={5},CurrentImage={6}, CheckType ={7} where ReportCode={8} and Position = {9}", ResultType, CheckResult, FailCause, creator, DateTime.Now, StandardImage, CurrentImage, CheckType, ReportCode, position);
+
+        }
+
+        public static void UpdateMan_ReportItem_XY(string ReportCode, string position, decimal px, decimal py)
+        {
+            int i = db.Database.ExecuteSqlCommand("update Man_ReportItem set X={0} ,Y ={1} where ReportCode={2} and Position = {3}", px, py, ReportCode, position);
+        }
+
+        public static void UpdateMan_ReportItem_RXY(string ReportCode, string position, decimal px, decimal py)
+        {
+            int i = db.Database.ExecuteSqlCommand("update Man_ReportItem set RX={0} ,RY ={1} where ReportCode={2} and Position = {3}", px, py, ReportCode, position);
         }
 
         #endregion
@@ -411,6 +440,18 @@ namespace SqlHelper
             db.P_Insert_Eng_XYData(productCode, position, boardId, boardSide, isSMD, materialCode, materialName, x, y, unit, angle, rX, rY, remarks, creator, modifier, standardCode, standardRotation, size, lcrType, isDefined, oX, oY, oAngle, row, lX, lY, isMerge, standardImage, sequence, furnaceLcrStandardValue, furnaceLcrUnitCode, furnaceLcrMaxValue, furnaceLcrMinValue, lXCompensation, lYCompensation, componentPackaging, sX, sY, adjustedAngle, groups);
         }
 
+
+        public static void UpdateXYData_XY(string productCode, string position, decimal px, decimal py)
+        {
+            //db.Eng_XYData.AsNoTracking().Where(x => x.ProductCode == productCode && x.Position == position).ToList().ForEach(x =>
+            //{
+            //    x.RX = px; x.RY = py;
+            //});
+
+            int i = db.Database.ExecuteSqlCommand("update Eng_XYData set X={0} ,Y ={1} where ProductCode={2} and Position = {3}", px, py, productCode, position);
+            db.SaveChanges();
+        }
+
         public static void UpdateXYData_RXY(string productCode, string position, decimal px, decimal py)
         {
             //db.Eng_XYData.AsNoTracking().Where(x => x.ProductCode == productCode && x.Position == position).ToList().ForEach(x =>
@@ -508,34 +549,34 @@ namespace SqlHelper
             {
                 int i = db.Database.ExecuteSqlCommand("insert into Eng_ModelItem(ProductCode,MaterialCode,mPicture,mPW,mPH,mZoomRatio,mDPI,Id,Groups,IsMain,Polarity,IsManual,LCy,HCy,NA,NB,XA,XB,P1,P2,P3,P4,P5,PLeft,PTop,Pw,Ph,PLeft2,PTop2,Pw2,Ph2,PLeft3,PTop3,Pw3,Ph3,Creator,CreationDate,Remarks) values ({0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13},{14},{15},{16},{17},{18},{19},{20},{21},{22},{23},{24},{25},{26},{27},{28},{29},{30},{31},{32},{33},{34},{35},{36},{37})",
                     modelItem.ProductCode, modelItem.MaterialCode, modelItem.mPicture,
-                    modelItem.mPW, modelItem.mPH, modelItem.mZoomRatio, modelItem.mDPI, 
+                    modelItem.mPW, modelItem.mPH, modelItem.mZoomRatio, modelItem.mDPI,
                     modelItem.Id, modelItem.Groups, modelItem.IsMain, modelItem.Polarity, modelItem.IsManual,
-                    modelItem.LCy, modelItem.HCy, modelItem.NA, modelItem.NB, modelItem.XA, modelItem.XB, 
+                    modelItem.LCy, modelItem.HCy, modelItem.NA, modelItem.NB, modelItem.XA, modelItem.XB,
                     modelItem.P1, modelItem.P2, modelItem.P3, modelItem.P4, modelItem.P5,
                     modelItem.PLeft, modelItem.PTop, modelItem.Pw, modelItem.Ph,
-                    modelItem.PLeft2, modelItem.PTop2, modelItem.Pw2, modelItem.Ph2, 
-                    modelItem.PLeft3, modelItem.PTop3, modelItem.Pw3, modelItem.Ph3, 
+                    modelItem.PLeft2, modelItem.PTop2, modelItem.Pw2, modelItem.Ph2,
+                    modelItem.PLeft3, modelItem.PTop3, modelItem.Pw3, modelItem.Ph3,
                     modelItem.Creator, modelItem.CreationDate, modelItem.Remarks);
             }
             else
             {
                 int i = db.Database.ExecuteSqlCommand("update Eng_ModelItem set mPicture={0},mPW={1},mPH={2},mZoomRatio={3},mDPI={4},Id={5},Groups={6},IsMain={7},Polarity={8},IsManual={9},LCy={10},HCy={11},NA={12},NB={13},XA={14},XB={15},P1={16},P2={17},P3={18},P4={19},P5={20},PLeft={21},PTop={22},Pw={23},Ph={24},PLeft2={25},PTop2={26},Pw2={27},Ph2={28},PLeft3={29},PTop3={30},Pw3={31},Ph3={32},Remarks={33} where ProductCode = {34} and MaterialCode ={35} and Id={36}",
                     modelItem.mPicture,
-                    modelItem.mPW,  modelItem.mPH,
-                    modelItem.mZoomRatio,  modelItem.mDPI,
-                    modelItem.Id, modelItem.Groups, modelItem.IsMain, modelItem.Polarity, modelItem.IsManual, 
-                    modelItem.LCy, modelItem.HCy, modelItem.NA, modelItem.NB, modelItem.XA, modelItem.XB, 
+                    modelItem.mPW, modelItem.mPH,
+                    modelItem.mZoomRatio, modelItem.mDPI,
+                    modelItem.Id, modelItem.Groups, modelItem.IsMain, modelItem.Polarity, modelItem.IsManual,
+                    modelItem.LCy, modelItem.HCy, modelItem.NA, modelItem.NB, modelItem.XA, modelItem.XB,
                     modelItem.P1, modelItem.P2, modelItem.P3, modelItem.P4, modelItem.P5,
                     modelItem.PLeft, modelItem.PTop, modelItem.Pw, modelItem.Ph, modelItem.PLeft2, modelItem.PTop2,
                     modelItem.Pw2, modelItem.Ph2, modelItem.PLeft3, modelItem.PTop3, modelItem.Pw3, modelItem.Ph3, modelItem.Remarks,
-                    modelItem. ProductCode  , modelItem. MaterialCode , modelItem.Id);
+                    modelItem.ProductCode, modelItem.MaterialCode, modelItem.Id);
             }
             db.SaveChanges();
         }
 
         public static void DeleteEng_ModelItem(string productCode, string materialCode, int id)
         {
-            db.Database.ExecuteSqlCommand("delete from Eng_ModelItem where ProductCode={0} and MaterialCode={1} and id ={2}", productCode, materialCode,id);
+            db.Database.ExecuteSqlCommand("delete from Eng_ModelItem where ProductCode={0} and MaterialCode={1} and id ={2}", productCode, materialCode, id);
             db.SaveChanges();
         }
         #endregion

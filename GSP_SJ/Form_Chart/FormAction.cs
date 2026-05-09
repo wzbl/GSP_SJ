@@ -3,6 +3,7 @@ using Emgu.Util.TypeEnum;
 using GSP_SJ.Form_Chart;
 using GSP_SJ.ModelClass;
 using HalconDotNet;
+using Microsoft.CSharp.RuntimeBinder;
 using SqlHelper;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,7 @@ using System.Data.Entity.Infrastructure;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Linq;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -43,10 +45,12 @@ namespace GSP_SJ
             {
 
             }
-            this.Load += Form3_Load;
+
         }
         private string reportCode = "";
         private string productCode = "";
+
+        Man_Report _Reports = null;
         public FormAction(string reportCode, string productCode)
         {
             InitializeComponent();
@@ -55,23 +59,26 @@ namespace GSP_SJ
             try
             {
                 RefreshDataGrid();
-                pictureBoxZoom1 = new UCZoom(Type_Window.Screen);
-                image = PublicFunction.ByteToBitmap(SQLDataControl.GetProgramOptionPicture(productCode));
-                pictureBoxZoom1.SetImage(image);
+                pictureBoxZoom1 = new UCZoom(Type_Window.Position);
+
                 this.panel2.Controls.Add(pictureBoxZoom1);
 
-                List<Man_ComponentSize> sizes = SQLDataControl.GetMan_ComponentSize();
-                pictureBoxZoom2 = new UCZoom(Type_Window.Screen);
-                image2 = new Bitmap("D:\\img\\1.jpg");
-                pictureBoxZoom2.SetImage(image2);
+                pictureBoxZoom2 = new UCZoom(Type_Window.Puzzle);
+                this.panel3.Controls.Add(pictureBoxZoom2);
 
                 pictureBoxZoom3 = new UCZoom(Type_Window.OCR);
                 kryptonPanel5.Controls.Add(pictureBoxZoom3);
-                pictureBoxZoom3.SetImage((Image)image2.Clone());
-                this.panel3.Controls.Add(pictureBoxZoom2);
 
-                foreach (var item in Global.man_ReportItems)
+                comMaterialCode.Items.Clear();
+                comLcrStandValue.Items.Clear();
+
+                pictureBoxZoom2.ContextMenuStrip = contextMenuStrip1;
+
+                List<Man_ComponentSize> sizes = SQLDataControl.GetMan_ComponentSize();
+                foreach (var item in DBEventAction.man_ReportItems)
                 {
+                    comMaterialCode.Items.Add(item.MaterialCode);
+                    comLcrStandValue.Items.Add(item.LcrStandardValue);
                     bool isHaveModel = SQLDataControl.GetEng_ModelItem(productCode, item.MaterialCode).Count > 0;
                     List<Man_ComponentSize> ComponentSize = sizes.Where(X => X.SizeCode == item.Size).ToList();
 
@@ -122,23 +129,38 @@ namespace GSP_SJ
                     }
                 }
 
-                pictureBoxZoom2.ContextMenuStrip = contextMenuStrip1;
-
+                comBomdgvShowModel.SelectedIndex = 0;
+                comBomdgvShowType.SelectedIndex = 0;
+                this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
+                DBEventAction.SelectComponent += SelectComponent;
+                DBEventAction.ChangeImg += ChangeImg;
+                dgvBom.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvBom_CellClick);
+                dgvdgvSub.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvdgvSub_CellClick);
+                txtReportCode.Text = reportCode;
+                txtProductCode.Text = productCode;
+                comSortType.SelectedIndex = 4;
+                Init();
+                comSamplingSource.SelectedIndex = 1;
+                comSamplingType.SelectedIndex = 0;
+                numSamplingNum.Value = 1;
+                comMaterialCode.Enabled = false;
+                comLcrStandValue.Enabled = false;
+                com复测.SelectedIndex = 2;
+                DBEventAction.RefreshManReport += RefreshManReport;
             }
             catch (Exception ex)
             {
 
             }
-            this.Load += Form3_Load;
+
         }
 
-        private void Form3_Load(object sender, EventArgs e)
+        private void RefreshManReport()
         {
-            comBomdgvShowModel.SelectedIndex = 0;
-            comBomdgvShowType.SelectedIndex = 0;
-            this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
-            Global.SelectComponent += SelectComponent;
-
+            RefreshDataGrid();
+            image = PublicFunction.ByteToBitmap(_Reports.PositionImage);
+            if (image != null)
+                pictureBoxZoom1.SetImage(image);
             if (dataGridView1.Rows.Count > 0)
             {
                 dataGridView1.Rows[0].Selected = true;
@@ -146,18 +168,71 @@ namespace GSP_SJ
                 pictureBoxZoom1.SetSelectCompont(pos);
                 pictureBoxZoom2.SetSelectCompont(pos);
                 pictureBoxZoom3.SetSelectCompont(pos);
-                RefreshMaterial(0);
+                RefreshMaterial(pos);
             }
-            dgvBom.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvBom_CellClick);
-            dgvdgvSub.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvdgvSub_CellClick);
-            txtReportCode.Text = reportCode;
-            txtProductCode.Text = productCode;
-            DbRawSqlQuery<Man_Report> _Reports = SQLDataControl.GetMan_Report(reportCode);
-            txtProductName.Text = _Reports.First().ProductName;
-            txtBoardSide.Text = _Reports.First().BoardSide;
-            txtBoardQty.Text = _Reports.First().BoardQty.ToString();
-            RefreshMessage();
         }
+
+        private async void Init()
+        {
+            await Task.Run(() =>
+            {
+                _Reports = SQLDataControl.GetMan_Report(reportCode);
+                if (_Reports.Picture != null)
+                    image2 = PublicFunction.ByteToBitmap(_Reports.Picture);
+                if (_Reports.PositionImage != null)
+                    image = PublicFunction.ByteToBitmap(_Reports.PositionImage);
+                else
+                    image = PublicFunction.ByteToBitmap(SQLDataControl.GetProgramOptionPicture(productCode));
+
+            });
+            RefreshMessage();
+            txtProductName.Text = _Reports.ProductName;
+            txtBoardSide.Text = _Reports.BoardSide;
+            txtBoardQty.Text = _Reports.BoardQty.ToString();
+            if (image2 != null)
+            {
+                pictureBoxZoom2.SetImage(image2);
+                pictureBoxZoom3.SetImage((Image)image2.Clone());
+            }
+            if (image != null)
+                pictureBoxZoom1.SetImage(image);
+            pictureBoxZoom1.Refresh();
+            pictureBoxZoom2.Refresh();
+            pictureBoxZoom3.Refresh();
+            if (dataGridView1.Rows.Count > 0)
+            {
+                dataGridView1.Rows[0].Selected = true;
+                string pos = dataGridView1.Rows[0].Cells[0].Value.ToString();
+                pictureBoxZoom1.SetSelectCompont(pos);
+                pictureBoxZoom2.SetSelectCompont(pos);
+                pictureBoxZoom3.SetSelectCompont(pos);
+                RefreshMaterial(pos);
+            }
+            comSortType.SelectedIndexChanged += comSortType_SelectedIndexChanged;
+        }
+
+
+        private void ChangeImg(Type_Window window)
+        {
+            switch (window)
+            {
+                case Type_Window.Position:
+                    this.image = new Bitmap(pictureBoxZoom1.Image);
+                    break;
+                case Type_Window.Puzzle:
+                    this.image2 = new Bitmap(pictureBoxZoom2.Image);
+                    if (image2 != null)
+                        pictureBoxZoom3.SetImage((Image)image2.Clone());
+                    SQLDataControl.UpdateMan_Report(reportCode, PublicFunction.BitmapToByte(image2));
+                    //跟新图像到数据库
+                    break;
+                case Type_Window.OCR:
+
+                    break;
+            }
+        }
+
+
 
         #region 电性检测
         private void SelectComponent(string pos)
@@ -171,7 +246,8 @@ namespace GSP_SJ
                 {
                     dataGridView1.ClearSelection();
                     dataGridView1.Rows[i].Selected = true;
-                    RefreshMaterial(i);
+
+                    RefreshMaterial(pos);
                     break;
                 }
             }
@@ -186,19 +262,20 @@ namespace GSP_SJ
                 string pos = dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString();
                 pictureBoxZoom1.SetSelectCompont(pos);
                 pictureBoxZoom2.SetSelectCompont(pos);
-                RefreshMaterial(e.RowIndex);
+                RefreshMaterial(pos);
             }
         }
 
         private void RefreshDataGrid()
         {
-            Global.man_ReportItems = SQLDataControl.Search_Man_ReportItem(reportCode);
+            DBEventAction.man_ReportItems = SQLDataControl.Search_Man_ReportItem(reportCode);
             dataGridView1.Rows.Clear();
-            foreach (var item in Global.man_ReportItems)
+            //item.CheckType
+            foreach (var item in DBEventAction.man_ReportItems)
             {
                 dataGridView1.Rows.Add(
                     item.Position,
-                    item.CheckType,
+                    item.ResultType,
                     item.CheckResult,
                     item.LcrStandardValue,
                     item.LcrUnitCode,
@@ -226,25 +303,58 @@ namespace GSP_SJ
                     item.MinTolerance,
                     item.ToleranceType
                     );
+
+                refresCellStatus(item);
+
             }
             RefreshBom();
         }
 
+        private void refresCellStatus(Man_ReportItem item)
+        {
+            if (item.ResultType == "manual")
+            {
+                dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[1].Style.BackColor = Color.Green;
+
+                if (item.CheckResult == "PASS")
+                {
+                    dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[2].Style.BackColor = Color.Green;
+                }
+            }
+            else if (item.ResultType == "auto")
+            {
+                dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[1].Style.BackColor = Color.Lime;
+                if (item.CheckResult == "PASS")
+                {
+                    dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[2].Style.BackColor = Color.Lime;
+                }
+            }
+            dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[1].Style.ForeColor = Color.White;
+            if (item.CheckResult == "FAIL")
+            {
+                dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[2].Style.BackColor = Color.Red;
+                dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[13].Style.ForeColor = Color.Red;
+            }
+
+            dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[6].Style.ForeColor = Color.Blue;
+        }
+
+
         private void 位置1ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             List<string> Position = new List<string>();
-            for (int i = 0; i < Global.man_ReportItems.Count; i++)
+            for (int i = 0; i < DBEventAction.man_ReportItems.Count; i++)
             {
-                Position.Add(Global.man_ReportItems[i].Position);
+                Position.Add(DBEventAction.man_ReportItems[i].Position);
             }
             FormLocation_Point formLocation = new FormLocation_Point(Position);
             if (formLocation.ShowDialog() == DialogResult.OK)
             {
-                dataGridView1.ClearSelection();
-                dataGridView1.Rows[formLocation.Index].Selected = true;
-                dataGridView1.FirstDisplayedScrollingRowIndex = formLocation.Index;
-                Location_Point.handPositionX[0] = double.Parse(Global.man_ReportItems[formLocation.Index].X.ToString());
-                Location_Point.handPositionY[0] = double.Parse(Global.man_ReportItems[formLocation.Index].Y.ToString());
+                //dataGridView1.ClearSelection();
+                //dataGridView1.Rows[formLocation.Index].Selected = true;
+                //dataGridView1.FirstDisplayedScrollingRowIndex = formLocation.Index;
+                Location_Point.handPositionX[0] = double.Parse(DBEventAction.man_ReportItems[formLocation.Index].X.ToString());
+                Location_Point.handPositionY[0] = double.Parse(DBEventAction.man_ReportItems[formLocation.Index].Y.ToString());
                 Location_Point.eyePixelPositionX[0] = double.Parse(pictureBoxZoom2.PixPoint().X.ToString());
                 Location_Point.eyePixelPositionY[0] = double.Parse(pictureBoxZoom2.PixPoint().Y.ToString());
 
@@ -256,18 +366,18 @@ namespace GSP_SJ
         private void 位置2ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             List<string> Position = new List<string>();
-            for (int i = 0; i < Global.man_ReportItems.Count; i++)
+            for (int i = 0; i < DBEventAction.man_ReportItems.Count; i++)
             {
-                Position.Add(Global.man_ReportItems[i].Position);
+                Position.Add(DBEventAction.man_ReportItems[i].Position);
             }
             FormLocation_Point formLocation = new FormLocation_Point(Position);
             if (formLocation.ShowDialog() == DialogResult.OK)
             {
-                dataGridView1.ClearSelection();
-                dataGridView1.Rows[formLocation.Index].Selected = true;
-                dataGridView1.FirstDisplayedScrollingRowIndex = formLocation.Index;
-                Location_Point.handPositionX[1] = double.Parse(Global.man_ReportItems[formLocation.Index].X.ToString());
-                Location_Point.handPositionY[1] = double.Parse(Global.man_ReportItems[formLocation.Index].Y.ToString());
+                //dataGridView1.ClearSelection();
+                //dataGridView1.Rows[formLocation.Index].Selected = true;
+                //dataGridView1.FirstDisplayedScrollingRowIndex = formLocation.Index;
+                Location_Point.handPositionX[1] = double.Parse(DBEventAction.man_ReportItems[formLocation.Index].X.ToString());
+                Location_Point.handPositionY[1] = double.Parse(DBEventAction.man_ReportItems[formLocation.Index].Y.ToString());
                 Location_Point.eyePixelPositionX[1] = double.Parse(pictureBoxZoom2.PixPoint().X.ToString());
                 Location_Point.eyePixelPositionY[1] = double.Parse(pictureBoxZoom2.PixPoint().Y.ToString());
                 pictureBoxZoom1.SetSelectCompont(formLocation.Position);
@@ -277,18 +387,18 @@ namespace GSP_SJ
         private void 位置3ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             List<string> Position = new List<string>();
-            for (int i = 0; i < Global.man_ReportItems.Count; i++)
+            for (int i = 0; i < DBEventAction.man_ReportItems.Count; i++)
             {
-                Position.Add(Global.man_ReportItems[i].Position);
+                Position.Add(DBEventAction.man_ReportItems[i].Position);
             }
             FormLocation_Point formLocation = new FormLocation_Point(Position);
             if (formLocation.ShowDialog() == DialogResult.OK)
             {
-                dataGridView1.ClearSelection();
-                dataGridView1.Rows[formLocation.Index].Selected = true;
-                dataGridView1.FirstDisplayedScrollingRowIndex = formLocation.Index;
-                Location_Point.handPositionX[2] = double.Parse(Global.man_ReportItems[formLocation.Index].X.ToString());
-                Location_Point.handPositionY[2] = double.Parse(Global.man_ReportItems[formLocation.Index].Y.ToString());
+                //dataGridView1.ClearSelection();
+                //dataGridView1.Rows[formLocation.Index].Selected = true;
+                //dataGridView1.FirstDisplayedScrollingRowIndex = formLocation.Index;
+                Location_Point.handPositionX[2] = double.Parse(DBEventAction.man_ReportItems[formLocation.Index].X.ToString());
+                Location_Point.handPositionY[2] = double.Parse(DBEventAction.man_ReportItems[formLocation.Index].Y.ToString());
                 Location_Point.eyePixelPositionX[2] = double.Parse(pictureBoxZoom2.PixPoint().X.ToString());
                 Location_Point.eyePixelPositionY[2] = double.Parse(pictureBoxZoom2.PixPoint().Y.ToString());
                 pictureBoxZoom1.SetSelectCompont(formLocation.Position);
@@ -298,23 +408,23 @@ namespace GSP_SJ
         private void 位置4ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             List<string> Position = new List<string>();
-            for (int i = 0; i < Global.man_ReportItems.Count; i++)
+            for (int i = 0; i < DBEventAction.man_ReportItems.Count; i++)
             {
-                Position.Add(Global.man_ReportItems[i].Position);
+                Position.Add(DBEventAction.man_ReportItems[i].Position);
             }
             FormLocation_Point formLocation = new FormLocation_Point(Position);
             if (formLocation.ShowDialog() == DialogResult.OK)
             {
-                dataGridView1.ClearSelection();
-                dataGridView1.Rows[formLocation.Index].Selected = true;
-                dataGridView1.FirstDisplayedScrollingRowIndex = formLocation.Index;
-                Location_Point.handPositionX[3] = double.Parse(Global.man_ReportItems[formLocation.Index].X.ToString());
-                Location_Point.handPositionY[3] = double.Parse(Global.man_ReportItems[formLocation.Index].Y.ToString());
+                //dataGridView1.ClearSelection();
+                //dataGridView1.Rows[formLocation.Index].Selected = true;
+                //dataGridView1.FirstDisplayedScrollingRowIndex = formLocation.Index;
+                Location_Point.handPositionX[3] = double.Parse(DBEventAction.man_ReportItems[formLocation.Index].X.ToString());
+                Location_Point.handPositionY[3] = double.Parse(DBEventAction.man_ReportItems[formLocation.Index].Y.ToString());
                 Location_Point.eyePixelPositionX[3] = double.Parse(pictureBoxZoom2.PixPoint().X.ToString());
                 Location_Point.eyePixelPositionY[3] = double.Parse(pictureBoxZoom2.PixPoint().Y.ToString());
                 pictureBoxZoom1.SetSelectCompont(formLocation.Position);
 
-                foreach (var item in Global.man_ReportItems)
+                foreach (var item in DBEventAction.man_ReportItems)
                 {
                     Size size = new Size(100, 100);
                     Color color = Color.HotPink;
@@ -337,7 +447,7 @@ namespace GSP_SJ
                         {
 
                         }
-                        SQLDataControl.UpdateXYData_LXY(productCode, item.Position, decimal.Parse(pixelPositionX.D.ToString()), decimal.Parse(pixelPositionY.D.ToString()));
+                        //SQLDataControl.UpdateXYData_LXY(productCode, item.Position, decimal.Parse(pixelPositionX.D.ToString()), decimal.Parse(pixelPositionY.D.ToString()));
                         SQLDataControl.UpdateMan_ReportItem_LXY(item.ReportCode, item.Position, decimal.Parse(pixelPositionX.D.ToString()), decimal.Parse(pixelPositionY.D.ToString()));
                     }
                 }
@@ -348,41 +458,304 @@ namespace GSP_SJ
 
         #region 信息统计
 
-        private void RefreshMaterial(int i)
+        private void RefreshMaterial(string pos)
         {
-            txtMaterialCode.Text = Global.man_ReportItems[i].MaterialCode;
-            txtMaterialName.Text = Global.man_ReportItems[i].MaterialName;
-            txtPosition.Text = Global.man_ReportItems[i].Position;
-            txtBoardId.Text = Global.man_ReportItems[i].BoardId.ToString();
-            txtLcrType.Text = Global.man_ReportItems[i].LcrType;
-            txtLcrUnitCode.Text = Global.man_ReportItems[i].LcrUnitCode;
-            txtLcrStandardValue.Text = Global.man_ReportItems[i].LcrStandardValue.ToString();
-            txtSize.Text = Global.man_ReportItems[i].Size;
-            txtLcrMaxValue.Text = Global.man_ReportItems[i].LcrMaxValue.ToString();
-            txtLcrMinValue.Text = Global.man_ReportItems[i].LcrMinValue.ToString();
-            txtLcrCheckValue.Text = Global.man_ReportItems[i].LcrCheckValue.ToString();
-            txtIsDefined.Text = Global.man_ReportItems[i].IsDefined.ToString();
-            txtIsSMD.Text = Global.man_ReportItems[i].IsSMD.ToString();
-            txtStationCode.Text = Global.man_ReportItems[i].StationCode;
+            int i = -1;
+            for (int j = 0; j < DBEventAction.man_ReportItems.Count; j++)
+            {
+                if (DBEventAction.man_ReportItems[j].Position == pos)
+                {
+                    i = j;
+                    break;
+                }
+            }
+            if (i < 0)
+                return;
+            txtMaterialCode.Text = DBEventAction.man_ReportItems[i].MaterialCode;
+            txtMaterialName.Text = DBEventAction.man_ReportItems[i].MaterialName;
+            txtPosition.Text = DBEventAction.man_ReportItems[i].Position;
+            txtBoardId.Text = DBEventAction.man_ReportItems[i].BoardId.ToString();
+            txtLcrType.Text = DBEventAction.man_ReportItems[i].LcrType;
+            txtLcrUnitCode.Text = DBEventAction.man_ReportItems[i].LcrUnitCode;
+            txtLcrStandardValue.Text = DBEventAction.man_ReportItems[i].LcrStandardValue.ToString();
+            txtSize.Text = DBEventAction.man_ReportItems[i].Size;
+            txtLcrMaxValue.Text = DBEventAction.man_ReportItems[i].LcrMaxValue.ToString();
+            txtLcrMinValue.Text = DBEventAction.man_ReportItems[i].LcrMinValue.ToString();
+            txtLcrCheckValue.Text = DBEventAction.man_ReportItems[i].LcrCheckValue.ToString();
+            txtIsDefined.Text = DBEventAction.man_ReportItems[i].IsDefined.ToString();
+            txtIsSMD.Text = DBEventAction.man_ReportItems[i].IsSMD.ToString();
+            txtStationCode.Text = DBEventAction.man_ReportItems[i].StationCode;
         }
         public void RefreshMessage()
         {
-            DbRawSqlQuery<Man_Report> _Reports = SQLDataControl.GetMan_Report(reportCode);
-            txtTotalQty.Text = _Reports.First().TotalQty.ToString();
-            txtPassQty.Text = _Reports.First().PassQty.ToString();
-            txtFailQty.Text = _Reports.First().FailQty.ToString();
-            txtMissQty.Text = _Reports.First().MissQty.ToString();
-            txtNoSmdQty.Text = _Reports.First().NoSmdQty.ToString();
-            txtAutomationQty.Text = _Reports.First().AutomationQty.ToString();
-            txtRQty.Text = _Reports.First().RQty.ToString();
-            txtCQty.Text = _Reports.First().CQty.ToString();
-            txtLQty.Text = _Reports.First().LQty.ToString();
-            txtDQty.Text = _Reports.First().DQty.ToString();
-            txtBQty.Text = _Reports.First().BQty.ToString();
-            txtOQty.Text = _Reports.First().OQty.ToString();
-            txtTQty.Text = _Reports.First().TQty.ToString();
-            txtIQty.Text = _Reports.First().IQty.ToString();
+            txtTotalQty.Text = _Reports.TotalQty.ToString();
+            txtPassQty.Text = _Reports.PassQty.ToString();
+            txtFailQty.Text = _Reports.FailQty.ToString();
+            txtMissQty.Text = _Reports.MissQty.ToString();
+            txtNoSmdQty.Text = _Reports.NoSmdQty.ToString();
+            txtAutomationQty.Text = _Reports.AutomationQty.ToString();
+            txtRQty.Text = _Reports.RQty.ToString();
+            txtCQty.Text = _Reports.CQty.ToString();
+            txtLQty.Text = _Reports.LQty.ToString();
+            txtDQty.Text = _Reports.DQty.ToString();
+            txtBQty.Text = _Reports.BQty.ToString();
+            txtOQty.Text = _Reports.OQty.ToString();
+            txtTQty.Text = _Reports.TQty.ToString();
+            txtIQty.Text = _Reports.IQty.ToString();
         }
+        #endregion
+
+        #region 常用功能
+
+        #region 排序
+        private void comSortType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            switch (comSortType.SelectedIndex)
+            {
+                case 0:
+                    //最优路径
+                    break;
+                case 1:
+                    //站位表
+                    break;
+                case 2:
+                    //BOM表
+                    SortByBOM();
+                    break;
+                case 3:
+                    //物料类别
+                    SortByLcrType();
+                    break;
+                case 4:
+                    //就近原则
+                    break;
+                case 5:
+                    //优先0度
+                    break;
+                case 6:
+                    //优先90度
+                    break;
+            }
+        }
+
+
+        private void SortByBOM()
+        {
+
+            DBEventAction.man_ReportItems = DBEventAction.man_ReportItems.OrderBy(p => p.BomSequence).ToList();
+            RefreshDataGridByChoise();
+        }
+
+        private void SortByLcrType()
+        {
+            DBEventAction.man_ReportItems = DBEventAction.man_ReportItems.OrderBy(p => p.LcrType).ToList();
+            RefreshDataGridByChoise();
+        }
+        #endregion
+
+        private void chkSampling_CheckedChanged(object sender, EventArgs e)
+        {
+            comSamplingSource.Enabled = chkSampling.Checked;
+            comSamplingType.Enabled = chkSampling.Checked;
+            numSamplingNum.Enabled = chkSampling.Checked;
+        }
+
+        #region 元件筛选
+        private void radType_CheckedChanged(object sender, EventArgs e)
+        {
+            radTypeR.Enabled = radType.Checked;
+            radTypeC.Enabled = radType.Checked;
+            radTypeL.Enabled = radType.Checked;
+            radTypeD.Enabled = radType.Checked;
+            radTypeT.Enabled = radType.Checked;
+            radTypeI.Enabled = radType.Checked;
+            radTypeO.Enabled = radType.Checked;
+            comMaterialCode.Enabled = radMaterialCode.Checked;
+            comLcrStandValue.Enabled = radLcrStandValue.Checked;
+            RefreshDataGridByChoise();
+        }
+        private void chk01005_CheckedChanged(object sender, EventArgs e)
+        {
+            RefreshDataGridByChoise();
+        }
+
+        private void comMaterialCode_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            RefreshDataGridByChoise();
+        }
+
+        private void comLcrStandValue_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            RefreshDataGridByChoise();
+        }
+
+        private void RefreshDataGridByChoise()
+        {
+            dataGridView1.Rows.Clear();
+
+            List<string> sizes = new List<string>();
+            if (chk01005.Checked)
+                sizes.Add("01005");
+            if (chk0402.Checked)
+                sizes.Add("0402");
+            if (chk0201.Checked)
+                sizes.Add("0201");
+            if (chk0603.Checked)
+                sizes.Add("0603");
+            if (chk0805.Checked)
+                sizes.Add("0805");
+            if (chk1206.Checked)
+                sizes.Add("1206");
+            if (chk1210.Checked)
+                sizes.Add("1210");
+            if (chk1812.Checked)
+                sizes.Add("1812");
+            if (chk2010.Checked)
+                sizes.Add("2010");
+            if (chk2512.Checked)
+                sizes.Add("2512");
+            List<Man_ReportItem> _ReportItems = DBEventAction.man_ReportItems.Where(x => sizes.Contains(x.Size)).ToList();
+
+            if (radType.Checked)
+            {
+                List<string> lcrtypes = new List<string>();
+                if (radTypeR.Checked)
+                    lcrtypes.Add("R");
+                if (radTypeC.Checked)
+                    lcrtypes.Add("C");
+                if (radTypeL.Checked)
+                    lcrtypes.Add("L");
+                if (radTypeD.Checked)
+                    lcrtypes.Add("D");
+                if (radTypeO.Checked)
+                    lcrtypes.Add("O");
+                if (radTypeT.Checked)
+                    lcrtypes.Add("T");
+                if (radTypeI.Checked)
+                    lcrtypes.Add("I");
+                _ReportItems = _ReportItems.Where(x => lcrtypes.Contains(x.LcrType)).ToList();
+            }
+            else if (radMaterialCode.Checked)
+            {
+                if (!string.IsNullOrEmpty(comMaterialCode.Text))
+                {
+                    _ReportItems = _ReportItems.Where(x => x.MaterialCode == comMaterialCode.Text).ToList();
+                }
+
+            }
+            else if (radLcrStandValue.Checked)
+            {
+                if (decimal.TryParse(comLcrStandValue.Text, out decimal v))
+                {
+                    _ReportItems = _ReportItems.Where(x => x.LcrStandardValue == v).ToList();
+                }
+            }
+
+            if (radCheckStatus_人工.Checked)
+            {
+                _ReportItems = _ReportItems.Where(x => x.ResultType == "manual").ToList();
+            }
+            else if (radCheckStatus_已测.Checked)
+            {
+                _ReportItems = _ReportItems.Where(x => x.CheckResult == "PASS" || x.CheckResult == "FAIL").ToList();
+            }
+            else if (radCheckStatus_PASS.Checked)
+            {
+                _ReportItems = _ReportItems.Where(x => x.CheckResult == "PASS").ToList();
+            }
+            else if (radCheckStatus_FAIL.Checked)
+            {
+                _ReportItems = _ReportItems.Where(x => x.CheckResult == "FAIL").ToList();
+            }
+            else if (radCheckStatus_UNKNOWN.Checked)
+            {
+                _ReportItems = _ReportItems.Where(x => x.CheckResult == "UNKNOWN").ToList();
+            }
+            else if (radCheckStatus_未测.Checked)
+            {
+                _ReportItems = _ReportItems.Where(x => x.CheckResult == "FAIL" || string.IsNullOrEmpty(x.CheckResult)).ToList();
+            }
+
+            foreach (var item in _ReportItems)
+            {
+                dataGridView1.Rows.Add(
+                    item.Position,
+                    item.ResultType,
+                    item.CheckResult,
+                    item.LcrStandardValue,
+                    item.LcrUnitCode,
+                    item.LcrMinValue,
+                    item.LcrCheckValue,
+                    item.LcrUnitCode,
+                    item.LcrMaxValue,
+                    item.LcrType,
+                    item.Size,
+                    item.MaterialCode,
+                    item.MaterialName,
+                    item.FailCause,
+                    item.Angle,
+                    item.IsSMD,
+                    item.Remarks,
+                    item.Creator,
+                    item.CreationDate,
+                    item.IsDefined,
+                    item.BomSequence,
+                    item.StandardCode,
+                    item.CheckOcrStr,
+                    "",
+                    item.CheckLine,
+                    item.MaxTolerance,
+                    item.MinTolerance,
+                    item.ToleranceType
+                    );
+                refresCellStatus(item);
+            }
+        }
+        #endregion
+
+        /// <summary>
+        /// 人工判断
+        /// </summary>
+
+        private void btnManualPASS_Click(object sender, EventArgs e)
+        {
+            if (dataGridView1.SelectedRows.Count > 0)
+            {
+                int selectedRow = dataGridView1.SelectedRows[0].Index;
+                string position = dataGridView1.SelectedRows[0].Cells[0].Value.ToString();
+                pictureBoxZoom2.GetSelectComponent(out Image image, out Component component);
+                SQLDataControl.UpdateMan_ReportItem_FailCause(reportCode, position, "manual", "PASS", "", DBEventAction.User.UserName, PublicFunction.BitmapToByte(new Bitmap(image)), PublicFunction.BitmapToByte(new Bitmap(image)), "");
+                DBEventAction.man_ReportItems = SQLDataControl.Search_Man_ReportItem(reportCode);
+                RefreshDataGridByChoise();
+                selectedRow++;
+                if (dataGridView1.Rows.Count > selectedRow)
+                {
+                    dataGridView1.Rows[selectedRow].Selected = true;
+                    dataGridView1.FirstDisplayedScrollingRowIndex = selectedRow - 1;
+                }
+            }
+        }
+
+        private void btnManualFAIL_Click(object sender, EventArgs e)
+        {
+            if (dataGridView1.SelectedRows.Count > 0)
+            {
+                int selectedRow = dataGridView1.SelectedRows[0].Index;
+                string FileCause = (sender as KryptonButton).Text;
+                string position = dataGridView1.SelectedRows[0].Cells[0].Value.ToString();
+                pictureBoxZoom2.GetSelectComponent(out Image image, out Component component);
+                SQLDataControl.UpdateMan_ReportItem_FailCause(reportCode, position, "manual", "FAIL", FileCause, DBEventAction.User.UserName, PublicFunction.BitmapToByte(new Bitmap(image)), PublicFunction.BitmapToByte(new Bitmap(image)), "");
+                DBEventAction.man_ReportItems = SQLDataControl.Search_Man_ReportItem(reportCode);
+                RefreshDataGridByChoise();
+                selectedRow++;
+                if (dataGridView1.Rows.Count > selectedRow)
+                {
+                    dataGridView1.Rows[selectedRow].Selected = true;
+                    dataGridView1.FirstDisplayedScrollingRowIndex = selectedRow - 1;
+                }
+            }
+        }
+
         #endregion
 
         #region 外观检测
@@ -390,7 +763,7 @@ namespace GSP_SJ
         private void RefreshBom()
         {
             dgvBom.Rows.Clear();
-            var Bomdgv = Global.man_ReportItems.GroupBy(X => X.MaterialCode).Select(g => new
+            var Bomdgv = DBEventAction.man_ReportItems.GroupBy(X => X.MaterialCode).Select(g => new
             {
                 MaterialCode = g.Key,  // 分组字段
                 LcrType = g.First().LcrType,       // 字段A
@@ -511,7 +884,7 @@ namespace GSP_SJ
                 dgvBom.ClearSelection();
                 dgvBom.Rows[e.RowIndex].Selected = true;
                 string materialCode = dgvBom.Rows[e.RowIndex].Cells[0].Value.ToString();
-                var obj = Global.man_ReportItems.Where(x => x.MaterialCode == materialCode).ToList();
+                var obj = DBEventAction.man_ReportItems.Where(x => x.MaterialCode == materialCode).ToList();
                 dgvdgvSub.Rows.Clear();
                 if (obj.Count > 0)
                 {
@@ -537,13 +910,13 @@ namespace GSP_SJ
         }
         private void IsShowCompoment_CheckedChanged(object sender, EventArgs e)
         {
-            Global.IsShowCompoment = IsShowCompoment.Checked;
+            DBEventAction.IsShowCompoment = IsShowCompoment.Checked;
             pictureBoxZoom3.Refresh();
         }
 
         private void IsShowCompomentPos_CheckedChanged(object sender, EventArgs e)
         {
-            Global.IsShowComponentPos = IsShowCompomentPos.Checked;
+            DBEventAction.IsShowComponentPos = IsShowCompomentPos.Checked;
             pictureBoxZoom3.Refresh();
         }
 
@@ -573,7 +946,7 @@ namespace GSP_SJ
         {
             if (pictureBoxZoom3.GetSelectComponent(out Image img, out Component clickedComponent))
             {
-                Man_ReportItem item = Global.man_ReportItems.Where(x => x.Position == clickedComponent.Designator).First();
+                Man_ReportItem item = DBEventAction.man_ReportItems.Where(x => x.Position == clickedComponent.Designator).First();
 
                 AddModel(item, clickedComponent, img);
 
@@ -619,14 +992,23 @@ namespace GSP_SJ
             eng_ModelItem.LCy = 85;
             eng_ModelItem.HCy = 100;
             eng_ModelItem.Remarks = "";
-            eng_ModelItem.Creator = Global.User.UserName;
+            eng_ModelItem.Creator = DBEventAction.User.UserName;
             eng_ModelItem.CreationDate = DateTime.Now;
             SQLDataControl.UpdateEng_ModelItem(eng_ModelItem);
         }
 
+
+
+
         #endregion
 
 
+        #region 自动检测
+        private void chk复测_CheckedChanged(object sender, EventArgs e)
+        {
+            com复测.Enabled = chk复测.Checked;
+        }
+        #endregion
     }
 
 }

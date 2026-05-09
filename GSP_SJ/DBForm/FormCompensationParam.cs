@@ -77,7 +77,7 @@ namespace GSP_SJ
             {
                 types.Add(_Meters[i].ShowValue);
             }
-            Global.DgvColBindData(dgvProgram, colIndex, types);
+            DBEventAction.DgvColBindData(dgvProgram, colIndex, types);
         }
         List<Eng_MeterOptionItem> items = new List<Eng_MeterOptionItem>();
         private void Search(string meterName = "")
@@ -246,7 +246,7 @@ namespace GSP_SJ
             {
                 types.Add(_Meters[i].ShowValue);
             }
-            Global.DgvColBindData(dgvProgram, rowIndex, colIndex, types);
+            DBEventAction.DgvColBindData(dgvProgram, rowIndex, colIndex, types);
         }
 
         private void comOptions_SelectedIndexChanged(object sender, EventArgs e)
@@ -414,7 +414,7 @@ namespace GSP_SJ
                 {
                     string optionName = comOptions.Text;
                     int row = -1;
-                    if (int.TryParse(Global.GetDGVCellValue(dgvProgram, i, 0), out int r))
+                    if (int.TryParse(DBEventAction.GetDGVCellValue(dgvProgram, i, 0), out int r))
                     {
                         row = r;
                     }
@@ -423,10 +423,10 @@ namespace GSP_SJ
                         MessageBox.Show("行号错误");
                         return;
                     }
-                    string LcrType = SQLDataControl.GetEng_MeterByShowValue("LcrType", Global.GetDGVCellValue(dgvProgram, i, 1));
+                    string LcrType = SQLDataControl.GetEng_MeterByShowValue("LcrType", DBEventAction.GetDGVCellValue(dgvProgram, i, 1));
                     GetUnitAndFuncType(LcrType, out string unit, out string funcType);
                     Nullable<decimal> MinValue;
-                    if (decimal.TryParse(Global.GetDGVCellValue(dgvProgram, i, 2), out decimal minV))
+                    if (decimal.TryParse(DBEventAction.GetDGVCellValue(dgvProgram, i, 2), out decimal minV))
                     {
                         MinValue = minV;
                     }
@@ -435,9 +435,9 @@ namespace GSP_SJ
                         MessageBox.Show("最小值错误");
                         return;
                     }
-                    string MinValueUnit = SQLDataControl.GetEng_MeterByShowValue(unit, Global.GetDGVCellValue(dgvProgram, i, 3));
+                    string MinValueUnit = SQLDataControl.GetEng_MeterByShowValue(unit, DBEventAction.GetDGVCellValue(dgvProgram, i, 3));
                     Nullable<decimal> MaxValue;
-                    if (decimal.TryParse(Global.GetDGVCellValue(dgvProgram, i, 4), out decimal maxV))
+                    if (decimal.TryParse(DBEventAction.GetDGVCellValue(dgvProgram, i, 4), out decimal maxV))
                     {
                         MaxValue = maxV;
                     }
@@ -446,14 +446,14 @@ namespace GSP_SJ
                         MessageBox.Show("最大值错误");
                         return;
                     }
-                    string MaxValueUnit = SQLDataControl.GetEng_MeterByShowValue(unit, Global.GetDGVCellValue(dgvProgram, i, 5));
-                    string FunctionType = SQLDataControl.GetEng_MeterByShowValue(funcType, Global.GetDGVCellValue(dgvProgram, i, 6));
-                    string Frequency = SQLDataControl.GetEng_MeterByShowValue("Frequency", Global.GetDGVCellValue(dgvProgram, i, 7));
-                    string Voltage = SQLDataControl.GetEng_MeterByShowValue("Voltage", Global.GetDGVCellValue(dgvProgram, i, 8));
-                    string RangeType = SQLDataControl.GetEng_MeterByShowValue("RangeType", Global.GetDGVCellValue(dgvProgram, i, 9));
-                    string Range = Global.GetDGVCellValue(dgvProgram, i, 10);
+                    string MaxValueUnit = SQLDataControl.GetEng_MeterByShowValue(unit, DBEventAction.GetDGVCellValue(dgvProgram, i, 5));
+                    string FunctionType = SQLDataControl.GetEng_MeterByShowValue(funcType, DBEventAction.GetDGVCellValue(dgvProgram, i, 6));
+                    string Frequency = SQLDataControl.GetEng_MeterByShowValue("Frequency", DBEventAction.GetDGVCellValue(dgvProgram, i, 7));
+                    string Voltage = SQLDataControl.GetEng_MeterByShowValue("Voltage", DBEventAction.GetDGVCellValue(dgvProgram, i, 8));
+                    string RangeType = SQLDataControl.GetEng_MeterByShowValue("RangeType", DBEventAction.GetDGVCellValue(dgvProgram, i, 9));
+                    string Range = DBEventAction.GetDGVCellValue(dgvProgram, i, 10);
                     Nullable<int> HoldTimes;
-                    if (int.TryParse(Global.GetDGVCellValue(dgvProgram, i, 11), out int timers))
+                    if (int.TryParse(DBEventAction.GetDGVCellValue(dgvProgram, i, 11), out int timers))
                     {
                         HoldTimes = timers;
                     }
@@ -462,10 +462,10 @@ namespace GSP_SJ
                         MessageBox.Show("失败次数错误");
                         return;
                     }
-                    string Speed = SQLDataControl.GetEng_MeterByShowValue("Speed", Global.GetDGVCellValue(dgvProgram, i, 12));
-                    string Resistance = SQLDataControl.GetEng_MeterByShowValue("Resistance", Global.GetDGVCellValue(dgvProgram, i, 13));
+                    string Speed = SQLDataControl.GetEng_MeterByShowValue("Speed", DBEventAction.GetDGVCellValue(dgvProgram, i, 12));
+                    string Resistance = SQLDataControl.GetEng_MeterByShowValue("Resistance", DBEventAction.GetDGVCellValue(dgvProgram, i, 13));
                     Nullable<int> ReadCount;
-                    if (int.TryParse(Global.GetDGVCellValue(dgvProgram, i, 14), out int count))
+                    if (int.TryParse(DBEventAction.GetDGVCellValue(dgvProgram, i, 14), out int count))
                     {
                         ReadCount = count;
                     }
@@ -475,7 +475,7 @@ namespace GSP_SJ
                         return;
                     }
                     Nullable<decimal> FRValue;
-                    if (decimal.TryParse(Global.GetDGVCellValue(dgvProgram, i, 15), out decimal frv))
+                    if (decimal.TryParse(DBEventAction.GetDGVCellValue(dgvProgram, i, 15), out decimal frv))
                     {
                         FRValue = frv;
                     }
@@ -485,7 +485,7 @@ namespace GSP_SJ
                         return;
                     }
                     Nullable<decimal> MinValidValue;
-                    if (decimal.TryParse(Global.GetDGVCellValue(dgvProgram, i, 16), out decimal minValidValue))
+                    if (decimal.TryParse(DBEventAction.GetDGVCellValue(dgvProgram, i, 16), out decimal minValidValue))
                     {
                         MinValidValue = minValidValue;
                     }
@@ -494,9 +494,9 @@ namespace GSP_SJ
                         MessageBox.Show("有效值下限错误");
                         return;
                     }
-                    string MinValidValueUnit = SQLDataControl.GetEng_MeterByShowValue(unit, Global.GetDGVCellValue(dgvProgram, i, 17));
+                    string MinValidValueUnit = SQLDataControl.GetEng_MeterByShowValue(unit, DBEventAction.GetDGVCellValue(dgvProgram, i, 17));
                     Nullable<decimal> MaxValidValue;
-                    if (decimal.TryParse(Global.GetDGVCellValue(dgvProgram, i, 18), out decimal maxValidValue))
+                    if (decimal.TryParse(DBEventAction.GetDGVCellValue(dgvProgram, i, 18), out decimal maxValidValue))
                     {
                         MaxValidValue = maxValidValue;
                     }
@@ -505,8 +505,8 @@ namespace GSP_SJ
                         MessageBox.Show("有效值上限错误");
                         return;
                     }
-                    string MaxValidValueUnit = SQLDataControl.GetEng_MeterByShowValue(unit, Global.GetDGVCellValue(dgvProgram, i, 19));
-                    string Remarks = Global.GetDGVCellValue(dgvProgram, i, 20);
+                    string MaxValidValueUnit = SQLDataControl.GetEng_MeterByShowValue(unit, DBEventAction.GetDGVCellValue(dgvProgram, i, 19));
+                    string Remarks = DBEventAction.GetDGVCellValue(dgvProgram, i, 20);
 
                     SQLDataControl.AddEng_MeterOptionItem(optionName, row, LcrType, MinValue, MinValueUnit, MaxValue, MaxValueUnit, FunctionType, Frequency, Voltage, RangeType, Range, HoldTimes, Speed, Resistance, ReadCount, FRValue, MinValidValue, MinValidValueUnit, MaxValidValue, MaxValidValueUnit, Remarks);
                 }

@@ -27,7 +27,7 @@ namespace GSP_SJ.ModelClass
         public FormResCheck()
         {
             InitializeComponent();
-            R_Item = Global.man_ReportItems.Where(x => x.LcrType == "R").ToList();
+            R_Item = DBEventAction.man_ReportItems.Where(x => x.LcrType == "R").ToList();
         }
 
         public FormResCheck(string reportCode, string productCode, Image bigImage, List<Component> components) : this()
@@ -56,7 +56,7 @@ namespace GSP_SJ.ModelClass
                         item.CheckType = "OCR";
                         item.CheckResult = "FAIL";
                         item.CreationDate = DateTime.Now;
-                        item.Creator = Global.User.UserName;
+                        item.Creator = DBEventAction.User.UserName;
                         try
                         {
                             this.Invoke(new Action(() =>

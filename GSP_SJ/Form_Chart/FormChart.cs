@@ -481,6 +481,8 @@ namespace GSP_SJ
 
         public string ProductCode = "";
 
+        public string ReportCode = "";
+
         private enum PanMode
         {
             None,
@@ -992,6 +994,17 @@ namespace GSP_SJ
         }
 
 
+        public async Task SaveReportImageToDB()
+        {
+            fullImage = null;
+            using (fullImage = SaveToBitmap(true))
+            {
+                byte[] bytes = PublicFunction.CompressImage(fullImage, "", 20, OrgWidth, orgHight);
+                SQLDataControl.UpdateMan_ReportPositionImage(ReportCode, bytes);
+            }
+        }
+
+
 
         // 计算所有元件的边界
         private RectangleF CalculateAllComponentsBounds()
@@ -1252,7 +1265,18 @@ namespace GSP_SJ
                 //SqlHelper.SQL.ExecuteQuery(cmd);
                 //跟新屏幕坐标到数据库
                 //if (saveScraw)
-                SQLDataControl.UpdateXYData_RXY(ProductCode, component.Designator, (decimal)screenPos1.X, (decimal)screenPos1.Y);
+                if (string.IsNullOrEmpty(ReportCode))
+                {
+                    SQLDataControl.UpdateXYData_XY(ProductCode, component.Designator, (decimal)component.Position.X, (decimal)component.Position.Y);
+                    SQLDataControl.UpdateXYData_RXY(ProductCode, component.Designator, (decimal)screenPos1.X, (decimal)screenPos1.Y);
+                }
+                    
+                else
+                {
+                    SQLDataControl.UpdateMan_ReportItem_XY(ReportCode, component.Designator, (decimal)component.Position.X, (decimal)component.Position.Y);
+                    SQLDataControl.UpdateMan_ReportItem_RXY(ReportCode, component.Designator, (decimal)screenPos1.X, (decimal)screenPos1.Y);
+                }
+                   
                 // 绘制元件矩形
                 using (Pen pen = new Pen(component.Color, 1.0f))
                 using (Brush fillBrush = new SolidBrush(Color.FromArgb(30, component.Color)))

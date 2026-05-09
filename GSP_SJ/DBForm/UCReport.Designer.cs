@@ -31,30 +31,6 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.dgvXYData = new ComponentFactory.Krypton.Toolkit.KryptonDataGridView();
-            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column10 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column11 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column12 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column13 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column14 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column15 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column16 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column17 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column18 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column24 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column19 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column20 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column21 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column22 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column23 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.kryptonPanel1 = new ComponentFactory.Krypton.Toolkit.KryptonPanel();
             this.btnCheckExport = new ComponentFactory.Krypton.Toolkit.KryptonButton();
             this.btnExportDGV = new ComponentFactory.Krypton.Toolkit.KryptonButton();
@@ -157,6 +133,30 @@
             this.kryptonLabel21 = new ComponentFactory.Krypton.Toolkit.KryptonLabel();
             this.txtTotalQty = new ComponentFactory.Krypton.Toolkit.KryptonTextBox();
             this.kryptonLabel18 = new ComponentFactory.Krypton.Toolkit.KryptonLabel();
+            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column10 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column11 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column12 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column13 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column14 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column15 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column16 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column17 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column18 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column24 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column19 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column20 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column21 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column22 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column23 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvXYData)).BeginInit();
@@ -250,197 +250,6 @@
             this.dgvXYData.RowTemplate.Height = 28;
             this.dgvXYData.Size = new System.Drawing.Size(1945, 712);
             this.dgvXYData.TabIndex = 2;
-            // 
-            // Column1
-            // 
-            this.Column1.HeaderText = "元件位置";
-            this.Column1.MinimumWidth = 7;
-            this.Column1.Name = "Column1";
-            this.Column1.ReadOnly = true;
-            this.Column1.Width = 130;
-            // 
-            // Column2
-            // 
-            this.Column2.HeaderText = "拼板";
-            this.Column2.MinimumWidth = 7;
-            this.Column2.Name = "Column2";
-            this.Column2.ReadOnly = true;
-            this.Column2.Width = 130;
-            // 
-            // Column3
-            // 
-            this.Column3.HeaderText = "贴装";
-            this.Column3.MinimumWidth = 7;
-            this.Column3.Name = "Column3";
-            this.Column3.ReadOnly = true;
-            this.Column3.Width = 130;
-            // 
-            // Column4
-            // 
-            this.Column4.HeaderText = "检测结果";
-            this.Column4.MinimumWidth = 7;
-            this.Column4.Name = "Column4";
-            this.Column4.ReadOnly = true;
-            this.Column4.Width = 130;
-            // 
-            // Column5
-            // 
-            this.Column5.HeaderText = "元件类别";
-            this.Column5.MinimumWidth = 7;
-            this.Column5.Name = "Column5";
-            this.Column5.ReadOnly = true;
-            this.Column5.Width = 130;
-            // 
-            // Column6
-            // 
-            this.Column6.HeaderText = "物料编号";
-            this.Column6.MinimumWidth = 7;
-            this.Column6.Name = "Column6";
-            this.Column6.ReadOnly = true;
-            this.Column6.Width = 130;
-            // 
-            // Column7
-            // 
-            this.Column7.HeaderText = "物料描述";
-            this.Column7.MinimumWidth = 7;
-            this.Column7.Name = "Column7";
-            this.Column7.ReadOnly = true;
-            this.Column7.Width = 130;
-            // 
-            // Column8
-            // 
-            this.Column8.HeaderText = "标准值";
-            this.Column8.MinimumWidth = 7;
-            this.Column8.Name = "Column8";
-            this.Column8.ReadOnly = true;
-            this.Column8.Width = 130;
-            // 
-            // Column9
-            // 
-            this.Column9.HeaderText = "单位";
-            this.Column9.MinimumWidth = 7;
-            this.Column9.Name = "Column9";
-            this.Column9.ReadOnly = true;
-            this.Column9.Width = 130;
-            // 
-            // Column10
-            // 
-            this.Column10.HeaderText = "下限值";
-            this.Column10.MinimumWidth = 7;
-            this.Column10.Name = "Column10";
-            this.Column10.ReadOnly = true;
-            this.Column10.Width = 130;
-            // 
-            // Column11
-            // 
-            this.Column11.HeaderText = "实测值";
-            this.Column11.MinimumWidth = 7;
-            this.Column11.Name = "Column11";
-            this.Column11.ReadOnly = true;
-            this.Column11.Width = 130;
-            // 
-            // Column12
-            // 
-            this.Column12.HeaderText = "上限值";
-            this.Column12.MinimumWidth = 7;
-            this.Column12.Name = "Column12";
-            this.Column12.ReadOnly = true;
-            this.Column12.Width = 130;
-            // 
-            // Column13
-            // 
-            this.Column13.HeaderText = "尺寸";
-            this.Column13.MinimumWidth = 7;
-            this.Column13.Name = "Column13";
-            this.Column13.ReadOnly = true;
-            this.Column13.Width = 130;
-            // 
-            // Column14
-            // 
-            this.Column14.HeaderText = "判定方式";
-            this.Column14.MinimumWidth = 7;
-            this.Column14.Name = "Column14";
-            this.Column14.ReadOnly = true;
-            this.Column14.Width = 130;
-            // 
-            // Column15
-            // 
-            this.Column15.HeaderText = "不良原因";
-            this.Column15.MinimumWidth = 7;
-            this.Column15.Name = "Column15";
-            this.Column15.ReadOnly = true;
-            this.Column15.Width = 130;
-            // 
-            // Column16
-            // 
-            this.Column16.HeaderText = "元件丝印";
-            this.Column16.MinimumWidth = 7;
-            this.Column16.Name = "Column16";
-            this.Column16.ReadOnly = true;
-            this.Column16.Width = 130;
-            // 
-            // Column17
-            // 
-            this.Column17.HeaderText = "上限公差";
-            this.Column17.MinimumWidth = 7;
-            this.Column17.Name = "Column17";
-            this.Column17.ReadOnly = true;
-            this.Column17.Width = 130;
-            // 
-            // Column18
-            // 
-            this.Column18.HeaderText = "下限公差";
-            this.Column18.MinimumWidth = 7;
-            this.Column18.Name = "Column18";
-            this.Column18.ReadOnly = true;
-            this.Column18.Width = 130;
-            // 
-            // Column24
-            // 
-            this.Column24.HeaderText = "公差类别";
-            this.Column24.MinimumWidth = 7;
-            this.Column24.Name = "Column24";
-            this.Column24.Width = 130;
-            // 
-            // Column19
-            // 
-            this.Column19.HeaderText = "站位";
-            this.Column19.MinimumWidth = 7;
-            this.Column19.Name = "Column19";
-            this.Column19.ReadOnly = true;
-            this.Column19.Width = 130;
-            // 
-            // Column20
-            // 
-            this.Column20.HeaderText = "频率";
-            this.Column20.MinimumWidth = 7;
-            this.Column20.Name = "Column20";
-            this.Column20.ReadOnly = true;
-            this.Column20.Width = 130;
-            // 
-            // Column21
-            // 
-            this.Column21.HeaderText = "备注";
-            this.Column21.MinimumWidth = 7;
-            this.Column21.Name = "Column21";
-            this.Column21.ReadOnly = true;
-            this.Column21.Width = 130;
-            // 
-            // Column22
-            // 
-            this.Column22.HeaderText = "检测人";
-            this.Column22.MinimumWidth = 7;
-            this.Column22.Name = "Column22";
-            this.Column22.ReadOnly = true;
-            this.Column22.Width = 130;
-            // 
-            // Column23
-            // 
-            this.Column23.HeaderText = "检测时间";
-            this.Column23.MinimumWidth = 7;
-            this.Column23.Name = "Column23";
-            this.Column23.ReadOnly = true;
-            this.Column23.Width = 130;
             // 
             // kryptonPanel1
             // 
@@ -1629,6 +1438,197 @@
             this.kryptonLabel18.TabIndex = 19;
             this.kryptonLabel18.Values.Text = "元件总数";
             // 
+            // Column1
+            // 
+            this.Column1.HeaderText = "元件位置";
+            this.Column1.MinimumWidth = 7;
+            this.Column1.Name = "Column1";
+            this.Column1.ReadOnly = true;
+            this.Column1.Width = 130;
+            // 
+            // Column2
+            // 
+            this.Column2.HeaderText = "拼板";
+            this.Column2.MinimumWidth = 7;
+            this.Column2.Name = "Column2";
+            this.Column2.ReadOnly = true;
+            this.Column2.Width = 130;
+            // 
+            // Column3
+            // 
+            this.Column3.HeaderText = "贴装";
+            this.Column3.MinimumWidth = 7;
+            this.Column3.Name = "Column3";
+            this.Column3.ReadOnly = true;
+            this.Column3.Width = 130;
+            // 
+            // Column4
+            // 
+            this.Column4.HeaderText = "检测结果";
+            this.Column4.MinimumWidth = 7;
+            this.Column4.Name = "Column4";
+            this.Column4.ReadOnly = true;
+            this.Column4.Width = 130;
+            // 
+            // Column5
+            // 
+            this.Column5.HeaderText = "元件类别";
+            this.Column5.MinimumWidth = 7;
+            this.Column5.Name = "Column5";
+            this.Column5.ReadOnly = true;
+            this.Column5.Width = 130;
+            // 
+            // Column6
+            // 
+            this.Column6.HeaderText = "物料编号";
+            this.Column6.MinimumWidth = 7;
+            this.Column6.Name = "Column6";
+            this.Column6.ReadOnly = true;
+            this.Column6.Width = 130;
+            // 
+            // Column7
+            // 
+            this.Column7.HeaderText = "物料描述";
+            this.Column7.MinimumWidth = 7;
+            this.Column7.Name = "Column7";
+            this.Column7.ReadOnly = true;
+            this.Column7.Width = 130;
+            // 
+            // Column8
+            // 
+            this.Column8.HeaderText = "标准值";
+            this.Column8.MinimumWidth = 7;
+            this.Column8.Name = "Column8";
+            this.Column8.ReadOnly = true;
+            this.Column8.Width = 130;
+            // 
+            // Column9
+            // 
+            this.Column9.HeaderText = "单位";
+            this.Column9.MinimumWidth = 7;
+            this.Column9.Name = "Column9";
+            this.Column9.ReadOnly = true;
+            this.Column9.Width = 130;
+            // 
+            // Column10
+            // 
+            this.Column10.HeaderText = "下限值";
+            this.Column10.MinimumWidth = 7;
+            this.Column10.Name = "Column10";
+            this.Column10.ReadOnly = true;
+            this.Column10.Width = 130;
+            // 
+            // Column11
+            // 
+            this.Column11.HeaderText = "实测值";
+            this.Column11.MinimumWidth = 7;
+            this.Column11.Name = "Column11";
+            this.Column11.ReadOnly = true;
+            this.Column11.Width = 130;
+            // 
+            // Column12
+            // 
+            this.Column12.HeaderText = "上限值";
+            this.Column12.MinimumWidth = 7;
+            this.Column12.Name = "Column12";
+            this.Column12.ReadOnly = true;
+            this.Column12.Width = 130;
+            // 
+            // Column13
+            // 
+            this.Column13.HeaderText = "尺寸";
+            this.Column13.MinimumWidth = 7;
+            this.Column13.Name = "Column13";
+            this.Column13.ReadOnly = true;
+            this.Column13.Width = 130;
+            // 
+            // Column14
+            // 
+            this.Column14.HeaderText = "判定方式";
+            this.Column14.MinimumWidth = 7;
+            this.Column14.Name = "Column14";
+            this.Column14.ReadOnly = true;
+            this.Column14.Width = 130;
+            // 
+            // Column15
+            // 
+            this.Column15.HeaderText = "不良原因";
+            this.Column15.MinimumWidth = 7;
+            this.Column15.Name = "Column15";
+            this.Column15.ReadOnly = true;
+            this.Column15.Width = 130;
+            // 
+            // Column16
+            // 
+            this.Column16.HeaderText = "元件丝印";
+            this.Column16.MinimumWidth = 7;
+            this.Column16.Name = "Column16";
+            this.Column16.ReadOnly = true;
+            this.Column16.Width = 130;
+            // 
+            // Column17
+            // 
+            this.Column17.HeaderText = "上限公差";
+            this.Column17.MinimumWidth = 7;
+            this.Column17.Name = "Column17";
+            this.Column17.ReadOnly = true;
+            this.Column17.Width = 130;
+            // 
+            // Column18
+            // 
+            this.Column18.HeaderText = "下限公差";
+            this.Column18.MinimumWidth = 7;
+            this.Column18.Name = "Column18";
+            this.Column18.ReadOnly = true;
+            this.Column18.Width = 130;
+            // 
+            // Column24
+            // 
+            this.Column24.HeaderText = "公差类别";
+            this.Column24.MinimumWidth = 7;
+            this.Column24.Name = "Column24";
+            this.Column24.Width = 130;
+            // 
+            // Column19
+            // 
+            this.Column19.HeaderText = "BOM序号";
+            this.Column19.MinimumWidth = 7;
+            this.Column19.Name = "Column19";
+            this.Column19.ReadOnly = true;
+            this.Column19.Width = 130;
+            // 
+            // Column20
+            // 
+            this.Column20.HeaderText = "频率";
+            this.Column20.MinimumWidth = 7;
+            this.Column20.Name = "Column20";
+            this.Column20.ReadOnly = true;
+            this.Column20.Width = 130;
+            // 
+            // Column21
+            // 
+            this.Column21.HeaderText = "备注";
+            this.Column21.MinimumWidth = 7;
+            this.Column21.Name = "Column21";
+            this.Column21.ReadOnly = true;
+            this.Column21.Width = 130;
+            // 
+            // Column22
+            // 
+            this.Column22.HeaderText = "检测人";
+            this.Column22.MinimumWidth = 7;
+            this.Column22.Name = "Column22";
+            this.Column22.ReadOnly = true;
+            this.Column22.Width = 130;
+            // 
+            // Column23
+            // 
+            this.Column23.HeaderText = "检测时间";
+            this.Column23.MinimumWidth = 7;
+            this.Column23.Name = "Column23";
+            this.Column23.ReadOnly = true;
+            this.Column23.Width = 130;
+            // 
             // UCReport
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -1762,6 +1762,14 @@
         private ComponentFactory.Krypton.Toolkit.KryptonLabel kryptonLabel35;
         private ComponentFactory.Krypton.Toolkit.KryptonTextBox txtModifier;
         private ComponentFactory.Krypton.Toolkit.KryptonLabel kryptonLabel38;
+        private ComponentFactory.Krypton.Toolkit.KryptonRichTextBox richRemarks;
+        private ComponentFactory.Krypton.Toolkit.KryptonLabel kryptonLabel44;
+        private ComponentFactory.Krypton.Toolkit.KryptonButton btnCheckExport;
+        private ComponentFactory.Krypton.Toolkit.KryptonButton btnExportDGV;
+        private ComponentFactory.Krypton.Toolkit.KryptonButton kryptonButton7;
+        private ComponentFactory.Krypton.Toolkit.KryptonButton btnExportPDF;
+        private ComponentFactory.Krypton.Toolkit.KryptonButton btnSave;
+        private ComponentFactory.Krypton.Toolkit.KryptonButton btnEnd;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
@@ -1786,13 +1794,5 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column21;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column22;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column23;
-        private ComponentFactory.Krypton.Toolkit.KryptonRichTextBox richRemarks;
-        private ComponentFactory.Krypton.Toolkit.KryptonLabel kryptonLabel44;
-        private ComponentFactory.Krypton.Toolkit.KryptonButton btnCheckExport;
-        private ComponentFactory.Krypton.Toolkit.KryptonButton btnExportDGV;
-        private ComponentFactory.Krypton.Toolkit.KryptonButton kryptonButton7;
-        private ComponentFactory.Krypton.Toolkit.KryptonButton btnExportPDF;
-        private ComponentFactory.Krypton.Toolkit.KryptonButton btnSave;
-        private ComponentFactory.Krypton.Toolkit.KryptonButton btnEnd;
     }
 }

@@ -103,6 +103,7 @@ namespace SqlHelper
         public string DeviceName { get; set; }
         public string ProgramStatus { get; set; }
         public string Remarks2 { get; set; }
+        public byte[] PositionImage { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Man_ReportItem> Man_ReportItem { get; set; }

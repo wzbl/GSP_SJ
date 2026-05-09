@@ -569,13 +569,21 @@ namespace SqlHelper
 
         public static byte[] BitmapToByte(Bitmap bitmap)
         {
-            MemoryStream ms = new MemoryStream();
-            bitmap.Save(ms, System.Drawing.Imaging.ImageFormat.Bmp);
-            ms.Seek(0, System.IO.SeekOrigin.Begin);
-            byte[] bytes = new byte[ms.Length];
-            ms.Read(bytes, 0, bytes.Length);
-            ms.Dispose();
-            return bytes;
+            try
+            {
+                MemoryStream ms = new MemoryStream();
+                bitmap.Save(ms, System.Drawing.Imaging.ImageFormat.Bmp);
+                ms.Seek(0, System.IO.SeekOrigin.Begin);
+                byte[] bytes = new byte[ms.Length];
+                ms.Read(bytes, 0, bytes.Length);
+                ms.Dispose();
+                return bytes;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+      
         }
 
 

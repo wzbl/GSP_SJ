@@ -430,7 +430,7 @@ namespace GSP_SJ.ModelClass
                 eng_Model.MaterialCode = MaterialCode;
                 eng_Model.MaterialName = MaterialName;
                 eng_Model.LCRType = LCRType;
-                eng_Model.Creator = Global.User.UserName;
+                eng_Model.Creator = DBEventAction.User.UserName;
                 eng_Model.CreationDate = DateTime.Now;
                 SQLDataControl.UpdateEng_Model(eng_Model);
 
@@ -499,7 +499,7 @@ namespace GSP_SJ.ModelClass
                 eng_ModelItem.LCy = LCy.Value;
                 eng_ModelItem.HCy = 100;
                 eng_ModelItem.Remarks = remarks.Text;
-                eng_ModelItem.Creator = Global.User.UserName;
+                eng_ModelItem.Creator = DBEventAction.User.UserName;
                 eng_ModelItem.CreationDate = DateTime.Now;
                 SQLDataControl.UpdateEng_ModelItem(eng_ModelItem);
             }

@@ -36,7 +36,7 @@ namespace GSP_SJ
         {
             dgvProgram.CellClick += dgvProgram_CellClick;
             dgvProgram.CellDoubleClick += dgvProgram_CellDoubleClick;
-            Global.RefreshReport += RefreshReport;
+            DBEventAction.RefreshReport += RefreshReport;
             startTime.Value = DateTime.Now.AddMonths(-1);
         }
 
@@ -47,7 +47,7 @@ namespace GSP_SJ
             List<P_Man_Report_Search_Result> p_Man_Report_s= Man_Reports.Where(x => x.ReportCode == ReportCode).ToList();
             if (p_Man_Report_s.Count>0)
             {
-                Global.ReportItem?.Invoke(p_Man_Report_s[0]);
+                DBEventAction.ReportItem?.Invoke(p_Man_Report_s[0]);
             }
         }
 
@@ -59,7 +59,7 @@ namespace GSP_SJ
             {
                 try
                 {
-                    Global.ReportItem?.Invoke(Man_Reports[e.RowIndex]);
+                    DBEventAction.ReportItem?.Invoke(Man_Reports[e.RowIndex]);
                 }
                 catch (Exception ex)
                 {

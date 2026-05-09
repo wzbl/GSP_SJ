@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SqlHelper;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -19,7 +20,6 @@ namespace GSP_SJ.Form_Chart
             Dock = DockStyle.Fill;
         }
 
-
         public UCZoom(Type_Window type_Window) : this()
         {
             zoomablePictureBox1 = new ZoomablePictureBox(type_Window);
@@ -30,11 +30,13 @@ namespace GSP_SJ.Form_Chart
                     break;
                 case Type_Window.Puzzle:
                     break;
-                case Type_Window.Screen:
+                case Type_Window.Position:
+                    tool坐标旋转.Visible = true;
                     break;
                 case Type_Window.OCR:
                     toolSelect.Visible = true;
                     toolROI.Visible = true;
+                    toolStripButton1.Visible = false;
                     break;
             }
         }
@@ -46,13 +48,18 @@ namespace GSP_SJ.Form_Chart
 
         private void toolStripComboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            zoomablePictureBox1.setSelectCompont(toolStripComboBox1.Text, kryptonPanel1.Width, kryptonPanel1.Height);
+            if (zoomablePictureBox1.Image != null)
+                zoomablePictureBox1.setSelectCompont(toolStripComboBox1.Text, kryptonPanel1.Width, kryptonPanel1.Height);
         }
 
         public void SetSelectCompont(string name)
         {
-            zoomablePictureBox1.setSelectCompont(name, kryptonPanel1.Width, kryptonPanel1.Height);
-            toolStripComboBox1.Text = name;
+            if (zoomablePictureBox1.Image != null)
+            {
+                zoomablePictureBox1.setSelectCompont(name, kryptonPanel1.Width, kryptonPanel1.Height);
+                toolStripComboBox1.Text = name;
+            }
+
         }
 
         public void AddComponent(Component component)
@@ -93,10 +100,46 @@ namespace GSP_SJ.Form_Chart
             toolROI.Checked = true;
         }
 
-      
+
         public bool GetSelectComponent(out Image image, out Component component)
         {
             return zoomablePictureBox1.GetSelectComponent(out image, out component);
+        }
+
+        private void toolStripButton1_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Multiselect = false;
+            //打开图片
+            openFileDialog.Filter = "png|*.png;*.jpg;*.jpeg;*.bmp";
+            openFileDialog.RestoreDirectory = true;
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                Image img = Image.FromFile(openFileDialog.FileName);
+                //byte [] imgbyte = PublicFunction.CompressImage(img, "", 100, img.Width, img.Height);
+                SetImage(img);//PublicFunction.ByteToBitmap(imgbyte));
+                DBEventAction.ChangeImg?.Invoke(zoomablePictureBox1.type_Window);
+            }
+        }
+
+        public Image Image
+        {
+            get
+            {
+                return zoomablePictureBox1.Image;
+            }
+        }
+
+        private void tool坐标旋转_Click(object sender, EventArgs e)
+        {
+            FormRotatePosition formRotatePosition = new FormRotatePosition(DBEventAction.man_ReportItems[0].ReportCode, zoomablePictureBox1.components[0].ProductCode);
+            DialogResult dialogResult = formRotatePosition.ShowDialog();
+            if (dialogResult == DialogResult.OK)
+            {
+                //保存之后，要刷新数据
+                DBEventAction.RefreshManReport?.Invoke();
+            }
+
         }
     }
 }

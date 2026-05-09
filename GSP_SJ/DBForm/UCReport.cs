@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.Entity.Infrastructure;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -222,13 +223,13 @@ namespace GSP_SJ
                     item.LcrCheckValue,
                     item.LcrMaxValue,
                     item.Size,
-                    item.CheckType,
+                    item.ResultType,
                     item.FailCause,
                     "",   //元件丝印
                     item.MaxTolerance,
                     item.MinTolerance,
                     item.ToleranceType,
-                    item.StationCode,
+                    item.BomSequence,
                     item.Frequency,
                     item.Remarks,
                     item.Creator,
@@ -245,6 +246,14 @@ namespace GSP_SJ
                 }
                 else
                     dgvXYData.Rows[dgvXYData.Rows.Count - 1].Cells[3].Style.ForeColor = Color.Red;
+
+                if (item.ResultType == "manual")
+                {
+                    dgvXYData.Rows[dgvXYData.Rows.Count - 1].Cells[13].Style.ForeColor = Color.Green;
+                }else if (item.ResultType == "auto")
+                {
+                    dgvXYData.Rows[dgvXYData.Rows.Count - 1].Cells[13].Style.ForeColor = Color.Blue;
+                }
 
             }
             txtSMDQty.Text = SmdCount.ToString();
@@ -266,7 +275,7 @@ namespace GSP_SJ
                 string productCode = comProductCode.Text;
                 if (string.IsNullOrEmpty(productCode))
                     return;
-                Global.ProguceItem?.Invoke(SQLDataControl.GetAllProgramm().Where(x => x.产品编号 == productCode).First());
+                DBEventAction.ProguceItem?.Invoke(SQLDataControl.GetAllProgramm().Where(x => x.产品编号 == productCode).First());
             }
             catch (Exception)
             {
@@ -284,8 +293,8 @@ namespace GSP_SJ
         private void btnQA_Click(object sender, EventArgs e)
         {
             btnSave_Click(null, null);
-            SQLDataControl.SetQAMan_Report(txtReportCode.Text, Global.User.UserName);
-            Global.RefreshReport?.Invoke(txtReportCode.Text);
+            SQLDataControl.SetQAMan_Report(txtReportCode.Text, DBEventAction.User.UserName);
+            DBEventAction.RefreshReport?.Invoke(txtReportCode.Text);
         }
 
         /// <summary>
@@ -352,7 +361,9 @@ namespace GSP_SJ
                 List<InspectionItem> inspectionItemList = GetInspectionItemList();
                 string[] headers = { "序号", "位号", "结果", "贴装", "料号", "描述", "标准", "实测", "备注", "检测人", "检测时间" };
                 //string bigImagePath = @"C:\Users\14802\Desktop\A.png";
-                PDFHepler.ExportPDF(saveFileDialog.FileName, "首件检测报告", headerList, bigImgPath, headers, inspectionItemList);
+                Man_Report _Reports = SQLDataControl.GetMan_Report(txtReportCode.Text);
+                //_Reports.First().Picture
+                PDFHepler.ExportPDF(saveFileDialog.FileName, "首件检测报告", headerList, null, _Reports.Picture, headers, inspectionItemList);
             }
         }
 
@@ -500,8 +511,8 @@ namespace GSP_SJ
                 report.BoardQty = int.Parse(numtxtBoardQty.Value.ToString());
                 report.IsCheckNoSMD = comIsCheckNoSMD.Text;
                 report.Remarks = richRemarks.Text;
-                report.Creator = Global.User.UserName;
-                report.Modifier = Global.User.UserName;
+                report.Creator = DBEventAction.User.UserName;
+                report.Modifier = DBEventAction.User.UserName;
                 report.OptionCode = SQLDataControl.GetMeterOptionName(comOptionCode.Text);
                 report.Barcode = txtBarcode.Text;
                 report.@class = _class;
@@ -520,6 +531,7 @@ namespace GSP_SJ
                 report.IQty = _XYDatas.Where(x => x.LcrType == "I").Count();
                 report.SmdQty = report.TotalQty - 2;
                 report.NoSmdQty = report.TotalQty - report.SmdQty;
+                //report.PositionImage = SQLDataControl.GetProgramOptionPicture(comProductCode.Text);
                 SQLDataControl.AddMan_Report(report);
                 IsAddReport = false;
                 btnStart.Enabled = false;
@@ -540,7 +552,7 @@ namespace GSP_SJ
                       batchQty,
                       txtWoCode.Text,
                       txtPCBVersion.Text,
-                      Global.User.UserName,
+                      DBEventAction.User.UserName,
                       richRemarks.Text
                     );
 
@@ -598,8 +610,8 @@ namespace GSP_SJ
         private void btnEnd_Click(object sender, EventArgs e)
         {
             btnSave_Click(null, null);
-            SQLDataControl.FinishMan_Report(txtReportCode.Text, Global.User.UserName);
-            Global.RefreshReport?.Invoke(txtReportCode.Text);
+            SQLDataControl.FinishMan_Report(txtReportCode.Text, DBEventAction.User.UserName);
+            DBEventAction.RefreshReport?.Invoke(txtReportCode.Text);
         }
 
         private void btnStart_Click(object sender, EventArgs e)

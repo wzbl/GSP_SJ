@@ -31,8 +31,7 @@ namespace GSP_SJ.Form_Chart
         private PointF currentMousePos = PointF.Empty;
         private PointF crossImagePos = PointF.Empty;
 
-
-        private Type_Window type_Window = Type_Window.None;
+        public Type_Window type_Window = Type_Window.None;
 
         public List<Component> components = new List<Component>();
 
@@ -168,9 +167,9 @@ namespace GSP_SJ.Form_Chart
 
                 if (IsSelectCompont)
                 {
-                    if (type_Window == Type_Window.Screen)
+                    if (type_Window == Type_Window.Position)
                     {
-                        Global.SelectComponent?.Invoke(clickedComponent.Designator);
+                        DBEventAction.SelectComponent?.Invoke(clickedComponent.Designator);
 
                     }
                     else if (type_Window == Type_Window.OCR)
@@ -195,7 +194,7 @@ namespace GSP_SJ.Form_Chart
                         if (hImage != null)
                         {
                             //hImage.WriteImage("bmp",0, "C:\\Users\\14802\\Desktop\\pos.bmp");
-                            Man_ReportItem item = Global.man_ReportItems.Where(x => x.Position == clickedComponent.Designator).First();
+                            Man_ReportItem item = DBEventAction.man_ReportItems.Where(x => x.Position == clickedComponent.Designator).First();
                             if (item != null)
                             {
                                 FormModelItem formModelItem = new FormModelItem(item.MaterialCode, item.MaterialName, clickedComponent.ProductCode, HalconImageConverter.HImageToBitmapRGB(hImage), item.LcrType);
@@ -261,7 +260,7 @@ namespace GSP_SJ.Form_Chart
                     //hImage.WriteImage("bmp", 0, "C:\\Users\\14802\\Desktop\\" + clickedComponent.Designator + ".bmp");
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
             }
@@ -352,7 +351,7 @@ namespace GSP_SJ.Form_Chart
 
                 foreach (var component in components)
                 {
-                    if (component.IsHaveModel && Global.IsShowCompoment)
+                    if (component.IsHaveModel && DBEventAction.IsShowCompoment)
                     {
                         Point p = ImageToScreenPoint(new Point((int)component.Position.X, (int)component.Position.Y));
                         float screenWidth = component.Size.Width * zoom;
@@ -368,7 +367,7 @@ namespace GSP_SJ.Form_Chart
                               (int)screenHeight));
                         }
                         pe.Graphics.ResetTransform();
-                        if (Global.IsShowComponentPos)
+                        if (DBEventAction.IsShowComponentPos)
                         {
                             pe.Graphics.DrawString(component.Designator, new Font("Arial", 10), Brushes.Yellow, p.X - 20, p.Y);
                         }

@@ -29,7 +29,7 @@ namespace GSP_SJ
         /// <param name="bigImage">大拼图路径</param>
         /// <param name="InspectionItem_headers">明细头</param>
         /// <param name="inspectionItems">明细列</param>
-        public static void ExportPDF(string savePath, string Title, List<PDFHeader> pDFHeaders, string bigImagePath, string[] InspectionItem_headers, List<InspectionItem> inspectionItems)
+        public static void ExportPDF(string savePath, string Title, List<PDFHeader> pDFHeaders, string bigImagePath, byte[] bytes, string[] InspectionItem_headers, List<InspectionItem> inspectionItems)
         {
             try
             {
@@ -74,17 +74,29 @@ namespace GSP_SJ
                     pA.SpacingBefore = 10;
                     doc.Add(pA);
 
-                    if (bigImagePath != null && File.Exists(bigImagePath))
+                    try
                     {
-                        Image imageA = Image.GetInstance(bigImagePath);
-                        imageA.ScaleToFit(530, 220);
-                        imageA.Alignment = Element.ALIGN_CENTER;
-                        doc.Add(imageA);
+                        if (bigImagePath != null && File.Exists(bigImagePath))
+                        {
+                            Image imageA = Image.GetInstance(bigImagePath);
+                            imageA.ScaleToFit(530, 220);
+                            imageA.Alignment = Element.ALIGN_CENTER;
+                            doc.Add(imageA);
+                        }
+                        else if (bytes != null)
+                        {
+                            Image imageA = Image.GetInstance(bytes);
+                            imageA.ScaleToFit(530, 220);
+                            imageA.Alignment = Element.ALIGN_CENTER;
+                            doc.Add(imageA);
+
+                        }
                     }
-                    else
+                    catch (Exception)
                     {
-                        // 没有图片
+
                     }
+                   
 
                     // 检测明细表格（核心：标准图、实测图嵌入列中）
                     Paragraph pTable = new Paragraph("二、元件检测明细", fontHead);

@@ -1,5 +1,7 @@
 ﻿using BorwinAnalyse.BaseClass;
 using BorwinAnalyse.ImportBom;
+using BrowApp.Language;
+using GSP;
 using GSP_SJ.DBForm;
 using GSP_SJ.ModelClass;
 using System;
@@ -18,22 +20,48 @@ namespace GSP_SJ
         [STAThread]
         static void Main()
         {
-            // 强制跳过 iTextSharp 授权验证（解决你报的错误）
-            System.Reflection.FieldInfo field = typeof(iTextSharp.text.io.StreamUtil).GetField("FONT_TEMP_DIR", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static);
-            if (field != null)
-            {
-                field.SetValue(null, Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData));
-            }
+            #region 异常捕获事件
+            //处理未捕获的异常
+            Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
+            //处理UI线程异常
+            Application.ThreadException += new global::System.Threading.ThreadExceptionEventHandler(Application_ThreadException);
+            //处理非UI线程异常
+            AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(Application_UnhandledException);
+            #endregion
+
+            bool createNew;
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            CommonAnalyse.Instance.Load();
-            AnaylseDataManager.Instance.Load();
-            DeepOCRHelper.Init();
-            FormLogin formLogin = new FormLogin();
-            if (formLogin.ShowDialog() == DialogResult.OK)
-                Application.Run(new FormMain());
-
-
+            using (global::System.Threading.Mutex mutex = new global::System.Threading.Mutex(true, Application.ProductName, out createNew))
+            {
+                if (createNew)
+                {
+                    MiddleLayer.InitialProject();
+                   
+                    FormLogin formLogin = new FormLogin();
+                    if (formLogin.ShowDialog() == DialogResult.OK)
+                        new StartForm().ShowDialog();
+                    Application.Run(new FormMain());
+                }
+                else
+                {
+                    MessageBox.Show("程序已经在运行中,请勿重复打开".tr(), "警告:".tr(), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    global::System.Threading.Thread.Sleep(1000);
+                    global::System.Environment.Exit(Environment.ExitCode);
+                }
+            }
+        }
+        static void Application_ThreadException(object sender, global::System.Threading.ThreadExceptionEventArgs e)
+        {
+            Application_Error(e.Exception);
+        }
+        static void Application_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            Application_Error((Exception)e.ExceptionObject);
+        }
+        public static void Application_Error(Exception error)
+        {
+            BrowApp.APP.Log.E_Log(error.Message, error);
         }
     }
 }

@@ -27,13 +27,13 @@ namespace GSP_SJ.DBForm
         {
             if(SQLDataControl.Login(txtcode.Text,txtpassword.Text,out string msg))
             {
-                Global.User = SQLDataControl.GetUser().Where(x => x.UserCode == txtcode.Text).First();
+                DBEventAction.User = SQLDataControl.GetUser().Where(x => x.UserCode == txtcode.Text).First();
              
                 DialogResult = DialogResult.OK;
             }
             else
             {
-                Global.User = null;
+                DBEventAction.User = null;
                 MessageBox.Show(msg);
             }
                

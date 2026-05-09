@@ -181,7 +181,7 @@ namespace GSP_SJ
     {
         None = 0,
         Puzzle,
-        Screen,
+        Position,
         OCR
     };
 }
