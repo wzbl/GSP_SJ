@@ -32,9 +32,11 @@
             this.toolSelect = new System.Windows.Forms.ToolStripButton();
             this.toolROI = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.tool坐标旋转 = new System.Windows.Forms.ToolStripButton();
+            this.btn重新定位 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripComboBox1 = new System.Windows.Forms.ToolStripComboBox();
+            this.tool_IsFurnace = new System.Windows.Forms.ToolStripLabel();
             this.kryptonPanel1 = new ComponentFactory.Krypton.Toolkit.KryptonPanel();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.kryptonPanel1)).BeginInit();
@@ -48,12 +50,14 @@
             this.toolSelect,
             this.toolROI,
             this.toolStripButton1,
-            this.toolStripLabel1,
             this.tool坐标旋转,
-            this.toolStripComboBox1});
+            this.btn重新定位,
+            this.toolStripLabel1,
+            this.toolStripComboBox1,
+            this.tool_IsFurnace});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(979, 29);
+            this.toolStrip1.Size = new System.Drawing.Size(979, 36);
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -63,7 +67,7 @@
             this.toolSelect.Image = global::GSP_SJ.Properties.Resources.Select;
             this.toolSelect.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolSelect.Name = "toolSelect";
-            this.toolSelect.Size = new System.Drawing.Size(30, 25);
+            this.toolSelect.Size = new System.Drawing.Size(30, 32);
             this.toolSelect.Text = "toolStripButton2";
             this.toolSelect.Visible = false;
             this.toolSelect.Click += new System.EventHandler(this.toolSelect_Click);
@@ -74,7 +78,7 @@
             this.toolROI.Image = global::GSP_SJ.Properties.Resources.ROIRect;
             this.toolROI.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolROI.Name = "toolROI";
-            this.toolROI.Size = new System.Drawing.Size(30, 25);
+            this.toolROI.Size = new System.Drawing.Size(30, 32);
             this.toolROI.Text = "toolStripButton3";
             this.toolROI.Visible = false;
             this.toolROI.Click += new System.EventHandler(this.toolROI_Click);
@@ -85,15 +89,9 @@
             this.toolStripButton1.Image = global::GSP_SJ.Properties.Resources._89;
             this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(30, 25);
+            this.toolStripButton1.Size = new System.Drawing.Size(30, 32);
             this.toolStripButton1.Text = "toolStripButton1";
             this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
-            // 
-            // toolStripLabel1
-            // 
-            this.toolStripLabel1.Name = "toolStripLabel1";
-            this.toolStripLabel1.Size = new System.Drawing.Size(44, 25);
-            this.toolStripLabel1.Text = "定位";
             // 
             // tool坐标旋转
             // 
@@ -101,24 +99,54 @@
             this.tool坐标旋转.Image = global::GSP_SJ.Properties.Resources._23;
             this.tool坐标旋转.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tool坐标旋转.Name = "tool坐标旋转";
-            this.tool坐标旋转.Size = new System.Drawing.Size(30, 25);
+            this.tool坐标旋转.Size = new System.Drawing.Size(30, 32);
             this.tool坐标旋转.Text = "坐标旋转";
             this.tool坐标旋转.Visible = false;
             this.tool坐标旋转.Click += new System.EventHandler(this.tool坐标旋转_Click);
             // 
+            // btn重新定位
+            // 
+            this.btn重新定位.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btn重新定位.Image = global::GSP_SJ.Properties.Resources._135crosshair;
+            this.btn重新定位.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btn重新定位.Name = "btn重新定位";
+            this.btn重新定位.Size = new System.Drawing.Size(30, 32);
+            this.btn重新定位.Text = "toolStripButton2";
+            this.btn重新定位.Click += new System.EventHandler(this.btn重新定位_Click);
+            // 
+            // toolStripLabel1
+            // 
+            this.toolStripLabel1.Name = "toolStripLabel1";
+            this.toolStripLabel1.Size = new System.Drawing.Size(44, 32);
+            this.toolStripLabel1.Text = "定位";
+            // 
             // toolStripComboBox1
             // 
             this.toolStripComboBox1.Name = "toolStripComboBox1";
-            this.toolStripComboBox1.Size = new System.Drawing.Size(121, 29);
+            this.toolStripComboBox1.Size = new System.Drawing.Size(121, 36);
             this.toolStripComboBox1.SelectedIndexChanged += new System.EventHandler(this.toolStripComboBox1_SelectedIndexChanged);
+            // 
+            // tool_IsFurnace
+            // 
+            this.tool_IsFurnace.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.tool_IsFurnace.BackColor = System.Drawing.Color.Red;
+            this.tool_IsFurnace.Font = new System.Drawing.Font("Segoe UI", 13.824F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tool_IsFurnace.ForeColor = System.Drawing.Color.Red;
+            this.tool_IsFurnace.IsLink = true;
+            this.tool_IsFurnace.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
+            this.tool_IsFurnace.LinkColor = System.Drawing.Color.Red;
+            this.tool_IsFurnace.Name = "tool_IsFurnace";
+            this.tool_IsFurnace.Size = new System.Drawing.Size(92, 32);
+            this.tool_IsFurnace.Text = "未定位";
+            this.tool_IsFurnace.Visible = false;
             // 
             // kryptonPanel1
             // 
             this.kryptonPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.kryptonPanel1.Location = new System.Drawing.Point(0, 29);
+            this.kryptonPanel1.Location = new System.Drawing.Point(0, 36);
             this.kryptonPanel1.Name = "kryptonPanel1";
             this.kryptonPanel1.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.Office2007Blue;
-            this.kryptonPanel1.Size = new System.Drawing.Size(979, 608);
+            this.kryptonPanel1.Size = new System.Drawing.Size(979, 601);
             this.kryptonPanel1.TabIndex = 1;
             // 
             // UCZoom
@@ -147,5 +175,7 @@
         private System.Windows.Forms.ToolStripButton toolSelect;
         private System.Windows.Forms.ToolStripButton toolROI;
         private System.Windows.Forms.ToolStripButton tool坐标旋转;
+        private System.Windows.Forms.ToolStripButton btn重新定位;
+        private System.Windows.Forms.ToolStripLabel tool_IsFurnace;
     }
 }

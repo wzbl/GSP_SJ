@@ -200,6 +200,8 @@ namespace GSP
         public static double MaxDx = 0.8;
         public static double MaxDy = 0.8;
 
+        public static int States = -1;//停机
+        public static int _States = -1;//停机
 
         /// <summary>
         /// 系统运行标志
@@ -246,7 +248,7 @@ namespace GSP
         /// <summary> 
         /// Tcp通讯对象
         /// </summary>
-        public static TcpClass TcpClass =new TcpClass();
+        public static TcpClass TcpClass = new TcpClass();
         public struct Spectype
         {
             public string name;
@@ -267,7 +269,7 @@ namespace GSP
         /// <summary>
         /// MES配置参数
         /// </summary>
-        public static MesConfig mesConfig=new MesConfig(Global.GlabPath + "/Systemfile/MesConfig.dat");
+        public static MesConfig mesConfig = new MesConfig(Global.GlabPath + "/Systemfile/MesConfig.dat");
         /// <summary>
         /// 配方数据
         /// </summary>
@@ -356,7 +358,7 @@ namespace GSP
                 return iniFile.Read("AutoFAI", "AutoRoleType", "", "UTF-8");
             }
             catch { return null; }
-           
+
         }
 
 
@@ -371,20 +373,20 @@ namespace GSP
                 BrowLib.FileClass.RwIni iniFile = new BrowLib.FileClass.RwIni(Global.GlabPath + "\\System.ini", "", Encoding.Default);
 
                 raito = iniFile.Read("压缩比例", "Ratio", "");
-                araito = iniFile.Read("压缩比例","ARatio", "");
+                araito = iniFile.Read("压缩比例", "ARatio", "");
 
                 Width = iniFile.Read("相机像素", "Width", "0");
                 Hight = iniFile.Read("相机像素", "Hight", "0");
-                LightName=iniFile.Read("光源名称", "LightName","");
-                CameraMode= iniFile.Read("相机配置", "CameraMode", "");
-                AirPressure= iniFile.Read("气压监测", "IsAirPressure", "0");
+                LightName = iniFile.Read("光源名称", "LightName", "");
+                CameraMode = iniFile.Read("相机配置", "CameraMode", "");
+                AirPressure = iniFile.Read("气压监测", "IsAirPressure", "0");
                 IsRunState_str = iniFile.Read("安全门", "IsRunState", "0");
                 switch (LightName)
                 {
                     case "YC":
                         Light = new YC_Light();
                         break;
-                        case "HG":
+                    case "HG":
                         Light = new HG_Light();
                         break;
                     default:
@@ -397,7 +399,7 @@ namespace GSP
                 Global.ImageHight = Convert.ToInt32(Hight);
 
                 Global.Is_DownCam = StringToBool(CameraMode);
-                Global.Is_Airpressure= StringToBool(AirPressure);
+                Global.Is_Airpressure = StringToBool(AirPressure);
                 Global.IsRunState = StringToBool(IsRunState_str);
             }
             catch { }
@@ -549,10 +551,10 @@ namespace GSP
         {
             try
             {
-                var Re= CalibData.Sizes.Where(H=>string.Equals(H.Name, Type, StringComparison.OrdinalIgnoreCase)).ToList();
-                if (Re.Count>0)
+                var Re = CalibData.Sizes.Where(H => string.Equals(H.Name, Type, StringComparison.OrdinalIgnoreCase)).ToList();
+                if (Re.Count > 0)
                 {
-                  return  Convert.ToDouble(Re.First().Hight);
+                    return Convert.ToDouble(Re.First().Hight);
                 }
                 else
                 {
@@ -664,7 +666,7 @@ namespace GSP
             try
             {
                 var Re = CalibData.Offsets.Where(H => H.Angle == engle).ToList();
-                if (Re.Count>0)
+                if (Re.Count > 0)
                 {
                     OffsetX = Convert.ToDouble(Re.First().OffsetX);
                     OffsetY = Convert.ToDouble(Re.First().OffsetY);
@@ -708,21 +710,21 @@ namespace GSP
                     Global.GetAngleOffset("0", out xOffset, out yOffset);//0°偏差 作参考计算
                     new Algorithm().GetOffsetXY(Global.CalibData.PinPos.Xpos, Global.CalibData.PinPos.Ypos, 0, Global.CalibData.CenterData.CenterX, Global.CalibData.CenterData.CenterY, out CenterdX, out CenterdY);
                     new Algorithm().GetOffsetXY(Global.CalibData.PinPos.Xpos, Global.CalibData.PinPos.Ypos, Convert.ToDouble(engle), Global.CalibData.CenterData.CenterX, Global.CalibData.CenterData.CenterY, out NCenterdX, out NCenterdY);
-                    OffsetX = xOffset+(NCenterdX - CenterdX);
-                    OffsetY = yOffset+(NCenterdY - CenterdY);
+                    OffsetX = xOffset + (NCenterdX - CenterdX);
+                    OffsetY = yOffset + (NCenterdY - CenterdY);
                     return true;
                 }
             }
             catch
             {
-                OffsetX=0; OffsetY=0;
+                OffsetX = 0; OffsetY = 0;
                 return false;
             }
-           
-            
+
+
         }
 
-        public static bool GetOffset(double engle, out double OffsetX, out double OffsetY,bool Enable=false)
+        public static bool GetOffset(double engle, out double OffsetX, out double OffsetY, bool Enable = false)
         {
             try
             {
@@ -738,10 +740,10 @@ namespace GSP
             }
             catch
             {
-                OffsetX=0.0; OffsetY=0.0;
+                OffsetX = 0.0; OffsetY = 0.0;
                 return false;
             }
-           
+
         }
         private static int GetIndex(string engle)
         {
@@ -752,7 +754,7 @@ namespace GSP
                 double closestValue = Convert.ToDouble(CalibData.Offsets[0].Angle);
                 double closestDifference = Math.Abs(rote - closestValue);
 
-                for (int i = 0; i <CalibData.Offsets.Count; i++)
+                for (int i = 0; i < CalibData.Offsets.Count; i++)
                 {
                     double difference = Math.Abs(rote - Convert.ToDouble(CalibData.Offsets[i].Angle));
                     if (difference < closestDifference)

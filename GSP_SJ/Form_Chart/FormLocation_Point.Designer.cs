@@ -31,16 +31,13 @@
             this.comPosition = new ComponentFactory.Krypton.Toolkit.KryptonComboBox();
             this.kryptonLabel1 = new ComponentFactory.Krypton.Toolkit.KryptonLabel();
             this.btnOK = new ComponentFactory.Krypton.Toolkit.KryptonButton();
-            this.kryptonLabel2 = new ComponentFactory.Krypton.Toolkit.KryptonLabel();
-            this.txtChoise = new ComponentFactory.Krypton.Toolkit.KryptonTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.comPosition)).BeginInit();
             this.SuspendLayout();
             // 
             // comPosition
             // 
-            this.comPosition.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comPosition.DropDownWidth = 139;
-            this.comPosition.Location = new System.Drawing.Point(105, 63);
+            this.comPosition.Location = new System.Drawing.Point(105, 34);
             this.comPosition.Name = "comPosition";
             this.comPosition.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.Office2007Blue;
             this.comPosition.Size = new System.Drawing.Size(139, 27);
@@ -48,7 +45,7 @@
             // 
             // kryptonLabel1
             // 
-            this.kryptonLabel1.Location = new System.Drawing.Point(5, 62);
+            this.kryptonLabel1.Location = new System.Drawing.Point(5, 33);
             this.kryptonLabel1.Name = "kryptonLabel1";
             this.kryptonLabel1.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.Office2007Blue;
             this.kryptonLabel1.Size = new System.Drawing.Size(46, 26);
@@ -57,7 +54,7 @@
             // 
             // btnOK
             // 
-            this.btnOK.Location = new System.Drawing.Point(268, 21);
+            this.btnOK.Location = new System.Drawing.Point(268, 11);
             this.btnOK.Name = "btnOK";
             this.btnOK.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.Office2007Blue;
             this.btnOK.Size = new System.Drawing.Size(139, 66);
@@ -65,34 +62,17 @@
             this.btnOK.Values.Text = "确定";
             this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
             // 
-            // kryptonLabel2
-            // 
-            this.kryptonLabel2.Location = new System.Drawing.Point(5, 22);
-            this.kryptonLabel2.Name = "kryptonLabel2";
-            this.kryptonLabel2.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.Office2007Blue;
-            this.kryptonLabel2.Size = new System.Drawing.Size(46, 26);
-            this.kryptonLabel2.TabIndex = 3;
-            this.kryptonLabel2.Values.Text = "筛选";
-            // 
-            // txtChoise
-            // 
-            this.txtChoise.Location = new System.Drawing.Point(105, 21);
-            this.txtChoise.Name = "txtChoise";
-            this.txtChoise.Size = new System.Drawing.Size(139, 29);
-            this.txtChoise.TabIndex = 4;
-            this.txtChoise.TextChanged += new System.EventHandler(this.txtChoise_TextChanged);
-            // 
             // FormLocation_Point
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(418, 106);
-            this.Controls.Add(this.txtChoise);
-            this.Controls.Add(this.kryptonLabel2);
+            this.ClientSize = new System.Drawing.Size(418, 88);
             this.Controls.Add(this.btnOK);
             this.Controls.Add(this.kryptonLabel1);
             this.Controls.Add(this.comPosition);
+            this.HeaderStyle = ComponentFactory.Krypton.Toolkit.HeaderStyle.Calendar;
             this.Name = "FormLocation_Point";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "选择位号";
             ((System.ComponentModel.ISupportInitialize)(this.comPosition)).EndInit();
             this.ResumeLayout(false);
@@ -105,7 +85,5 @@
         private ComponentFactory.Krypton.Toolkit.KryptonComboBox comPosition;
         private ComponentFactory.Krypton.Toolkit.KryptonLabel kryptonLabel1;
         private ComponentFactory.Krypton.Toolkit.KryptonButton btnOK;
-        private ComponentFactory.Krypton.Toolkit.KryptonLabel kryptonLabel2;
-        private ComponentFactory.Krypton.Toolkit.KryptonTextBox txtChoise;
     }
 }

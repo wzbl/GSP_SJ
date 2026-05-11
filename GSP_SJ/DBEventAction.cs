@@ -87,6 +87,11 @@ namespace GSP_SJ
         /// </summary>
         public static List<Man_ReportItem> man_ReportItems = new List<Man_ReportItem>();
 
+        /// <summary>
+        /// 当前报告
+        /// </summary>
+        public static Man_Report _Reports = null;
+
         public static bool IsShowCompoment = false;
         public static bool IsShowComponentPos = false;
     }

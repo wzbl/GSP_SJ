@@ -33,6 +33,7 @@
             this.kryptonPage1 = new ComponentFactory.Krypton.Navigator.KryptonPage();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.kryptonPanel1 = new ComponentFactory.Krypton.Toolkit.KryptonPanel();
+            this.btnChange = new ComponentFactory.Krypton.Toolkit.KryptonButton();
             this.btnDeleteBom = new ComponentFactory.Krypton.Toolkit.KryptonButton();
             this.btnBomTitleSetting = new ComponentFactory.Krypton.Toolkit.KryptonButton();
             this.dgv_BOM = new ComponentFactory.Krypton.Toolkit.KryptonDataGridView();
@@ -53,6 +54,7 @@
             this.txtXYPath = new ComponentFactory.Krypton.Toolkit.KryptonTextBox();
             this.kryptonLabel1 = new ComponentFactory.Krypton.Toolkit.KryptonLabel();
             this.txtBomPath = new ComponentFactory.Krypton.Toolkit.KryptonTextBox();
+            this.btnAnayRow = new ComponentFactory.Krypton.Toolkit.KryptonButton();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.kryptonNavigator1)).BeginInit();
             this.kryptonNavigator1.SuspendLayout();
@@ -100,6 +102,7 @@
             this.kryptonNavigator1.Bar.ItemMinimumSize = new System.Drawing.Size(40, 40);
             this.kryptonNavigator1.Bar.ItemSizing = ComponentFactory.Krypton.Navigator.BarItemSizing.Individual;
             this.kryptonNavigator1.Bar.TabBorderStyle = ComponentFactory.Krypton.Toolkit.TabBorderStyle.SlantOutsizeBoth;
+            this.kryptonNavigator1.Bar.TabStyle = ComponentFactory.Krypton.Toolkit.TabStyle.HighProfile;
             this.kryptonNavigator1.Button.ButtonDisplayLogic = ComponentFactory.Krypton.Navigator.ButtonDisplayLogic.Context;
             this.kryptonNavigator1.Button.CloseButtonAction = ComponentFactory.Krypton.Navigator.CloseButtonAction.RemovePageAndDispose;
             this.kryptonNavigator1.Button.CloseButtonDisplay = ComponentFactory.Krypton.Navigator.ButtonDisplay.Hide;
@@ -112,14 +115,21 @@
             this.kryptonNavigator1.Button.PreviousButtonAction = ComponentFactory.Krypton.Navigator.DirectionButtonAction.ModeAppropriateAction;
             this.kryptonNavigator1.Button.PreviousButtonDisplay = ComponentFactory.Krypton.Navigator.ButtonDisplay.Logic;
             this.kryptonNavigator1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.kryptonNavigator1.Group.GroupBackStyle = ComponentFactory.Krypton.Toolkit.PaletteBackStyle.ControlClient;
+            this.kryptonNavigator1.Group.GroupBorderStyle = ComponentFactory.Krypton.Toolkit.PaletteBorderStyle.ControlClient;
+            this.kryptonNavigator1.Header.HeaderStyleBar = ComponentFactory.Krypton.Toolkit.HeaderStyle.Secondary;
+            this.kryptonNavigator1.Header.HeaderStylePrimary = ComponentFactory.Krypton.Toolkit.HeaderStyle.Primary;
+            this.kryptonNavigator1.Header.HeaderStyleSecondary = ComponentFactory.Krypton.Toolkit.HeaderStyle.Secondary;
             this.kryptonNavigator1.Location = new System.Drawing.Point(3, 153);
             this.kryptonNavigator1.Name = "kryptonNavigator1";
             this.kryptonNavigator1.NavigatorMode = ComponentFactory.Krypton.Navigator.NavigatorMode.BarTabGroup;
+            this.kryptonNavigator1.PageBackStyle = ComponentFactory.Krypton.Toolkit.PaletteBackStyle.ControlClient;
             this.kryptonNavigator1.Pages.AddRange(new ComponentFactory.Krypton.Navigator.KryptonPage[] {
             this.kryptonPage1,
             this.kryptonPage2,
             this.kryptonPage3});
             this.kryptonNavigator1.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.Office2007Blue;
+            this.kryptonNavigator1.Panel.PanelBackStyle = ComponentFactory.Krypton.Toolkit.PaletteBackStyle.PanelClient;
             this.kryptonNavigator1.SelectedIndex = 0;
             this.kryptonNavigator1.Size = new System.Drawing.Size(1005, 541);
             this.kryptonNavigator1.TabIndex = 0;
@@ -135,6 +145,7 @@
             this.kryptonPage1.Name = "kryptonPage1";
             this.kryptonPage1.Size = new System.Drawing.Size(1003, 499);
             this.kryptonPage1.Text = "BOM信息";
+            this.kryptonPage1.ToolTipStyle = ComponentFactory.Krypton.Toolkit.LabelStyle.ToolTip;
             this.kryptonPage1.ToolTipTitle = "Page ToolTip";
             this.kryptonPage1.UniqueName = "9012D9F442854BDEDE96BA959665F228";
             // 
@@ -155,21 +166,36 @@
             // 
             // kryptonPanel1
             // 
+            this.kryptonPanel1.Controls.Add(this.btnAnayRow);
+            this.kryptonPanel1.Controls.Add(this.btnChange);
             this.kryptonPanel1.Controls.Add(this.btnDeleteBom);
             this.kryptonPanel1.Controls.Add(this.btnBomTitleSetting);
             this.kryptonPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.kryptonPanel1.Location = new System.Drawing.Point(3, 3);
             this.kryptonPanel1.Name = "kryptonPanel1";
+            this.kryptonPanel1.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.Office2007Blue;
             this.kryptonPanel1.Size = new System.Drawing.Size(997, 74);
             this.kryptonPanel1.TabIndex = 0;
             // 
+            // btnChange
+            // 
+            this.btnChange.Location = new System.Drawing.Point(349, 7);
+            this.btnChange.Name = "btnChange";
+            this.btnChange.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.Office2007Blue;
+            this.btnChange.Size = new System.Drawing.Size(172, 58);
+            this.btnChange.TabIndex = 2;
+            this.btnChange.Values.Image = global::BorwinAnalyse.Properties.Resources._23;
+            this.btnChange.Values.Text = "修改";
+            this.btnChange.Click += new System.EventHandler(this.btnChange_Click);
+            // 
             // btnDeleteBom
             // 
-            this.btnDeleteBom.Location = new System.Drawing.Point(150, 7);
+            this.btnDeleteBom.Location = new System.Drawing.Point(195, 7);
             this.btnDeleteBom.Name = "btnDeleteBom";
             this.btnDeleteBom.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.Office2007Blue;
-            this.btnDeleteBom.Size = new System.Drawing.Size(139, 58);
+            this.btnDeleteBom.Size = new System.Drawing.Size(148, 58);
             this.btnDeleteBom.TabIndex = 1;
+            this.btnDeleteBom.Values.Image = global::BorwinAnalyse.Properties.Resources._21;
             this.btnDeleteBom.Values.Text = "删除行";
             this.btnDeleteBom.Click += new System.EventHandler(this.btnDeleteBom_Click);
             // 
@@ -178,8 +204,9 @@
             this.btnBomTitleSetting.Location = new System.Drawing.Point(5, 7);
             this.btnBomTitleSetting.Name = "btnBomTitleSetting";
             this.btnBomTitleSetting.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.Office2007Blue;
-            this.btnBomTitleSetting.Size = new System.Drawing.Size(139, 58);
+            this.btnBomTitleSetting.Size = new System.Drawing.Size(184, 58);
             this.btnBomTitleSetting.TabIndex = 0;
+            this.btnBomTitleSetting.Values.Image = global::BorwinAnalyse.Properties.Resources._002_01;
             this.btnBomTitleSetting.Values.Text = "列标题设置";
             this.btnBomTitleSetting.Click += new System.EventHandler(this.btnBomTitleSetting_Click);
             // 
@@ -189,6 +216,7 @@
             this.dgv_BOM.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgv_BOM.Location = new System.Drawing.Point(3, 83);
             this.dgv_BOM.Name = "dgv_BOM";
+            this.dgv_BOM.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.Office2007Blue;
             this.dgv_BOM.RowHeadersWidth = 53;
             this.dgv_BOM.RowTemplate.Height = 28;
             this.dgv_BOM.Size = new System.Drawing.Size(997, 413);
@@ -205,6 +233,7 @@
             this.kryptonPage2.Name = "kryptonPage2";
             this.kryptonPage2.Size = new System.Drawing.Size(1003, 499);
             this.kryptonPage2.Text = "XY数据";
+            this.kryptonPage2.ToolTipStyle = ComponentFactory.Krypton.Toolkit.LabelStyle.ToolTip;
             this.kryptonPage2.ToolTipTitle = "Page ToolTip";
             this.kryptonPage2.UniqueName = "10428354626942D309862DE3E57579CA";
             // 
@@ -230,26 +259,29 @@
             this.kryptonPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.kryptonPanel2.Location = new System.Drawing.Point(3, 3);
             this.kryptonPanel2.Name = "kryptonPanel2";
+            this.kryptonPanel2.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.Office2007Blue;
             this.kryptonPanel2.Size = new System.Drawing.Size(997, 74);
             this.kryptonPanel2.TabIndex = 0;
             // 
             // btnDeleteXY
             // 
-            this.btnDeleteXY.Location = new System.Drawing.Point(150, 20);
+            this.btnDeleteXY.Location = new System.Drawing.Point(195, 7);
             this.btnDeleteXY.Name = "btnDeleteXY";
             this.btnDeleteXY.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.Office2007Blue;
-            this.btnDeleteXY.Size = new System.Drawing.Size(139, 41);
+            this.btnDeleteXY.Size = new System.Drawing.Size(175, 58);
             this.btnDeleteXY.TabIndex = 2;
+            this.btnDeleteXY.Values.Image = global::BorwinAnalyse.Properties.Resources._21;
             this.btnDeleteXY.Values.Text = "删除行";
             this.btnDeleteXY.Click += new System.EventHandler(this.btnDeleteXY_Click);
             // 
             // btnXYTitleSetting
             // 
-            this.btnXYTitleSetting.Location = new System.Drawing.Point(5, 20);
+            this.btnXYTitleSetting.Location = new System.Drawing.Point(5, 7);
             this.btnXYTitleSetting.Name = "btnXYTitleSetting";
             this.btnXYTitleSetting.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.Office2007Blue;
-            this.btnXYTitleSetting.Size = new System.Drawing.Size(139, 41);
+            this.btnXYTitleSetting.Size = new System.Drawing.Size(184, 58);
             this.btnXYTitleSetting.TabIndex = 1;
+            this.btnXYTitleSetting.Values.Image = global::BorwinAnalyse.Properties.Resources._002_01;
             this.btnXYTitleSetting.Values.Text = "列标题设置";
             this.btnXYTitleSetting.Click += new System.EventHandler(this.btnXYTitleSetting_Click);
             // 
@@ -259,6 +291,7 @@
             this.dgvXYData.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvXYData.Location = new System.Drawing.Point(3, 83);
             this.dgvXYData.Name = "dgvXYData";
+            this.dgvXYData.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.Office2007Blue;
             this.dgvXYData.RowHeadersWidth = 53;
             this.dgvXYData.RowTemplate.Height = 28;
             this.dgvXYData.Size = new System.Drawing.Size(997, 413);
@@ -272,8 +305,9 @@
             this.kryptonPage3.LastVisibleSet = true;
             this.kryptonPage3.MinimumSize = new System.Drawing.Size(50, 50);
             this.kryptonPage3.Name = "kryptonPage3";
-            this.kryptonPage3.Size = new System.Drawing.Size(1003, 509);
+            this.kryptonPage3.Size = new System.Drawing.Size(1003, 499);
             this.kryptonPage3.Text = "位号图";
+            this.kryptonPage3.ToolTipStyle = ComponentFactory.Krypton.Toolkit.LabelStyle.ToolTip;
             this.kryptonPage3.ToolTipTitle = "Page ToolTip";
             this.kryptonPage3.UniqueName = "FE7C361621A245AE338F47E5099E02B6";
             // 
@@ -299,6 +333,7 @@
             this.kryptonPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.kryptonPanel3.Location = new System.Drawing.Point(3, 3);
             this.kryptonPanel3.Name = "kryptonPanel3";
+            this.kryptonPanel3.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.Office2007Blue;
             this.kryptonPanel3.Size = new System.Drawing.Size(1005, 144);
             this.kryptonPanel3.TabIndex = 2;
             // 
@@ -384,6 +419,17 @@
             this.txtBomPath.Size = new System.Drawing.Size(344, 29);
             this.txtBomPath.TabIndex = 0;
             // 
+            // btnAnayRow
+            // 
+            this.btnAnayRow.Location = new System.Drawing.Point(527, 7);
+            this.btnAnayRow.Name = "btnAnayRow";
+            this.btnAnayRow.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.Office2007Blue;
+            this.btnAnayRow.Size = new System.Drawing.Size(287, 58);
+            this.btnAnayRow.TabIndex = 3;
+            this.btnAnayRow.Values.Image = global::BorwinAnalyse.Properties.Resources._147;
+            this.btnAnayRow.Values.Text = "分析选中行";
+            this.btnAnayRow.Click += new System.EventHandler(this.btnAnayRow_Click);
+            // 
             // FormImPortBom
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -442,5 +488,7 @@
         private ComponentFactory.Krypton.Toolkit.KryptonButton btnImport;
         private ComponentFactory.Krypton.Toolkit.KryptonButton btnDeleteBom;
         private ComponentFactory.Krypton.Toolkit.KryptonButton btnDeleteXY;
+        private ComponentFactory.Krypton.Toolkit.KryptonButton btnChange;
+        private ComponentFactory.Krypton.Toolkit.KryptonButton btnAnayRow;
     }
 }

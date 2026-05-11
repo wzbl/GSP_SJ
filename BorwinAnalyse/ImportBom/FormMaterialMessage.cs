@@ -8,32 +8,24 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Xml.Linq;
 
-namespace GSP_SJ
+namespace BorwinAnalyse.ImportBom
 {
-    public partial class FormMeter : KryptonForm
+    public partial class FormMaterialMessage : KryptonForm
     {
-        public FormMeter()
+        public string MaterialCode { get; internal set; }
+        public string MaterialName { get; internal set; }
+
+        public FormMaterialMessage(string materialCode, string materialName)
         {
             InitializeComponent();
-            UpdateLanguage();
+            txtMaterialCode.Text = materialCode;
+            txtMaterialName.Text = materialName;
         }
-        private void UpdateLanguage()
-        {
-            BrowApp.Language.Language.Instance.UpdateLanguage(this, null);
-        }
-
-        public string NewName = "";
 
         private void btnOK_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(txtName.Text))
-            {
-                MessageBox.Show("请输入名称");
-                return;
-            }
-            NewName = txtName.Text;
+            MaterialName = txtMaterialName.Text;
             DialogResult = DialogResult.OK;
         }
 

@@ -25,7 +25,18 @@ namespace GSP_SJ
             InitializeComponent();
             Dock = DockStyle.Fill;
             InitUIBind();
+            this.Load += UCReport_Load;
         }
+
+        private void UCReport_Load(object sender, EventArgs e)
+        {
+            UpdateLanguage();
+        }
+        private void UpdateLanguage()
+        {
+            BrowApp.Language.Language.Instance.UpdateLanguage(this, null);
+        }
+        
 
         private void InitUIBind()
         {

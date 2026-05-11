@@ -59,8 +59,12 @@ namespace GSP_SJ
             bindComboxData("Resistance", 13);
             dgvProgram.CellClick += DgvProgram_CellClick;
 
+            UpdateLanguage();
         }
-
+        private void UpdateLanguage()
+        {
+            BrowApp.Language.Language.Instance.UpdateLanguage(this, null);
+        }
         private void DgvProgram_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex >= 0)

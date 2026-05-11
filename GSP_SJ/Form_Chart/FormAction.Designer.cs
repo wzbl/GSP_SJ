@@ -180,14 +180,15 @@
             this.kryptonLabel11 = new ComponentFactory.Krypton.Toolkit.KryptonLabel();
             this.kryptonPage5 = new ComponentFactory.Krypton.Navigator.KryptonPage();
             this.kryptonPanel9 = new ComponentFactory.Krypton.Toolkit.KryptonPanel();
-            this.kryptonButton22 = new ComponentFactory.Krypton.Toolkit.KryptonButton();
-            this.kryptonButton23 = new ComponentFactory.Krypton.Toolkit.KryptonButton();
-            this.kryptonButton24 = new ComponentFactory.Krypton.Toolkit.KryptonButton();
-            this.kryptonButton25 = new ComponentFactory.Krypton.Toolkit.KryptonButton();
-            this.kryptonButton26 = new ComponentFactory.Krypton.Toolkit.KryptonButton();
-            this.kryptonButton27 = new ComponentFactory.Krypton.Toolkit.KryptonButton();
-            this.kryptonButton28 = new ComponentFactory.Krypton.Toolkit.KryptonButton();
-            this.kryptonButton29 = new ComponentFactory.Krypton.Toolkit.KryptonButton();
+            this.btnFlow_OUT = new ComponentFactory.Krypton.Toolkit.KryptonButton();
+            this.btnReSetAlarm = new ComponentFactory.Krypton.Toolkit.KryptonButton();
+            this.btn4线测试 = new ComponentFactory.Krypton.Toolkit.KryptonButton();
+            this.btn2线测试 = new ComponentFactory.Krypton.Toolkit.KryptonButton();
+            this.btnFlow_In = new ComponentFactory.Krypton.Toolkit.KryptonButton();
+            this.btn顶升 = new ComponentFactory.Krypton.Toolkit.KryptonButton();
+            this.btnGoStopPos = new ComponentFactory.Krypton.Toolkit.KryptonButton();
+            this.btnHome = new ComponentFactory.Krypton.Toolkit.KryptonButton();
+            this.btnAutoModel = new ComponentFactory.Krypton.Toolkit.KryptonButton();
             this.kryptonGroupBox9 = new ComponentFactory.Krypton.Toolkit.KryptonGroupBox();
             this.kryptonComboBox1 = new ComponentFactory.Krypton.Toolkit.KryptonComboBox();
             this.kryptonButton21 = new ComponentFactory.Krypton.Toolkit.KryptonButton();
@@ -224,9 +225,9 @@
             this.chk电阻 = new ComponentFactory.Krypton.Toolkit.KryptonCheckBox();
             this.chk跳过Fail = new ComponentFactory.Krypton.Toolkit.KryptonCheckBox();
             this.chk跳过Pass = new ComponentFactory.Krypton.Toolkit.KryptonCheckBox();
-            this.kryptonButton19 = new ComponentFactory.Krypton.Toolkit.KryptonButton();
-            this.kryptonButton18 = new ComponentFactory.Krypton.Toolkit.KryptonButton();
-            this.kryptonButton17 = new ComponentFactory.Krypton.Toolkit.KryptonButton();
+            this.btnStop = new ComponentFactory.Krypton.Toolkit.KryptonButton();
+            this.btnPause = new ComponentFactory.Krypton.Toolkit.KryptonButton();
+            this.btnStart = new ComponentFactory.Krypton.Toolkit.KryptonButton();
             this.dataGridView1 = new ComponentFactory.Krypton.Toolkit.KryptonDataGridView();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -474,7 +475,7 @@
             this.kryptonPage4,
             this.kryptonPage5});
             this.kryptonNavigator2.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.Office2007Blue;
-            this.kryptonNavigator2.SelectedIndex = 2;
+            this.kryptonNavigator2.SelectedIndex = 0;
             this.kryptonNavigator2.Size = new System.Drawing.Size(794, 994);
             this.kryptonNavigator2.TabIndex = 4;
             this.kryptonNavigator2.Text = "kryptonNavigator2";
@@ -2067,18 +2068,19 @@
             // 
             // kryptonPanel9
             // 
-            this.kryptonPanel9.Controls.Add(this.kryptonButton22);
-            this.kryptonPanel9.Controls.Add(this.kryptonButton23);
-            this.kryptonPanel9.Controls.Add(this.kryptonButton24);
-            this.kryptonPanel9.Controls.Add(this.kryptonButton25);
-            this.kryptonPanel9.Controls.Add(this.kryptonButton26);
-            this.kryptonPanel9.Controls.Add(this.kryptonButton27);
-            this.kryptonPanel9.Controls.Add(this.kryptonButton28);
-            this.kryptonPanel9.Controls.Add(this.kryptonButton29);
+            this.kryptonPanel9.Controls.Add(this.btnFlow_OUT);
+            this.kryptonPanel9.Controls.Add(this.btnReSetAlarm);
+            this.kryptonPanel9.Controls.Add(this.btn4线测试);
+            this.kryptonPanel9.Controls.Add(this.btn2线测试);
+            this.kryptonPanel9.Controls.Add(this.btnFlow_In);
+            this.kryptonPanel9.Controls.Add(this.btn顶升);
+            this.kryptonPanel9.Controls.Add(this.btnGoStopPos);
+            this.kryptonPanel9.Controls.Add(this.btnHome);
+            this.kryptonPanel9.Controls.Add(this.btnAutoModel);
             this.kryptonPanel9.Controls.Add(this.kryptonGroupBox9);
-            this.kryptonPanel9.Controls.Add(this.kryptonButton19);
-            this.kryptonPanel9.Controls.Add(this.kryptonButton18);
-            this.kryptonPanel9.Controls.Add(this.kryptonButton17);
+            this.kryptonPanel9.Controls.Add(this.btnStop);
+            this.kryptonPanel9.Controls.Add(this.btnPause);
+            this.kryptonPanel9.Controls.Add(this.btnStart);
             this.kryptonPanel9.Dock = System.Windows.Forms.DockStyle.Fill;
             this.kryptonPanel9.Location = new System.Drawing.Point(0, 0);
             this.kryptonPanel9.Name = "kryptonPanel9";
@@ -2086,77 +2088,99 @@
             this.kryptonPanel9.Size = new System.Drawing.Size(792, 962);
             this.kryptonPanel9.TabIndex = 0;
             // 
-            // kryptonButton22
+            // btnFlow_OUT
             // 
-            this.kryptonButton22.Location = new System.Drawing.Point(593, 593);
-            this.kryptonButton22.Name = "kryptonButton22";
-            this.kryptonButton22.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.Office2007Blue;
-            this.kryptonButton22.Size = new System.Drawing.Size(180, 49);
-            this.kryptonButton22.TabIndex = 50;
-            this.kryptonButton22.Values.Text = "报警复位";
+            this.btnFlow_OUT.Location = new System.Drawing.Point(215, 606);
+            this.btnFlow_OUT.Name = "btnFlow_OUT";
+            this.btnFlow_OUT.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.Office2007Blue;
+            this.btnFlow_OUT.Size = new System.Drawing.Size(180, 60);
+            this.btnFlow_OUT.TabIndex = 51;
+            this.btnFlow_OUT.Values.Text = "出板";
+            this.btnFlow_OUT.Click += new System.EventHandler(this.btnFlow_OUT_Click);
             // 
-            // kryptonButton23
+            // btnReSetAlarm
             // 
-            this.kryptonButton23.Location = new System.Drawing.Point(405, 593);
-            this.kryptonButton23.Name = "kryptonButton23";
-            this.kryptonButton23.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.Office2007Blue;
-            this.kryptonButton23.Size = new System.Drawing.Size(180, 49);
-            this.kryptonButton23.TabIndex = 49;
-            this.kryptonButton23.Values.Text = "四线测试";
+            this.btnReSetAlarm.Location = new System.Drawing.Point(404, 539);
+            this.btnReSetAlarm.Name = "btnReSetAlarm";
+            this.btnReSetAlarm.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.Office2007Blue;
+            this.btnReSetAlarm.Size = new System.Drawing.Size(180, 60);
+            this.btnReSetAlarm.TabIndex = 50;
+            this.btnReSetAlarm.Values.Image = global::GSP_SJ.Properties.Resources.icons8_报警_48;
+            this.btnReSetAlarm.Values.Text = "报警复位";
+            this.btnReSetAlarm.Click += new System.EventHandler(this.btnReSetAlarm_Click);
             // 
-            // kryptonButton24
+            // btn4线测试
             // 
-            this.kryptonButton24.Location = new System.Drawing.Point(216, 593);
-            this.kryptonButton24.Name = "kryptonButton24";
-            this.kryptonButton24.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.Office2007Blue;
-            this.kryptonButton24.Size = new System.Drawing.Size(180, 49);
-            this.kryptonButton24.TabIndex = 48;
-            this.kryptonButton24.Values.Text = "二线测试";
+            this.btn4线测试.Location = new System.Drawing.Point(593, 606);
+            this.btn4线测试.Name = "btn4线测试";
+            this.btn4线测试.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.Office2007Blue;
+            this.btn4线测试.Size = new System.Drawing.Size(180, 60);
+            this.btn4线测试.TabIndex = 49;
+            this.btn4线测试.Values.Text = "四线测试";
+            this.btn4线测试.Click += new System.EventHandler(this.btn4线测试_Click);
             // 
-            // kryptonButton25
+            // btn2线测试
             // 
-            this.kryptonButton25.Location = new System.Drawing.Point(26, 593);
-            this.kryptonButton25.Name = "kryptonButton25";
-            this.kryptonButton25.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.Office2007Blue;
-            this.kryptonButton25.Size = new System.Drawing.Size(180, 49);
-            this.kryptonButton25.TabIndex = 47;
-            this.kryptonButton25.Values.Text = "出板";
+            this.btn2线测试.Location = new System.Drawing.Point(404, 606);
+            this.btn2线测试.Name = "btn2线测试";
+            this.btn2线测试.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.Office2007Blue;
+            this.btn2线测试.Size = new System.Drawing.Size(180, 60);
+            this.btn2线测试.TabIndex = 48;
+            this.btn2线测试.Values.Text = "二线测试";
+            this.btn2线测试.Click += new System.EventHandler(this.btn2线测试_Click);
             // 
-            // kryptonButton26
+            // btnFlow_In
             // 
-            this.kryptonButton26.Location = new System.Drawing.Point(592, 538);
-            this.kryptonButton26.Name = "kryptonButton26";
-            this.kryptonButton26.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.Office2007Blue;
-            this.kryptonButton26.Size = new System.Drawing.Size(180, 49);
-            this.kryptonButton26.TabIndex = 46;
-            this.kryptonButton26.Values.Text = "未顶升";
+            this.btnFlow_In.Location = new System.Drawing.Point(26, 606);
+            this.btnFlow_In.Name = "btnFlow_In";
+            this.btnFlow_In.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.Office2007Blue;
+            this.btnFlow_In.Size = new System.Drawing.Size(180, 60);
+            this.btnFlow_In.TabIndex = 47;
+            this.btnFlow_In.Values.Text = "进板";
+            this.btnFlow_In.Click += new System.EventHandler(this.btnFlow_In_Click);
             // 
-            // kryptonButton27
+            // btn顶升
             // 
-            this.kryptonButton27.Location = new System.Drawing.Point(404, 538);
-            this.kryptonButton27.Name = "kryptonButton27";
-            this.kryptonButton27.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.Office2007Blue;
-            this.kryptonButton27.Size = new System.Drawing.Size(180, 49);
-            this.kryptonButton27.TabIndex = 45;
-            this.kryptonButton27.Values.Text = "回停止位";
+            this.btn顶升.Location = new System.Drawing.Point(26, 677);
+            this.btn顶升.Name = "btn顶升";
+            this.btn顶升.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.Office2007Blue;
+            this.btn顶升.Size = new System.Drawing.Size(180, 60);
+            this.btn顶升.TabIndex = 46;
+            this.btn顶升.Values.Text = "顶升";
+            this.btn顶升.Click += new System.EventHandler(this.btn顶升_Click);
             // 
-            // kryptonButton28
+            // btnGoStopPos
             // 
-            this.kryptonButton28.Location = new System.Drawing.Point(215, 538);
-            this.kryptonButton28.Name = "kryptonButton28";
-            this.kryptonButton28.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.Office2007Blue;
-            this.kryptonButton28.Size = new System.Drawing.Size(180, 49);
-            this.kryptonButton28.TabIndex = 44;
-            this.kryptonButton28.Values.Text = "归零";
+            this.btnGoStopPos.Location = new System.Drawing.Point(593, 539);
+            this.btnGoStopPos.Name = "btnGoStopPos";
+            this.btnGoStopPos.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.Office2007Blue;
+            this.btnGoStopPos.Size = new System.Drawing.Size(180, 60);
+            this.btnGoStopPos.TabIndex = 45;
+            this.btnGoStopPos.Values.Image = global::GSP_SJ.Properties.Resources._16;
+            this.btnGoStopPos.Values.Text = "回停止位";
+            this.btnGoStopPos.Click += new System.EventHandler(this.btnGoStopPos_Click);
             // 
-            // kryptonButton29
+            // btnHome
             // 
-            this.kryptonButton29.Location = new System.Drawing.Point(25, 538);
-            this.kryptonButton29.Name = "kryptonButton29";
-            this.kryptonButton29.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.Office2007Blue;
-            this.kryptonButton29.Size = new System.Drawing.Size(180, 49);
-            this.kryptonButton29.TabIndex = 43;
-            this.kryptonButton29.Values.Text = "自动模式";
+            this.btnHome.Location = new System.Drawing.Point(215, 538);
+            this.btnHome.Name = "btnHome";
+            this.btnHome.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.Office2007Blue;
+            this.btnHome.Size = new System.Drawing.Size(180, 60);
+            this.btnHome.TabIndex = 44;
+            this.btnHome.Values.Image = global::GSP_SJ.Properties.Resources._186;
+            this.btnHome.Values.Text = "归零";
+            this.btnHome.Click += new System.EventHandler(this.btnHome_Click);
+            // 
+            // btnAutoModel
+            // 
+            this.btnAutoModel.Location = new System.Drawing.Point(25, 538);
+            this.btnAutoModel.Name = "btnAutoModel";
+            this.btnAutoModel.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.Office2007Blue;
+            this.btnAutoModel.Size = new System.Drawing.Size(180, 60);
+            this.btnAutoModel.TabIndex = 43;
+            this.btnAutoModel.Values.Image = global::GSP_SJ.Properties.Resources.icons8_switch_on_48;
+            this.btnAutoModel.Values.Text = "自动模式";
+            this.btnAutoModel.Click += new System.EventHandler(this.btnAutoModel_Click);
             // 
             // kryptonGroupBox9
             // 
@@ -2556,35 +2580,38 @@
             this.chk跳过Pass.TabIndex = 38;
             this.chk跳过Pass.Values.Text = "跳过PASS";
             // 
-            // kryptonButton19
+            // btnStop
             // 
-            this.kryptonButton19.Location = new System.Drawing.Point(531, 15);
-            this.kryptonButton19.Name = "kryptonButton19";
-            this.kryptonButton19.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.Office2007Blue;
-            this.kryptonButton19.Size = new System.Drawing.Size(252, 73);
-            this.kryptonButton19.TabIndex = 15;
-            this.kryptonButton19.Values.Image = global::GSP_SJ.Properties.Resources.icons8_停止_48;
-            this.kryptonButton19.Values.Text = "停止检测";
+            this.btnStop.Location = new System.Drawing.Point(531, 15);
+            this.btnStop.Name = "btnStop";
+            this.btnStop.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.Office2007Blue;
+            this.btnStop.Size = new System.Drawing.Size(252, 73);
+            this.btnStop.TabIndex = 15;
+            this.btnStop.Values.Image = global::GSP_SJ.Properties.Resources.icons8_停止_48;
+            this.btnStop.Values.Text = "停止检测";
+            this.btnStop.Click += new System.EventHandler(this.btnStop_Click);
             // 
-            // kryptonButton18
+            // btnPause
             // 
-            this.kryptonButton18.Location = new System.Drawing.Point(268, 15);
-            this.kryptonButton18.Name = "kryptonButton18";
-            this.kryptonButton18.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.Office2007Blue;
-            this.kryptonButton18.Size = new System.Drawing.Size(262, 73);
-            this.kryptonButton18.TabIndex = 14;
-            this.kryptonButton18.Values.Image = global::GSP_SJ.Properties.Resources.icons8_暂停_48;
-            this.kryptonButton18.Values.Text = "暂停检测";
+            this.btnPause.Location = new System.Drawing.Point(268, 15);
+            this.btnPause.Name = "btnPause";
+            this.btnPause.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.Office2007Blue;
+            this.btnPause.Size = new System.Drawing.Size(262, 73);
+            this.btnPause.TabIndex = 14;
+            this.btnPause.Values.Image = global::GSP_SJ.Properties.Resources.icons8_暂停_48;
+            this.btnPause.Values.Text = "暂停检测";
+            this.btnPause.Click += new System.EventHandler(this.btnPause_Click);
             // 
-            // kryptonButton17
+            // btnStart
             // 
-            this.kryptonButton17.Location = new System.Drawing.Point(5, 15);
-            this.kryptonButton17.Name = "kryptonButton17";
-            this.kryptonButton17.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.Office2007Blue;
-            this.kryptonButton17.Size = new System.Drawing.Size(262, 73);
-            this.kryptonButton17.TabIndex = 13;
-            this.kryptonButton17.Values.Image = global::GSP_SJ.Properties.Resources.icons8_开始_48;
-            this.kryptonButton17.Values.Text = "开始检测";
+            this.btnStart.Location = new System.Drawing.Point(5, 15);
+            this.btnStart.Name = "btnStart";
+            this.btnStart.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.Office2007Blue;
+            this.btnStart.Size = new System.Drawing.Size(262, 73);
+            this.btnStart.TabIndex = 13;
+            this.btnStart.Values.Image = global::GSP_SJ.Properties.Resources.icons8_开始_48;
+            this.btnStart.Values.Text = "开始检测";
+            this.btnStart.Click += new System.EventHandler(this.btnStart_Click);
             // 
             // dataGridView1
             // 
@@ -2889,34 +2916,34 @@
             this.位置3ToolStripMenuItem,
             this.位置4ToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(124, 108);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(145, 108);
             // 
             // 位置1ToolStripMenuItem
             // 
             this.位置1ToolStripMenuItem.Name = "位置1ToolStripMenuItem";
-            this.位置1ToolStripMenuItem.Size = new System.Drawing.Size(123, 26);
-            this.位置1ToolStripMenuItem.Text = "位置1";
+            this.位置1ToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
+            this.位置1ToolStripMenuItem.Text = "MARK1";
             this.位置1ToolStripMenuItem.Click += new System.EventHandler(this.位置1ToolStripMenuItem_Click);
             // 
             // 位置2ToolStripMenuItem
             // 
             this.位置2ToolStripMenuItem.Name = "位置2ToolStripMenuItem";
-            this.位置2ToolStripMenuItem.Size = new System.Drawing.Size(123, 26);
-            this.位置2ToolStripMenuItem.Text = "位置2";
+            this.位置2ToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
+            this.位置2ToolStripMenuItem.Text = "MARK2";
             this.位置2ToolStripMenuItem.Click += new System.EventHandler(this.位置2ToolStripMenuItem_Click);
             // 
             // 位置3ToolStripMenuItem
             // 
             this.位置3ToolStripMenuItem.Name = "位置3ToolStripMenuItem";
-            this.位置3ToolStripMenuItem.Size = new System.Drawing.Size(123, 26);
-            this.位置3ToolStripMenuItem.Text = "位置3";
+            this.位置3ToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
+            this.位置3ToolStripMenuItem.Text = "Position3";
             this.位置3ToolStripMenuItem.Click += new System.EventHandler(this.位置3ToolStripMenuItem_Click);
             // 
             // 位置4ToolStripMenuItem
             // 
             this.位置4ToolStripMenuItem.Name = "位置4ToolStripMenuItem";
-            this.位置4ToolStripMenuItem.Size = new System.Drawing.Size(123, 26);
-            this.位置4ToolStripMenuItem.Text = "位置4";
+            this.位置4ToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
+            this.位置4ToolStripMenuItem.Text = "Position4";
             this.位置4ToolStripMenuItem.Click += new System.EventHandler(this.位置4ToolStripMenuItem_Click);
             // 
             // kryptonNavigator1
@@ -3930,9 +3957,9 @@
         private ComponentFactory.Krypton.Toolkit.KryptonLabel kryptonLabel45;
         private ComponentFactory.Krypton.Toolkit.KryptonGroupBox kryptonGroupBox8;
         private ComponentFactory.Krypton.Toolkit.KryptonPanel kryptonPanel9;
-        private ComponentFactory.Krypton.Toolkit.KryptonButton kryptonButton18;
-        private ComponentFactory.Krypton.Toolkit.KryptonButton kryptonButton17;
-        private ComponentFactory.Krypton.Toolkit.KryptonButton kryptonButton19;
+        private ComponentFactory.Krypton.Toolkit.KryptonButton btnPause;
+        private ComponentFactory.Krypton.Toolkit.KryptonButton btnStart;
+        private ComponentFactory.Krypton.Toolkit.KryptonButton btnStop;
         private ComponentFactory.Krypton.Toolkit.KryptonGroupBox kryptonGroupBox9;
         private ComponentFactory.Krypton.Toolkit.KryptonCheckBox chk空贴;
         private ComponentFactory.Krypton.Toolkit.KryptonCheckBox chk电感;
@@ -3968,14 +3995,14 @@
         private ComponentFactory.Krypton.Toolkit.KryptonNumericUpDown kryptonNumericUpDown2;
         private ComponentFactory.Krypton.Toolkit.KryptonButton kryptonButton21;
         private ComponentFactory.Krypton.Toolkit.KryptonButton kryptonButton20;
-        private ComponentFactory.Krypton.Toolkit.KryptonButton kryptonButton22;
-        private ComponentFactory.Krypton.Toolkit.KryptonButton kryptonButton23;
-        private ComponentFactory.Krypton.Toolkit.KryptonButton kryptonButton24;
-        private ComponentFactory.Krypton.Toolkit.KryptonButton kryptonButton25;
-        private ComponentFactory.Krypton.Toolkit.KryptonButton kryptonButton26;
-        private ComponentFactory.Krypton.Toolkit.KryptonButton kryptonButton27;
-        private ComponentFactory.Krypton.Toolkit.KryptonButton kryptonButton28;
-        private ComponentFactory.Krypton.Toolkit.KryptonButton kryptonButton29;
+        private ComponentFactory.Krypton.Toolkit.KryptonButton btnReSetAlarm;
+        private ComponentFactory.Krypton.Toolkit.KryptonButton btn4线测试;
+        private ComponentFactory.Krypton.Toolkit.KryptonButton btn2线测试;
+        private ComponentFactory.Krypton.Toolkit.KryptonButton btnFlow_In;
+        private ComponentFactory.Krypton.Toolkit.KryptonButton btn顶升;
+        private ComponentFactory.Krypton.Toolkit.KryptonButton btnGoStopPos;
+        private ComponentFactory.Krypton.Toolkit.KryptonButton btnHome;
+        private ComponentFactory.Krypton.Toolkit.KryptonButton btnAutoModel;
         private ComponentFactory.Krypton.Toolkit.KryptonCheckBox chk0603;
         private ComponentFactory.Krypton.Toolkit.KryptonCheckBox chk0402;
         private ComponentFactory.Krypton.Toolkit.KryptonCheckBox chk0201;
@@ -4015,5 +4042,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column26;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column27;
         private ComponentFactory.Krypton.Toolkit.KryptonComboBox kryptonComboBox1;
+        private ComponentFactory.Krypton.Toolkit.KryptonButton btnFlow_OUT;
     }
 }

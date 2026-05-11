@@ -17,6 +17,11 @@ namespace GSP_SJ.DBForm
         public FormSetPasswork()
         {
             InitializeComponent();
+            UpdateLanguage();
+        }
+        private void UpdateLanguage()
+        {
+            BrowApp.Language.Language.Instance.UpdateLanguage(this, null);
         }
         int type = 0;
         public string password = "";

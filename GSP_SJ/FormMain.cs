@@ -7,6 +7,7 @@ using BrowApp.MessageTip;
 using BrowLib;
 using CKVisionAppNet;
 using ComponentFactory.Krypton.Navigator;
+using ComponentFactory.Krypton.Ribbon;
 using ComponentFactory.Krypton.Toolkit;
 using GSP;
 using GSP.Mes;
@@ -32,7 +33,6 @@ namespace GSP_SJ
 {
     public partial class FormMain : KryptonForm
     {
-        
         public FormMain()
         {
             InitializeComponent();
@@ -41,7 +41,6 @@ namespace GSP_SJ
             RefAuthority("");
             Global.VisionApp.VisionAppIni();
             Global.VisionApp.CreationProject();
-            Global.TcpClass.TcpMessageReceived += RefReceive;
             Global.UserHandler += new EventHandler(RefUser);
             // 3. 创建委托实例
             AlarmHelper.AddEvent += UpAlam;
@@ -50,7 +49,7 @@ namespace GSP_SJ
             timer.Interval = 20;
             timer.Tick += timer1_Tick;
             //timer.Start();
-            this.Load+= FormMain_Load;
+            this.Load += FormMain_Load;
             this.FormClosing += BrowForm_FormClosing;
         }
 
@@ -74,28 +73,29 @@ namespace GSP_SJ
             }
         }
 
-
         private void FormMain_Load(object sender, EventArgs e)
         {
-           
+
             State_mes.TextLine1 = "系统未初始化？";
             State_mes.StateNormal.TextColor = Color.DarkOrange;
-       
             Flow.StartThread();
             BrowApp.Language.Language.Instance.UpdateLanguage(this, null);
             Global.GlobRefEvent?.Invoke();
             BrowLib.Controller.SetLimit(false);
             Global.VisionApp.SetLanguage("eng");
-            Task.Run(() => {
+            Task.Run(() =>
+            {
                 bool RE = Global.VisionApp.LoadProject(@"./VisionProject/VisionPro.proj");
                 APP.Log.I_Log("加载视觉方案{" + RE.ToString() + "}");
             });
-            bool result = Global.TcpClass.TCPini("127.0.0.1", 8000, "Tcp");
-            APP.Log.I_Log("FAI通讯连接{" + result.ToString() + "}");
+         
         }
 
         System.Windows.Forms.Timer timer;
         private int Btimes;
+
+        private MotionCtr motionCtr;
+
         #region 定时器
         private KTimer KTimer = new KTimer();
         private KTimer MesTimer = new KTimer();
@@ -105,7 +105,6 @@ namespace GSP_SJ
         FlowControl Flow = new FlowControl();
         Algorithm Algorithm = new Algorithm();
         private MarkForm markFrm;
-        private int States = -1;//停机
         #endregion
 
         #region 系统Timer事件
@@ -170,19 +169,16 @@ namespace GSP_SJ
             {
                 Global.AlarmFlag = true;
                 Global.PauseFlag = true;
-
-      
                 RefSystemState(0);
                 if (Global.MachineState == GEnumEx.MachineState.MachineRuning)
                 {
-                    Global.TcpClass.Send("M:Error");
                     Global.MachineState = GEnumEx.MachineState.MachineError;
                 }
                 BrowLib.Controller.OutPort["蜂鸣器_OUT"].On();
                 BrowLib.Controller.OutPort["三色灯红色_OUT"].On();
                 BrowLib.Controller.OutPort["三色灯黄色_OUT"].Off();
                 BrowLib.Controller.OutPort["三色灯绿色_OUT"].Off();
-                States = 1;//报警
+                Global.States = 1;//报警
             }
             else
             {
@@ -196,7 +192,7 @@ namespace GSP_SJ
                             Global.MachineState = GEnumEx.MachineState.MachinePause;
                         }
                     }
-              
+
                     switch (Global.MachineState)
                     {
                         case GEnumEx.MachineState.MachineRuning:
@@ -227,7 +223,6 @@ namespace GSP_SJ
                                 BrowLib.Controller.OutPort["三色灯黄色_OUT"].On();
                                 BrowLib.Controller.OutPort["三色灯绿色_OUT"].Off();
 
-                                Global.TcpClass.Send("M:Pause");
                             }
                             break;
                         case GEnumEx.MachineState.MachineInitialize:
@@ -252,7 +247,7 @@ namespace GSP_SJ
                                 BrowLib.Controller.OutPort["三色灯红色_OUT"].Off();
                                 BrowLib.Controller.OutPort["三色灯黄色_OUT"].Off();
                                 BrowLib.Controller.OutPort["三色灯绿色_OUT"].On();
-                                States = 2;//待机
+                                Global.States = 2;//待机
                             }
                             break;
                         case GEnumEx.MachineState.MachineStop:
@@ -264,7 +259,7 @@ namespace GSP_SJ
                                 BrowLib.Controller.OutPort["三色灯红色_OUT"].Off();
                                 BrowLib.Controller.OutPort["三色灯黄色_OUT"].On();
                                 BrowLib.Controller.OutPort["三色灯绿色_OUT"].Off();
-                                States = 0;//停机
+                                Global.States = 0;//停机
                             }
                             break;
                     }
@@ -297,17 +292,17 @@ namespace GSP_SJ
         }
         #endregion
 
-        private int _States = 0;//停机
+
         private void Upstates()
         {
 
-            if (_States != States)
+            if (Global._States != Global.States)
             {
-                _States = States;
+                Global._States = Global.States;
 
                 string StatusID = "STOP";
 
-                switch (_States)
+                switch (Global._States)
                 {
                     case 0:
                         StatusID = "STOP";
@@ -405,7 +400,8 @@ namespace GSP_SJ
             string alertID = Global.mesConfig.equipmentNo + DateTime.Now.ToString("yyyyMMddhhmmss");
             if (Global.mesConfig.Ulr2_ck)
             {
-                Task.Run(() => {
+                Task.Run(() =>
+                {
                     try
                     {
                         BrowLib.FileClass.RwIni iniFile = new BrowLib.FileClass.RwIni(Global.Systemdata.CfgFile, "", Encoding.Default);
@@ -419,6 +415,40 @@ namespace GSP_SJ
                     catch { }
                 });
             }
+        }
+   
+        private void RefRecipe(int mode)
+        {
+            string FBCCode, XYCode, BoardSide, ProductCode, ProductName;
+            double X, Y;
+            Global.ReadFAIConfig(out FBCCode, out XYCode, out BoardSide, out ProductCode, out ProductName);
+            Global.RecipePatn = XYCode + BoardSide;
+            Global.Parm.SetCode = Global.RecipePatn;
+            Global.VisionApp.SetCodePath = Global.RecipePatn;
+            if (mode == 0)
+            {
+                Global.Is_NoMark = true;
+                bool Btn1 = Global.Parm.Read(ref Global.Parm);
+                if (Btn1) { Global.IsRecipe = true; }
+                else
+                    Global.IsRecipe = false;
+            }
+            else if (mode == 1)
+            {
+                Global.Is_NoMark = false;
+                bool Btn1 = Global.Parm.Read(ref Global.Parm);
+                bool Btn2 = Global.VisionApp.ReadObj("Mark.proc", "Task3");
+                if (Btn1 && Btn2) { Global.IsRecipe = true; }
+                else
+                    Global.IsRecipe = false;
+            }
+
+            GSP.VisionGlobal.bMak1_X = Global.Parm.BMak1Pos.Xpos;
+            GSP.VisionGlobal.bMak1_Y = Global.Parm.BMak1Pos.Ypos;
+
+            GSP.VisionGlobal.bMak2_X = Global.Parm.BMak2Pos.Xpos;
+            GSP.VisionGlobal.bMak2_Y = Global.Parm.BMak2Pos.Ypos;
+
         }
         void RefReceive(object sends, string message)
         {
@@ -435,21 +465,17 @@ namespace GSP_SJ
                         case "刷新BOM":
                             Global.RefFormHandler?.Invoke(this, new EventArgs());
                             Global.Authority = Global.ReadAuthority();
-                            Global.TcpClass.Send("M:刷新BOM_OK");
                             break;
                         case "刷新配方":
                             RefRecipe(Convert.ToInt32(GetMes[2]));
-                            Global.TcpClass.Send("M:刷新配方_OK");
                             Global.Hoffset = Convert.ToDouble(GetMes[3]);
                             break;
                         case "模式切换_OFF":
                             BrowLib.Controller.OutPort["自动切换手动"].Off();
-                            Global.TcpClass.Send("M:模式切换_OFF_OK");
                             break;
                         case "模式切换_ON":
                             BrowLib.Controller.OutPort["自动切换手动"].On();
                             BrowLib.Controller.OutPort["四线切换两线"].On();
-                            Global.TcpClass.Send("M:模式切换_ON_OK");
                             break;
                         case "用户登出":
                             Global.Password = null;
@@ -479,7 +505,7 @@ namespace GSP_SJ
                             Flow.ExecuteManual(() =>
                             {
                                 new HandFlow().SafeMoveXYZR(200, 10, 0, Global.CalibData.ZeroPos.Xpos, Global.CalibData.ZeroPos.Ypos, Global.CalibData.ZeroPos.Zpos, 0, size);
-                                Global.TcpClass.Send("M:开路清零就绪");
+                              
                             });
                             break;
                         case "短路清零":
@@ -487,7 +513,7 @@ namespace GSP_SJ
                             Flow.ExecuteManual(() =>
                             {
                                 new HandFlow().SafeMoveXYZR(200, 10, 0, Global.CalibData.ZeroPos2.Xpos, Global.CalibData.ZeroPos2.Ypos, Global.CalibData.ZeroPos2.Zpos, 0, size2);
-                                Global.TcpClass.Send("M:短路清零就绪");
+                            
                             });
                             break;
                         case "短路清零完成":
@@ -703,40 +729,6 @@ namespace GSP_SJ
                 }
             });
         }
-        private void RefRecipe(int mode)
-        {
-            string FBCCode, XYCode, BoardSide, ProductCode, ProductName;
-            double X, Y;
-            Global.ReadFAIConfig(out FBCCode, out XYCode, out BoardSide, out ProductCode, out ProductName);
-            Global.RecipePatn = XYCode + BoardSide;
-            Global.Parm.SetCode = Global.RecipePatn;
-            Global.VisionApp.SetCodePath = Global.RecipePatn;
-            if (mode == 0)
-            {
-                Global.Is_NoMark = true;
-                bool Btn1 = Global.Parm.Read(ref Global.Parm);
-                if (Btn1) { Global.IsRecipe = true; }
-                else
-                    Global.IsRecipe = false;
-            }
-            else if (mode == 1)
-            {
-                Global.Is_NoMark = false;
-                bool Btn1 = Global.Parm.Read(ref Global.Parm);
-                bool Btn2 = Global.VisionApp.ReadObj("Mark.proc", "Task3");
-                if (Btn1 && Btn2) { Global.IsRecipe = true; }
-                else
-                    Global.IsRecipe = false;
-            }
-
-            GSP.VisionGlobal.bMak1_X = Global.Parm.BMak1Pos.Xpos;
-            GSP.VisionGlobal.bMak1_Y = Global.Parm.BMak1Pos.Ypos;
-
-            GSP.VisionGlobal.bMak2_X = Global.Parm.BMak2Pos.Xpos;
-            GSP.VisionGlobal.bMak2_Y = Global.Parm.BMak2Pos.Ypos;
-
-        }
-
         private void RefSystemState(int Type)
         {
             switch (Type)//报警中
@@ -924,10 +916,10 @@ namespace GSP_SJ
                 }
                 else
                 {
-                    
+
                     Flow.START();
                     Global.TcpClass.Send("M:StartOK");
-                    States = 3;//运行
+                    Global.States = 3;//运行
                 }
             }
         }
@@ -1063,7 +1055,7 @@ namespace GSP_SJ
                             }
                         }
                     }
-
+                    kryptonNavigator1.SelectedPage.ImageLarge = Properties.Resources._32;
                 }
             };
 
@@ -1098,9 +1090,10 @@ namespace GSP_SJ
                             }
                         }
                     }
+                    kryptonNavigator1.SelectedPage.ImageLarge = Properties.Resources._66;
                 }
             };
-           
+
         }
 
 
@@ -1191,11 +1184,11 @@ namespace GSP_SJ
 
         private void MenuItem1_Click(object sender, EventArgs e)
         {
-            SwitchFrm(MenuItem1.Text, MiddleLayer.UI_Vision);
+            SwitchFrm(MenuItem1.Text, MiddleLayer.UI_Vision, MenuItem1.Image);
         }
         private void MenuItem2_Click(object sender, EventArgs e)
         {
-            SwitchFrm(MenuItem2.Text, MiddleLayer.UI_Language);
+            SwitchFrm(MenuItem2.Text, MiddleLayer.UI_Language, MenuItem2.Image);
         }
         private void MenuItem3_Click(object sender, EventArgs e)
         {
@@ -1204,7 +1197,7 @@ namespace GSP_SJ
         }
         private void MenuItem4_Click(object sender, EventArgs e)
         {
-            SwitchFrm(MenuItem4.Text, MiddleLayer.UI_MachineTest);
+            SwitchFrm(MenuItem4.Text, MiddleLayer.UI_MachineTest, MenuItem4.Image);
         }
         private void MenuItem5_Click(object sender, EventArgs e)
         {
@@ -1271,80 +1264,22 @@ namespace GSP_SJ
             return page;
         }
 
-        private void NewRibbonRecentDoc(string name, int tag, Bitmap bitmap)
-        {
-            KryptonContextMenuItem kryptonRibbonRecentDoc = new KryptonContextMenuItem();
-            kryptonRibbonRecentDoc.Text = name;
-            kryptonRibbonRecentDoc.Tag = tag.ToString();
-            kryptonRibbonRecentDoc.Image = bitmap;
-            this.MainRib.RibbonAppButton.AppButtonMenuItems.Add(kryptonRibbonRecentDoc);
-            kryptonRibbonRecentDoc.Click += KryptonRibbonRecentDoc_Click;
-        }
-
-        private void KryptonRibbonRecentDoc_Click(object sender, EventArgs e)
-        {
-            string tag = ((KryptonContextMenuItem)sender).Tag.ToString();
-            switch (tag)
-            {
-                case "0":
-                    //用户管理
-                    FormUserManager user = new FormUserManager();
-                    user.ShowDialog();
-                    break;
-                case "1":
-                    //站位表
-                    break;
-                case "2":
-                    //资料库
-                    FormBasMaterial formBasMaterial = new FormBasMaterial();
-                    formBasMaterial.ShowDialog();
-                    break;
-                case "3":
-                    //尺寸管理
-                    FormSize formSize = new FormSize();
-                    formSize.ShowDialog();
-                    break;
-                case "4":
-                    //电桥配置
-                    FormCompensationSet formCompensationSet = new FormCompensationSet();
-                    formCompensationSet.ShowDialog();
-                    break;
-                case "5":
-                    //电桥参数
-                    FormCompensationParam formCompensationParam = new FormCompensationParam();
-                    formCompensationParam.ShowDialog();
-                    break;
-                case "6":
-                    //模板库
-                    FormModel formModel = new FormModel();
-                    formModel.ShowDialog();
-                    break;
-                case "7":
-                    //语言
-
-                    break;
-                default:
-                    break;
-            }
-            this.MainRib.RibbonAppButton.AppButtonImage = ((KryptonContextMenuItem)sender).Image;
-        }
-
         private void btnAddProduce_Click(object sender, EventArgs e)
         {
-            //FormProductItem form = new FormProductItem();
-            //form.ShowDialog();
-            string text = "程序";
+            string text = "新程序".tr();
             kryptonNavigator1.Pages.Add(GetKryptonPage(text));
             kryptonNavigator1.Pages[kryptonNavigator1.Pages.Count - 1].Controls.Add(new UCProgram());
             kryptonNavigator1.SelectedPage = kryptonNavigator1.Pages[kryptonNavigator1.Pages.Count - 1];
+            kryptonNavigator1.SelectedPage.ImageLarge = btnAddProduce.ImageLarge;
         }
 
         private void btnAddReport_Click(object sender, EventArgs e)
         {
-            string text = "报告";
+            string text = "新报告".tr();
             kryptonNavigator1.Pages.Add(GetKryptonPage(text));
             kryptonNavigator1.Pages[kryptonNavigator1.Pages.Count - 1].Controls.Add(new UCReport(true));
             kryptonNavigator1.SelectedPage = kryptonNavigator1.Pages[kryptonNavigator1.Pages.Count - 1];
+            kryptonNavigator1.SelectedPage.ImageLarge = btnAddReport.ImageLarge;
         }
 
         /// <summary>
@@ -1375,7 +1310,7 @@ namespace GSP_SJ
                 }
             }
 
-
+            kryptonNavigator1.SelectedPage.ImageLarge = btnAllProduce.ImageLarge;
 
         }
 
@@ -1406,6 +1341,8 @@ namespace GSP_SJ
                     }
                 }
             }
+
+            kryptonNavigator1.SelectedPage.ImageLarge = btnAllReport.ImageLarge;
         }
 
         private void buttonSpecAny1_Click(object sender, EventArgs e)
@@ -1431,10 +1368,10 @@ namespace GSP_SJ
             Global.UserHandler?.Invoke(user.Authority, new EventArgs());
             APP.Log.I_Log("用户登录-用户名:" + Global.UserName + "-权限:" + Global.Authority);
             //初始化系统菜单
-            if(!string.IsNullOrEmpty(user.Authority))
-             groupMotion.Visible = true;
+            if (!string.IsNullOrEmpty(user.Authority))
+                groupMotion.Visible = true;
             else
-             groupMotion.Visible = false;
+                groupMotion.Visible = false;
         }
 
         private void logout_btn_Click(object sender, EventArgs e)
@@ -1521,20 +1458,21 @@ namespace GSP_SJ
 
         private void btnResetAlarm_Click(object sender, EventArgs e)
         {
-
+            APP.Alarm.Clear();//报警清除
         }
 
         private void CalibBtn_Click(object sender, EventArgs e)
         {
-            SwitchFrm(CalibBtn.TextLine1, MiddleLayer.UI_Calib);
+            SwitchFrm(CalibBtn.TextLine1, MiddleLayer.UI_Calib, CalibBtn.ImageLarge);
         }
 
         /// <summary>
         /// 切换窗体
         /// </summary>
         /// <param name="control"></param>
-        private void SwitchFrm(string text, Control control)
+        private void SwitchFrm(string text, Control control, System.Drawing.Image image)
         {
+
             if (kryptonNavigator1.Pages.Where(x => x.Text == text).Count() == 0)
             {
                 kryptonNavigator1.Pages.Add(GetKryptonPage(text));
@@ -1553,13 +1491,14 @@ namespace GSP_SJ
                     }
                 }
             }
+            kryptonNavigator1.SelectedPage.ImageLarge = image;
         }
 
         private void ProgramBtn_Click(object sender, EventArgs e)
         {
-            SwitchFrm(ProgramBtn.TextLine1, MiddleLayer.UI_Program);
+            SwitchFrm(ProgramBtn.TextLine1, MiddleLayer.UI_Program, ProgramBtn.ImageLarge);
         }
-        private MotionCtr motionCtr;
+  
         private void Debug_btn_Click(object sender, EventArgs e)
         {
             if (Global.SystemRun) { FloatingTip.ShowWarning("请暂停设备再执行操作".tr()); return; }
@@ -1578,15 +1517,13 @@ namespace GSP_SJ
 
         private void System_btn_Click(object sender, EventArgs e)
         {
-            SwitchFrm(System_btn.TextLine1, MiddleLayer.UI_System);
+            SwitchFrm(System_btn.TextLine1, MiddleLayer.UI_System, System_btn.ImageLarge);
         }
 
         private void Mes_btn_Click(object sender, EventArgs e)
         {
-            SwitchFrm(System_btn.TextLine1, MiddleLayer.UI_MESControl);
+            SwitchFrm(System_btn.TextLine1, MiddleLayer.UI_MESControl, System_btn.ImageLarge);
         }
-
-     
 
         private void HomeBtn_Click(object sender, EventArgs e)
         {

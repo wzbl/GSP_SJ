@@ -16,6 +16,11 @@ namespace BorwinAnalyse.ImportBom
         public FormAddRule()
         {
             InitializeComponent();
+            UpdateLanguage();
+        }
+        private void UpdateLanguage()
+        {
+            BrowApp.Language.Language.Instance.UpdateLanguage(this, null);
         }
 
         public FormAddRule(string rule) : this()

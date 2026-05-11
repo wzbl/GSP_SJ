@@ -2,6 +2,7 @@
 using BorwinAnalyse.ImportBom;
 using BrowLib.Static;
 using ComponentFactory.Krypton.Toolkit;
+using NPOI.SS.Formula.Functions;
 using SqlHelper;
 using System;
 using System.Collections.Generic;
@@ -86,8 +87,12 @@ namespace BorwinAnalyse.Forms
 
             }
             BindData();
+            UpdateLanguage();
         }
-
+        private void UpdateLanguage()
+        {
+            BrowApp.Language.Language.Instance.UpdateLanguage(this, null);
+        }
         private void AnalyBomFile()
         {
             p_Search_Engs.Clear();
@@ -181,97 +186,7 @@ namespace BorwinAnalyse.Forms
                         _Bom_Result.替代料 = "";
                     }
 
-                    AnalyseResult analyseResult = CommonAnalyse.Instance.AnalyseMethod_copy(_Bom_Result.物料描述);
-                    switch (analyseResult.Type)
-                    {
-                        case "电阻":
-                            _Bom_Result.元件类型 = "R";
-                            break;
-                        case "电容":
-                            _Bom_Result.元件类型 = "C";
-                            break;
-                        default:
-                            _Bom_Result.元件类型 = "O";
-                            break;
-                    }
-                    if (analyseResult.Result)
-                    {
-                        _Bom_Result.元件尺寸 = analyseResult.Size;
-                        _Bom_Result.标准值 = decimal.Parse(analyseResult.Value);
-                        _Bom_Result.单位 = analyseResult.Unit;
-                        if (analyseResult.Grade.Contains("%"))
-                        {
-                            string grade = analyseResult.Grade.Replace("%", "");
-                            _Bom_Result.上限公差 = decimal.Parse(grade);
-                            _Bom_Result.下限公差 = decimal.Parse(grade);
-                            decimal val = (decimal)_Bom_Result.上限公差 / (decimal)100.00;
-                            _Bom_Result.最大值 = _Bom_Result.标准值 + _Bom_Result.标准值 * (val);
-                            _Bom_Result.最小值 = _Bom_Result.标准值 - _Bom_Result.标准值 * (val);
-                            _Bom_Result.公差类别 = "%";
-                        }
-                        else
-                        {
-                            _Bom_Result.上限公差 = decimal.Parse(analyseResult.Grade);
-                            _Bom_Result.下限公差 = decimal.Parse(analyseResult.Grade);
-                            _Bom_Result.最大值 = _Bom_Result.标准值 + _Bom_Result.上限公差;
-                            _Bom_Result.最小值 = _Bom_Result.标准值 - _Bom_Result.下限公差;
-                            _Bom_Result.公差类别 = "±";
-                        }
-
-                    }
-                    else
-                    {
-                        _Bom_Result.元件尺寸 = analyseResult.Size;
-                        if (analyseResult.Unit != null)
-                            _Bom_Result.单位 = analyseResult.Unit;
-                        if (decimal.TryParse(analyseResult.Value, out decimal value))
-                        {
-                            _Bom_Result.标准值 = decimal.Parse(analyseResult.Value);
-                            if (analyseResult.Grade.Contains("%"))
-                            {
-                                string grade = analyseResult.Grade.Replace("%", "");
-                                _Bom_Result.上限公差 = decimal.Parse(grade);
-                                _Bom_Result.下限公差 = decimal.Parse(grade);
-                                decimal val = (decimal)_Bom_Result.上限公差 / (decimal)100.00;
-                                _Bom_Result.最大值 = _Bom_Result.标准值 + _Bom_Result.标准值 * (val);
-                                _Bom_Result.最小值 = _Bom_Result.标准值 - _Bom_Result.标准值 * (val);
-                                _Bom_Result.公差类别 = "%";
-                            }
-                            else if (decimal.TryParse(analyseResult.Grade, out decimal g))
-                            {
-                                _Bom_Result.上限公差 = decimal.Parse(analyseResult.Grade);
-                                _Bom_Result.下限公差 = decimal.Parse(analyseResult.Grade);
-                                _Bom_Result.最大值 = _Bom_Result.标准值 + _Bom_Result.上限公差;
-                                _Bom_Result.最小值 = _Bom_Result.标准值 - _Bom_Result.下限公差;
-                                _Bom_Result.公差类别 = "±";
-                            }
-                        }
-                        else
-                        {
-                            if (analyseResult.Grade.Contains("%"))
-                            {
-                                string grade = analyseResult.Grade.Replace("%", "");
-                                _Bom_Result.上限公差 = decimal.Parse(grade);
-                                _Bom_Result.下限公差 = decimal.Parse(grade);
-                                decimal val = (decimal)_Bom_Result.上限公差 / (decimal)100.00;
-                                //_Bom_Result.最大值 = _Bom_Result.标准值 + _Bom_Result.标准值 * (val);
-                                //_Bom_Result.最小值 = _Bom_Result.标准值 - _Bom_Result.标准值 * (val);
-                                _Bom_Result.公差类别 = "%";
-                            }
-                            else if (decimal.TryParse(analyseResult.Grade, out decimal g))
-                            {
-                                _Bom_Result.上限公差 = decimal.Parse(analyseResult.Grade);
-                                _Bom_Result.下限公差 = decimal.Parse(analyseResult.Grade);
-                                //_Bom_Result.最大值 = _Bom_Result.标准值 + _Bom_Result.上限公差;
-                                //_Bom_Result.最小值 = _Bom_Result.标准值 - _Bom_Result.下限公差;
-                                _Bom_Result.公差类别 = "±";
-                            }
-                        }
-                        if (_Bom_Result.元件类型 != "O")
-                        {
-                            ErrorLog.Add(_Bom_Result.序号, analyseResult.DefaultFormat() + "," + analyseResult.ErrorMsg);
-                        }
-                    }
+                    AnalyRow(_Bom_Result);
 
                     _Bom_Result.修改者 = "Test";
                     _Bom_Result.创建者 = "Test";
@@ -285,6 +200,102 @@ namespace BorwinAnalyse.Forms
 
             }
 
+        }
+
+        private bool AnalyRow(P_Search_Eng_Bom_Result _Bom_Result)
+        {
+            AnalyseResult analyseResult = CommonAnalyse.Instance.AnalyseMethod_copy(_Bom_Result.物料描述);
+            switch (analyseResult.Type)
+            {
+                case "电阻":
+                    _Bom_Result.元件类型 = "R";
+                    break;
+                case "电容":
+                    _Bom_Result.元件类型 = "C";
+                    break;
+                default:
+                    _Bom_Result.元件类型 = "O";
+                    break;
+            }
+            if (analyseResult.Result)
+            {
+                _Bom_Result.元件尺寸 = analyseResult.Size;
+                _Bom_Result.标准值 = decimal.Parse(analyseResult.Value);
+                _Bom_Result.单位 = analyseResult.Unit;
+                if (analyseResult.Grade.Contains("%"))
+                {
+                    string grade = analyseResult.Grade.Replace("%", "");
+                    _Bom_Result.上限公差 = decimal.Parse(grade);
+                    _Bom_Result.下限公差 = decimal.Parse(grade);
+                    decimal val = (decimal)_Bom_Result.上限公差 / (decimal)100.00;
+                    _Bom_Result.最大值 = _Bom_Result.标准值 + _Bom_Result.标准值 * (val);
+                    _Bom_Result.最小值 = _Bom_Result.标准值 - _Bom_Result.标准值 * (val);
+                    _Bom_Result.公差类别 = "%";
+                }
+                else
+                {
+                    _Bom_Result.上限公差 = decimal.Parse(analyseResult.Grade);
+                    _Bom_Result.下限公差 = decimal.Parse(analyseResult.Grade);
+                    _Bom_Result.最大值 = _Bom_Result.标准值 + _Bom_Result.上限公差;
+                    _Bom_Result.最小值 = _Bom_Result.标准值 - _Bom_Result.下限公差;
+                    _Bom_Result.公差类别 = "±";
+                }
+
+            }
+            else
+            {
+                _Bom_Result.元件尺寸 = analyseResult.Size;
+                if (analyseResult.Unit != null)
+                    _Bom_Result.单位 = analyseResult.Unit;
+                if (decimal.TryParse(analyseResult.Value, out decimal value))
+                {
+                    _Bom_Result.标准值 = decimal.Parse(analyseResult.Value);
+                    if (analyseResult.Grade.Contains("%"))
+                    {
+                        string grade = analyseResult.Grade.Replace("%", "");
+                        _Bom_Result.上限公差 = decimal.Parse(grade);
+                        _Bom_Result.下限公差 = decimal.Parse(grade);
+                        decimal val = (decimal)_Bom_Result.上限公差 / (decimal)100.00;
+                        _Bom_Result.最大值 = _Bom_Result.标准值 + _Bom_Result.标准值 * (val);
+                        _Bom_Result.最小值 = _Bom_Result.标准值 - _Bom_Result.标准值 * (val);
+                        _Bom_Result.公差类别 = "%";
+                    }
+                    else if (decimal.TryParse(analyseResult.Grade, out decimal g))
+                    {
+                        _Bom_Result.上限公差 = decimal.Parse(analyseResult.Grade);
+                        _Bom_Result.下限公差 = decimal.Parse(analyseResult.Grade);
+                        _Bom_Result.最大值 = _Bom_Result.标准值 + _Bom_Result.上限公差;
+                        _Bom_Result.最小值 = _Bom_Result.标准值 - _Bom_Result.下限公差;
+                        _Bom_Result.公差类别 = "±";
+                    }
+                }
+                else
+                {
+                    if (analyseResult.Grade.Contains("%"))
+                    {
+                        string grade = analyseResult.Grade.Replace("%", "");
+                        _Bom_Result.上限公差 = decimal.Parse(grade);
+                        _Bom_Result.下限公差 = decimal.Parse(grade);
+                        decimal val = (decimal)_Bom_Result.上限公差 / (decimal)100.00;
+                        //_Bom_Result.最大值 = _Bom_Result.标准值 + _Bom_Result.标准值 * (val);
+                        //_Bom_Result.最小值 = _Bom_Result.标准值 - _Bom_Result.标准值 * (val);
+                        _Bom_Result.公差类别 = "%";
+                    }
+                    else if (decimal.TryParse(analyseResult.Grade, out decimal g))
+                    {
+                        _Bom_Result.上限公差 = decimal.Parse(analyseResult.Grade);
+                        _Bom_Result.下限公差 = decimal.Parse(analyseResult.Grade);
+                        //_Bom_Result.最大值 = _Bom_Result.标准值 + _Bom_Result.上限公差;
+                        //_Bom_Result.最小值 = _Bom_Result.标准值 - _Bom_Result.下限公差;
+                        _Bom_Result.公差类别 = "±";
+                    }
+                }
+                if (_Bom_Result.元件类型 != "O")
+                {
+                    ErrorLog.Add(_Bom_Result.序号, analyseResult.DefaultFormat() + "," + analyseResult.ErrorMsg);
+                }
+            }
+            return analyseResult.Result;
         }
 
         private void AnalyXYFile()
@@ -385,9 +396,9 @@ namespace BorwinAnalyse.Forms
                     _XY_Result.板面 = side;
                     foreach (var item in p_Search_Engs)
                     {
-                           string _pos = item.元件位置.Replace(" ", ",");
-                           List<string> res = _pos.Split(',').ToList();
-                            if (res != null)
+                        string _pos = item.元件位置.Replace(" ", ",");
+                        List<string> res = _pos.Split(',').ToList();
+                        if (res != null)
                             if (res.Where(x => x == _XY_Result.元件位置).ToList().Count > 0)
                             {
                                 _XY_Result.物料描述 = item.物料描述;
@@ -446,7 +457,7 @@ namespace BorwinAnalyse.Forms
 
             for (int i = 0; i < dgvXYData.RowCount; i++)
             {
-                if (dgvXYData.Rows[i].Cells[5].Value == null||string.IsNullOrEmpty(dgvXYData.Rows[i].Cells[5].Value.ToString()))
+                if (dgvXYData.Rows[i].Cells[5].Value == null || string.IsNullOrEmpty(dgvXYData.Rows[i].Cells[5].Value.ToString()))
                 {
                     dgvXYData.Rows[i].Cells[5].Style.BackColor = Color.Red;
                 }
@@ -545,6 +556,45 @@ namespace BorwinAnalyse.Forms
             if (e.RowIndex >= 0)
             {
                 dgvXYData.Rows[e.RowIndex].Selected = true;
+            }
+        }
+
+        private void btnChange_Click(object sender, EventArgs e)
+        {
+            int index = -1;
+            if (dgv_BOM.SelectedRows.Count > 0)
+            {
+                index = dgv_BOM.SelectedRows[0].Index;
+
+            }
+            if (index >= 0)
+            {
+                string materialCode = p_Search_Engs[index].物料编码;
+                string materialName = p_Search_Engs[index].物料描述;
+                FormMaterialMessage frm = new FormMaterialMessage(materialCode, materialName);
+                if (frm.ShowDialog() == DialogResult.OK)
+                {
+                    p_Search_Engs[index].物料描述 = frm.MaterialName;
+                    if (AnalyRow(p_Search_Engs[index]))
+                    {
+                        dgv_BOM.Rows[index].Cells[0].Style.BackColor = Color.White;
+                    }
+                    dgv_BOM.Refresh();
+                }
+
+            }
+        }
+
+        private void btnAnayRow_Click(object sender, EventArgs e)
+        {
+            if (dgv_BOM.SelectedRows.Count > 0)
+            {
+                int index = dgv_BOM.SelectedRows[0].Index;
+                if (AnalyRow(p_Search_Engs[index]))
+                {
+                    dgv_BOM.Rows[index].Cells[0].Style.BackColor = Color.White;
+                }
+                dgv_BOM.Refresh();
             }
         }
     }

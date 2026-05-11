@@ -22,6 +22,11 @@ namespace GSP_SJ
         private void FormCompensationParam_Load(object sender, EventArgs e)
         {
             Search();
+            UpdateLanguage();
+        }
+        private void UpdateLanguage()
+        {
+            BrowApp.Language.Language.Instance.UpdateLanguage(this, null);
         }
 
         private void Search()

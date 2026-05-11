@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BrowApp.Language;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -26,6 +27,8 @@ namespace BorwinAnalyse.ImportBom
             {
                 dgvData.Rows.Add(datas[i]);
             }
+            btnAdd.Text= btnAdd.Text.tr();
+            btnDelete.Text = btnDelete.Text.tr();
         }
 
         public List<string> GetData()

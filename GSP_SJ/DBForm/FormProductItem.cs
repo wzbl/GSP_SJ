@@ -19,6 +19,11 @@ namespace GSP_SJ
             InitializeComponent();
             UCProgram uCProgram = new UCProgram();
             this.Controls.Add(uCProgram);
+            UpdateLanguage();
+        }
+        private void UpdateLanguage()
+        {
+            BrowApp.Language.Language.Instance.UpdateLanguage(this, null);
         }
 
         public FormProductItem(View_Eng_Program view_Eng_Program)

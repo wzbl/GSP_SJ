@@ -1,5 +1,8 @@
-﻿using ComponentFactory.Krypton.Toolkit;
+﻿using BrowApp;
+using ComponentFactory.Krypton.Toolkit;
 using Emgu.Util.TypeEnum;
+using GSP;
+using GSP.UI;
 using GSP_SJ.Form_Chart;
 using GSP_SJ.ModelClass;
 using HalconDotNet;
@@ -22,7 +25,6 @@ namespace GSP_SJ
 {
     public partial class FormAction : KryptonForm
     {
-
         UCZoom pictureBoxZoom1;
         UCZoom pictureBoxZoom2;
         UCZoom pictureBoxZoom3;
@@ -50,7 +52,6 @@ namespace GSP_SJ
         private string reportCode = "";
         private string productCode = "";
 
-        Man_Report _Reports = null;
         public FormAction(string reportCode, string productCode)
         {
             InitializeComponent();
@@ -147,18 +148,24 @@ namespace GSP_SJ
                 comLcrStandValue.Enabled = false;
                 com复测.SelectedIndex = 2;
                 DBEventAction.RefreshManReport += RefreshManReport;
+                if (DBEventAction._Reports.IsFurnace == null || (bool)DBEventAction._Reports.IsFurnace)
+                    this.位置1ToolStripMenuItem.Enabled = false;
+                else
+                    this.位置1ToolStripMenuItem.Enabled = true;
+                this.位置2ToolStripMenuItem.Enabled = false;
+                this.位置3ToolStripMenuItem.Enabled = false;
+                this.位置4ToolStripMenuItem.Enabled = false;
             }
             catch (Exception ex)
             {
 
             }
-
         }
 
         private void RefreshManReport()
         {
             RefreshDataGrid();
-            image = PublicFunction.ByteToBitmap(_Reports.PositionImage);
+            image = PublicFunction.ByteToBitmap(DBEventAction._Reports.PositionImage);
             if (image != null)
                 pictureBoxZoom1.SetImage(image);
             if (dataGridView1.Rows.Count > 0)
@@ -172,23 +179,23 @@ namespace GSP_SJ
             }
         }
 
-        private async void Init()
+        private void Init()
         {
-            await Task.Run(() =>
-            {
-                _Reports = SQLDataControl.GetMan_Report(reportCode);
-                if (_Reports.Picture != null)
-                    image2 = PublicFunction.ByteToBitmap(_Reports.Picture);
-                if (_Reports.PositionImage != null)
-                    image = PublicFunction.ByteToBitmap(_Reports.PositionImage);
-                else
-                    image = PublicFunction.ByteToBitmap(SQLDataControl.GetProgramOptionPicture(productCode));
+            //await Task.Run(() =>
+            //{
+            DBEventAction._Reports = SQLDataControl.GetMan_Report(reportCode);
+            if (DBEventAction._Reports.Picture != null)
+                image2 = PublicFunction.ByteToBitmap(DBEventAction._Reports.Picture);
+            if (DBEventAction._Reports.PositionImage != null)
+                image = PublicFunction.ByteToBitmap(DBEventAction._Reports.PositionImage);
+            else
+                image = PublicFunction.ByteToBitmap(SQLDataControl.GetProgramOptionPicture(productCode));
 
-            });
+            //});
             RefreshMessage();
-            txtProductName.Text = _Reports.ProductName;
-            txtBoardSide.Text = _Reports.BoardSide;
-            txtBoardQty.Text = _Reports.BoardQty.ToString();
+            txtProductName.Text = DBEventAction._Reports.ProductName;
+            txtBoardSide.Text = DBEventAction._Reports.BoardSide;
+            txtBoardQty.Text = DBEventAction._Reports.BoardQty.ToString();
             if (image2 != null)
             {
                 pictureBoxZoom2.SetImage(image2);
@@ -209,8 +216,13 @@ namespace GSP_SJ
                 RefreshMaterial(pos);
             }
             comSortType.SelectedIndexChanged += comSortType_SelectedIndexChanged;
+            UpdateLanguage();
+            pictureBoxZoom2.Refresh_IsFurnace();
         }
-
+        private void UpdateLanguage()
+        {
+            BrowApp.Language.Language.Instance.UpdateLanguage(this, null);
+        }
 
         private void ChangeImg(Type_Window window)
         {
@@ -231,7 +243,6 @@ namespace GSP_SJ
                     break;
             }
         }
-
 
 
         #region 电性检测
@@ -342,12 +353,18 @@ namespace GSP_SJ
 
         private void 位置1ToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            //位置Mark1
             List<string> Position = new List<string>();
             for (int i = 0; i < DBEventAction.man_ReportItems.Count; i++)
             {
                 Position.Add(DBEventAction.man_ReportItems[i].Position);
             }
-            FormLocation_Point formLocation = new FormLocation_Point(Position);
+            string pos = "";
+            if(pictureBoxZoom1.GetSelectComponent(out Image img,out Component component))
+            {
+                pos=component.Designator;
+            }
+            FormLocation_Point formLocation = new FormLocation_Point(Position, pos);
             if (formLocation.ShowDialog() == DialogResult.OK)
             {
                 //dataGridView1.ClearSelection();
@@ -359,18 +376,39 @@ namespace GSP_SJ
                 Location_Point.eyePixelPositionY[0] = double.Parse(pictureBoxZoom2.PixPoint().Y.ToString());
 
                 pictureBoxZoom1.SetSelectCompont(formLocation.Position);
+                MarkForm markForm = new MarkForm();
+                MotionCommand.Cmark(0, 0, 0, 0);
+                Global.Parm.PcbLong = Convert.ToDouble(100);
+                Global.Parm.PcbHight = Convert.ToDouble(100);
+
+                markForm.Mode = Convert.ToInt32(1);
+                markForm.Code = formLocation.Position;
+                markForm.Bmark1_X = Convert.ToDouble(Location_Point.handPositionX[0]);
+                markForm.Bmark1_Y = Convert.ToDouble(Location_Point.handPositionY[0]);
+                markForm.Num = 1;
+                markForm.FomActivated();
+                this.位置1ToolStripMenuItem.Enabled = false;
+                this.位置2ToolStripMenuItem.Enabled = true;
+                this.位置3ToolStripMenuItem.Enabled = false;
+                this.位置4ToolStripMenuItem.Enabled = false;
             }
 
         }
 
         private void 位置2ToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            //位置Mark2
             List<string> Position = new List<string>();
             for (int i = 0; i < DBEventAction.man_ReportItems.Count; i++)
             {
                 Position.Add(DBEventAction.man_ReportItems[i].Position);
             }
-            FormLocation_Point formLocation = new FormLocation_Point(Position);
+            string pos = "";
+            if (pictureBoxZoom1.GetSelectComponent(out Image img, out Component component))
+            {
+                pos = component.Designator;
+            }
+            FormLocation_Point formLocation = new FormLocation_Point(Position,pos);
             if (formLocation.ShowDialog() == DialogResult.OK)
             {
                 //dataGridView1.ClearSelection();
@@ -381,6 +419,22 @@ namespace GSP_SJ
                 Location_Point.eyePixelPositionX[1] = double.Parse(pictureBoxZoom2.PixPoint().X.ToString());
                 Location_Point.eyePixelPositionY[1] = double.Parse(pictureBoxZoom2.PixPoint().Y.ToString());
                 pictureBoxZoom1.SetSelectCompont(formLocation.Position);
+
+                MarkForm markForm = new MarkForm();
+                MotionCommand.Cmark(0, 0, 0, 0);
+                Global.Parm.PcbLong = Convert.ToDouble(100);
+                Global.Parm.PcbHight = Convert.ToDouble(100);
+
+                markForm.Mode = Convert.ToInt32(1);
+                markForm.Code = formLocation.Position;
+                markForm.Bmark1_X = Convert.ToDouble(Location_Point.handPositionX[1]);
+                markForm.Bmark1_Y = Convert.ToDouble(Location_Point.handPositionY[1]);
+                markForm.Num = 2;
+                markForm.FomActivated();
+                this.位置1ToolStripMenuItem.Enabled = false;
+                this.位置2ToolStripMenuItem.Enabled = false;
+                this.位置3ToolStripMenuItem.Enabled = true;
+                this.位置4ToolStripMenuItem.Enabled = false;
             }
         }
 
@@ -391,7 +445,12 @@ namespace GSP_SJ
             {
                 Position.Add(DBEventAction.man_ReportItems[i].Position);
             }
-            FormLocation_Point formLocation = new FormLocation_Point(Position);
+            string pos = "";
+            if (pictureBoxZoom1.GetSelectComponent(out Image img, out Component component))
+            {
+                pos = component.Designator;
+            }
+            FormLocation_Point formLocation = new FormLocation_Point(Position, pos);
             if (formLocation.ShowDialog() == DialogResult.OK)
             {
                 //dataGridView1.ClearSelection();
@@ -402,6 +461,10 @@ namespace GSP_SJ
                 Location_Point.eyePixelPositionX[2] = double.Parse(pictureBoxZoom2.PixPoint().X.ToString());
                 Location_Point.eyePixelPositionY[2] = double.Parse(pictureBoxZoom2.PixPoint().Y.ToString());
                 pictureBoxZoom1.SetSelectCompont(formLocation.Position);
+                this.位置1ToolStripMenuItem.Enabled = false;
+                this.位置2ToolStripMenuItem.Enabled = false;
+                this.位置3ToolStripMenuItem.Enabled = false;
+                this.位置4ToolStripMenuItem.Enabled = true;
             }
         }
 
@@ -412,7 +475,12 @@ namespace GSP_SJ
             {
                 Position.Add(DBEventAction.man_ReportItems[i].Position);
             }
-            FormLocation_Point formLocation = new FormLocation_Point(Position);
+            string pos = "";
+            if (pictureBoxZoom1.GetSelectComponent(out Image img, out Component component))
+            {
+                pos = component.Designator;
+            }
+            FormLocation_Point formLocation = new FormLocation_Point(Position, pos);
             if (formLocation.ShowDialog() == DialogResult.OK)
             {
                 //dataGridView1.ClearSelection();
@@ -423,7 +491,7 @@ namespace GSP_SJ
                 Location_Point.eyePixelPositionX[3] = double.Parse(pictureBoxZoom2.PixPoint().X.ToString());
                 Location_Point.eyePixelPositionY[3] = double.Parse(pictureBoxZoom2.PixPoint().Y.ToString());
                 pictureBoxZoom1.SetSelectCompont(formLocation.Position);
-
+                SQLDataControl.UpdatateManReport_IsFurnace(DBEventAction._Reports.ReportCode, true);
                 foreach (var item in DBEventAction.man_ReportItems)
                 {
                     Size size = new Size(100, 100);
@@ -449,9 +517,15 @@ namespace GSP_SJ
                         }
                         //SQLDataControl.UpdateXYData_LXY(productCode, item.Position, decimal.Parse(pixelPositionX.D.ToString()), decimal.Parse(pixelPositionY.D.ToString()));
                         SQLDataControl.UpdateMan_ReportItem_LXY(item.ReportCode, item.Position, decimal.Parse(pixelPositionX.D.ToString()), decimal.Parse(pixelPositionY.D.ToString()));
+
                     }
                 }
+                pictureBoxZoom2.Refresh_IsFurnace();
                 RefreshDataGrid();
+                this.位置1ToolStripMenuItem.Enabled = false;
+                this.位置2ToolStripMenuItem.Enabled = false;
+                this.位置3ToolStripMenuItem.Enabled = false;
+                this.位置4ToolStripMenuItem.Enabled = false;
             }
         }
         #endregion
@@ -488,20 +562,20 @@ namespace GSP_SJ
         }
         public void RefreshMessage()
         {
-            txtTotalQty.Text = _Reports.TotalQty.ToString();
-            txtPassQty.Text = _Reports.PassQty.ToString();
-            txtFailQty.Text = _Reports.FailQty.ToString();
-            txtMissQty.Text = _Reports.MissQty.ToString();
-            txtNoSmdQty.Text = _Reports.NoSmdQty.ToString();
-            txtAutomationQty.Text = _Reports.AutomationQty.ToString();
-            txtRQty.Text = _Reports.RQty.ToString();
-            txtCQty.Text = _Reports.CQty.ToString();
-            txtLQty.Text = _Reports.LQty.ToString();
-            txtDQty.Text = _Reports.DQty.ToString();
-            txtBQty.Text = _Reports.BQty.ToString();
-            txtOQty.Text = _Reports.OQty.ToString();
-            txtTQty.Text = _Reports.TQty.ToString();
-            txtIQty.Text = _Reports.IQty.ToString();
+            txtTotalQty.Text = DBEventAction._Reports.TotalQty.ToString();
+            txtPassQty.Text = DBEventAction._Reports.PassQty.ToString();
+            txtFailQty.Text = DBEventAction._Reports.FailQty.ToString();
+            txtMissQty.Text = DBEventAction._Reports.MissQty.ToString();
+            txtNoSmdQty.Text = DBEventAction._Reports.NoSmdQty.ToString();
+            txtAutomationQty.Text = DBEventAction._Reports.AutomationQty.ToString();
+            txtRQty.Text = DBEventAction._Reports.RQty.ToString();
+            txtCQty.Text = DBEventAction._Reports.CQty.ToString();
+            txtLQty.Text = DBEventAction._Reports.LQty.ToString();
+            txtDQty.Text = DBEventAction._Reports.DQty.ToString();
+            txtBQty.Text = DBEventAction._Reports.BQty.ToString();
+            txtOQty.Text = DBEventAction._Reports.OQty.ToString();
+            txtTQty.Text = DBEventAction._Reports.TQty.ToString();
+            txtIQty.Text = DBEventAction._Reports.IQty.ToString();
         }
         #endregion
 
@@ -1002,13 +1076,87 @@ namespace GSP_SJ
 
         #endregion
 
-
         #region 自动检测
         private void chk复测_CheckedChanged(object sender, EventArgs e)
         {
             com复测.Enabled = chk复测.Checked;
         }
         #endregion
+
+        #region MotionControl
+
+        private void btnStart_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnPause_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnStop_Click(object sender, EventArgs e)
+        {
+
+        }
+        private void btnAutoModel_Click(object sender, EventArgs e)
+        {
+            if (BrowLib.Controller.OutPort["自动切换手动"].State())
+                BrowLib.Controller.OutPort["自动切换手动"].Off();
+            else
+                BrowLib.Controller.OutPort["自动切换手动"].On();
+        }
+
+        private void btnHome_Click(object sender, EventArgs e)
+        {
+            MotionCommand.Home();
+        }
+
+        private void btnReSetAlarm_Click(object sender, EventArgs e)
+        {
+            APP.Alarm.Clear();//报警清除
+        }
+
+        private void btnGoStopPos_Click(object sender, EventArgs e)
+        {
+            MotionCommand.GoToStopPos();
+        }
+
+        private void btnFlow_In_Click(object sender, EventArgs e)
+        {
+            MotionCommand.In_Click();
+        }
+
+        private void btnFlow_OUT_Click(object sender, EventArgs e)
+        {
+            MotionCommand.Out_Click();
+        }
+
+        private void btn2线测试_Click(object sender, EventArgs e)
+        {
+            BrowLib.Controller.OutPort["四线切换两线"].On();
+        }
+
+        private void btn4线测试_Click(object sender, EventArgs e)
+        {
+            BrowLib.Controller.OutPort["四线切换两线"].Off();
+        }
+
+        private void btn顶升_Click(object sender, EventArgs e)
+        {
+            if (BrowLib.Controller.OutPort["顶升气缸_OUT"].State())
+            {
+                BrowLib.Controller.OutPort["顶升气缸_OUT"].Off();
+            }
+            else
+            {
+                BrowLib.Controller.OutPort["顶升气缸_OUT"].On();
+            }
+        }
+
+        #endregion
+
+
     }
 
 }

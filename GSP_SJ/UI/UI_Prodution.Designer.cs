@@ -73,13 +73,14 @@
             this.MainNavigator.Button.CloseButtonDisplay = ComponentFactory.Krypton.Navigator.ButtonDisplay.Hide;
             this.MainNavigator.Dock = System.Windows.Forms.DockStyle.Fill;
             this.MainNavigator.Location = new System.Drawing.Point(0, 0);
+            this.MainNavigator.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.MainNavigator.Name = "MainNavigator";
             this.MainNavigator.Pages.AddRange(new ComponentFactory.Krypton.Navigator.KryptonPage[] {
             this.kryptonPage1,
             this.kryptonPage2});
             this.MainNavigator.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.Office2007Blue;
             this.MainNavigator.SelectedIndex = 0;
-            this.MainNavigator.Size = new System.Drawing.Size(1000, 768);
+            this.MainNavigator.Size = new System.Drawing.Size(1333, 1024);
             this.MainNavigator.TabIndex = 7;
             this.MainNavigator.Text = "kryptonNavigator1";
             // 
@@ -92,9 +93,10 @@
             this.kryptonPage1.ImageMedium = ((System.Drawing.Image)(resources.GetObject("kryptonPage1.ImageMedium")));
             this.kryptonPage1.ImageSmall = ((System.Drawing.Image)(resources.GetObject("kryptonPage1.ImageSmall")));
             this.kryptonPage1.LastVisibleSet = true;
-            this.kryptonPage1.MinimumSize = new System.Drawing.Size(50, 50);
+            this.kryptonPage1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.kryptonPage1.MinimumSize = new System.Drawing.Size(67, 67);
             this.kryptonPage1.Name = "kryptonPage1";
-            this.kryptonPage1.Size = new System.Drawing.Size(998, 735);
+            this.kryptonPage1.Size = new System.Drawing.Size(1331, 991);
             this.kryptonPage1.Text = "视觉监控";
             this.kryptonPage1.ToolTipTitle = "Page ToolTip";
             this.kryptonPage1.UniqueName = "4DEC497E32C845C9D483DA19B940630B";
@@ -104,9 +106,10 @@
             this.MPanel.Controls.Add(this.tableLayoutPanel1);
             this.MPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.MPanel.Location = new System.Drawing.Point(0, 0);
+            this.MPanel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.MPanel.Name = "MPanel";
             this.MPanel.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.ProfessionalSystem;
-            this.MPanel.Size = new System.Drawing.Size(998, 735);
+            this.MPanel.Size = new System.Drawing.Size(1331, 991);
             this.MPanel.TabIndex = 0;
             // 
             // tableLayoutPanel1
@@ -125,8 +128,8 @@
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 735F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(998, 735);
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 980F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1331, 991);
             this.tableLayoutPanel1.TabIndex = 1;
             // 
             // kryptonSplitContainer1
@@ -134,7 +137,8 @@
             this.kryptonSplitContainer1.Cursor = System.Windows.Forms.Cursors.Default;
             this.kryptonSplitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.kryptonSplitContainer1.IsSplitterFixed = true;
-            this.kryptonSplitContainer1.Location = new System.Drawing.Point(292, 3);
+            this.kryptonSplitContainer1.Location = new System.Drawing.Point(390, 4);
+            this.kryptonSplitContainer1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.kryptonSplitContainer1.Name = "kryptonSplitContainer1";
             this.kryptonSplitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
@@ -148,8 +152,8 @@
             this.kryptonSplitContainer1.Panel2.Controls.Add(this.Mark2pic);
             this.kryptonSplitContainer1.Panel2.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.ProfessionalSystem;
             this.kryptonSplitContainer1.SeparatorStyle = ComponentFactory.Krypton.Toolkit.SeparatorStyle.HighProfile;
-            this.kryptonSplitContainer1.Size = new System.Drawing.Size(251, 729);
-            this.kryptonSplitContainer1.SplitterDistance = 352;
+            this.kryptonSplitContainer1.Size = new System.Drawing.Size(334, 983);
+            this.kryptonSplitContainer1.SplitterDistance = 474;
             this.kryptonSplitContainer1.SplitterWidth = 1;
             this.kryptonSplitContainer1.TabIndex = 0;
             // 
@@ -160,7 +164,7 @@
             this.Mark1pic.Location = new System.Drawing.Point(0, 0);
             this.Mark1pic.Margin = new System.Windows.Forms.Padding(1);
             this.Mark1pic.Name = "Mark1pic";
-            this.Mark1pic.Size = new System.Drawing.Size(251, 352);
+            this.Mark1pic.Size = new System.Drawing.Size(334, 474);
             this.Mark1pic.TabIndex = 0;
             this.Mark1pic.TabStop = false;
             this.Mark1pic.Resize += new System.EventHandler(this.Mark1pic_Resize);
@@ -172,7 +176,7 @@
             this.Mark2pic.Location = new System.Drawing.Point(0, 0);
             this.Mark2pic.Margin = new System.Windows.Forms.Padding(1);
             this.Mark2pic.Name = "Mark2pic";
-            this.Mark2pic.Size = new System.Drawing.Size(251, 376);
+            this.Mark2pic.Size = new System.Drawing.Size(334, 508);
             this.Mark2pic.TabIndex = 0;
             this.Mark2pic.TabStop = false;
             this.Mark2pic.Resize += new System.EventHandler(this.Mark2pic_Resize);
@@ -181,10 +185,10 @@
             // 
             this.Mpic.BackColor = System.Drawing.Color.Black;
             this.Mpic.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.Mpic.Location = new System.Drawing.Point(547, 1);
+            this.Mpic.Location = new System.Drawing.Point(729, 1);
             this.Mpic.Margin = new System.Windows.Forms.Padding(1);
             this.Mpic.Name = "Mpic";
-            this.Mpic.Size = new System.Drawing.Size(450, 733);
+            this.Mpic.Size = new System.Drawing.Size(601, 989);
             this.Mpic.TabIndex = 1;
             this.Mpic.TabStop = false;
             this.Mpic.Resize += new System.EventHandler(this.Mpic_Resize);
@@ -205,15 +209,16 @@
             this.kryptonPanel1.Name = "kryptonPanel1";
             this.kryptonPanel1.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.Office2007Blue;
             this.kryptonPanel1.PanelBackStyle = ComponentFactory.Krypton.Toolkit.PaletteBackStyle.SeparatorHighProfile;
-            this.kryptonPanel1.Size = new System.Drawing.Size(287, 733);
+            this.kryptonPanel1.Size = new System.Drawing.Size(384, 989);
             this.kryptonPanel1.TabIndex = 2;
             // 
             // ClearBtn
             // 
-            this.ClearBtn.Location = new System.Drawing.Point(42, 387);
+            this.ClearBtn.Location = new System.Drawing.Point(56, 516);
+            this.ClearBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.ClearBtn.Name = "ClearBtn";
             this.ClearBtn.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.Office2007Blue;
-            this.ClearBtn.Size = new System.Drawing.Size(124, 33);
+            this.ClearBtn.Size = new System.Drawing.Size(165, 44);
             this.ClearBtn.TabIndex = 3;
             this.ClearBtn.Values.Image = ((System.Drawing.Image)(resources.GetObject("ClearBtn.Values.Image")));
             this.ClearBtn.Values.Text = "清零";
@@ -221,9 +226,10 @@
             // kryptonLabel6
             // 
             this.kryptonLabel6.LabelStyle = ComponentFactory.Krypton.Toolkit.LabelStyle.BoldControl;
-            this.kryptonLabel6.Location = new System.Drawing.Point(20, 331);
+            this.kryptonLabel6.Location = new System.Drawing.Point(27, 441);
+            this.kryptonLabel6.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.kryptonLabel6.Name = "kryptonLabel6";
-            this.kryptonLabel6.Size = new System.Drawing.Size(168, 26);
+            this.kryptonLabel6.Size = new System.Drawing.Size(212, 29);
             this.kryptonLabel6.StateNormal.LongText.Color1 = System.Drawing.Color.Green;
             this.kryptonLabel6.StateNormal.LongText.Color2 = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
             this.kryptonLabel6.StateNormal.LongText.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
@@ -234,10 +240,11 @@
             // 
             // ContinuouBtn
             // 
-            this.ContinuouBtn.Location = new System.Drawing.Point(42, 260);
+            this.ContinuouBtn.Location = new System.Drawing.Point(56, 347);
+            this.ContinuouBtn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.ContinuouBtn.Name = "ContinuouBtn";
             this.ContinuouBtn.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.Office2007Blue;
-            this.ContinuouBtn.Size = new System.Drawing.Size(124, 38);
+            this.ContinuouBtn.Size = new System.Drawing.Size(165, 51);
             this.ContinuouBtn.TabIndex = 1;
             this.ContinuouBtn.Values.Image = ((System.Drawing.Image)(resources.GetObject("ContinuouBtn.Values.Image")));
             this.ContinuouBtn.Values.Text = "实时图像";
@@ -246,9 +253,10 @@
             // ProductName_lab
             // 
             this.ProductName_lab.LabelStyle = ComponentFactory.Krypton.Toolkit.LabelStyle.BoldControl;
-            this.ProductName_lab.Location = new System.Drawing.Point(19, 180);
+            this.ProductName_lab.Location = new System.Drawing.Point(25, 240);
+            this.ProductName_lab.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.ProductName_lab.Name = "ProductName_lab";
-            this.ProductName_lab.Size = new System.Drawing.Size(91, 26);
+            this.ProductName_lab.Size = new System.Drawing.Size(110, 26);
             this.ProductName_lab.StateNormal.LongText.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.ProductName_lab.TabIndex = 0;
             this.ProductName_lab.Values.Image = ((System.Drawing.Image)(resources.GetObject("ProductName_lab.Values.Image")));
@@ -257,9 +265,10 @@
             // ProductCode_lab
             // 
             this.ProductCode_lab.LabelStyle = ComponentFactory.Krypton.Toolkit.LabelStyle.BoldControl;
-            this.ProductCode_lab.Location = new System.Drawing.Point(19, 134);
+            this.ProductCode_lab.Location = new System.Drawing.Point(25, 179);
+            this.ProductCode_lab.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.ProductCode_lab.Name = "ProductCode_lab";
-            this.ProductCode_lab.Size = new System.Drawing.Size(91, 26);
+            this.ProductCode_lab.Size = new System.Drawing.Size(110, 26);
             this.ProductCode_lab.StateNormal.LongText.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.ProductCode_lab.TabIndex = 0;
             this.ProductCode_lab.Values.Image = ((System.Drawing.Image)(resources.GetObject("ProductCode_lab.Values.Image")));
@@ -268,9 +277,10 @@
             // BoardSide_lab
             // 
             this.BoardSide_lab.LabelStyle = ComponentFactory.Krypton.Toolkit.LabelStyle.BoldControl;
-            this.BoardSide_lab.Location = new System.Drawing.Point(19, 94);
+            this.BoardSide_lab.Location = new System.Drawing.Point(25, 125);
+            this.BoardSide_lab.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.BoardSide_lab.Name = "BoardSide_lab";
-            this.BoardSide_lab.Size = new System.Drawing.Size(65, 26);
+            this.BoardSide_lab.Size = new System.Drawing.Size(76, 26);
             this.BoardSide_lab.StateNormal.LongText.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.BoardSide_lab.TabIndex = 0;
             this.BoardSide_lab.Values.Image = ((System.Drawing.Image)(resources.GetObject("BoardSide_lab.Values.Image")));
@@ -279,9 +289,10 @@
             // XYCode_lab
             // 
             this.XYCode_lab.LabelStyle = ComponentFactory.Krypton.Toolkit.LabelStyle.BoldControl;
-            this.XYCode_lab.Location = new System.Drawing.Point(19, 54);
+            this.XYCode_lab.Location = new System.Drawing.Point(25, 72);
+            this.XYCode_lab.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.XYCode_lab.Name = "XYCode_lab";
-            this.XYCode_lab.Size = new System.Drawing.Size(91, 26);
+            this.XYCode_lab.Size = new System.Drawing.Size(110, 26);
             this.XYCode_lab.StateNormal.LongText.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.XYCode_lab.TabIndex = 0;
             this.XYCode_lab.Values.Image = ((System.Drawing.Image)(resources.GetObject("XYCode_lab.Values.Image")));
@@ -290,9 +301,10 @@
             // FBCCode_Lab
             // 
             this.FBCCode_Lab.LabelStyle = ComponentFactory.Krypton.Toolkit.LabelStyle.BoldControl;
-            this.FBCCode_Lab.Location = new System.Drawing.Point(19, 12);
+            this.FBCCode_Lab.Location = new System.Drawing.Point(25, 16);
+            this.FBCCode_Lab.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.FBCCode_Lab.Name = "FBCCode_Lab";
-            this.FBCCode_Lab.Size = new System.Drawing.Size(98, 26);
+            this.FBCCode_Lab.Size = new System.Drawing.Size(118, 29);
             this.FBCCode_Lab.StateNormal.LongText.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.FBCCode_Lab.StateNormal.ShortText.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.FBCCode_Lab.TabIndex = 0;
@@ -307,20 +319,22 @@
             this.kryptonPage2.ImageMedium = ((System.Drawing.Image)(resources.GetObject("kryptonPage2.ImageMedium")));
             this.kryptonPage2.ImageSmall = ((System.Drawing.Image)(resources.GetObject("kryptonPage2.ImageSmall")));
             this.kryptonPage2.LastVisibleSet = true;
-            this.kryptonPage2.MinimumSize = new System.Drawing.Size(50, 50);
+            this.kryptonPage2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.kryptonPage2.MinimumSize = new System.Drawing.Size(67, 67);
             this.kryptonPage2.Name = "kryptonPage2";
-            this.kryptonPage2.Size = new System.Drawing.Size(998, 735);
+            this.kryptonPage2.Size = new System.Drawing.Size(1331, 991);
             this.kryptonPage2.Text = "生产信息";
             this.kryptonPage2.ToolTipTitle = "Page ToolTip";
             this.kryptonPage2.UniqueName = "8C42DEAD67324E1016B09746F9F06183";
             // 
             // UI_Prodution
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.MainNavigator);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "UI_Prodution";
-            this.Size = new System.Drawing.Size(1000, 768);
+            this.Size = new System.Drawing.Size(1333, 1024);
             this.Load += new System.EventHandler(this.Prodution_Load);
             ((System.ComponentModel.ISupportInitialize)(this.MainNavigator)).EndInit();
             this.MainNavigator.ResumeLayout(false);

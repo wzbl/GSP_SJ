@@ -38,8 +38,12 @@ namespace GSP_SJ
             dgvProgram.CellDoubleClick += dgvProgram_CellDoubleClick;
             DBEventAction.RefreshReport += RefreshReport;
             startTime.Value = DateTime.Now.AddMonths(-1);
+            UpdateLanguage();
         }
-
+        private void UpdateLanguage()
+        {
+            BrowApp.Language.Language.Instance.UpdateLanguage(this, null);
+        }
         private void RefreshReport(string ReportCode)
         {
             Search();

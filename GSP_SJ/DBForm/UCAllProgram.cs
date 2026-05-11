@@ -55,6 +55,11 @@ namespace GSP_SJ
         private void UCAllProgram_Load(object sender, EventArgs e)
         {
             Search();
+           
+        }
+        private void UpdateLanguage()
+        {
+            BrowApp.Language.Language.Instance.UpdateLanguage(this, null);
         }
         List<View_Eng_Program> eng_Programs;
         private async void Search()
@@ -66,6 +71,7 @@ namespace GSP_SJ
             });
             dgvProgram.DataSource = eng_Programs;
             dgvProgram.Refresh();
+            UpdateLanguage();
         }
 
         private void btnAdd_Click(object sender, EventArgs e)

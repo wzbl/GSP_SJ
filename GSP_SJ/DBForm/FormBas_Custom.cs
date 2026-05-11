@@ -32,8 +32,12 @@ namespace GSP_SJ.DBForm
         private void FormBas_Custom_Load(object sender, EventArgs e)
         {
             search();
+            UpdateLanguage();
         }
-
+        private void UpdateLanguage()
+        {
+            BrowApp.Language.Language.Instance.UpdateLanguage(this, null);
+        }
         private void search()
         {
             dgvProgram.Rows.Clear();

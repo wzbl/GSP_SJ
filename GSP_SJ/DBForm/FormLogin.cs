@@ -1,4 +1,5 @@
-﻿using SqlHelper;
+﻿using ComponentFactory.Krypton.Toolkit;
+using SqlHelper;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -11,11 +12,16 @@ using System.Windows.Forms;
 
 namespace GSP_SJ.DBForm
 {
-    public partial class FormLogin : Form
+    public partial class FormLogin : KryptonForm
     {
         public FormLogin()
         {
             InitializeComponent();
+            UpdateLanguage();
+        }
+        private void UpdateLanguage()
+        {
+            BrowApp.Language.Language.Instance.UpdateLanguage(this, null);
         }
 
         private void btnCancle_Click(object sender, EventArgs e)

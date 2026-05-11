@@ -55,6 +55,7 @@
             this.kryptonRibbonGroupTriple3 = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupTriple();
             this.btnResetAlarm = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton();
             this.btnStop = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton();
+            this.HomeBtn = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton();
             this.kryptonRibbonGroup4 = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroup();
             this.kryptonRibbonGroupLines1 = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupLines();
             this.Xpos_lab = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupLabel();
@@ -75,7 +76,6 @@
             this.kryptonNavigator2 = new ComponentFactory.Krypton.Navigator.KryptonNavigator();
             this.kryptonPage1 = new ComponentFactory.Krypton.Navigator.KryptonPage();
             this.kryptonPage2 = new ComponentFactory.Krypton.Navigator.KryptonPage();
-            this.HomeBtn = new ComponentFactory.Krypton.Ribbon.KryptonRibbonGroupButton();
             ((System.ComponentModel.ISupportInitialize)(this.MainRib)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.kryptonNavigator1)).BeginInit();
             this.kryptonNavigator1.SuspendLayout();
@@ -100,7 +100,6 @@
             this.kryptonRibbonContext1});
             this.MainRib.RibbonTabs.AddRange(new ComponentFactory.Krypton.Ribbon.KryptonRibbonTab[] {
             this.kryptonRibbonTab1});
-            this.MainRib.SelectedContext = null;
             this.MainRib.SelectedTab = this.kryptonRibbonTab1;
             this.MainRib.Size = new System.Drawing.Size(1621, 145);
             this.MainRib.StateCommon.RibbonGeneral.TextHint = ComponentFactory.Krypton.Toolkit.PaletteTextHint.AntiAlias;
@@ -199,7 +198,7 @@
             // 
             // btnAddProduce
             // 
-            this.btnAddProduce.ImageLarge = global::GSP_SJ.Properties.Resources._110;
+            this.btnAddProduce.ImageLarge = global::GSP_SJ.Properties.Resources._32;
             this.btnAddProduce.KeyTip = "BM";
             this.btnAddProduce.Tag = "0";
             this.btnAddProduce.TextLine1 = "新建程序";
@@ -207,7 +206,7 @@
             // 
             // btnAddReport
             // 
-            this.btnAddReport.ImageLarge = global::GSP_SJ.Properties.Resources._160;
+            this.btnAddReport.ImageLarge = global::GSP_SJ.Properties.Resources._66;
             this.btnAddReport.TextLine1 = "新建报告";
             this.btnAddReport.Click += new System.EventHandler(this.btnAddReport_Click);
             // 
@@ -219,7 +218,7 @@
             // 
             // btnAllProduce
             // 
-            this.btnAllProduce.ImageLarge = global::GSP_SJ.Properties.Resources._77;
+            this.btnAllProduce.ImageLarge = global::GSP_SJ.Properties.Resources._51;
             this.btnAllProduce.ImageSmall = null;
             this.btnAllProduce.Tag = "1";
             this.btnAllProduce.TextLine1 = "所有程序";
@@ -279,6 +278,12 @@
             this.btnStop.ImageLarge = global::GSP_SJ.Properties.Resources._70;
             this.btnStop.TextLine1 = "停止位";
             this.btnStop.Click += new System.EventHandler(this.btnStop_Click);
+            // 
+            // HomeBtn
+            // 
+            this.HomeBtn.ImageLarge = global::GSP_SJ.Properties.Resources._186;
+            this.HomeBtn.TextLine1 = "回零";
+            this.HomeBtn.Click += new System.EventHandler(this.HomeBtn_Click);
             // 
             // kryptonRibbonGroup4
             // 
@@ -461,11 +466,6 @@
             this.kryptonPage2.Text = "警报";
             this.kryptonPage2.ToolTipTitle = "Page ToolTip";
             this.kryptonPage2.UniqueName = "055A94173555454A548569B26078B2A5";
-            // 
-            // HomeBtn
-            // 
-            this.HomeBtn.TextLine1 = "回零";
-            this.HomeBtn.Click += new System.EventHandler(this.HomeBtn_Click);
             // 
             // FormMain
             // 

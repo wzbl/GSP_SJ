@@ -102,6 +102,12 @@ namespace SqlHelper
             //}
         }
 
+        public static void UpdatateManReport_IsFurnace(string ReportCode,bool IsFurnace)
+        {
+            int i = db.Database.ExecuteSqlCommand("update Man_Report set IsFurnace={0} where ReportCode={1}", IsFurnace, ReportCode);
+
+        }
+
         public static async void UpdateMan_ReportPositionImage(string ReportCode, byte[] PositionImage)
         {
            await db.Database.ExecuteSqlCommandAsync("update Man_Report set PositionImage={0} where ReportCode={1}", PositionImage, ReportCode);

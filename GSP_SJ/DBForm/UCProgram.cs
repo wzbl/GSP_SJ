@@ -119,6 +119,12 @@ namespace GSP_SJ
             RefreshBomData();
             RefreshXYData();
             RefreshModelData();
+            UpdateLanguage();
+        }
+
+        private void UpdateLanguage()
+        {
+            BrowApp.Language.Language.Instance.UpdateLanguage(this, null);
         }
 
         private void RefreshModelData()
@@ -150,6 +156,7 @@ namespace GSP_SJ
         {
             if (string.IsNullOrEmpty(txtProductCode.Text))
             {
+                
                 MessageBox.Show("请输入产品编号");
                 return;
             }
@@ -219,11 +226,12 @@ namespace GSP_SJ
             await Task.Run(() =>
             {
                 save();
+                eng_XYData_Results = SQLDataControl.SearchXYData(txtProductCode.Text);
+                uCXYDataChart.RefreshData(eng_XYData_Results);
+                uCXYDataChart.Save();
             });
-            eng_XYData_Results = SQLDataControl.SearchXYData(txtProductCode.Text);
+
             dgvXYData.DataSource = eng_XYData_Results;
-            uCXYDataChart.RefreshData(eng_XYData_Results);
-            uCXYDataChart.Save();
             txtProductCode.Enabled = false;
             btnSave.Enabled = true;
         }
@@ -457,97 +465,7 @@ namespace GSP_SJ
         {
             for (int i = 0; i < p_Search_Engs.Count; i++)
             {
-                AnalyseResult analyseResult = CommonAnalyse.Instance.AnalyseMethod_copy(p_Search_Engs[i].物料描述);
-                switch (analyseResult.Type)
-                {
-                    case "电阻":
-                        p_Search_Engs[i].元件类型 = "R";
-                        break;
-                    case "电容":
-                        p_Search_Engs[i].元件类型 = "C";
-                        break;
-                    default:
-                        p_Search_Engs[i].元件类型 = "O";
-                        break;
-                }
-                if (analyseResult.Result)
-                {
-                    p_Search_Engs[i].元件尺寸 = analyseResult.Size;
-                    p_Search_Engs[i].标准值 = decimal.Parse(analyseResult.Value);
-                    p_Search_Engs[i].单位 = analyseResult.Unit;
-                    if (analyseResult.Grade.Contains("%"))
-                    {
-                        string grade = analyseResult.Grade.Replace("%", "");
-                        p_Search_Engs[i].上限公差 = decimal.Parse(grade);
-                        p_Search_Engs[i].下限公差 = decimal.Parse(grade);
-                        decimal val = (decimal)p_Search_Engs[i].上限公差 / (decimal)100.00;
-                        p_Search_Engs[i].最大值 = p_Search_Engs[i].标准值 + p_Search_Engs[i].标准值 * (val);
-                        p_Search_Engs[i].最小值 = p_Search_Engs[i].标准值 - p_Search_Engs[i].标准值 * (val);
-                        p_Search_Engs[i].公差类别 = "%";
-                    }
-                    else
-                    {
-                        p_Search_Engs[i].上限公差 = decimal.Parse(analyseResult.Grade);
-                        p_Search_Engs[i].下限公差 = decimal.Parse(analyseResult.Grade);
-                        p_Search_Engs[i].最大值 = p_Search_Engs[i].标准值 + p_Search_Engs[i].上限公差;
-                        p_Search_Engs[i].最小值 = p_Search_Engs[i].标准值 - p_Search_Engs[i].下限公差;
-                        p_Search_Engs[i].公差类别 = "±";
-                    }
-
-                }
-                else
-                {
-                    p_Search_Engs[i].元件尺寸 = analyseResult.Size;
-                    if (analyseResult.Unit != null)
-                        p_Search_Engs[i].单位 = analyseResult.Unit;
-                    if (decimal.TryParse(analyseResult.Value, out decimal value))
-                    {
-                        p_Search_Engs[i].标准值 = decimal.Parse(analyseResult.Value);
-                        if (analyseResult.Grade.Contains("%"))
-                        {
-                            string grade = analyseResult.Grade.Replace("%", "");
-                            p_Search_Engs[i].上限公差 = decimal.Parse(grade);
-                            p_Search_Engs[i].下限公差 = decimal.Parse(grade);
-                            decimal val = (decimal)p_Search_Engs[i].上限公差 / (decimal)100.00;
-                            p_Search_Engs[i].最大值 = p_Search_Engs[i].标准值 + p_Search_Engs[i].标准值 * (val);
-                            p_Search_Engs[i].最小值 = p_Search_Engs[i].标准值 - p_Search_Engs[i].标准值 * (val);
-                            p_Search_Engs[i].公差类别 = "%";
-                        }
-                        else if (decimal.TryParse(analyseResult.Grade, out decimal g))
-                        {
-                            p_Search_Engs[i].上限公差 = decimal.Parse(analyseResult.Grade);
-                            p_Search_Engs[i].下限公差 = decimal.Parse(analyseResult.Grade);
-                            p_Search_Engs[i].最大值 = p_Search_Engs[i].标准值 + p_Search_Engs[i].上限公差;
-                            p_Search_Engs[i].最小值 = p_Search_Engs[i].标准值 - p_Search_Engs[i].下限公差;
-                            p_Search_Engs[i].公差类别 = "±";
-                        }
-                    }
-                    else
-                    {
-                        if (analyseResult.Grade.Contains("%"))
-                        {
-                            string grade = analyseResult.Grade.Replace("%", "");
-                            p_Search_Engs[i].上限公差 = decimal.Parse(grade);
-                            p_Search_Engs[i].下限公差 = decimal.Parse(grade);
-                            decimal val = (decimal)p_Search_Engs[i].上限公差 / (decimal)100.00;
-                            //p_Search_Engs[i].最大值 = p_Search_Engs[i].标准值 + p_Search_Engs[i].标准值 * (val);
-                            //p_Search_Engs[i].最小值 = p_Search_Engs[i].标准值 - p_Search_Engs[i].标准值 * (val);
-                            p_Search_Engs[i].公差类别 = "%";
-                        }
-                        else if (decimal.TryParse(analyseResult.Grade, out decimal g))
-                        {
-                            p_Search_Engs[i].上限公差 = decimal.Parse(analyseResult.Grade);
-                            p_Search_Engs[i].下限公差 = decimal.Parse(analyseResult.Grade);
-                            //p_Search_Engs[i].最大值 = p_Search_Engs[i].标准值 + p_Search_Engs[i].上限公差;
-                            //p_Search_Engs[i].最小值 = p_Search_Engs[i].标准值 - p_Search_Engs[i].下限公差;
-                            p_Search_Engs[i].公差类别 = "±";
-                        }
-                    }
-                    if (p_Search_Engs[i].元件类型 != "O")
-                    {
-                        ErrorLog.Add(p_Search_Engs[i].序号, analyseResult.DefaultFormat() + "," + analyseResult.ErrorMsg);
-                    }
-                }
+                AnalyRow(i);
                 try
                 {
                     List<P_Search_Eng_XYData_Result> _XY_Result = eng_XYData_Results.Where(x => x.物料编码 == p_Search_Engs[i].物料编码).ToList();
@@ -565,17 +483,13 @@ namespace GSP_SJ
                 {
 
                 }
-
             }
-
         }
 
         private void btnAddReport_Click(object sender, EventArgs e)
         {
 
         }
-
-
 
         private void btnExportBom_Click(object sender, EventArgs e)
         {
@@ -589,8 +503,6 @@ namespace GSP_SJ
             }
 
         }
-
-
 
         private void btnExportXYData_Click_1(object sender, EventArgs e)
         {
@@ -688,6 +600,128 @@ namespace GSP_SJ
                 if (comCustom.Items.Contains(_Customers[i].CustomerCode) == false)
                     comCustom.Items.Add(_Customers[i].CustomerCode);
             }
+        }
+
+        private void btnChangeMaterial_Click(object sender, EventArgs e)
+        {
+            int index = -1;
+            if (DataGridView_BOM.SelectedRows.Count > 0)
+            {
+                index = DataGridView_BOM.SelectedRows[0].Index;
+
+            }
+            if (index >= 0)
+            {
+                string materialCode = p_Search_Engs[index].物料编码;
+                string materialName = p_Search_Engs[index].物料描述;
+                FormMaterialMessage frm = new FormMaterialMessage(materialCode, materialName);
+                if (frm.ShowDialog() == DialogResult.OK)
+                {
+                    p_Search_Engs[index].物料描述 = frm.MaterialName;
+                    if (AnalyRow(index))
+                    {
+                        //DataGridView_BOM.Rows[index].Cells[0].Style.BackColor = Color.White;
+                    }
+                    DataGridView_BOM.Refresh();
+                }
+
+            }
+        }
+
+        private bool AnalyRow(int i)
+        {
+            AnalyseResult analyseResult = CommonAnalyse.Instance.AnalyseMethod_copy(p_Search_Engs[i].物料描述);
+            switch (analyseResult.Type)
+            {
+                case "电阻":
+                    p_Search_Engs[i].元件类型 = "R";
+                    break;
+                case "电容":
+                    p_Search_Engs[i].元件类型 = "C";
+                    break;
+                default:
+                    p_Search_Engs[i].元件类型 = "O";
+                    break;
+            }
+            if (analyseResult.Result)
+            {
+                p_Search_Engs[i].元件尺寸 = analyseResult.Size;
+                p_Search_Engs[i].标准值 = decimal.Parse(analyseResult.Value);
+                p_Search_Engs[i].单位 = analyseResult.Unit;
+                if (analyseResult.Grade.Contains("%"))
+                {
+                    string grade = analyseResult.Grade.Replace("%", "");
+                    p_Search_Engs[i].上限公差 = decimal.Parse(grade);
+                    p_Search_Engs[i].下限公差 = decimal.Parse(grade);
+                    decimal val = (decimal)p_Search_Engs[i].上限公差 / (decimal)100.00;
+                    p_Search_Engs[i].最大值 = p_Search_Engs[i].标准值 + p_Search_Engs[i].标准值 * (val);
+                    p_Search_Engs[i].最小值 = p_Search_Engs[i].标准值 - p_Search_Engs[i].标准值 * (val);
+                    p_Search_Engs[i].公差类别 = "%";
+                }
+                else
+                {
+                    p_Search_Engs[i].上限公差 = decimal.Parse(analyseResult.Grade);
+                    p_Search_Engs[i].下限公差 = decimal.Parse(analyseResult.Grade);
+                    p_Search_Engs[i].最大值 = p_Search_Engs[i].标准值 + p_Search_Engs[i].上限公差;
+                    p_Search_Engs[i].最小值 = p_Search_Engs[i].标准值 - p_Search_Engs[i].下限公差;
+                    p_Search_Engs[i].公差类别 = "±";
+                }
+
+            }
+            else
+            {
+                p_Search_Engs[i].元件尺寸 = analyseResult.Size;
+                if (analyseResult.Unit != null)
+                    p_Search_Engs[i].单位 = analyseResult.Unit;
+                if (decimal.TryParse(analyseResult.Value, out decimal value))
+                {
+                    p_Search_Engs[i].标准值 = decimal.Parse(analyseResult.Value);
+                    if (analyseResult.Grade.Contains("%"))
+                    {
+                        string grade = analyseResult.Grade.Replace("%", "");
+                        p_Search_Engs[i].上限公差 = decimal.Parse(grade);
+                        p_Search_Engs[i].下限公差 = decimal.Parse(grade);
+                        decimal val = (decimal)p_Search_Engs[i].上限公差 / (decimal)100.00;
+                        p_Search_Engs[i].最大值 = p_Search_Engs[i].标准值 + p_Search_Engs[i].标准值 * (val);
+                        p_Search_Engs[i].最小值 = p_Search_Engs[i].标准值 - p_Search_Engs[i].标准值 * (val);
+                        p_Search_Engs[i].公差类别 = "%";
+                    }
+                    else if (decimal.TryParse(analyseResult.Grade, out decimal g))
+                    {
+                        p_Search_Engs[i].上限公差 = decimal.Parse(analyseResult.Grade);
+                        p_Search_Engs[i].下限公差 = decimal.Parse(analyseResult.Grade);
+                        p_Search_Engs[i].最大值 = p_Search_Engs[i].标准值 + p_Search_Engs[i].上限公差;
+                        p_Search_Engs[i].最小值 = p_Search_Engs[i].标准值 - p_Search_Engs[i].下限公差;
+                        p_Search_Engs[i].公差类别 = "±";
+                    }
+                }
+                else
+                {
+                    if (analyseResult.Grade.Contains("%"))
+                    {
+                        string grade = analyseResult.Grade.Replace("%", "");
+                        p_Search_Engs[i].上限公差 = decimal.Parse(grade);
+                        p_Search_Engs[i].下限公差 = decimal.Parse(grade);
+                        decimal val = (decimal)p_Search_Engs[i].上限公差 / (decimal)100.00;
+                        //p_Search_Engs[i].最大值 = p_Search_Engs[i].标准值 + p_Search_Engs[i].标准值 * (val);
+                        //p_Search_Engs[i].最小值 = p_Search_Engs[i].标准值 - p_Search_Engs[i].标准值 * (val);
+                        p_Search_Engs[i].公差类别 = "%";
+                    }
+                    else if (decimal.TryParse(analyseResult.Grade, out decimal g))
+                    {
+                        p_Search_Engs[i].上限公差 = decimal.Parse(analyseResult.Grade);
+                        p_Search_Engs[i].下限公差 = decimal.Parse(analyseResult.Grade);
+                        //p_Search_Engs[i].最大值 = p_Search_Engs[i].标准值 + p_Search_Engs[i].上限公差;
+                        //p_Search_Engs[i].最小值 = p_Search_Engs[i].标准值 - p_Search_Engs[i].下限公差;
+                        p_Search_Engs[i].公差类别 = "±";
+                    }
+                }
+                if (p_Search_Engs[i].元件类型 != "O")
+                {
+                    ErrorLog.Add(p_Search_Engs[i].序号, analyseResult.DefaultFormat() + "," + analyseResult.ErrorMsg);
+                }
+            }
+            return analyseResult.Result;
         }
     }
 }

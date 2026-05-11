@@ -36,7 +36,7 @@
             this.DataGridView_BOM = new ComponentFactory.Krypton.Toolkit.KryptonDataGridView();
             this.kryptonRichTextBox1 = new ComponentFactory.Krypton.Toolkit.KryptonRichTextBox();
             this.kryptonPanel3 = new ComponentFactory.Krypton.Toolkit.KryptonPanel();
-            this.kryptonButton4 = new ComponentFactory.Krypton.Toolkit.KryptonButton();
+            this.btnChangeMaterial = new ComponentFactory.Krypton.Toolkit.KryptonButton();
             this.btnDeleteMaterial = new ComponentFactory.Krypton.Toolkit.KryptonButton();
             this.kryptonButton2 = new ComponentFactory.Krypton.Toolkit.KryptonButton();
             this.btnAddBasMaterial = new ComponentFactory.Krypton.Toolkit.KryptonButton();
@@ -53,6 +53,12 @@
             this.btnExportXYData = new ComponentFactory.Krypton.Toolkit.KryptonButton();
             this.kryptonPage3 = new ComponentFactory.Krypton.Navigator.KryptonPage();
             this.kryptonSplitContainer1 = new ComponentFactory.Krypton.Toolkit.KryptonSplitContainer();
+            this.btnCustomManager = new ComponentFactory.Krypton.Toolkit.KryptonButton();
+            this.txtVision = new ComponentFactory.Krypton.Toolkit.KryptonTextBox();
+            this.kryptonLabel7 = new ComponentFactory.Krypton.Toolkit.KryptonLabel();
+            this.comCompensation = new ComponentFactory.Krypton.Toolkit.KryptonComboBox();
+            this.kryptonLabel6 = new ComponentFactory.Krypton.Toolkit.KryptonLabel();
+            this.comCustom = new ComponentFactory.Krypton.Toolkit.KryptonComboBox();
             this.ComSide = new ComponentFactory.Krypton.Toolkit.KryptonComboBox();
             this.btnAddReport = new ComponentFactory.Krypton.Toolkit.KryptonButton();
             this.btnAnalyse = new ComponentFactory.Krypton.Toolkit.KryptonButton();
@@ -64,12 +70,6 @@
             this.kryptonLabel2 = new ComponentFactory.Krypton.Toolkit.KryptonLabel();
             this.txtProductCode = new ComponentFactory.Krypton.Toolkit.KryptonTextBox();
             this.kryptonLabel1 = new ComponentFactory.Krypton.Toolkit.KryptonLabel();
-            this.comCustom = new ComponentFactory.Krypton.Toolkit.KryptonComboBox();
-            this.comCompensation = new ComponentFactory.Krypton.Toolkit.KryptonComboBox();
-            this.kryptonLabel6 = new ComponentFactory.Krypton.Toolkit.KryptonLabel();
-            this.txtVision = new ComponentFactory.Krypton.Toolkit.KryptonTextBox();
-            this.kryptonLabel7 = new ComponentFactory.Krypton.Toolkit.KryptonLabel();
-            this.btnCustomManager = new ComponentFactory.Krypton.Toolkit.KryptonButton();
             ((System.ComponentModel.ISupportInitialize)(this.kryptonNavigator1)).BeginInit();
             this.kryptonNavigator1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.kryptonPage1)).BeginInit();
@@ -96,9 +96,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.kryptonSplitContainer1.Panel2)).BeginInit();
             this.kryptonSplitContainer1.Panel2.SuspendLayout();
             this.kryptonSplitContainer1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.ComSide)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.comCustom)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.comCompensation)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.comCustom)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ComSide)).BeginInit();
             this.SuspendLayout();
             // 
             // kryptonNavigator1
@@ -210,7 +210,7 @@
             // 
             // kryptonPanel3
             // 
-            this.kryptonPanel3.Controls.Add(this.kryptonButton4);
+            this.kryptonPanel3.Controls.Add(this.btnChangeMaterial);
             this.kryptonPanel3.Controls.Add(this.btnDeleteMaterial);
             this.kryptonPanel3.Controls.Add(this.kryptonButton2);
             this.kryptonPanel3.Controls.Add(this.btnAddBasMaterial);
@@ -223,16 +223,17 @@
             this.kryptonPanel3.Size = new System.Drawing.Size(144, 854);
             this.kryptonPanel3.TabIndex = 12;
             // 
-            // kryptonButton4
+            // btnChangeMaterial
             // 
-            this.kryptonButton4.Dock = System.Windows.Forms.DockStyle.Top;
-            this.kryptonButton4.Location = new System.Drawing.Point(0, 230);
-            this.kryptonButton4.Name = "kryptonButton4";
-            this.kryptonButton4.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.Office2007Blue;
-            this.kryptonButton4.Size = new System.Drawing.Size(144, 46);
-            this.kryptonButton4.TabIndex = 13;
-            this.kryptonButton4.Values.Image = global::GSP_SJ.Properties.Resources._125;
-            this.kryptonButton4.Values.Text = "更改物料";
+            this.btnChangeMaterial.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnChangeMaterial.Location = new System.Drawing.Point(0, 230);
+            this.btnChangeMaterial.Name = "btnChangeMaterial";
+            this.btnChangeMaterial.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.Office2007Blue;
+            this.btnChangeMaterial.Size = new System.Drawing.Size(144, 46);
+            this.btnChangeMaterial.TabIndex = 13;
+            this.btnChangeMaterial.Values.Image = global::GSP_SJ.Properties.Resources._125;
+            this.btnChangeMaterial.Values.Text = "更改物料";
+            this.btnChangeMaterial.Click += new System.EventHandler(this.btnChangeMaterial_Click);
             // 
             // btnDeleteMaterial
             // 
@@ -444,6 +445,60 @@
             this.kryptonSplitContainer1.SplitterDistance = 128;
             this.kryptonSplitContainer1.TabIndex = 1;
             // 
+            // btnCustomManager
+            // 
+            this.btnCustomManager.Location = new System.Drawing.Point(864, 61);
+            this.btnCustomManager.Name = "btnCustomManager";
+            this.btnCustomManager.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.Office2007Blue;
+            this.btnCustomManager.Size = new System.Drawing.Size(95, 40);
+            this.btnCustomManager.TabIndex = 18;
+            this.btnCustomManager.Values.Text = "维护";
+            this.btnCustomManager.Click += new System.EventHandler(this.btnCustomManager_Click);
+            // 
+            // txtVision
+            // 
+            this.txtVision.Location = new System.Drawing.Point(440, 64);
+            this.txtVision.Name = "txtVision";
+            this.txtVision.Size = new System.Drawing.Size(123, 35);
+            this.txtVision.StateCommon.Content.Font = new System.Drawing.Font("宋体", 13.824F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.txtVision.TabIndex = 17;
+            // 
+            // kryptonLabel7
+            // 
+            this.kryptonLabel7.Location = new System.Drawing.Point(332, 62);
+            this.kryptonLabel7.Name = "kryptonLabel7";
+            this.kryptonLabel7.Size = new System.Drawing.Size(74, 38);
+            this.kryptonLabel7.StateCommon.ShortText.Font = new System.Drawing.Font("宋体", 16.128F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.kryptonLabel7.TabIndex = 16;
+            this.kryptonLabel7.Values.Text = "版本";
+            // 
+            // comCompensation
+            // 
+            this.comCompensation.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comCompensation.DropDownWidth = 134;
+            this.comCompensation.Location = new System.Drawing.Point(751, 18);
+            this.comCompensation.Name = "comCompensation";
+            this.comCompensation.Size = new System.Drawing.Size(112, 27);
+            this.comCompensation.TabIndex = 15;
+            // 
+            // kryptonLabel6
+            // 
+            this.kryptonLabel6.Location = new System.Drawing.Point(565, 12);
+            this.kryptonLabel6.Name = "kryptonLabel6";
+            this.kryptonLabel6.Size = new System.Drawing.Size(131, 38);
+            this.kryptonLabel6.StateCommon.ShortText.Font = new System.Drawing.Font("宋体", 16.128F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.kryptonLabel6.TabIndex = 14;
+            this.kryptonLabel6.Values.Text = "电桥参数";
+            // 
+            // comCustom
+            // 
+            this.comCustom.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comCustom.DropDownWidth = 112;
+            this.comCustom.Location = new System.Drawing.Point(751, 68);
+            this.comCustom.Name = "comCustom";
+            this.comCustom.Size = new System.Drawing.Size(112, 27);
+            this.comCustom.TabIndex = 13;
+            // 
             // ComSide
             // 
             this.ComSide.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -466,6 +521,7 @@
             this.btnAddReport.TabIndex = 11;
             this.btnAddReport.Values.Image = global::GSP_SJ.Properties.Resources._160;
             this.btnAddReport.Values.Text = "新建报告";
+            this.btnAddReport.Visible = false;
             this.btnAddReport.Click += new System.EventHandler(this.btnAddReport_Click);
             // 
             // btnAnalyse
@@ -553,60 +609,6 @@
             this.kryptonLabel1.TabIndex = 0;
             this.kryptonLabel1.Values.Text = "产品编码";
             // 
-            // comCustom
-            // 
-            this.comCustom.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comCustom.DropDownWidth = 112;
-            this.comCustom.Location = new System.Drawing.Point(751, 68);
-            this.comCustom.Name = "comCustom";
-            this.comCustom.Size = new System.Drawing.Size(112, 27);
-            this.comCustom.TabIndex = 13;
-            // 
-            // comCompensation
-            // 
-            this.comCompensation.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comCompensation.DropDownWidth = 134;
-            this.comCompensation.Location = new System.Drawing.Point(751, 18);
-            this.comCompensation.Name = "comCompensation";
-            this.comCompensation.Size = new System.Drawing.Size(112, 27);
-            this.comCompensation.TabIndex = 15;
-            // 
-            // kryptonLabel6
-            // 
-            this.kryptonLabel6.Location = new System.Drawing.Point(565, 12);
-            this.kryptonLabel6.Name = "kryptonLabel6";
-            this.kryptonLabel6.Size = new System.Drawing.Size(131, 38);
-            this.kryptonLabel6.StateCommon.ShortText.Font = new System.Drawing.Font("宋体", 16.128F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.kryptonLabel6.TabIndex = 14;
-            this.kryptonLabel6.Values.Text = "电桥参数";
-            // 
-            // txtVision
-            // 
-            this.txtVision.Location = new System.Drawing.Point(440, 64);
-            this.txtVision.Name = "txtVision";
-            this.txtVision.Size = new System.Drawing.Size(123, 35);
-            this.txtVision.StateCommon.Content.Font = new System.Drawing.Font("宋体", 13.824F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.txtVision.TabIndex = 17;
-            // 
-            // kryptonLabel7
-            // 
-            this.kryptonLabel7.Location = new System.Drawing.Point(332, 62);
-            this.kryptonLabel7.Name = "kryptonLabel7";
-            this.kryptonLabel7.Size = new System.Drawing.Size(74, 38);
-            this.kryptonLabel7.StateCommon.ShortText.Font = new System.Drawing.Font("宋体", 16.128F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.kryptonLabel7.TabIndex = 16;
-            this.kryptonLabel7.Values.Text = "版本";
-            // 
-            // btnCustomManager
-            // 
-            this.btnCustomManager.Location = new System.Drawing.Point(864, 61);
-            this.btnCustomManager.Name = "btnCustomManager";
-            this.btnCustomManager.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.Office2007Blue;
-            this.btnCustomManager.Size = new System.Drawing.Size(95, 40);
-            this.btnCustomManager.TabIndex = 18;
-            this.btnCustomManager.Values.Text = "维护";
-            this.btnCustomManager.Click += new System.EventHandler(this.btnCustomManager_Click);
-            // 
             // UCProgram
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -642,9 +644,9 @@
             this.kryptonSplitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.kryptonSplitContainer1)).EndInit();
             this.kryptonSplitContainer1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.ComSide)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.comCustom)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.comCompensation)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.comCustom)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ComSide)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -684,7 +686,7 @@
         private ComponentFactory.Krypton.Toolkit.KryptonComboBox ComSide;
         private ComponentFactory.Krypton.Toolkit.KryptonButton btnReplaceCode;
         private ComponentFactory.Krypton.Toolkit.KryptonButton btnAddBasMaterial;
-        private ComponentFactory.Krypton.Toolkit.KryptonButton kryptonButton4;
+        private ComponentFactory.Krypton.Toolkit.KryptonButton btnChangeMaterial;
         private ComponentFactory.Krypton.Toolkit.KryptonButton btnDeleteMaterial;
         private ComponentFactory.Krypton.Toolkit.KryptonButton kryptonButton2;
         private ComponentFactory.Krypton.Toolkit.KryptonComboBox comCustom;

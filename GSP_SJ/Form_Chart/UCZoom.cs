@@ -1,4 +1,6 @@
-﻿using SqlHelper;
+﻿using BrowApp.Language;
+using GSP;
+using SqlHelper;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -29,6 +31,7 @@ namespace GSP_SJ.Form_Chart
                 case Type_Window.None:
                     break;
                 case Type_Window.Puzzle:
+                    tool_IsFurnace.Visible = true;
                     break;
                 case Type_Window.Position:
                     tool坐标旋转.Visible = true;
@@ -100,7 +103,6 @@ namespace GSP_SJ.Form_Chart
             toolROI.Checked = true;
         }
 
-
         public bool GetSelectComponent(out Image image, out Component component)
         {
             return zoomablePictureBox1.GetSelectComponent(out image, out component);
@@ -138,6 +140,43 @@ namespace GSP_SJ.Form_Chart
             {
                 //保存之后，要刷新数据
                 DBEventAction.RefreshManReport?.Invoke();
+            }
+
+        }
+
+        private void btn重新定位_Click(object sender, EventArgs e)
+        {
+            //是否定位标准
+            if(BrowApp.APP.Tip.ShowTip(0, "提示".tr(), "是否重新定位？".tr(), "是".tr(), "否".tr()) == 1)
+            {
+                DBEventAction._Reports.IsFurnace = false;
+                SQLDataControl.UpdatateManReport_IsFurnace(DBEventAction._Reports.ReportCode, false);
+                tool_IsFurnace.Text = "未定位".tr();
+                tool_IsFurnace.ForeColor = Color.Red;
+                if (this.ContextMenuStrip != null)
+                {
+                    this.ContextMenuStrip.Items[0].Enabled = true;
+                }
+            }
+         
+        }
+
+        public void Refresh_IsFurnace()
+        {
+            if (DBEventAction._Reports.IsFurnace == null)
+            {
+                tool_IsFurnace.Text = "未定位".tr(); 
+                tool_IsFurnace.ForeColor = Color.Red;
+            }
+            else if ((bool)DBEventAction._Reports.IsFurnace)
+            {
+                tool_IsFurnace.Text = "已定位".tr();
+                tool_IsFurnace.ForeColor = Color.Green;
+            }
+            else
+            {
+                tool_IsFurnace.Text = "未定位".tr();
+                tool_IsFurnace.ForeColor = Color.Red;
             }
 
         }

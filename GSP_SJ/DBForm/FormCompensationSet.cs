@@ -25,6 +25,11 @@ namespace GSP_SJ
 
             Search();
             dgvProgram.CellClick += dgvProgram_CellClick;
+            UpdateLanguage();
+        }
+        private void UpdateLanguage()
+        {
+            BrowApp.Language.Language.Instance.UpdateLanguage(this, null);
         }
 
         private void dgvProgram_CellClick(object sender, DataGridViewCellEventArgs e)

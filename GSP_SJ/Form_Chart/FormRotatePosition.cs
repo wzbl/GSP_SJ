@@ -1,4 +1,5 @@
-﻿using ComponentFactory.Krypton.Toolkit;
+﻿using BrowApp.Language;
+using ComponentFactory.Krypton.Toolkit;
 using SqlHelper;
 using System;
 using System.Collections.Generic;
@@ -125,11 +126,11 @@ namespace GSP_SJ.Form_Chart
                     }
                 }
             };
-            ToolStripButton toolStrip1 = new ToolStripButton("重置视图");
+            ToolStripButton toolStrip1 = new ToolStripButton("重置视图".tr());
             toolStrip1.Click += (s, e) => canvas.ResetView();
-            ToolStripButton toolStrip2 = new ToolStripButton("适合视图");
+            ToolStripButton toolStrip2 = new ToolStripButton("适合视图".tr());
             toolStrip2.Click += (s, e) => canvas.FitToView();
-            ToolStripButton toolStrip3 = new ToolStripButton("水平X镜像");//原点X轴对称
+            ToolStripButton toolStrip3 = new ToolStripButton("水平X镜像".tr());//原点X轴对称
             toolStrip3.Click += (s, e) =>
             {
                 for (int i = 0; i < canvas.Components.Count; i++)
@@ -138,7 +139,7 @@ namespace GSP_SJ.Form_Chart
                 }
                 canvas.FitToView();
             };
-            ToolStripButton toolStrip4 = new ToolStripButton("水平Y镜像");//原点Y轴对称
+            ToolStripButton toolStrip4 = new ToolStripButton("水平Y镜像".tr());//原点Y轴对称
             toolStrip4.Click += (s, e) =>
             {
                 for (int i = 0; i < canvas.Components.Count; i++)
@@ -148,7 +149,7 @@ namespace GSP_SJ.Form_Chart
                 canvas.FitToView();
             };
 
-            ToolStripButton toolStrip5 = new ToolStripButton("逆时针90");
+            ToolStripButton toolStrip5 = new ToolStripButton("逆时针90".tr());
             toolStrip5.Click += (s, e) =>
             {
                 for (int i = 0; i < canvas.Components.Count; i++)
@@ -158,7 +159,7 @@ namespace GSP_SJ.Form_Chart
                 }
                 canvas.FitToView();
             };
-            ToolStripButton toolStrip6 = new ToolStripButton("顺时针90");
+            ToolStripButton toolStrip6 = new ToolStripButton("顺时针90".tr());
             toolStrip6.Click += (s, e) =>
             {
                 for (int i = 0; i < canvas.Components.Count; i++)
@@ -169,7 +170,7 @@ namespace GSP_SJ.Form_Chart
                 canvas.FitToView();
             };
 
-            ToolStripButton toolStrip7 = new ToolStripButton("旋转180");
+            ToolStripButton toolStrip7 = new ToolStripButton("旋转180".tr());
             toolStrip7.Click += (s, e) =>
             {
                 for (int i = 0; i < canvas.Components.Count; i++)
@@ -179,7 +180,7 @@ namespace GSP_SJ.Form_Chart
                 canvas.FitToView();
             };
 
-            ToolStripButton toolStrip8 = new ToolStripButton("元件水平X镜像");
+            ToolStripButton toolStrip8 = new ToolStripButton("元件水平X镜像".tr());
             toolStrip8.Click += (s, e) =>
             {
                 for (int i = 0; i < canvas.Components.Count; i++)
@@ -191,7 +192,7 @@ namespace GSP_SJ.Form_Chart
                 }
                 canvas.FitToView();
             };
-            ToolStripButton toolStrip9 = new ToolStripButton("元件水平Y镜像");
+            ToolStripButton toolStrip9 = new ToolStripButton("元件水平Y镜像".tr());
             toolStrip9.Click += (s, e) =>
             {
                 for (int i = 0; i < canvas.Components.Count; i++)
@@ -205,7 +206,7 @@ namespace GSP_SJ.Form_Chart
                 canvas.FitToView();
             };
 
-            ToolStripButton toolStrip10 = new ToolStripButton("元件逆时针90");
+            ToolStripButton toolStrip10 = new ToolStripButton("元件逆时针90".tr());
             toolStrip10.Click += (s, e) =>
             {
                 for (int i = 0; i < canvas.Components.Count; i++)
@@ -214,7 +215,7 @@ namespace GSP_SJ.Form_Chart
                 }
                 canvas.FitToView();
             };
-            ToolStripButton toolStrip11 = new ToolStripButton("元件顺时针90");
+            ToolStripButton toolStrip11 = new ToolStripButton("元件顺时针90".tr());
             toolStrip11.Click += (s, e) =>
             {
                 for (int i = 0; i < canvas.Components.Count; i++)
@@ -224,7 +225,7 @@ namespace GSP_SJ.Form_Chart
                 canvas.FitToView();
             };
 
-            ToolStripButton toolStrip12 = new ToolStripButton("元件旋转180");
+            ToolStripButton toolStrip12 = new ToolStripButton("元件旋转180".tr());
             toolStrip12.Click += (s, e) =>
             {
                 for (int i = 0; i < canvas.Components.Count; i++)
@@ -234,7 +235,7 @@ namespace GSP_SJ.Form_Chart
                 canvas.FitToView();
             };
 
-            ToolStripButton toolStrip13 = new ToolStripButton("保存数据");
+            ToolStripButton toolStrip13 = new ToolStripButton("保存数据".tr());
             toolStrip13.Click += async (s, e) =>
             {
                 await canvas.SaveReportImageToDB();
