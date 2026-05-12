@@ -45,6 +45,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\BrowLib.dll</HintPath>
     </Reference>
+    <Reference Include="Browocrlib, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\Browocrlib.dll</HintPath>
+    </Reference>
     <Reference Include="CKVisionAppNet, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\CKVisionAppNet.dll</HintPath>
@@ -67,19 +71,11 @@
       <HintPath>..\..\lib\ComponentFactory.Krypton.Workspace.dll</HintPath>
     </Reference>
     <Reference Include="Emgu.CV.Bitmap">
-      <HintPath>..\..\..\Brow Vision\lib\Emgu.CV.Bitmap.dll</HintPath>
+      <HintPath>..\..\lib\Emgu.CV.Bitmap.dll</HintPath>
     </Reference>
-    <Reference Include="Emgu.CV.UI, Version=3.2.0.2682, Culture=neutral, PublicKeyToken=7281126722ab4438, processorArchitecture=MSIL">
+    <Reference Include="Emgu.CV.Platform.NetStandard, Version=4.5.5.4823, Culture=neutral, PublicKeyToken=7281126722ab4438, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\Emgu.CV.UI.dll</HintPath>
-    </Reference>
-    <Reference Include="Emgu.CV.UI.GL, Version=3.2.0.2682, Culture=neutral, PublicKeyToken=7281126722ab4438, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\Emgu.CV.UI.GL.dll</HintPath>
-    </Reference>
-    <Reference Include="Emgu.CV.World, Version=3.2.0.2682, Culture=neutral, PublicKeyToken=7281126722ab4438, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\Emgu.CV.World.dll</HintPath>
+      <HintPath>..\..\lib\Emgu.CV.Platform.NetStandard.dll</HintPath>
     </Reference>
     <Reference Include="halcondotnet, Version=20.11.1.0, Culture=neutral, PublicKeyToken=4973bed59ddbf2b8, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -310,6 +306,7 @@
       <DependentUpon>FormResCheck.cs</DependentUpon>
     </Compile>
     <Compile Include="ModelClass\HalconImageConverter.cs" />
+    <Compile Include="ModelClass\HImageToEmguCVConverter.cs" />
     <Compile Include="ModelClass\ROI.cs" />
     <Compile Include="ModelClass\UCOCRModel.cs">
       <SubType>UserControl</SubType>
@@ -690,6 +687,12 @@
     <PackageReference Include="iTextSharp">
       <Version>5.5.10</Version>
     </PackageReference>
+    <PackageReference Include="Microsoft.ML.OnnxRuntime">
+      <Version>1.13.1</Version>
+    </PackageReference>
+    <PackageReference Include="System.Drawing.Common">
+      <Version>9.0.9</Version>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
@@ -834,6 +837,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Mes\FAIlogo.png" />
+    <None Include="Resources\icons8-缩小-16.png" />
+    <None Include="Resources\icons8-扩大-16.png" />
+    <None Include="Resources\icons8-缩小-48.png" />
+    <None Include="Resources\icons8-扩大-48.png" />
+    <None Include="Resources\23crosshair.png" />
     <None Include="Resources\135crosshair.png" />
     <None Include="Resources\16.png" />
     <None Include="Resources\1861.png" />

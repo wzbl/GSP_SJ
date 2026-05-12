@@ -333,6 +333,16 @@ namespace GSP_SJ.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
+        internal static System.Drawing.Bitmap _23crosshair {
+            get {
+                object obj = ResourceManager.GetObject("23crosshair", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
         internal static System.Drawing.Bitmap _24 {
             get {
                 object obj = ResourceManager.GetObject("24", resourceCulture);
@@ -703,6 +713,26 @@ namespace GSP_SJ.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
+        internal static System.Drawing.Bitmap icons8_扩大_16 {
+            get {
+                object obj = ResourceManager.GetObject("icons8-扩大-16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap icons8_扩大_48 {
+            get {
+                object obj = ResourceManager.GetObject("icons8-扩大-48", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
         internal static System.Drawing.Bitmap icons8_报警_48 {
             get {
                 object obj = ResourceManager.GetObject("icons8-报警-48", resourceCulture);
@@ -773,6 +803,26 @@ namespace GSP_SJ.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
+        internal static System.Drawing.Bitmap icons8_缩小_16 {
+            get {
+                object obj = ResourceManager.GetObject("icons8-缩小-16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap icons8_缩小_48 {
+            get {
+                object obj = ResourceManager.GetObject("icons8-缩小-48", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
         internal static System.Drawing.Bitmap icons8_自动_96 {
             get {
                 object obj = ResourceManager.GetObject("icons8-自动-96", resourceCulture);
@@ -806,6 +856,16 @@ namespace GSP_SJ.Properties {
         internal static System.Drawing.Bitmap Off {
             get {
                 object obj = ResourceManager.GetObject("Off", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap Ok_3_24px {
+            get {
+                object obj = ResourceManager.GetObject("Ok_3_24px", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

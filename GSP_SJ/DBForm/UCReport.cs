@@ -1,6 +1,4 @@
 ﻿using BorwinAnalyse.BaseClass;
-using Emgu.CV.CvEnum;
-using Emgu.CV.UI.GLView;
 using SqlHelper;
 using System;
 using System.Collections.Generic;

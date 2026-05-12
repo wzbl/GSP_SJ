@@ -1,4 +1,4 @@
-﻿ using BrowApp;
+﻿using BrowApp;
 using BrowApp.IO;
 using BrowApp.Language;
 using BrowLib;
@@ -66,10 +66,10 @@ namespace GSP
         /// </summary>
         private Task ManualTask;
 
-    /// <summary>
-    /// 停止手动线程
-    /// </summary>
-    public CancellationTokenSource StopManualTask = new CancellationTokenSource();
+        /// <summary>
+        /// 停止手动线程
+        /// </summary>
+        public CancellationTokenSource StopManualTask = new CancellationTokenSource();
         /// <summary>
         /// 执行手动流程
         /// </summary>
@@ -144,7 +144,7 @@ namespace GSP
             double OUT_X; double OUT_Y;
             OUT_X = X - OffsetX;
             OUT_Y = Y - OffsetY;
-           return Tuple.Create<double, double>(OUT_X, OUT_Y);
+            return Tuple.Create<double, double>(OUT_X, OUT_Y);
         }
         /// <summary>
         /// 整机回零流程
@@ -353,13 +353,13 @@ namespace GSP
                                 HomeStep++;
                                 break;
                             case 9:
-                                if(Global.X轴.HomeState &&
+                                if (Global.X轴.HomeState &&
                                 Global.Y轴.HomeState &&
                                  Global.R轴.HomeState &&
                                  Global.左夹爪轴.HomeState &&
                                  Global.右夹爪轴.HomeState)
                                 {
-                                  
+
                                     HomeStep++;
                                 }
                                 break;
@@ -518,10 +518,10 @@ namespace GSP
                                 Global.Y轴.HomeState &&
                                  Global.R轴.HomeState &&
                                  Global.左夹爪轴.HomeState &&
-                                 Global.右夹爪轴.HomeState&&
+                                 Global.右夹爪轴.HomeState &&
                                  Global.顶升轴.HomeState)
                                 {
-                                 HomeStep++;
+                                    HomeStep++;
                                     APP.Log.I_Log("HomeStep" + HomeStep.ToString());
                                 }
                                 break;
@@ -1050,7 +1050,7 @@ namespace GSP
                         //拼版偏移
                         X = X + Global.Parm.PbXoffset;
                         Y = Y + Global.Parm.PbYoffset;
-                        
+
 
                         LeftPos = Global.GetSize(Type);//获取开口大小
                         ZHight = Global.GetHight(Type);//获取下针高度
@@ -1227,7 +1227,7 @@ namespace GSP
             double X = 0, Y = 0, yR = 0, R = 0, Dx = 0, Dy = 0;
             double LeftPos = 0;
             double ZHight = 0, CcdHight = 0;
-            double yX = 0, yY = 0, offset_X = 0, offset_Y = 0, offsetx = 0, offsety = 0, CenterdX=0, CenterdY=0;
+            double yX = 0, yY = 0, offset_X = 0, offset_Y = 0, offsetx = 0, offsety = 0, CenterdX = 0, CenterdY = 0;
             double Jqsize = 0;
             while (IniStart && !Global.StopFlag)
             {
@@ -1266,7 +1266,7 @@ namespace GSP
                         offsetx = Convert.ToDouble(dataRows[0]["X坐标调整"].ToString());
                         offsety = Convert.ToDouble(dataRows[0]["Y坐标调整"].ToString());
                         R = Algorithm.GetAngle(yR);
-                        APP.Log.I_Log("原始X坐标:"+X.ToString()+"原始Y坐标:"+Y.ToString() +
+                        APP.Log.I_Log("原始X坐标:" + X.ToString() + "原始Y坐标:" + Y.ToString() +
                             "原始方向:" + yR.ToString() + "X坐标调整:" + offsetx.ToString() + "Y坐标调整:" + offsety.ToString());
                         //象限坐标系平移  
                         X = X + VisionGlobal.TranslationX;
@@ -1357,7 +1357,7 @@ namespace GSP
                         //获取相机Vs针头便移值
                         Global.GetOffset(R, out offset_X, out offset_Y, Global.Is_DownCam);
                         APP.Log.I_Log("角度:" + R.ToString() + "旋转偏移dX:" + offset_X.ToString() + "旋转偏移dY:" + offset_Y.ToString());
-                        Tuple<double, double> offset = this.GetOffset(yX, yY, offset_X + Dx, offset_Y +Dy);
+                        Tuple<double, double> offset = this.GetOffset(yX, yY, offset_X + Dx, offset_Y + Dy);
                         yX = offset.Item1;
                         yY = offset.Item2;
                         APP.Log.I_Log("目标X:" + yX.ToString() + "目标Y:" + yY.ToString());
@@ -1392,7 +1392,7 @@ namespace GSP
                     case 12:
                         if (Global.Z轴.GetPrfPos() - ZHight - 2 < 0.02)
                         {
-                            if(Global.Z轴.Runing())
+                            if (Global.Z轴.Runing())
                             {
                                 Global.Z轴.PMove(Global.Systemdata.buf_Zspeed, 500, ZHight, 1);
                                 GoToStep++; ;
@@ -1641,7 +1641,7 @@ namespace GSP
                                     }
                                     else
                                     {
-                                      APP.Tip.ShowTip(1, "警告".tr(), "请放入PCB板".tr(), "确定".tr());
+                                        APP.Tip.ShowTip(1, "警告".tr(), "请放入PCB板".tr(), "确定".tr());
                                     }
                                     break;
                             }
@@ -1987,7 +1987,7 @@ namespace GSP
                                         int tHeight = 0;
 
                                         //SharedImage = Global.VisionApp.GetBitmap("Task6", "图像合并");
-                                        IntPtr ptr = Global.VisionApp.GetImageBits("Task6", "图像合并",ref tFormat,ref tWidth,ref tHeight);
+                                        IntPtr ptr = Global.VisionApp.GetImageBits("Task6", "图像合并", ref tFormat, ref tWidth, ref tHeight);
                                         //String _Path = Directory.GetCurrentDirectory().ToString() + "\\BMP";
                                         //Task.Run(() =>
                                         //{
@@ -1995,8 +1995,8 @@ namespace GSP
                                         //});
                                         //APP.Log.I_Log(_Path + "\\" + DateTime.Now.ToString("yyyyMMddhhmmss") + ".bmp");
 
-                                        bool re=  MemoryHelper.Write_SharedMemory(ptr, tFormat, tWidth, tHeight, "SharedImage");
-                                        APP.Log.I_Log("写入共享内存:"+"["+re.ToString()+"]");
+                                        bool re = MemoryHelper.Write_SharedMemory(ptr, tFormat, tWidth, tHeight, "SharedImage");
+                                        APP.Log.I_Log("写入共享内存:" + "[" + re.ToString() + "]");
                                         //Thread.Sleep(200);
                                         Global.TcpClass.Send("M:GraspimgOK");
                                         Global.SystemRun = false;
@@ -2215,7 +2215,7 @@ namespace GSP
                                     int tHeight = 0;
 
                                     IntPtr ptr = Global.VisionApp.GetImageBits("Task6", "图像合并", ref tFormat, ref tWidth, ref tHeight);
-                                   
+
                                     bool re = MemoryHelper.Write_SharedMemory(ptr, tFormat, tWidth, tHeight, "SharedImage");
                                     //SharedImage = Global.VisionApp.GetBitmap("Task6", "图像合并");
                                     //bool re =MemoryHelper.Write_SharedMemory_Bitmap1(SharedImage, "SharedImage");
@@ -2387,7 +2387,7 @@ namespace GSP
 
             string StrCode = null, Type = null;
 
-            double X = 0, Y = 0, R = 0, Size = 0, ZHight = 0, Wx = 0, Wy = 0, Dx = 0, Dy = 0, offsetx = 0, offsety = 0,CenterdX=0, CenterdY=0;
+            double X = 0, Y = 0, R = 0, Size = 0, ZHight = 0, Wx = 0, Wy = 0, Dx = 0, Dy = 0, offsetx = 0, offsety = 0, CenterdX = 0, CenterdY = 0;
 
             double jqsize = 0;
             while (!Global.StopFlag)
@@ -2409,18 +2409,18 @@ namespace GSP
                                 case 3://860P
                                     if (BrowLib.Controller.InPort["阻挡感应光电_IN"].IsOn(100))
                                     {
-                                       Runstep = 6;
+                                        Runstep = 6;
                                     }
                                     else
                                     {
-                                      APP.Tip.ShowTip(1, "警告", "请放入PCB板".tr(), "确定".tr());
+                                        APP.Tip.ShowTip(1, "警告", "请放入PCB板".tr(), "确定".tr());
                                     }
-                                  break;
+                                    break;
                             }
                             break;
                         #region 检测入口传感器
                         case 1:
-                            if(BrowLib.Controller.InPort["入口感应光电_IN"].IsOn(500))
+                            if (BrowLib.Controller.InPort["入口感应光电_IN"].IsOn(500))
                             {
                                 BrowLib.Controller.OutPort["上位机要板_OUT"].Off();//上位机要板关闭
                                 APP.Log.I_Log("入口感应到位[Runstep=" + Runstep.ToString() + "]");
@@ -2458,9 +2458,9 @@ namespace GSP
                             Runstep++;
                             break;
                         case 5:
-                            if(Global.调宽.Runing())
+                            if (Global.调宽.Runing())
                             {
-                              Runstep++;
+                                Runstep++;
                             }
                             break;
                         case 6:
@@ -2767,7 +2767,7 @@ namespace GSP
                                                         Runstep = 50;//离线
                                                         break;
                                                 }
-                                              break;
+                                                break;
                                         }
                                     }
                                     else
@@ -2822,7 +2822,7 @@ namespace GSP
                                         }
                                         else
                                         {
-                                            APP.Log.I_Log("指令回复错误:" + str2+ "[Runstep="+ Runstep.ToString()+"]");
+                                            APP.Log.I_Log("指令回复错误:" + str2 + "[Runstep=" + Runstep.ToString() + "]");
                                             Mode = 0;
                                             Runstep++;
                                         }
@@ -3619,7 +3619,7 @@ namespace GSP
                     #endregion
                 }
                 #endregion
-               Thread.Sleep(5);
+                Thread.Sleep(5);
             }
         }
         /// <summary>
@@ -3817,13 +3817,13 @@ namespace GSP
                 Thread.Sleep(10);
             }
         }
-       
+
         /// <summary>
         /// 重复精度测试
         /// </summary>
         /// <param name="Num"></param>
         /// <param name="action"></param>
-        public void RepeatTest(int Num,double Startpos, double Spd,double Acc,double Offset, int Delay,int AxisID, Action<int,double> action)
+        public void RepeatTest(int Num, double Startpos, double Spd, double Acc, double Offset, int Delay, int AxisID, Action<int, double> action)
         {
             int Cpkstep = 0;
             int j = 0;
@@ -3833,7 +3833,7 @@ namespace GSP
             switch (AxisID)
             {
                 case 1:
-                    AxisNme= "X轴";
+                    AxisNme = "X轴";
                     break;
                 case 2:
                     AxisNme = "Y轴";
@@ -3882,14 +3882,14 @@ namespace GSP
                         }
                         break;
                     case 6:
-                        if(AxisID<3)
+                        if (AxisID < 3)
                         {
-                          Global.VisionApp.ExecuteProc("Task8", 0);
-                          Cpkstep++;
+                            Global.VisionApp.ExecuteProc("Task8", 0);
+                            Cpkstep++;
                         }
                         else
                         {
-                          Cpkstep++;
+                            Cpkstep++;
                         }
                         break;
                     case 7:
@@ -3897,7 +3897,7 @@ namespace GSP
                         {
                             if (Global.VisionApp.EndProc["Task8"])
                             {
-                                if (j%5==1) // 余数不为 0 时是奇数
+                                if (j % 5 == 1) // 余数不为 0 时是奇数
                                 {
                                     Check = false;
                                 }
@@ -3905,26 +3905,26 @@ namespace GSP
                                 {
                                     Check = true;
                                 }
-                                if (AxisID==1)
+                                if (AxisID == 1)
                                 {
-                                  //Pos = Startpos - Global.VisionApp.GetDblValue("Task8", "定义变量", 2108, 0);
-                                  Pos = Startpos + Algorithm.RandomDouble(-0.003, 0.003, Check);
+                                    //Pos = Startpos - Global.VisionApp.GetDblValue("Task8", "定义变量", 2108, 0);
+                                    Pos = Startpos + Algorithm.RandomDouble(-0.003, 0.003, Check);
                                 }
                                 else if (AxisID == 2)
                                 {
-                                  //Pos = Startpos - Global.VisionApp.GetDblValue("Task8", "定义变量", 2109, 0);
-                                  Pos = Startpos + Algorithm.RandomDouble(-0.003, 0.003, Check);
+                                    //Pos = Startpos - Global.VisionApp.GetDblValue("Task8", "定义变量", 2109, 0);
+                                    Pos = Startpos + Algorithm.RandomDouble(-0.003, 0.003, Check);
                                 }
                                 Cpkstep++;
                             }
                         }
                         else
                         {
-                            Pos = BrowLib.Controller.Motion[AxisNme].GetPrfPos()+ Algorithm.RandomDouble(-0.002,0.002, Check);
+                            Pos = BrowLib.Controller.Motion[AxisNme].GetPrfPos() + Algorithm.RandomDouble(-0.002, 0.002, Check);
                             Cpkstep++;
                         }
                         break;
-                     case 8:
+                    case 8:
                         if (j >= Num)
                         {
                             Cpkstep++;
@@ -3946,7 +3946,7 @@ namespace GSP
                 }
                 Thread.Sleep(10);
             }
-         }
+        }
 
         public void AutoCalibrationFlow(int Num, double Startpos, double Spd, double Acc, double Offset, int Delay, int AxisID, Action<int, double> action)
         {
@@ -3984,7 +3984,7 @@ namespace GSP
                         }
                         break;
                     case 2:
-                        BrowLib.Controller.Motion[AxisNme].PMove(Spd, Acc, Startpos + j*Offset, 1);
+                        BrowLib.Controller.Motion[AxisNme].PMove(Spd, Acc, Startpos + j * Offset, 1);
                         Calibrationstep++;
                         break;
                     case 3:
@@ -4004,8 +4004,8 @@ namespace GSP
                         {
                             if (AxisID == 1)
                                 Pos = Global.VisionApp.GetDblValue("Task8", "定义变量", 2108, 0);
-                            else if(AxisID == 2)
-                                Pos =Global.VisionApp.GetDblValue("Task8", "定义变量", 2109, 0);
+                            else if (AxisID == 2)
+                                Pos = Global.VisionApp.GetDblValue("Task8", "定义变量", 2109, 0);
                             Calibrationstep++;
                         }
                         break;
@@ -4022,7 +4022,7 @@ namespace GSP
                         action(j, Pos);
                         break;
                     case 7:
-                        APP.Log.I_Log(AxisNme+"：标定完成");
+                        APP.Log.I_Log(AxisNme + "：标定完成");
                         Global.StopFlag = true;
                         Global.MachineState = GEnumEx.MachineState.MachineStop;
                         Global.SystemRun = false;

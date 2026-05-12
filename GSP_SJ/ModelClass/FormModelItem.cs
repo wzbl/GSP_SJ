@@ -27,7 +27,7 @@ namespace GSP_SJ.ModelClass
 
         private string LCRType = "";
 
-   
+
 
         public FormModelItem(string MaterialCode, string description, string producerCode, Image image, string LCRType)
         {
@@ -39,9 +39,16 @@ namespace GSP_SJ.ModelClass
             roiPictureBox1.Width = image.Width; roiPictureBox1.Height = image.Height;
             org = image;
             //org = ResizeImage(image, roiPictureBox1.Width, roiPictureBox1.Height); ;
-    
+
             this.LCRType = LCRType;
             MaterialName = description;
+            this.Shown += FormModelItem_Shown;
+        }
+
+        private void FormModelItem_Shown(object sender, EventArgs e)
+        {
+            //显示比对结果
+            DispMatchResult();
         }
 
         public FormModelItem(string MaterialCode, string description, string producerCode = "")
@@ -51,6 +58,7 @@ namespace GSP_SJ.ModelClass
             Text = "[" + MaterialCode + "]描述[" + description + "]";
             this.Load += FormModelItem_Load;
             ProducerCode = producerCode;
+            this.Shown += FormModelItem_Shown;
         }
         List<Eng_PubModelItem> eng_PubModelItems;
         List<Eng_ModelItem> eng_ModelItems;
@@ -62,23 +70,20 @@ namespace GSP_SJ.ModelClass
             IsManual.Checked = true;
             NB_0.Checked = true;
             Search();
-         
+
             if (dataGridView1.Rows.Count == 0 && org != null)
             {
                 roiPictureBox1.Image = org;
-                int w =  org.Width / 5;
+                int w = org.Width / 5;
                 int h = org.Height / 5;
                 Rectangle rectangle = new Rectangle(
                 w,
                 h,
-                org.Width - (w*2),
-                org.Height - (h*2));
+                org.Width - (w * 2),
+                org.Height - (h * 2));
                 DirectionalROI rOI = new DirectionalROI(rectangle, "");
                 roiPictureBox1.AddROI(rOI);
 
-
-                //显示比对结果
-                DispMatchResult();
             }
 
             dataGridView1.CellClick += dataGridView1_CellClick;
@@ -118,7 +123,7 @@ namespace GSP_SJ.ModelClass
                             item.CreationDate);
                     }
 
-                    byte[] img = eng_ModelItems[eng_ModelItems.Count-1].mPicture;
+                    byte[] img = eng_ModelItems[eng_ModelItems.Count - 1].mPicture;
                     MemoryStream memoryStream = new MemoryStream(img);
                     Image pic = Image.FromStream(memoryStream);
 

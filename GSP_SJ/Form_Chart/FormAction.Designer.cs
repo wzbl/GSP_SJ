@@ -196,9 +196,9 @@
             this.kryptonLabel55 = new ComponentFactory.Krypton.Toolkit.KryptonLabel();
             this.kryptonNumericUpDown5 = new ComponentFactory.Krypton.Toolkit.KryptonNumericUpDown();
             this.kryptonLabel54 = new ComponentFactory.Krypton.Toolkit.KryptonLabel();
-            this.kryptonNumericUpDown4 = new ComponentFactory.Krypton.Toolkit.KryptonNumericUpDown();
+            this.numpcbHeight = new ComponentFactory.Krypton.Toolkit.KryptonNumericUpDown();
             this.kryptonLabel53 = new ComponentFactory.Krypton.Toolkit.KryptonLabel();
-            this.kryptonNumericUpDown3 = new ComponentFactory.Krypton.Toolkit.KryptonNumericUpDown();
+            this.numpcbLong = new ComponentFactory.Krypton.Toolkit.KryptonNumericUpDown();
             this.kryptonLabel52 = new ComponentFactory.Krypton.Toolkit.KryptonLabel();
             this.kryptonComboBox9 = new ComponentFactory.Krypton.Toolkit.KryptonComboBox();
             this.kryptonLabel51 = new ComponentFactory.Krypton.Toolkit.KryptonLabel();
@@ -475,7 +475,7 @@
             this.kryptonPage4,
             this.kryptonPage5});
             this.kryptonNavigator2.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.Office2007Blue;
-            this.kryptonNavigator2.SelectedIndex = 0;
+            this.kryptonNavigator2.SelectedIndex = 2;
             this.kryptonNavigator2.Size = new System.Drawing.Size(794, 994);
             this.kryptonNavigator2.TabIndex = 4;
             this.kryptonNavigator2.Text = "kryptonNavigator2";
@@ -2196,9 +2196,9 @@
             this.kryptonGroupBox9.Panel.Controls.Add(this.kryptonLabel55);
             this.kryptonGroupBox9.Panel.Controls.Add(this.kryptonNumericUpDown5);
             this.kryptonGroupBox9.Panel.Controls.Add(this.kryptonLabel54);
-            this.kryptonGroupBox9.Panel.Controls.Add(this.kryptonNumericUpDown4);
+            this.kryptonGroupBox9.Panel.Controls.Add(this.numpcbHeight);
             this.kryptonGroupBox9.Panel.Controls.Add(this.kryptonLabel53);
-            this.kryptonGroupBox9.Panel.Controls.Add(this.kryptonNumericUpDown3);
+            this.kryptonGroupBox9.Panel.Controls.Add(this.numpcbLong);
             this.kryptonGroupBox9.Panel.Controls.Add(this.kryptonLabel52);
             this.kryptonGroupBox9.Panel.Controls.Add(this.kryptonComboBox9);
             this.kryptonGroupBox9.Panel.Controls.Add(this.kryptonLabel51);
@@ -2287,12 +2287,12 @@
             this.kryptonLabel54.TabIndex = 64;
             this.kryptonLabel54.Values.Text = "检测超时(ms)";
             // 
-            // kryptonNumericUpDown4
+            // numpcbHeight
             // 
-            this.kryptonNumericUpDown4.Location = new System.Drawing.Point(589, 232);
-            this.kryptonNumericUpDown4.Name = "kryptonNumericUpDown4";
-            this.kryptonNumericUpDown4.Size = new System.Drawing.Size(121, 28);
-            this.kryptonNumericUpDown4.TabIndex = 63;
+            this.numpcbHeight.Location = new System.Drawing.Point(589, 232);
+            this.numpcbHeight.Name = "numpcbHeight";
+            this.numpcbHeight.Size = new System.Drawing.Size(121, 28);
+            this.numpcbHeight.TabIndex = 63;
             // 
             // kryptonLabel53
             // 
@@ -2303,12 +2303,12 @@
             this.kryptonLabel53.TabIndex = 62;
             this.kryptonLabel53.Values.Text = "板宽";
             // 
-            // kryptonNumericUpDown3
+            // numpcbLong
             // 
-            this.kryptonNumericUpDown3.Location = new System.Drawing.Point(221, 230);
-            this.kryptonNumericUpDown3.Name = "kryptonNumericUpDown3";
-            this.kryptonNumericUpDown3.Size = new System.Drawing.Size(121, 28);
-            this.kryptonNumericUpDown3.TabIndex = 61;
+            this.numpcbLong.Location = new System.Drawing.Point(221, 230);
+            this.numpcbLong.Name = "numpcbLong";
+            this.numpcbLong.Size = new System.Drawing.Size(121, 28);
+            this.numpcbLong.TabIndex = 61;
             // 
             // kryptonLabel52
             // 
@@ -2348,11 +2348,8 @@
             this.kryptonComboBox8.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.kryptonComboBox8.DropDownWidth = 123;
             this.kryptonComboBox8.Items.AddRange(new object[] {
-            "最优路径",
-            "站位表",
-            "BOM",
-            "物料类别",
-            "就近原则"});
+            "0",
+            "1"});
             this.kryptonComboBox8.Location = new System.Drawing.Point(589, 196);
             this.kryptonComboBox8.Name = "kryptonComboBox8";
             this.kryptonComboBox8.Size = new System.Drawing.Size(121, 27);
@@ -2921,28 +2918,28 @@
             // 位置1ToolStripMenuItem
             // 
             this.位置1ToolStripMenuItem.Name = "位置1ToolStripMenuItem";
-            this.位置1ToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
+            this.位置1ToolStripMenuItem.Size = new System.Drawing.Size(144, 26);
             this.位置1ToolStripMenuItem.Text = "MARK1";
             this.位置1ToolStripMenuItem.Click += new System.EventHandler(this.位置1ToolStripMenuItem_Click);
             // 
             // 位置2ToolStripMenuItem
             // 
             this.位置2ToolStripMenuItem.Name = "位置2ToolStripMenuItem";
-            this.位置2ToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
+            this.位置2ToolStripMenuItem.Size = new System.Drawing.Size(144, 26);
             this.位置2ToolStripMenuItem.Text = "MARK2";
             this.位置2ToolStripMenuItem.Click += new System.EventHandler(this.位置2ToolStripMenuItem_Click);
             // 
             // 位置3ToolStripMenuItem
             // 
             this.位置3ToolStripMenuItem.Name = "位置3ToolStripMenuItem";
-            this.位置3ToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
+            this.位置3ToolStripMenuItem.Size = new System.Drawing.Size(144, 26);
             this.位置3ToolStripMenuItem.Text = "Position3";
             this.位置3ToolStripMenuItem.Click += new System.EventHandler(this.位置3ToolStripMenuItem_Click);
             // 
             // 位置4ToolStripMenuItem
             // 
             this.位置4ToolStripMenuItem.Name = "位置4ToolStripMenuItem";
-            this.位置4ToolStripMenuItem.Size = new System.Drawing.Size(216, 26);
+            this.位置4ToolStripMenuItem.Size = new System.Drawing.Size(144, 26);
             this.位置4ToolStripMenuItem.Text = "Position4";
             this.位置4ToolStripMenuItem.Click += new System.EventHandler(this.位置4ToolStripMenuItem_Click);
             // 
@@ -3984,9 +3981,9 @@
         private ComponentFactory.Krypton.Toolkit.KryptonLabel kryptonLabel55;
         private ComponentFactory.Krypton.Toolkit.KryptonNumericUpDown kryptonNumericUpDown5;
         private ComponentFactory.Krypton.Toolkit.KryptonLabel kryptonLabel54;
-        private ComponentFactory.Krypton.Toolkit.KryptonNumericUpDown kryptonNumericUpDown4;
+        private ComponentFactory.Krypton.Toolkit.KryptonNumericUpDown numpcbHeight;
         private ComponentFactory.Krypton.Toolkit.KryptonLabel kryptonLabel53;
-        private ComponentFactory.Krypton.Toolkit.KryptonNumericUpDown kryptonNumericUpDown3;
+        private ComponentFactory.Krypton.Toolkit.KryptonNumericUpDown numpcbLong;
         private ComponentFactory.Krypton.Toolkit.KryptonLabel kryptonLabel52;
         private ComponentFactory.Krypton.Toolkit.KryptonComboBox kryptonComboBox9;
         private ComponentFactory.Krypton.Toolkit.KryptonLabel kryptonLabel51;

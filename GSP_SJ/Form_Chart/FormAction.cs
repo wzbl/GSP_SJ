@@ -51,85 +51,25 @@ namespace GSP_SJ
         }
         private string reportCode = "";
         private string productCode = "";
-
+        List<string> Position = new List<string>();
         public FormAction(string reportCode, string productCode)
         {
             InitializeComponent();
             this.reportCode = reportCode;
             this.productCode = productCode;
+           
             try
             {
-                RefreshDataGrid();
-                pictureBoxZoom1 = new UCZoom(Type_Window.Position);
-
-                this.panel2.Controls.Add(pictureBoxZoom1);
-
-                pictureBoxZoom2 = new UCZoom(Type_Window.Puzzle);
-                this.panel3.Controls.Add(pictureBoxZoom2);
-
-                pictureBoxZoom3 = new UCZoom(Type_Window.OCR);
-                kryptonPanel5.Controls.Add(pictureBoxZoom3);
-
                 comMaterialCode.Items.Clear();
                 comLcrStandValue.Items.Clear();
-
+                Init();
+                pictureBoxZoom1 = new UCZoom(Type_Window.Position);
+                this.panel2.Controls.Add(pictureBoxZoom1);
+                pictureBoxZoom2 = new UCZoom(Type_Window.Puzzle);
+                this.panel3.Controls.Add(pictureBoxZoom2);
+                pictureBoxZoom3 = new UCZoom(Type_Window.OCR);
+                kryptonPanel5.Controls.Add(pictureBoxZoom3);
                 pictureBoxZoom2.ContextMenuStrip = contextMenuStrip1;
-
-                List<Man_ComponentSize> sizes = SQLDataControl.GetMan_ComponentSize();
-                foreach (var item in DBEventAction.man_ReportItems)
-                {
-                    comMaterialCode.Items.Add(item.MaterialCode);
-                    comLcrStandValue.Items.Add(item.LcrStandardValue);
-                    bool isHaveModel = SQLDataControl.GetEng_ModelItem(productCode, item.MaterialCode).Count > 0;
-                    List<Man_ComponentSize> ComponentSize = sizes.Where(X => X.SizeCode == item.Size).ToList();
-
-                    Size size = new Size(100, 100);
-
-                    if (ComponentSize.Count > 0)
-                    {
-                        size = new Size((int)ComponentSize.First().PixelWidth, (int)ComponentSize.First().PixelHeight);
-                    }
-
-                    Color color = Color.HotPink;
-                    string _x = item.RX.ToString();
-                    string _y = item.RY.ToString();
-                    if (float.TryParse(_x.Trim().ToString(), out float x) && float.TryParse(_y.Trim().ToString(), out float y))
-                    {
-                        float angle = 0;
-                        if (float.TryParse(item.Angle.ToString(), out
-                            angle))
-                        {
-
-                        }
-
-                        Component component = new Component(item.Position, new PointF(x, y), size, angle, "null", color);
-                        component.ProductCode = productCode;
-                        component.MaterialCode = item.MaterialCode;
-                        component.MaterialName = item.MaterialName;
-                        component.IsHaveModel = isHaveModel;
-                        pictureBoxZoom1.AddComponent(component);
-                    }
-
-                    _x = item.LX.ToString();
-                    _y = item.LY.ToString();
-                    if (float.TryParse(_x.Trim().ToString(), out x) && float.TryParse(_y.Trim().ToString(), out y))
-                    {
-                        float angle = 0;
-                        if (float.TryParse(item.Angle.ToString(), out
-                            angle))
-                        {
-
-                        }
-                        Component component = new Component(item.Position, new PointF(x, y), size, angle, "null", color);
-                        component.ProductCode = productCode;
-                        component.MaterialCode = item.MaterialCode;
-                        component.MaterialName = item.MaterialName;
-                        component.IsHaveModel = isHaveModel;
-                        pictureBoxZoom2.AddComponent(component);
-                        pictureBoxZoom3.AddComponent(component);
-                    }
-                }
-
                 comBomdgvShowModel.SelectedIndex = 0;
                 comBomdgvShowType.SelectedIndex = 0;
                 this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
@@ -140,7 +80,6 @@ namespace GSP_SJ
                 txtReportCode.Text = reportCode;
                 txtProductCode.Text = productCode;
                 comSortType.SelectedIndex = 4;
-                Init();
                 comSamplingSource.SelectedIndex = 1;
                 comSamplingType.SelectedIndex = 0;
                 numSamplingNum.Value = 1;
@@ -148,18 +87,22 @@ namespace GSP_SJ
                 comLcrStandValue.Enabled = false;
                 com复测.SelectedIndex = 2;
                 DBEventAction.RefreshManReport += RefreshManReport;
-                if (DBEventAction._Reports.IsFurnace == null || (bool)DBEventAction._Reports.IsFurnace)
-                    this.位置1ToolStripMenuItem.Enabled = false;
-                else
-                    this.位置1ToolStripMenuItem.Enabled = true;
                 this.位置2ToolStripMenuItem.Enabled = false;
                 this.位置3ToolStripMenuItem.Enabled = false;
                 this.位置4ToolStripMenuItem.Enabled = false;
+            
             }
             catch (Exception ex)
             {
 
             }
+
+            this.Shown+= OnShown;
+        }
+
+        private void OnShown(object sender, EventArgs e)
+        {
+            UpdateLanguage();
         }
 
         private void RefreshManReport()
@@ -179,11 +122,12 @@ namespace GSP_SJ
             }
         }
 
-        private void Init()
+        private async void Init()
         {
-            //await Task.Run(() =>
-            //{
-            DBEventAction._Reports = SQLDataControl.GetMan_Report(reportCode);
+            await Task.Run(() =>
+            {
+                DBEventAction.man_ReportItems = SQLDataControl.Search_Man_ReportItem(reportCode);
+                DBEventAction._Reports = SQLDataControl.GetMan_Report(reportCode);
             if (DBEventAction._Reports.Picture != null)
                 image2 = PublicFunction.ByteToBitmap(DBEventAction._Reports.Picture);
             if (DBEventAction._Reports.PositionImage != null)
@@ -191,7 +135,97 @@ namespace GSP_SJ
             else
                 image = PublicFunction.ByteToBitmap(SQLDataControl.GetProgramOptionPicture(productCode));
 
-            //});
+        });
+            List<Man_ComponentSize> sizes = SQLDataControl.GetMan_ComponentSize();
+            foreach (var item in DBEventAction.man_ReportItems)
+            {
+                comMaterialCode.Items.Add(item.MaterialCode);
+                comLcrStandValue.Items.Add(item.LcrStandardValue);
+                Position.Add(item.Position);
+                bool isHaveModel = SQLDataControl.GetEng_ModelItem(productCode, item.MaterialCode).Count > 0;
+                List<Man_ComponentSize> ComponentSize = sizes.Where(X => X.SizeCode == item.Size).ToList();
+
+                Size size = new Size(100, 100);
+
+                if (ComponentSize.Count > 0)
+                {
+                    size = new Size((int)ComponentSize.First().PixelWidth, (int)ComponentSize.First().PixelHeight);
+                }
+
+                Color color = Color.HotPink;
+                string _x = item.RX.ToString();
+                string _y = item.RY.ToString();
+                if (float.TryParse(_x.Trim().ToString(), out float x) && float.TryParse(_y.Trim().ToString(), out float y))
+                {
+                    float angle = 0;
+                    if (float.TryParse(item.Angle.ToString(), out
+                        angle))
+                    {
+
+                    }
+
+                    Component component = new Component(item.Position, new PointF(x, y), size, angle, "null", color);
+                    component.ProductCode = productCode;
+                    component.MaterialCode = item.MaterialCode;
+                    component.MaterialName = item.MaterialName;
+                    component.IsHaveModel = isHaveModel;
+                    pictureBoxZoom1.AddComponent(component);
+                }
+
+                _x = item.LX.ToString();
+                _y = item.LY.ToString();
+                if (float.TryParse(_x.Trim().ToString(), out x) && float.TryParse(_y.Trim().ToString(), out y))
+                {
+                    float angle = 0;
+                    if (float.TryParse(item.Angle.ToString(), out
+                        angle))
+                    {
+
+                    }
+                    Component component = new Component(item.Position, new PointF(x, y), size, angle, "null", color);
+                    component.ProductCode = productCode;
+                    component.MaterialCode = item.MaterialCode;
+                    component.MaterialName = item.MaterialName;
+                    component.IsHaveModel = isHaveModel;
+                    pictureBoxZoom2.AddComponent(component);
+                    pictureBoxZoom3.AddComponent(component);
+                }
+
+                dataGridView1.Rows.Add(
+                   item.Position,
+                   item.ResultType,
+                   item.CheckResult,
+                   item.LcrStandardValue,
+                   item.LcrUnitCode,
+                   item.LcrMinValue,
+                   item.LcrCheckValue,
+                   item.LcrUnitCode,
+                   item.LcrMaxValue,
+                   item.LcrType,
+                   item.Size,
+                   item.MaterialCode,
+                   item.MaterialName,
+                   item.FailCause,
+                   item.Angle,
+                   item.IsSMD,
+                   item.Remarks,
+                   item.Creator,
+                   item.CreationDate,
+                   item.IsDefined,
+                   item.BomSequence,
+                   item.StandardCode,
+                   item.CheckOcrStr,
+                   "",
+                   item.CheckLine,
+                   item.MaxTolerance,
+                   item.MinTolerance,
+                   item.ToleranceType
+                   );
+
+                refresCellStatus(item);
+
+            }
+            RefreshBom();
             RefreshMessage();
             txtProductName.Text = DBEventAction._Reports.ProductName;
             txtBoardSide.Text = DBEventAction._Reports.BoardSide;
@@ -216,8 +250,13 @@ namespace GSP_SJ
                 RefreshMaterial(pos);
             }
             comSortType.SelectedIndexChanged += comSortType_SelectedIndexChanged;
-            UpdateLanguage();
+         
             pictureBoxZoom2.Refresh_IsFurnace();
+
+            if (DBEventAction._Reports.IsFurnace == null || (bool)DBEventAction._Reports.IsFurnace)
+                this.位置1ToolStripMenuItem.Enabled = false;
+            else
+                this.位置1ToolStripMenuItem.Enabled = true;
         }
         private void UpdateLanguage()
         {
@@ -277,7 +316,7 @@ namespace GSP_SJ
             }
         }
 
-        private void RefreshDataGrid()
+        private  void RefreshDataGrid()
         {
             DBEventAction.man_ReportItems = SQLDataControl.Search_Man_ReportItem(reportCode);
             dataGridView1.Rows.Clear();
@@ -354,11 +393,7 @@ namespace GSP_SJ
         private void 位置1ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //位置Mark1
-            List<string> Position = new List<string>();
-            for (int i = 0; i < DBEventAction.man_ReportItems.Count; i++)
-            {
-                Position.Add(DBEventAction.man_ReportItems[i].Position);
-            }
+     
             string pos = "";
             if(pictureBoxZoom1.GetSelectComponent(out Image img,out Component component))
             {
@@ -376,17 +411,8 @@ namespace GSP_SJ
                 Location_Point.eyePixelPositionY[0] = double.Parse(pictureBoxZoom2.PixPoint().Y.ToString());
 
                 pictureBoxZoom1.SetSelectCompont(formLocation.Position);
-                MarkForm markForm = new MarkForm();
-                MotionCommand.Cmark(0, 0, 0, 0);
-                Global.Parm.PcbLong = Convert.ToDouble(100);
-                Global.Parm.PcbHight = Convert.ToDouble(100);
-
-                markForm.Mode = Convert.ToInt32(1);
-                markForm.Code = formLocation.Position;
-                markForm.Bmark1_X = Convert.ToDouble(Location_Point.handPositionX[0]);
-                markForm.Bmark1_Y = Convert.ToDouble(Location_Point.handPositionY[0]);
-                markForm.Num = 1;
-                markForm.FomActivated();
+                MotionCommand.C_Mark(formLocation.Position,1,1, Location_Point.handPositionX[0], Location_Point.handPositionY[0], (int)Location_Point.eyePixelPositionX[0], (int)Location_Point.eyePixelPositionY[0], pictureBoxZoom2.Image.Width, pictureBoxZoom2.Image.Height, (double)numpcbLong.Value, (double)numpcbHeight.Value);
+                
                 this.位置1ToolStripMenuItem.Enabled = false;
                 this.位置2ToolStripMenuItem.Enabled = true;
                 this.位置3ToolStripMenuItem.Enabled = false;
@@ -398,11 +424,6 @@ namespace GSP_SJ
         private void 位置2ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //位置Mark2
-            List<string> Position = new List<string>();
-            for (int i = 0; i < DBEventAction.man_ReportItems.Count; i++)
-            {
-                Position.Add(DBEventAction.man_ReportItems[i].Position);
-            }
             string pos = "";
             if (pictureBoxZoom1.GetSelectComponent(out Image img, out Component component))
             {
@@ -419,18 +440,8 @@ namespace GSP_SJ
                 Location_Point.eyePixelPositionX[1] = double.Parse(pictureBoxZoom2.PixPoint().X.ToString());
                 Location_Point.eyePixelPositionY[1] = double.Parse(pictureBoxZoom2.PixPoint().Y.ToString());
                 pictureBoxZoom1.SetSelectCompont(formLocation.Position);
+                MotionCommand.C_Mark(formLocation.Position, 2, 1, Location_Point.handPositionX[1], Location_Point.handPositionY[1], (int)Location_Point.eyePixelPositionX[1], (int)Location_Point.eyePixelPositionY[1], pictureBoxZoom2.Image.Width, pictureBoxZoom2.Image.Height, (double)numpcbLong.Value, (double)numpcbHeight.Value);
 
-                MarkForm markForm = new MarkForm();
-                MotionCommand.Cmark(0, 0, 0, 0);
-                Global.Parm.PcbLong = Convert.ToDouble(100);
-                Global.Parm.PcbHight = Convert.ToDouble(100);
-
-                markForm.Mode = Convert.ToInt32(1);
-                markForm.Code = formLocation.Position;
-                markForm.Bmark1_X = Convert.ToDouble(Location_Point.handPositionX[1]);
-                markForm.Bmark1_Y = Convert.ToDouble(Location_Point.handPositionY[1]);
-                markForm.Num = 2;
-                markForm.FomActivated();
                 this.位置1ToolStripMenuItem.Enabled = false;
                 this.位置2ToolStripMenuItem.Enabled = false;
                 this.位置3ToolStripMenuItem.Enabled = true;
@@ -440,11 +451,6 @@ namespace GSP_SJ
 
         private void 位置3ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            List<string> Position = new List<string>();
-            for (int i = 0; i < DBEventAction.man_ReportItems.Count; i++)
-            {
-                Position.Add(DBEventAction.man_ReportItems[i].Position);
-            }
             string pos = "";
             if (pictureBoxZoom1.GetSelectComponent(out Image img, out Component component))
             {
@@ -470,11 +476,6 @@ namespace GSP_SJ
 
         private void 位置4ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            List<string> Position = new List<string>();
-            for (int i = 0; i < DBEventAction.man_ReportItems.Count; i++)
-            {
-                Position.Add(DBEventAction.man_ReportItems[i].Position);
-            }
             string pos = "";
             if (pictureBoxZoom1.GetSelectComponent(out Image img, out Component component))
             {
@@ -1087,24 +1088,28 @@ namespace GSP_SJ
 
         private void btnStart_Click(object sender, EventArgs e)
         {
-
+            MotionCommand.Start();
         }
 
         private void btnPause_Click(object sender, EventArgs e)
         {
-
+            MotionCommand.Pause();
         }
 
         private void btnStop_Click(object sender, EventArgs e)
         {
-
+            MotionCommand.Stop();
         }
         private void btnAutoModel_Click(object sender, EventArgs e)
         {
             if (BrowLib.Controller.OutPort["自动切换手动"].State())
                 BrowLib.Controller.OutPort["自动切换手动"].Off();
             else
+            {
                 BrowLib.Controller.OutPort["自动切换手动"].On();
+                BrowLib.Controller.OutPort["四线切换两线"].On();
+            }
+          
         }
 
         private void btnHome_Click(object sender, EventArgs e)

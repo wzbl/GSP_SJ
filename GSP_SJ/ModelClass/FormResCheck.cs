@@ -67,6 +67,7 @@ namespace GSP_SJ.ModelClass
                                 txtAngle.Text = item.Angle.ToString();
                                 txtSize.Text = item.Size;
                                 txtStandOCR.Text = item.StandardOcrStr;
+                                GetOCRText(hImage);
                             }));
                         }
                         catch (Exception ex)
@@ -79,6 +80,25 @@ namespace GSP_SJ.ModelClass
                 }
             });
             this.Close();
+        }
+
+
+        private void GetOCRText(HObject ho_Imag)
+        {
+            List<string> ocrs = new List<string>();
+            try
+            {
+                ocrs = Browocrlib.OCRHelper.GetOCR(HImageToEmguCVConverter.HImageToMat(new HImage(ho_Imag)), 6);
+            }
+            catch (Exception)
+            {
+
+            }
+
+            foreach (var item in ocrs)
+            {
+                txtResult.Text = item;
+            }
         }
 
         private void RoiImg(Man_ReportItem item)

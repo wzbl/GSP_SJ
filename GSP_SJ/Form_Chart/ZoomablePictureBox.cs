@@ -17,6 +17,7 @@ namespace GSP_SJ.Form_Chart
 {
     public class ZoomablePictureBox : PictureBox
     {
+        private HImage fullImage;
         private Image originalImage;
         private float zoom = 1.0f;
         private Point dragStart;
@@ -46,6 +47,13 @@ namespace GSP_SJ.Form_Chart
         private Point _roiDragOffset;           // 拖动偏移
         private Rectangle clickedComponentRectangle = new Rectangle();
 
+        public Action ActionMove;
+
+        public Action ActionZoom;
+
+        public int deltaX = 0;
+        public int deltaY = 0;
+
         private HImage hImage = null;
 
         public float Zoom
@@ -67,6 +75,8 @@ namespace GSP_SJ.Form_Chart
                 zoom = 1.0f;
                 imagePosition = Point.Empty;
                 base.Image = value;
+                // 原图转Halcon图像
+                fullImage = HalconImageConverter.BitmapToHImage2(new Bitmap(originalImage));
                 Invalidate();
             }
         }
@@ -102,50 +112,6 @@ namespace GSP_SJ.Form_Chart
             clickedComponent = null;
         }
 
-        protected override void OnKeyDown(KeyEventArgs e)
-        {
-            if (e.Control && !isCtrlPressed)
-            {
-                isCtrlPressed = true;
-                this.Cursor = Cursors.Cross;
-                Invalidate();
-            }
-            base.OnKeyDown(e);
-        }
-
-        protected override void OnKeyUp(KeyEventArgs e)
-        {
-            if (!e.Control && isCtrlPressed)
-            {
-                isCtrlPressed = false;
-                this.Cursor = Cursors.Default;
-                Invalidate();
-            }
-            base.OnKeyUp(e);
-        }
-
-        // ====================== Ctrl 按键监听 ======================
-        private void ZoomablePictureBox_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Control && !isCtrlPressed)
-            {
-                isCtrlPressed = true;
-                this.Cursor = Cursors.Cross;
-                Invalidate();
-            }
-        }
-
-        private void ZoomablePictureBox_KeyUp(object sender, KeyEventArgs e)
-        {
-            if (!e.Control && isCtrlPressed)
-            {
-                isCtrlPressed = false;
-                this.Cursor = Cursors.Default;
-                Invalidate();
-            }
-        }
-
-
         private void ZoomablePictureBox_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left && originalImage != null)
@@ -161,7 +127,6 @@ namespace GSP_SJ.Form_Chart
                     {
                         IsSelectCompont = true;
                     }
-
                 }
                 Invalidate();
 
@@ -174,11 +139,11 @@ namespace GSP_SJ.Form_Chart
                     }
                     else if (type_Window == Type_Window.OCR)
                     {
-                        if(clickedComponent.IsHaveModel)
+                        if (clickedComponent.IsHaveModel)
                         {
 
                         }
-                        else if(ROIs.Count > 0)
+                        else if (ROIs.Count > 0)
                         {
                             CountComponentsInROI(ROIs[0], out List<Component> comps);
                             if (!comps.Contains(clickedComponent))
@@ -190,27 +155,30 @@ namespace GSP_SJ.Form_Chart
                         {
                             return;
                         }
-                        RoiImg();
-                        if (hImage != null)
-                        {
-                            //hImage.WriteImage("bmp",0, "C:\\Users\\14802\\Desktop\\pos.bmp");
-                            Man_ReportItem item = DBEventAction.man_ReportItems.Where(x => x.Position == clickedComponent.Designator).First();
-                            if (item != null)
-                            {
-                                FormModelItem formModelItem = new FormModelItem(item.MaterialCode, item.MaterialName, clickedComponent.ProductCode, HalconImageConverter.HImageToBitmapRGB(hImage), item.LcrType);
-                                formModelItem.ShowDialog();
-                                bool isHaveModel = SQLDataControl.GetEng_ModelItem(clickedComponent.ProductCode, item.MaterialCode).ToList().Count > 0;
-                                components.Where(x => x.MaterialCode == item.MaterialCode).ToList().ForEach(x => x.IsHaveModel = isHaveModel);
-
-                            }
-                        }
+                        CreateMode(clickedComponent);
                     }
                 }
             }
         }
 
+        private void CreateMode(Component clickedComponent)
+        {
+            RoiImg(clickedComponent);
+            if (hImage != null)
+            {
+                //hImage.WriteImage("bmp",0, "C:\\Users\\14802\\Desktop\\pos.bmp");
+                Man_ReportItem item = DBEventAction.man_ReportItems.Where(x => x.Position == clickedComponent.Designator).First();
+                if (item != null)
+                {
+                    FormModelItem formModelItem = new FormModelItem(item.MaterialCode, item.MaterialName, clickedComponent.ProductCode, HalconImageConverter.HImageToBitmapRGB(hImage), item.LcrType);
+                    formModelItem.ShowDialog();
+                    bool isHaveModel = SQLDataControl.GetEng_ModelItem(clickedComponent.ProductCode, item.MaterialCode).ToList().Count > 0;
+                    components.Where(x => x.MaterialCode == item.MaterialCode).ToList().ForEach(x => x.IsHaveModel = isHaveModel);
 
-        public bool GetSelectComponent(out Image image,out Component component)
+                }
+            }
+        }
+        public bool GetSelectComponent(out Image image, out Component component)
         {
             image = null;
             component = null;
@@ -218,19 +186,20 @@ namespace GSP_SJ.Form_Chart
             {
                 return false;
             }
-            RoiImg();
+            RoiImg(clickedComponent);
             component = clickedComponent;
-            if(hImage != null)
+            if (hImage != null)
                 image = HalconImageConverter.HImageToBitmapRGB(hImage);
             return true;
         }
-        
-        private void RoiImg()
+
+        private void RoiImg(Component clickedComponent)
         {
             hImage = null;
             HObject hObject, ho_ImageReduced, ho_findCircleRoi = null;
             HOperatorSet.GenEmptyObj(out hObject);
             HOperatorSet.GenEmptyObj(out ho_ImageReduced);
+            HOperatorSet.GenEmptyObj(out ho_findCircleRoi);
             try
             {
                 Point point = new Point((int)clickedComponent.Position.X, (int)clickedComponent.Position.Y);
@@ -238,8 +207,6 @@ namespace GSP_SJ.Form_Chart
 
                 using (HDevDisposeHelper dh = new HDevDisposeHelper())
                 {
-                    //HOperatorSet.GenRectangle2(out ho_findCircleRoi, rOI.X, rOI.Y, clickedComponent.Angle,
-                    //                                                        rOI.Height/2, rOI.Width/2);
                     HOperatorSet.GenRectangle1(out ho_findCircleRoi, rOI.Top - 50, rOI.Left - 50,
                                                                           rOI.Bottom + 50, rOI.Right + 50);
                     HOperatorSet.ReduceDomain(HalconImageConverter.BitmapToHImage2(new Bitmap(originalImage)), ho_findCircleRoi, out hObject);
@@ -250,8 +217,8 @@ namespace GSP_SJ.Form_Chart
                     HOperatorSet.GetImageSize(hImage, out HTuple width, out HTuple height);
                     if (width > 60 && height > 60)
                     {
-                        HOperatorSet.GenRectangle1(out ho_findCircleRoi, 40, 40,
-                                                                      height - 40, width - 40);
+                        HOperatorSet.GenRectangle1(out ho_findCircleRoi, 30, 30,
+                                                                      height - 30, width - 30);
                         HOperatorSet.ChangeDomain(hImage, ho_findCircleRoi, out ho_ImageReduced);
                         HOperatorSet.CropDomain(ho_ImageReduced, out ho_ImageReduced);
                         hImage = new HImage(ho_ImageReduced);
@@ -270,7 +237,6 @@ namespace GSP_SJ.Form_Chart
             ho_ImageReduced.Dispose();
         }
 
-       
         /// <summary>
         /// 获取鼠标点击的像素点
         /// </summary>
@@ -285,103 +251,114 @@ namespace GSP_SJ.Form_Chart
 
         protected override void OnPaint(PaintEventArgs pe)
         {
-            if (originalImage != null && zoom != 1.0f)
+            try
             {
-                // 自定义绘制缩放后的图像
-                var destRect = GetDestinationRectangle();
-                pe.Graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
-                pe.Graphics.DrawImage(originalImage, destRect);
 
-                // 绘制选中元件
-                if (IsSelectCompont)
+
+                if (originalImage != null && zoom != 1.0f)
                 {
-                    float screenWidth = clickedComponent.Size.Width * zoom;
-                    float screenHeight = clickedComponent.Size.Height * zoom;
-                    Point point = ImageToScreenPoint(new Point((int)clickedComponent.Position.X, (int)clickedComponent.Position.Y));
-                    using (Pen pen = new Pen(Color.Red, 3.0f))
-                    using (Pen pen2 = new Pen(Color.Blue, 3.0f))
-                    using (Brush fillBrush = new SolidBrush(Color.FromArgb(60, Color.Red)))
-                    {
-                        pe.Graphics.TranslateTransform(point.X, point.Y);
-                        pe.Graphics.RotateTransform(-clickedComponent.Angle);
-                        clickedComponentRectangle = new Rectangle(
-                              -(int)screenWidth / 2,
-                                 -(int)screenHeight / 2,
-                              (int)screenWidth,
-                              (int)screenHeight);
-                        pe.Graphics.DrawRectangle(pen2, clickedComponentRectangle);
-                        pe.Graphics.ResetTransform();
-                        RectangleF rect = new RectangleF(
-                             point.X - 20,
-                         point.Y - 20,
-                        40,
-                        40
-                        );
-                        pe.Graphics.DrawLine(pen, rect.X + rect.Width / 2, rect.Y + rect.Height, rect.X + rect.Width / 2, rect.Y + rect.Height + 100);
-                        pe.Graphics.DrawLine(pen, rect.X + rect.Width / 2, rect.Y, rect.X + rect.Width / 2, rect.Y - 100);
-                        pe.Graphics.DrawLine(pen, rect.X, rect.Y + rect.Height / 2, rect.X - 100, rect.Y + rect.Height / 2);
-                        pe.Graphics.DrawLine(pen, rect.X + rect.Width, rect.Y + rect.Height / 2, rect.X + rect.Width + 100, rect.Y + rect.Height / 2);
+                    // 自定义绘制缩放后的图像
+                    var destRect = GetDestinationRectangle();
+                    pe.Graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                    pe.Graphics.DrawImage(originalImage, destRect);
 
+                    // 绘制选中元件
+                    if (IsSelectCompont)
+                    {
+                        float screenWidth = clickedComponent.Size.Width * zoom;
+                        float screenHeight = clickedComponent.Size.Height * zoom;
+                        Point point = ImageToScreenPoint(new Point((int)clickedComponent.Position.X, (int)clickedComponent.Position.Y));
+                        using (Pen pen = new Pen(Color.Red, 3.0f))
+                        using (Pen pen2 = new Pen(Color.Blue, 3.0f))
+                        using (Brush fillBrush = new SolidBrush(Color.FromArgb(60, Color.Red)))
+                        {
+                            pe.Graphics.TranslateTransform(point.X, point.Y);
+                            pe.Graphics.RotateTransform(-clickedComponent.Angle);
+                            clickedComponentRectangle = new Rectangle(
+                                  -(int)screenWidth / 2,
+                                     -(int)screenHeight / 2,
+                                  (int)screenWidth,
+                                  (int)screenHeight);
+                            pe.Graphics.DrawRectangle(pen2, clickedComponentRectangle);
+                            pe.Graphics.ResetTransform();
+                            RectangleF rect = new RectangleF(
+                                 point.X - 20,
+                             point.Y - 20,
+                            40,
+                            40
+                            );
+                            pe.Graphics.DrawLine(pen, rect.X + rect.Width / 2, rect.Y + rect.Height, rect.X + rect.Width / 2, rect.Y + rect.Height + 100);
+                            pe.Graphics.DrawLine(pen, rect.X + rect.Width / 2, rect.Y, rect.X + rect.Width / 2, rect.Y - 100);
+                            pe.Graphics.DrawLine(pen, rect.X, rect.Y + rect.Height / 2, rect.X - 100, rect.Y + rect.Height / 2);
+                            pe.Graphics.DrawLine(pen, rect.X + rect.Width, rect.Y + rect.Height / 2, rect.X + rect.Width + 100, rect.Y + rect.Height / 2);
+
+
+                        }
+                    }
+                    // ====================== 绘制 Ctrl 十字架 ======================
+                    if (isCtrlPressed)
+                    {
+                        DrawCross(pe.Graphics);
+                    }
+                    else
+                        DrawStatus(pe.Graphics);
+                    //Point p = ScreenToImagePoint(new Point((int)movePoint.X, (int)movePoint.Y));
+                    //pe.Graphics.DrawString("X:"+p.X+",Y:"+p.Y, new Font("Arial", 20), Brushes.Red, 150, Height - 200);
+
+
+                    // ====================== 绘制所有 ROI ======================
+                    DrawAllROIs(pe.Graphics);
+
+                    // ====================== 绘制正在拖拽的 ROI ======================
+                    if (rOIModel == ROIModel.RectangleROI && !_drawingRoi.IsEmpty)
+                    {
+                        using (Pen pen = new Pen(Color.Red, 2))
+                        {
+                            pen.DashStyle = DashStyle.Dash;
+                            pe.Graphics.DrawRectangle(pen, _drawingRoi);
+                        }
+                    }
+
+                    foreach (var component in components)
+                    {
+                        if (component.IsHaveModel && DBEventAction.IsShowCompoment)
+                        {
+                            Point p = ImageToScreenPoint(new Point((int)component.Position.X, (int)component.Position.Y));
+                            float screenWidth = component.Size.Width * zoom;
+                            float screenHeight = component.Size.Height * zoom;
+                            pe.Graphics.TranslateTransform(p.X, p.Y);
+                            pe.Graphics.RotateTransform(-component.Angle);
+                            using (Pen pen2 = new Pen(Color.Yellow, 3.0f))
+                            {
+                                pe.Graphics.DrawRectangle(pen2, new Rectangle(
+                                  -(int)screenWidth / 2,
+                                     -(int)screenHeight / 2,
+                                  (int)screenWidth,
+                                  (int)screenHeight));
+                            }
+                            pe.Graphics.ResetTransform();
+                            if (DBEventAction.IsShowComponentPos)
+                            {
+                                pe.Graphics.DrawString(component.Designator, new Font("Arial", 10), Brushes.Yellow, p.X - 20, p.Y);
+                            }
+                        }
 
                     }
-                }
-                // ====================== 绘制 Ctrl 十字架 ======================
-                if (isCtrlPressed)
-                {
-                    DrawCross(pe.Graphics);
                 }
                 else
-                    DrawStatus(pe.Graphics);
-                //Point p = ScreenToImagePoint(new Point((int)movePoint.X, (int)movePoint.Y));
-                //pe.Graphics.DrawString("X:"+p.X+",Y:"+p.Y, new Font("Arial", 20), Brushes.Red, 150, Height - 200);
-
-
-                // ====================== 绘制所有 ROI ======================
-                DrawAllROIs(pe.Graphics);
-
-                // ====================== 绘制正在拖拽的 ROI ======================
-                if (rOIModel == ROIModel.RectangleROI && !_drawingRoi.IsEmpty)
                 {
-                    using (Pen pen = new Pen(Color.Red, 2))
+                    if (isCtrlPressed)
                     {
-                        pen.DashStyle = DashStyle.Dash;
-                        pe.Graphics.DrawRectangle(pen, _drawingRoi);
+                        DrawCross(pe.Graphics);
                     }
+                    base.OnPaint(pe);
                 }
 
-                foreach (var component in components)
-                {
-                    if (component.IsHaveModel && DBEventAction.IsShowCompoment)
-                    {
-                        Point p = ImageToScreenPoint(new Point((int)component.Position.X, (int)component.Position.Y));
-                        float screenWidth = component.Size.Width * zoom;
-                        float screenHeight = component.Size.Height * zoom;
-                        pe.Graphics.TranslateTransform(p.X, p.Y);
-                        pe.Graphics.RotateTransform(-component.Angle);
-                        using (Pen pen2 = new Pen(Color.Yellow, 3.0f))
-                        {
-                            pe.Graphics.DrawRectangle(pen2, new Rectangle(
-                              -(int)screenWidth / 2,
-                                 -(int)screenHeight / 2,
-                              (int)screenWidth,
-                              (int)screenHeight));
-                        }
-                        pe.Graphics.ResetTransform();
-                        if (DBEventAction.IsShowComponentPos)
-                        {
-                            pe.Graphics.DrawString(component.Designator, new Font("Arial", 10), Brushes.Yellow, p.X - 20, p.Y);
-                        }
-                    }
-
-                }
             }
-            else
+            catch (Exception)
             {
-                if (isCtrlPressed)
-                {
-                    DrawCross(pe.Graphics);
-                }
-                base.OnPaint(pe);
+
+
             }
         }
 
@@ -394,15 +371,15 @@ namespace GSP_SJ.Form_Chart
                 Color color = isSelected ? Color.Lime : Color.Red;
                 int count = CountComponentsInROI(roi, out List<Component> comps);
                 using (Pen pen = new Pen(color, isSelected ? 3 : 2))
-                using (Brush textBrush = new SolidBrush(Color.White))
+                //using (Brush textBrush = new SolidBrush(Color.White))
                 using (Brush backBrush = new SolidBrush(Color.FromArgb(180, color)))
                 using (Font font = new Font("Arial", 9))
                 {
                     g.DrawRectangle(pen, roi);
-                    string text = $"元件：{count}";
-                    SizeF size = g.MeasureString(text, font);
-                    g.FillRectangle(backBrush, roi.X, roi.Y - 20, size.Width, size.Height);
-                    g.DrawString(text, font, textBrush, roi.X, roi.Y - 20);
+                    //string text = $"元件：{count}";
+                    //SizeF size = g.MeasureString(text, font);
+                    //g.FillRectangle(backBrush, roi.X, roi.Y - 20, size.Width, size.Height);
+                    //g.DrawString(text, font, textBrush, roi.X, roi.Y - 20);
                 }
             }
         }
@@ -528,6 +505,28 @@ namespace GSP_SJ.Form_Chart
 
                 Invalidate();
             }
+        }
+
+
+        public void setSelectPos(Point p, int width, int height)
+        {
+            Zoom = 0.9f;
+            // 计算指定点在当前缩放和位置下的屏幕坐标
+            Point currentScreenPoint = ImageToScreenPoint(p);
+
+            // 计算视图中心点
+            Point viewCenter = new Point(width / 2, height / 2);
+
+            // 计算需要调整的偏移量
+            int deltaX = viewCenter.X - currentScreenPoint.X;
+            int deltaY = viewCenter.Y - currentScreenPoint.Y;
+
+            // 更新图像位置
+            imagePosition.X += deltaX;
+            imagePosition.Y += deltaY;
+
+            Invalidate();
+
         }
 
         /// <summary>
@@ -705,24 +704,33 @@ namespace GSP_SJ.Form_Chart
 
         private void ZoomablePictureBox_MouseWheel(object sender, MouseEventArgs e)
         {
-            if (originalImage == null && isCtrlPressed) return;
+            try
+            {
+                if (originalImage == null && isCtrlPressed) return;
 
-            // 保存缩放前的鼠标位置（相对于图像）
-            Point mousePos = e.Location;
-            Point imagePosBeforeZoom = GetImagePointFromScreenPoint(mousePos);
+                // 保存缩放前的鼠标位置（相对于图像）
+                Point mousePos = e.Location;
+                Point imagePosBeforeZoom = GetImagePointFromScreenPoint(mousePos);
 
-            // 计算缩放
-            if (e.Delta > 0)
-                Zoom *= ZOOM_FACTOR;
-            else
-                Zoom /= ZOOM_FACTOR;
+                // 计算缩放
+                if (e.Delta > 0)
+                    Zoom *= ZOOM_FACTOR;
+                else
+                    Zoom /= ZOOM_FACTOR;
 
-            // 计算缩放后的鼠标位置，并调整图像位置以保持缩放中心
-            Point imagePosAfterZoom = GetImagePointFromScreenPoint(mousePos);
-            imagePosition.X += (int)((imagePosAfterZoom.X - imagePosBeforeZoom.X) * zoom);
-            imagePosition.Y += (int)((imagePosAfterZoom.Y - imagePosBeforeZoom.Y) * zoom);
-            ROIs.Clear();
-            Invalidate();
+                // 计算缩放后的鼠标位置，并调整图像位置以保持缩放中心
+                Point imagePosAfterZoom = GetImagePointFromScreenPoint(mousePos);
+                imagePosition.X += (int)((imagePosAfterZoom.X - imagePosBeforeZoom.X) * zoom);
+                imagePosition.Y += (int)((imagePosAfterZoom.Y - imagePosBeforeZoom.Y) * zoom);
+                ROIs.Clear();
+                Invalidate();
+                ActionZoom?.Invoke();
+            }
+            catch (Exception)
+            {
+
+            }
+
         }
 
         bool IsSelectCompont = false;
@@ -824,8 +832,8 @@ namespace GSP_SJ.Form_Chart
             {
                 // 拖动模式
                 // 计算拖动距离并更新图像位置
-                int deltaX = e.X - dragStart.X;
-                int deltaY = e.Y - dragStart.Y;
+                deltaX = e.X - dragStart.X;
+                deltaY = e.Y - dragStart.Y;
 
                 imagePosition.X += deltaX;
                 imagePosition.Y += deltaY;
@@ -837,6 +845,7 @@ namespace GSP_SJ.Form_Chart
 
                 dragStart = e.Location;
                 Invalidate();
+                ActionMove?.Invoke();
             }
             if (isCtrlPressed)
                 Invalidate();
@@ -861,6 +870,10 @@ namespace GSP_SJ.Form_Chart
                 //将ROI添加到列表中
                 ROIs.Add(_drawingRoi);
                 CountComponentsInROI(_drawingRoi, out List<Component> comps);
+                if (comps.Count > 0)
+                {
+                    CreateMode(comps[0]);
+                }
             }
             _drawingRoi = Rectangle.Empty;
             Invalidate();

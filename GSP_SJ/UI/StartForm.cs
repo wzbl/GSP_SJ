@@ -17,7 +17,7 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace GSP
 {
-    public partial class StartForm :KryptonForm
+    public partial class StartForm : KryptonForm
     {
         private BrowLib.KTimer timer;//计时器
         private const int LOAD_ITEM_COUNT = 8;
@@ -30,8 +30,8 @@ namespace GSP
             this.IniHeader.MouseDown += TopBar_MouseDown;
             this.IniHeader.MouseMove += TopBar_MouseMove;
             this.Load += StartForm_Load;
-            
-            timer =new BrowLib.KTimer();
+
+            timer = new BrowLib.KTimer();
             IniHeader.ButtonSpecs[0].Visible = false;
             IniHeader.ButtonSpecs[1].Visible = true;
             ThreadIni = new Thread(IniWork);
@@ -40,7 +40,7 @@ namespace GSP
         }
         private void StartForm_Load(object sender, EventArgs e)
         {
-            IniHeader.Values.Description ="Vosion:"+ Global.Vosion;
+            IniHeader.Values.Description = "Vosion:" + Global.Vosion;
         }
         #region 点击panel控件移动窗口
         private Point downPoint;
@@ -57,7 +57,7 @@ namespace GSP
             }
         }
         #endregion
-       
+
         /// <summary>
         /// 双缓冲，解决界面加载、放大、缩小的卡顿问题
         /// </summary>
@@ -76,15 +76,15 @@ namespace GSP
             Progress = 0,
             Complete = 1,
         }
-       
+
         private void Close_btn_Click(object sender, EventArgs e)
         {
             this.Close();
             this.Dispose();
-            DialogResult= DialogResult.No;
+            DialogResult = DialogResult.No;
         }
         //运行初始化消息委托
-        private delegate void InitInfoReportHandler(InitInfoReportMode mode, int loadProgress, bool  result, string text,string time);
+        private delegate void InitInfoReportHandler(InitInfoReportMode mode, int loadProgress, bool result, string text, string time);
         //运行初始化消息处理
         private void InitInfoReportedProc(InitInfoReportMode mode, int loadProgress, bool result, string text, string time)
         {
@@ -94,8 +94,8 @@ namespace GSP
                     SysInit_Listbox.Items.Add(new KryptonListItem()
                     {
                         ShortText = text,
-                        LongText ="("+ time+"ms)",
-                        //Image = result ? Resources.Ok_3_24px : Resources.Warn_24px
+                        LongText = "(" + time + "ms)",
+                        Image = result ? GSP_SJ.Properties.Resources.Ok_3_24px : GSP_SJ.Properties.Resources.Warn_24px
                     });
                     lblPercent.Text = string.Format("{0}%", (int)((double)(loadProgress + 1) / (double)LOAD_ITEM_COUNT * 100));
                     break;
@@ -104,8 +104,8 @@ namespace GSP
 
                     //if (m_loadErrCount <= 0 && !m_loadSimul)
                     //{
-                        DialogResult = DialogResult.OK;
-                        this.Close();
+                    DialogResult = DialogResult.OK;
+                    this.Close();
                     //}
                     IniHeader.ButtonSpecs[0].Visible = true;
                     IniHeader.ButtonSpecs[1].Visible = true;
@@ -118,22 +118,22 @@ namespace GSP
         {
             if (this.InvokeRequired)
             {
-              BeginInvoke(new InitInfoReportHandler(InitInfoReportedProc), new object[] { mode, loadProgress, result, text, time });
+                BeginInvoke(new InitInfoReportHandler(InitInfoReportedProc), new object[] { mode, loadProgress, result, text, time });
             }
             else
             {
-              InitInfoReportedProc(mode, loadProgress, result, text, time);
+                InitInfoReportedProc(mode, loadProgress, result, text, time);
             }
         }
         private void IniWork()
         {
-            while(m_loadProgress < LOAD_ITEM_COUNT)
+            while (m_loadProgress < LOAD_ITEM_COUNT)
             {
-               switch(m_loadProgress)
+                switch (m_loadProgress)
                 {
                     case 0:
                         timer.Restart();
-                        Rtn=BrowApp.APP.Alarm.InitAlarmConfiguration(null);
+                        Rtn = BrowApp.APP.Alarm.InitAlarmConfiguration(null);
                         BrowApp.Language.Language.Instance.Load();
                         m_loadProgress++;
                         InitInfoReported(InitInfoReportMode.Progress, m_loadProgress, Rtn, "初始化报警配置文件", timer.GetTime().ToString());
@@ -167,9 +167,9 @@ namespace GSP
                         InitInfoReported(InitInfoReportMode.Progress, m_loadProgress, Rtn, "初始化运动控制卡", timer.GetTime().ToString());
                         m_loadProgress++;
                         break;
-                     case 4:
+                    case 4:
                         timer.Restart();
-                        Rtn= Global.TcpClass.TCPini("127.0.0.1", 8000, "Tcp");
+                        Rtn = Global.TcpClass.TCPini("127.0.0.1", 8000, "Tcp");
                         InitInfoReported(InitInfoReportMode.Progress, m_loadProgress, Rtn, "初始化TCP连接", timer.GetTime().ToString());
                         m_loadProgress++;
                         break;
@@ -190,6 +190,7 @@ namespace GSP
                         CommonAnalyse.Instance.Load();
                         AnaylseDataManager.Instance.Load();
                         DeepOCRHelper.Init();
+                        Browocrlib.OCRHelper.Init();
                         InitInfoReported(InitInfoReportMode.Complete, -1, true, null, null);
                         break;
                 }

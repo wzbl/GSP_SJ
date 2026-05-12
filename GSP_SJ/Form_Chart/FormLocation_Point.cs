@@ -17,19 +17,12 @@ namespace GSP_SJ
         public FormLocation_Point(List<string> position,string pos="")
         {
             InitializeComponent();
-            foreach (var item in position)
-            {
-                comPosition.Items.Add(item);
-            }
             this.position = position;
+            comPosition.DataSource = position;
             comPosition.Text = pos;
-            UpdateLanguage();
         }
 
-        private void UpdateLanguage()
-        {
-            BrowApp.Language.Language.Instance.UpdateLanguage(this, null);
-        }
+       
 
         private List<string> position;
         public string Position = "";

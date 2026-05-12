@@ -210,26 +210,68 @@ namespace SqlHelper
             }
 
         }
-
+        /// <summary>
+        /// 拼图像素坐标
+        /// </summary>
+        /// <param name="ReportCode"></param>
+        /// <param name="position"></param>
+        /// <param name="px"></param>
+        /// <param name="py"></param>
         public static void UpdateMan_ReportItem_LXY(string ReportCode, string position, decimal px, decimal py)
         {
             int i = db.Database.ExecuteSqlCommand("update Man_ReportItem set LX={0} ,LY ={1} where ReportCode={2} and Position = {3}", px, py, ReportCode, position);
         }
-
+        /// <summary>
+        /// 修改测试结果
+        /// </summary>
+        /// <param name="ReportCode"></param>
+        /// <param name="position"></param>
+        /// <param name="ResultType"></param>
+        /// <param name="CheckResult"></param>
+        /// <param name="FailCause"></param>
+        /// <param name="creator"></param>
+        /// <param name="StandardImage"></param>
+        /// <param name="CurrentImage"></param>
+        /// <param name="CheckType"></param>
         public static void UpdateMan_ReportItem_FailCause(string ReportCode, string position, string ResultType, string CheckResult, string FailCause, string creator, byte[] StandardImage, byte[] CurrentImage, string CheckType)
         {
             int i = db.Database.ExecuteSqlCommand("update Man_ReportItem set ResultType={0},CheckResult={1},FailCause={2},Creator={3},CreationDate={4},StandardImage={5},CurrentImage={6}, CheckType ={7} where ReportCode={8} and Position = {9}", ResultType, CheckResult, FailCause, creator, DateTime.Now, StandardImage, CurrentImage, CheckType, ReportCode, position);
 
         }
-
+        /// <summary>
+        /// 修改导入XY坐标
+        /// </summary>
+        /// <param name="ReportCode"></param>
+        /// <param name="position"></param>
+        /// <param name="px"></param>
+        /// <param name="py"></param>
         public static void UpdateMan_ReportItem_XY(string ReportCode, string position, decimal px, decimal py)
         {
             int i = db.Database.ExecuteSqlCommand("update Man_ReportItem set X={0} ,Y ={1} where ReportCode={2} and Position = {3}", px, py, ReportCode, position);
         }
 
+        /// <summary>
+        /// 位号图屏幕坐标
+        /// </summary>
+        /// <param name="ReportCode"></param>
+        /// <param name="position"></param>
+        /// <param name="px"></param>
+        /// <param name="py"></param>
         public static void UpdateMan_ReportItem_RXY(string ReportCode, string position, decimal px, decimal py)
         {
             int i = db.Database.ExecuteSqlCommand("update Man_ReportItem set RX={0} ,RY ={1} where ReportCode={2} and Position = {3}", px, py, ReportCode, position);
+        }
+
+        /// <summary>
+        /// 轴坐标
+        /// </summary>
+        /// <param name="ReportCode"></param>
+        /// <param name="position"></param>
+        /// <param name="px"></param>
+        /// <param name="py"></param>
+        public static void UpdateMan_ReportItem_SXY(string ReportCode, string position, decimal px, decimal py)
+        {
+            int i = db.Database.ExecuteSqlCommand("update Man_ReportItem set SX={0} ,SY ={1} where ReportCode={2} and Position = {3}", px, py, ReportCode, position);
         }
 
         #endregion

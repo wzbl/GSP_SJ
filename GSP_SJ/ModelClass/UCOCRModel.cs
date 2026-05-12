@@ -1,6 +1,8 @@
-﻿using Emgu.CV;
+﻿using Browocrlib;
+using Emgu.CV;
 using Emgu.CV.Structure;
 using HalconDotNet;
+using iTextSharp.text.pdf.codec;
 using SqlHelper;
 using System;
 using System.Collections.Generic;
@@ -22,7 +24,6 @@ namespace GSP_SJ.ModelClass
         {
             InitializeComponent();
             Dock = DockStyle.Top;
-            RefreshData(image, rOI);
             rOI.ChangeROI += RefreshData;
         }
 
@@ -30,10 +31,6 @@ namespace GSP_SJ.ModelClass
 
         private void RefreshData(Image image, DirectionalROI rOI)
         {
-            Image<Bgr, byte> image1 = CropImage(ConvertToImageBgr(image), rOI.Bounds);
-            if (image1 != null)
-                picImg.Image = image1.ToBitmap();
-
             using (HImage hImage = HalconImageConverter.BitmapToHImageRGB(new Bitmap(image)))
             {
                 HOperatorSet.Rgb1ToGray(hImage, out HObject gray);
@@ -52,12 +49,10 @@ namespace GSP_SJ.ModelClass
                 else
                 {
                     hWindowControl1.Visible = true;
-
                     hWindowControl1.HalconWindow.ClearWindow();
                     hWindowControl1.HalconWindow.DispObj(PublicFunction.GetCorrectedContour(modelContour));
-
                 }
-
+                txtOCRText.Text = "";
                 HObject ho_findCircleRoi;
                 //执行ocr
                 using (HDevDisposeHelper dh = new HDevDisposeHelper())
@@ -65,14 +60,12 @@ namespace GSP_SJ.ModelClass
                     HOperatorSet.GenRectangle1(out ho_findCircleRoi, rOI.Top, rOI.Left,
                     rOI.Bottom, rOI.Right);
                 }
-
                 HOperatorSet.ReduceDomain(gray, ho_findCircleRoi, out ho_image);
                 HOperatorSet.ChangeDomain(ho_image, ho_findCircleRoi, out HObject ho_ImageReduced2);
                 HOperatorSet.CropDomain(ho_ImageReduced2, out HObject ho_ImageReduced3);
-                DeepOCRHelper.FindOCR(new HImage(ho_image), out string text);
-                //new HImage(ho_image).WriteImage("bmp",0, @"D:\ocr.bmp");
-                //new HImage(ho_ImageReduced2).WriteImage("bmp",0, @"D:\ocr2.bmp");
-                txtOCRText.Text = text;
+                hWindowControl2.HalconWindow.ClearWindow();
+                FitImage(hWindowControl2.HalconWindow, ho_ImageReduced3);
+                GetOCRText(ho_ImageReduced3);
                 ho_ImageReduced2.Dispose();
                 ho_ImageReduced3.Dispose();
                 ho_findCircleRoi.Dispose();
@@ -80,41 +73,72 @@ namespace GSP_SJ.ModelClass
 
             }
         }
-        /// <summary>
-        /// 获取轮廓
-        /// </summary>
-        private void GetImgshape()
+        private void FitImage(HWindow hWin, HObject hImg)
         {
+            //适应图像算法：
+            //  该算法本质是让窗口跟随图像大小而改变，从而显示出完整的图像。但因为窗口大小是固定的，为了显示完整的图像，只能在保证图像宽高比的前提下根据窗口将图像进行缩放。
+            //  已知：窗口的宽为L1,高为H1，图像的宽为L2，高为H2。假设从窗口左下角到右上角画一条斜线，则该线的斜率就表示窗口的高/宽比，记作K1,则K1=H1/L1，同理，图像的高宽比记作K2，K2=H2/L2。
+            //  根据K1和K2的值相比较，明显可知，当K1>K2时，为了显示完整的图像(图像宽高按照1：1比例)，需要将图像的宽度根据窗口的宽度进行缩放，而图像的高度则根据图像的宽高比进行计算，以达到在窗口中显示完整的图像
+            //  当K1>K2，使图像宽度=窗口宽度，则图像高度根据窗口高宽比进行计算：
+            //      L2 = L1  
+            //      H2 = K2*L2
+            //      为了使图像显示在窗口的中心位置，则图像的起始坐标计算为：X1=0, Y1=(H1-H2)/2，终点坐标为：X2=L1-1, Y2=H1-Y1 => Y2=H1-((H1-H2)/2)
+            //  当K1<K2，使图像高度=窗口高度，则图像宽度根据窗口高宽比进行计算：
+            //      H2 = H1  
+            //      L2 = H2/K2
+            // 为了使图像显示在窗口的中心位置，则图像的起始坐标计算为：X1=(L1-L2)/2, Y1=0，终点坐标为：X2=L1-X1, Y2=H1-1
+
+            HTuple imgWidth, imgHeight;//图像宽度和高度
+            double ratio_win, ratio_img;//窗口比例，图像比例
+            int beginRow, endRow, beginCol, endCol;//图像在窗口上显示的起始行，结束行，起始列，结束列位置
             try
             {
-                using (HImage hImage = HalconImageConverter.BitmapToHImageRGB(new Bitmap(picImg.Image)))
+                if (hImg != null)
                 {
-                    //提取轮廓
-                    HOperatorSet.Rgb1ToGray(hImage, out HObject gray);
-                    HOperatorSet.CreateShapeModel
-                        (hImage,
-                        "auto",
-                        -0.39,
-                        0.79,
-                              "auto",
-                              "auto",
-                        "use_polarity",
-                             "auto",
-                            "auto",
-                       out HTuple ModelID);
-
-                    HOperatorSet.GetShapeModelContours(out HObject modelContours, ModelID, 1);
-
-                    hWindowControl1.Visible = true;
-                    DisplayXLDInCenter(hWindowControl1.HalconWindow, modelContours);
+                    HOperatorSet.GetImageSize(hImg, out imgWidth, out imgHeight);//获取图像的尺寸
+                    ratio_win = (double)hWindowControl2.WindowSize.Width / (double)hWindowControl2.WindowSize.Height;//计算窗口宽高比例
+                    ratio_img = (double)imgWidth / (double)imgHeight;//计算图像宽高比例
+                    //窗口适应图像算法：保证按照图像宽/高比例显示图像
+                    if (ratio_win >= ratio_img)
+                    {
+                        //如果窗口的宽高比大于图像的宽高比，则将图像按照【窗口高度】进行整体缩放，并调整图像的显示位置
+                        //保证图像高度和窗口高度一致，图像宽度则根据图像的宽高比进行缩放
+                        //图像的起始行位置位于窗口顶端(row=0),起始列位置按照窗口和缩放后的图像计算:(窗口宽度- 缩放后图像宽度)/2
+                        beginRow = 0;
+                        endRow = (int)imgHeight.D - 1;
+                        beginCol = (int)(-imgWidth.D * (ratio_win / ratio_img - 1d) / 2d);
+                        endCol = (int)(imgWidth.D + imgWidth.D * (ratio_win / ratio_img - 1d) / 2d);
+                    }
+                    else
+                    {
+                        beginCol = 0;
+                        endCol = (int)imgWidth.D - 1;
+                        beginRow = (int)(-imgHeight.D * (ratio_img / ratio_win - 1d) / 2d);
+                        endRow = (int)(imgHeight.D + imgHeight.D * (ratio_img / ratio_win - 1d) / 2d);
+                    }
+                    hWin.SetPart(beginRow, beginCol, endRow, endCol);//使图像缩放
+                    hWin.DispObj(hImg);//显示图像
                 }
             }
-            catch (Exception ex)
+            catch { }//屏蔽错误
+        }
+
+        private void GetOCRText(HObject ho_Imag)
+        {
+            List<string> ocrs = new List<string>();
+            try
+            {
+                ocrs = Browocrlib.OCRHelper.GetOCR(HImageToEmguCVConverter.HImageToMat(new HImage(ho_Imag)), 6);
+            }
+            catch (Exception)
             {
 
             }
 
-
+            foreach (var item in ocrs)
+            {
+                txtOCRText.Text = item;
+            }
         }
 
         public void DisplayXLDInCenter(HWindow window, HObject xld)
@@ -152,31 +176,6 @@ namespace GSP_SJ.ModelClass
             {
                 MessageBox.Show($"显示XLD时出错: {ex.Message}");
             }
-        }
-
-        public static Image<Bgr, byte> ConvertToImageBgr(Image image)
-        {
-            // 确保图像是Bitmap格式
-            Bitmap bitmap = image as Bitmap ?? new Bitmap(image);
-
-            // 直接转换为Image<Bgr, byte>
-            return new Image<Bgr, byte>(bitmap);
-        }
-
-        public static Image<Bgr, byte> CropImage(Image<Bgr, byte> image, Rectangle roi)
-        {
-            // 验证ROI是否在图像范围内
-            if (roi.X < 0 || roi.Y < 0 ||
-                roi.Right > image.Width ||
-                roi.Bottom > image.Height)
-            {
-                ////throw new ArgumentException("裁剪区域超出图像范围");
-                //Rectangle rectangle = new Rectangle(roi.Left,roi.Top, image.Width-roi.Left,image.Height-roi.Top);
-                //return image.Copy(rectangle);
-                return null;
-            }
-
-            return image.Copy(roi);
         }
 
 
