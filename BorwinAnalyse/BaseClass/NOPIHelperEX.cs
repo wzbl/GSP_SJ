@@ -105,31 +105,32 @@ namespace BorwinAnalyse.BaseClass
                                                     }
                                                 }
                                             }
-                                        }else
-                                        for (int i = firstRow.FirstCellNum; i < cellCount; ++i)
-                                        {
-                                            ICell cell = firstRow.GetCell(i);
-                                            if (cell != null)
+                                        }
+                                        else
+                                            for (int i = firstRow.FirstCellNum; i < cellCount; ++i)
                                             {
-                                                cell.SetCellType(CellType.String);
-                                                if (cell.StringCellValue != null)
+                                                ICell cell = firstRow.GetCell(i);
+                                                if (cell != null)
                                                 {
-                                                    DataColumn column = new DataColumn(cell.StringCellValue);
+                                                    cell.SetCellType(CellType.String);
+                                                    if (cell.StringCellValue != null)
+                                                    {
+                                                        DataColumn column = new DataColumn(cell.StringCellValue);
 
+                                                        if (!dataTable.Columns.Contains("A" + i.ToString()))
+                                                        {
+                                                            dataTable.Columns.Add("A" + i.ToString());
+                                                        }
+                                                    }
+                                                }
+                                                else
+                                                {
                                                     if (!dataTable.Columns.Contains("A" + i.ToString()))
                                                     {
                                                         dataTable.Columns.Add("A" + i.ToString());
                                                     }
                                                 }
                                             }
-                                            else
-                                            {
-                                                if (!dataTable.Columns.Contains("A" + i.ToString()))
-                                                {
-                                                    dataTable.Columns.Add("A" + i.ToString());
-                                                }
-                                            }
-                                        }
                                     }
                                     else
                                     {
@@ -171,7 +172,7 @@ namespace BorwinAnalyse.BaseClass
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message.tr());
+                BrowApp.APP.Tip.ShowTip(1, "警告".tr(), ex.Message.tr(), "确定".tr());
                 return null;
             }
         }
@@ -567,7 +568,7 @@ namespace BorwinAnalyse.BaseClass
         /// 导出dataTable
         /// </summary>
         /// <param name="TableName"></param>
-        public static void ExportDataToExcel(DataTable TableName,string fileName="")
+        public static void ExportDataToExcel(DataTable TableName, string fileName = "")
         {
             SaveFileDialog saveFileDialog = new SaveFileDialog();
             //设置文件标题
@@ -672,7 +673,7 @@ namespace BorwinAnalyse.BaseClass
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message, "提示".tr(), MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    BrowApp.APP.Tip.ShowTip(1, "警告".tr(), ex.Message, "确定".tr());
                 }
                 finally
                 {
@@ -708,9 +709,7 @@ namespace BorwinAnalyse.BaseClass
         {
             if (string.IsNullOrEmpty(filePathAndName)) return;
 
-            MessageBox.Show("导出成功！".tr(), "提示".tr(), MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-            if (MessageBox.Show("保存成功，是否打开文件？".tr(), "提示".tr(), MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
+            if (BrowApp.APP.Tip.ShowTip(0, "提示".tr(), "导出成功，是否打开文件？".tr(), "提示".tr(), "确定".tr(), "取消".tr()) == 1)
             {
                 System.Diagnostics.Process.Start(filePathAndName);
             }
@@ -721,7 +720,7 @@ namespace BorwinAnalyse.BaseClass
         {
             if (string.IsNullOrEmpty(filePathAndName)) return;
 
-            MessageBox.Show("导入成功！".tr(), "提示".tr(), MessageBoxButtons.OK, MessageBoxIcon.Information);
+            BrowApp.APP.Tip.ShowTip(0, "提示".tr(), "导入成功！".tr(), "确定".tr());
 
         }
 

@@ -194,7 +194,7 @@ namespace GSP.UI
         {
             if (!Global.SystemInitialOk)
             {
-                APP.Tip.ShowTip(0, "警告", "设备未归零,请先归零再执行操作!!!".tr(), "确定".tr());
+                APP.Tip.ShowTip(0, "警告".tr(), "设备未归零,请先归零再执行操作!!!".tr(), "确定".tr());
                 return;
             }
             if (Flow.IsManualRun()) { return; }

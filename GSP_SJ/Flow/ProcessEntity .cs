@@ -833,7 +833,7 @@ public class ProcessEntity
             VisionGlobal.bMak2_Y + VisionGlobal.TranslationY, out Mx, out My);
             if (Ecode != 0)
             {
-                APP.Tip.ShowTip(1, "警告", "Mark绑定数据出错".tr(), "确定".tr());
+                APP.Tip.ShowTip(1, "警告".tr(), "Mark绑定数据出错".tr(), "确定".tr());
                 Global.StopFlag = true;
                 Global.MachineState = GEnumEx.MachineState.MachineStop;
                 Global.SystemRun = false;

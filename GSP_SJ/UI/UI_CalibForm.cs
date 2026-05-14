@@ -1,5 +1,5 @@
-﻿using BrowApp;
-using BrowApp.IO;
+﻿
+using BrowApp;
 using BrowApp.Language;
 using BrowApp.MessageTip;
 using BrowLib;
@@ -161,7 +161,7 @@ namespace GSP.UI
                 BrowLib.Controller.MotionAPI.LinXyMoveA(500, 5000, MoveX[i], MoveY[i], 1);
                 do
                 {
-                    if (!Global.X轴.GetSevOn() || !Global.Y轴.GetSevOn()) { KryptonMessageBox.Show("轴未上使能？"); return; }
+                    if (!Global.X轴.GetSevOn() || !Global.Y轴.GetSevOn()) { BrowApp.APP.Tip.ShowTip(1, "警告".tr(), "轴未上使能？".tr()); return; }
                     rtn = BrowLib.Controller.MotionAPI.LinXYRuningA();
                     Thread.Sleep(2);
                 }
@@ -174,11 +174,11 @@ namespace GSP.UI
                     Thread.Sleep(2);
                 }
                 while (!Global.VisionApp.IsEndProc);
-                if (!Global.VisionApp.RunState("Task1", "执行结果")) { KryptonMessageBox.Show("标定失败!!!"); return; };
+                if (!Global.VisionApp.RunState("Task1", "执行结果")) { BrowApp.APP.Tip.ShowTip(1, "警告".tr(), "标定失败!!!".tr()); return; };
                 PosX[i] = MoveX[i]; PosY[i] = MoveY[i];
                 Thread.Sleep(500);
             }
-            KryptonMessageBox.Show("标定成功!!!");
+             BrowApp.APP.Tip.ShowTip(0, "提示".tr(), "标定成功!!!".tr(), "确定".tr());
 
         }
         /// <summary>
@@ -318,7 +318,7 @@ namespace GSP.UI
         {
             if (!Global.SystemInitialOk)
             {
-                APP.Tip.ShowTip(0, "警告", "设备未归零,请先归零再执行操作!!!", "确定");
+                APP.Tip.ShowTip(0, "警告".tr(), "设备未归零,请先归零再执行操作!!!", "确定".tr());
                 return;
             }
             if (flow.IsManualRun()) { return; }
@@ -350,7 +350,7 @@ namespace GSP.UI
         {
             if (!Global.SystemInitialOk)
             {
-                APP.Tip.ShowTip(0, "警告", "设备未归零,请先归零再执行操作!!!".tr(), "确定".tr());
+                APP.Tip.ShowTip(0, "警告".tr(), "设备未归零,请先归零再执行操作!!!".tr(), "确定".tr());
                 return;
             }
             if (flow.IsManualRun()) { return; }
@@ -368,7 +368,7 @@ namespace GSP.UI
         }
         private void Save_Btn_Click(object sender, EventArgs e)
         {
-            if (KryptonMessageBox.Show("确定要保存参数吗？".tr(), "提示".tr(), MessageBoxButtons.OKCancel) != DialogResult.OK) { return; }
+            if ( BrowApp.APP.Tip.ShowTip(0, "提示".tr(), "确定要保存参数吗？".tr(), "确定".tr(),"取消".tr()) != 1) { return; }
             try
             {
                 Global.CalibData.CalibParm.Xpos = Convert.ToDouble(Xpos_unm.Value);
@@ -563,7 +563,7 @@ namespace GSP.UI
         }
         private void Delete_Btn12_Click(object sender, EventArgs e)
         {
-            if (KryptonMessageBox.Show("确定要删除参数吗？")!=DialogResult.OK) { return; }
+            if (BrowApp.APP.Tip.ShowTip(0, "提示".tr(), "确定要删除参数吗？","确定".tr(),"取消".tr())!=1) { return; }
             try
             {
                 this.SizeDgv.Rows.RemoveAt(this.Selectidex2);
@@ -620,7 +620,7 @@ namespace GSP.UI
         }
         private void Autocompute_btn_Click(object sender, EventArgs e)
         {
-            if (KryptonMessageBox.Show("确定替换自动计算数据？")!=DialogResult.OK) { return; }
+            if (BrowApp.APP.Tip.ShowTip(0, "提示".tr(), "确定替换自动计算数据？","确定".tr(), "取消".tr()) != 1) { return; }
             List<Global.Spectype> Spectypes = new List<Global.Spectype>();
             Automatic(kryptonTextBox2.Text, Convert.ToDouble(SizeNum.Value), Convert.ToDouble(ZHightnum.Value), out Spectypes);
             this.SizeDgv.Rows.Clear();
@@ -785,7 +785,7 @@ namespace GSP.UI
         {
             if (!Global.SystemInitialOk)
             {
-                APP.Tip.ShowTip(0, "警告", "设备未归零,请先归零再执行操作!!!", "确定");
+                APP.Tip.ShowTip(0, "警告".tr(), "设备未归零,请先归零再执行操作!!!", "确定".tr());
                 return;
             }
             if (flow.IsManualRun()) { return; }
@@ -806,7 +806,7 @@ namespace GSP.UI
         {
             if (!Global.SystemInitialOk)
             {
-                APP.Tip.ShowTip(0, "警告", "设备未归零,请先归零再执行操作!!!", "确定");
+                APP.Tip.ShowTip(0, "警告".tr(), "设备未归零,请先归零再执行操作!!!", "确定".tr());
                 return;
             }
             if (flow.IsManualRun()) { return; }
@@ -924,7 +924,7 @@ namespace GSP.UI
         private void SaveBtn_Click(object sender, EventArgs e)
         {
             BrowLib.FileClass.DataCsv Csv = new BrowLib.FileClass.DataCsv();
-            if (KryptonMessageBox.Show("确定要保存参数吗？".tr(), "提示".tr(), MessageBoxButtons.OKCancel) != DialogResult.OK) { return; }
+            if ( BrowApp.APP.Tip.ShowTip(0, "提示".tr(), "确定要保存参数吗？".tr(), "确定".tr(), "取消".tr()) != 1) { return; }
             {
                 try
                 {
@@ -1044,7 +1044,7 @@ namespace GSP.UI
                     CalibData.OffsetType Re = Global.CalibData.Offsets.FirstOrDefault((CalibData.OffsetType H) => H.Angle == this.defAnglelist[i].ToString());
                     if (Re != null)
                     {
-                        bool flag3 = KryptonMessageBox.Show("已经存在数据，确定要覆盖吗？") != DialogResult.OK;
+                        bool flag3 =  BrowApp.APP.Tip.ShowTip(0, "提示".tr(), "已经存在数据，确定要覆盖吗？".tr(), "确定".tr(), "取消".tr()) != 1;
                         if (flag3)
                         {
                             break;
@@ -1086,7 +1086,7 @@ namespace GSP.UI
                     CalibData.OffsetType Re = Global.CalibData.Offsets.FirstOrDefault((CalibData.OffsetType H) => H.Angle == Customizedangle.Value.ToString());
                     if (Re != null)
                     {
-                        bool flag3 = KryptonMessageBox.Show("已经存在数据，确定要覆盖吗？") != DialogResult.OK;
+                        bool flag3 = BrowApp.APP.Tip.ShowTip(0, "提示".tr(), "已经存在数据，确定要覆盖吗？".tr(), "确定".tr(), "取消".tr()) != 1;
                         if (flag3)
                         {
                            return;
@@ -1132,7 +1132,7 @@ namespace GSP.UI
         {
             if (!Global.SystemInitialOk)
             {
-                APP.Tip.ShowTip(0, "警告", "设备未归零,请先归零再执行操作!!!", "确定");
+                APP.Tip.ShowTip(1, "警告".tr(), "设备未归零,请先归零再执行操作!!!".tr());
                 return;
             }
             if (flow.IsManualRun()) { return; }
@@ -1162,7 +1162,7 @@ namespace GSP.UI
             }
             double XYSpd = Convert.ToDouble(TPosDgv.Rows[Selectidex3].Cells[6].Value);
             double Zspd = Convert.ToDouble(TPosDgv.Rows[Selectidex3].Cells[7].Value);
-            if (XYSpd == 0 || Zspd == 0) { APP.Tip.ShowTip(0, "警告", "速度不能为0？", "确定"); return; }
+            if (XYSpd == 0 || Zspd == 0) { APP.Tip.ShowTip(0, "警告".tr(), "速度不能为0？", "确定".tr()); return; }
             WaitFrm waitFrm = new WaitFrm(RuntoBtn);
             waitFrm.Enabled = true;
             flow.ExecuteManual(() =>

@@ -68,7 +68,7 @@ namespace GSP_SJ
         {
             if (!Global.SystemInitialOk)
             {
-                APP.Tip.ShowTip(0, "警告".tr(), "设备未归零,请先归零再执行操作".tr(), "确定");
+                APP.Tip.ShowTip(0, "警告".tr(), "设备未归零,请先归零再执行操作".tr(), "确定".tr());
                 Global.TcpClass.Send("M:Flow_OUT_NG");
                 return;
             }
@@ -130,7 +130,7 @@ namespace GSP_SJ
                 }
                 if (!Global.SystemInitialOk)
                 {
-                    APP.Tip.ShowTip(0, "警告", "自动运行前请先复位".tr(), "确定");
+                    APP.Tip.ShowTip(0, "警告".tr(), "自动运行前请先复位".tr(), "确定".tr());
 
                     return;
                 }
@@ -148,7 +148,7 @@ namespace GSP_SJ
                 }
                 if (!Global.IsRecipe)
                 {
-                    APP.Tip.ShowTip(0, "警告", "无配方数据".tr(), "确定".tr());
+                    APP.Tip.ShowTip(0, "警告".tr(), "无配方数据".tr(), "确定".tr());
 
                     return;
                 }
@@ -313,7 +313,7 @@ namespace GSP_SJ
                 }
                 if (Global.AlarmFlag)
                 {
-                    APP.Tip.ShowTip(0, "警告", "请先解除报警 / 再启动设备".tr(), "确定".tr());
+                    APP.Tip.ShowTip(0, "警告".tr(), "请先解除报警 / 再启动设备".tr(), "确定".tr());
 
                     return;
                 }
@@ -389,7 +389,7 @@ namespace GSP_SJ
             }
             if (Global.AlarmFlag)
             {
-                APP.Tip.ShowTip(0, "警告", "请先清除报警再执行操作".tr(), "确定".tr());
+                APP.Tip.ShowTip(0, "警告".tr(), "请先清除报警再执行操作".tr(), "确定".tr());
                 return;
             }
             Global.StopFlag = false;
@@ -403,7 +403,7 @@ namespace GSP_SJ
         {
             if (Global.BomData.Rows.Count <= 0)
             {
-                APP.Tip.ShowTip(0, "警告", "未导入数据".tr(), "确定".tr());
+                APP.Tip.ShowTip(0, "警告".tr(), "未导入数据".tr(), "确定".tr());
                 return;
             }
             if (!Global.IsRecipe)
@@ -422,7 +422,7 @@ namespace GSP_SJ
         {
             if (Global.BomData.Rows.Count <= 0)
             {
-                APP.Tip.ShowTip(0, "警告".tr(), "未导入数据".tr(), "确定");
+                APP.Tip.ShowTip(0, "警告".tr(), "未导入数据".tr(), "确定".tr());
                 return;
             }
             if (!Global.IsRecipe)

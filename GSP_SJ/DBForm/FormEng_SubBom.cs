@@ -1,4 +1,5 @@
-﻿using ComponentFactory.Krypton.Toolkit;
+﻿using BrowApp.Language;
+using ComponentFactory.Krypton.Toolkit;
 using SqlHelper;
 using System;
 using System.Collections.Generic;
@@ -88,13 +89,13 @@ namespace GSP_SJ.DBForm
             {
                 if (dgvProgram.Rows[i].Cells[2].Value == null)
                 {
-                    MessageBox.Show("请填写替代料编码");
+                     BrowApp.APP.Tip.ShowTip(1, "警告".tr(), "请填写替代料编码".tr(), "确定".tr());
                     return;
                 }
 
                 if (dgvProgram.Rows[i].Cells[3].Value == null)
                 {
-                    MessageBox.Show("请填写替代料描述");
+                     BrowApp.APP.Tip.ShowTip(1, "警告".tr(), "请填写替代料描述".tr(), "确定".tr());
                     return;
                 }
                 string subCode = dgvProgram.Rows[i].Cells[2].Value.ToString();
@@ -103,13 +104,13 @@ namespace GSP_SJ.DBForm
 
                 if (string.IsNullOrEmpty(subCode))
                 {
-                    MessageBox.Show("请填写替代料编码");
+                     BrowApp.APP.Tip.ShowTip(1, "警告".tr(), "请填写替代料编码".tr(), "确定".tr());
                     return;
                 }
 
                 if (string.IsNullOrEmpty(SubName))
                 {
-                    MessageBox.Show("请填写替代料描述");
+                     BrowApp.APP.Tip.ShowTip(1, "警告".tr(), "请填写替代料描述".tr(), "确定".tr());
                     return;
                 }
 

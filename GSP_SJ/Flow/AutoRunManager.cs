@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BrowApp.Language;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -109,7 +110,7 @@ namespace GSP.Flow
                 catch (Exception ex)
                 {
                     _context.Log($"步骤{_context.CurrentStep}执行异常：{ex.Message}");
-                    _context.ShowWarning("错误", $"步骤{_context.CurrentStep}执行失败：{ex.Message}", "确定");
+                    _context.ShowWarning("错误", $"步骤{_context.CurrentStep}执行失败：{ex.Message}", "确定".tr());
                     Global.StopFlag = true;
                 }
             }

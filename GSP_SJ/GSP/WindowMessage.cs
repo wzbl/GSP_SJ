@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BrowApp.Language;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -86,7 +87,7 @@ namespace GSP
             }
             catch (Exception ex)
             {
-                MessageBox.Show("发生错误.\r\n" + ex.Message, "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                 BrowApp.APP.Tip.ShowTip(0, "警告".tr(), "错误:".tr() + ex.Message,"确定".tr(),"取消".tr() );
                 return false;
             }
         }
@@ -114,7 +115,7 @@ namespace GSP
             }
             catch (Exception ex)
             {
-                MessageBox.Show("发生错误.\r\n" + ex.Message, "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                 BrowApp.APP.Tip.ShowTip(0, "警告".tr(), "错误:".tr() + ex.Message, "确定".tr());
                 return false;
             }
         }
@@ -133,7 +134,7 @@ namespace GSP
                 int WINDOW_HANDLER = FindWindow(null, @windowName); //检测窗体是否开启
                 if (WINDOW_HANDLER == 0)
                 {
-                    if (isTip) MessageBox.Show("请检查[" + windowName + "]窗口是否正常打开.", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    if (isTip)  BrowApp.APP.Tip.ShowTip(1, "警告".tr(), "请检查[".tr() + windowName + "]窗口是否正常打开.".tr(),  "确定".tr());
                     return false;
                 }
 
@@ -147,7 +148,7 @@ namespace GSP
             }
             catch (Exception ex)
             {
-                MessageBox.Show("发送Window消息失败. \r\n" + ex.Message, "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                 BrowApp.APP.Tip.ShowTip(1, "警告".tr(), "发送Window消息失败".tr() + ex.Message, "确定".tr());
                 return false;
             }
             return true;
@@ -162,7 +163,7 @@ namespace GSP
                 {
                     if (question)
                     {
-                        if (MessageBox.Show("程序已启动,是否强制结束并重新开启？", "询问", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                        if ( BrowApp.APP.Tip.ShowTip(0, "提示".tr(), "程序已启动,是否强制结束并重新开启？".tr(), "确定".tr(), "取消".tr()) != 1)
                         {
                             process.Kill(); //结束进程
                             return false;
@@ -196,7 +197,7 @@ namespace GSP
             }
             catch (Exception ex)
             {
-                MessageBox.Show("发送Window消息失败. \r\n" + ex.Message);
+                 BrowApp.APP.Tip.ShowTip(0, "警告".tr(), "发送Window消息失败. \r\n" + ex.Message, "确定".tr());
                 return false;
             }
             return true;
@@ -216,7 +217,7 @@ namespace GSP
             }
             catch (Exception ex)
             {
-                MessageBox.Show("发送Window消息失败. \r\n" + ex.Message);
+                 BrowApp.APP.Tip.ShowTip(0, "警告".tr(), "发送Window消息失败. \r\n" + ex.Message, "确定".tr());
                 return false;
             }
             return true;
@@ -237,14 +238,14 @@ namespace GSP
                 int WINDOW_HANDLER = FindWindow(null, @windowName); //检测窗体是否开启
                 if (WINDOW_HANDLER == 0)
                 {
-                    if (isTip) MessageBox.Show("请检查[" + windowName + "]窗口是否正常打开.", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    if (isTip)  BrowApp.APP.Tip.ShowTip(1, "警告".tr(), "请检查[" .tr()+ windowName + "]窗口是否正常打开.".tr(), "确定".tr());
                     return false;
                 }
                 PostMessage((IntPtr)WINDOW_HANDLER, userMessage, 0, message);
             }
             catch (Exception ex)
             {
-                MessageBox.Show("发送Window消息失败. \r\n" + ex.Message, "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                 BrowApp.APP.Tip.ShowTip(1, "警告".tr(), "发送Window消息失败".tr() + ex.Message, "确定".tr());
                 return false;
             }
             return true;

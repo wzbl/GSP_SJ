@@ -337,7 +337,7 @@ namespace BorwinAnalyse.UCControls
                 StartAnalyse();
                 Thread.Sleep(100);
 
-                //MessageBox.Show("解析完成".tr());
+                // BrowApp.APP.Tip.ShowTip(0, "警告".tr(), "解析完成".tr());
             }
         }
 
@@ -364,7 +364,7 @@ namespace BorwinAnalyse.UCControls
                 DataGridView_Result.DataSource = null;
                 await AnalyseAll();
                 //stopwatch.Stop();
-                //MessageBox.Show("解析完成用时"+stopwatch.ElapsedMilliseconds);
+                // BrowApp.APP.Tip.ShowTip(0, "警告".tr(), "解析完成用时"+stopwatch.ElapsedMilliseconds);
 
                 Thread.Sleep(10);
                 DataGridView_Result.DataSource = null;
@@ -404,7 +404,7 @@ namespace BorwinAnalyse.UCControls
                 }
                 catch (Exception ex)
                 {
-                    BrowApp.APP.Tip.ShowTip(0, "警告".tr(), ex.Message, "确定".tr());
+                    BrowApp.APP.Tip.ShowTip(1, "警告".tr(), ex.Message,"确定".tr());
                 }
                 //AnalyseDt.Rows[index].ItemArray[3] = analyseResult.Result;
                 //AnalyseDt.Rows[index].ItemArray[4] = analyseResult.Type;
@@ -702,7 +702,7 @@ namespace BorwinAnalyse.UCControls
                 }
                 catch (Exception ex)
                 {
-                    APP.Tip.ShowTip(0, "警告", ex.Message);
+                    APP.Tip.ShowTip(0, "警告".tr(), ex.Message, "确定".tr());
                 }
                 analyseResult.BarCode = barcode;
                 analyseResult.Description = description;
@@ -927,7 +927,7 @@ namespace BorwinAnalyse.UCControls
         {
             if (string.IsNullOrEmpty(txtName.Text))
             {
-                MessageBox.Show("产品名称不能为空".tr());
+                 BrowApp.APP.Tip.ShowTip(0, "警告".tr(), "产品名称不能为空".tr(), "确定".tr());
                 return;
             }
             Save();
@@ -936,10 +936,10 @@ namespace BorwinAnalyse.UCControls
         private void Save()
         {
             //BomManager.Instance.SaveInAllBomData(txtName.Text, DataGridView_Result);
-            //if (MessageBox.Show("保存成功，是否作为当前BOM？".tr(), "提示".tr(), MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
+            //if ( BrowApp.APP.Tip.ShowTip(0, "警告".tr(), "保存成功，是否作为当前BOM？".tr(), "提示".tr(), MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
             //{
             //    BomManager.Instance.SaveInCurrentBomData(txtName.Text, DataGridView_Result);
-            //    MessageBox.Show("已经设置为当前BOM".tr(), "提示".tr(), MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //     BrowApp.APP.Tip.ShowTip(0, "警告".tr(), "已经设置为当前BOM".tr(), "提示".tr(), MessageBoxButtons.OK, MessageBoxIcon.Information);
             //}
             for (int i = 0; i < DataGridView_Result.RowCount; i++)
             {
@@ -1148,7 +1148,7 @@ namespace BorwinAnalyse.UCControls
                     }
                     catch (Exception ex)
                     {
-                        APP.Tip.ShowTip(0, "警告", ex.Message);
+                        APP.Tip.ShowTip(1, "警告".tr(), ex.Message, "确定".tr());
                     }
                     if (analyseResult.Result)
                     {
@@ -1175,7 +1175,7 @@ namespace BorwinAnalyse.UCControls
                     DataGridViewAnalyTest.Rows[i].Cells[1].Style = dataGridViewCellStyle;
                 }
             }
-            MessageBox.Show("解析完成".tr(), "解析测试".tr(), MessageBoxButtons.OK, MessageBoxIcon.Information);
+             BrowApp.APP.Tip.ShowTip(0, "提示".tr(), "解析完成".tr(), "确定".tr());
         }
 
         private void BtnClearTestAnaly_Click(object sender, EventArgs e)

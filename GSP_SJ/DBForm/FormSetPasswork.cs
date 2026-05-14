@@ -1,4 +1,5 @@
-﻿using ComponentFactory.Krypton.Toolkit;
+﻿using BrowApp.Language;
+using ComponentFactory.Krypton.Toolkit;
 using SqlHelper;
 using System;
 using System.Collections.Generic;
@@ -53,19 +54,19 @@ namespace GSP_SJ.DBForm
                 }
                 else
                 {
-                    MessageBox.Show("两次密码不一致");
+                    BrowApp.APP.Tip.ShowTip(1, "警告".tr(), "两次密码不一致".tr(), "确定".tr());
                 }
             }
             else
             {
                 if (SQLDataControl.ChangePassword(userCode, txtOld.Text, txtNew.Text, out string msg))
                 {
-                    MessageBox.Show("密码更新完成");
+                    BrowApp.APP.Tip.ShowTip(0, "提示".tr(), "密码更新完成".tr(), "确定".tr());
                     this.Close();
                 }
                 else
                 {
-                    MessageBox.Show(msg);
+                    BrowApp.APP.Tip.ShowTip(1, "警告".tr(), msg, "确定".tr());
                 }
             }
         }

@@ -60,7 +60,7 @@ namespace GSP_SJ
         /// <param name="e"></param>
         private void BrowForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (KryptonMessageBox.Show("确定要关闭软件吗？".tr(), "提示".tr(), MessageBoxButtons.OKCancel) == DialogResult.OK)
+            if (BrowApp.APP.Tip.ShowTip(0, "提示".tr(), "确定要关闭软件吗？".tr(), "确定".tr(), "取消".tr()) == 1)
             {
                 Global.VisionApp.VisionAppClose();
                 BrowLib.Controller.CardAPI.Servoff();
@@ -76,9 +76,9 @@ namespace GSP_SJ
         private void FormMain_Load(object sender, EventArgs e)
         {
 
-            State_mes.TextLine1 = "系统未初始化？";
+            State_mes.TextLine1 = "系统未初始化？".tr();
             State_mes.StateNormal.TextColor = Color.DarkOrange;
-          
+
             BrowApp.Language.Language.Instance.UpdateLanguage(this, null);
             Global.GlobRefEvent?.Invoke();
             BrowLib.Controller.SetLimit(false);
@@ -88,7 +88,7 @@ namespace GSP_SJ
                 bool RE = Global.VisionApp.LoadProject(@"./VisionProject/VisionPro.proj");
                 APP.Log.I_Log("加载视觉方案{" + RE.ToString() + "}");
             });
-         
+
         }
 
         System.Windows.Forms.Timer timer;
@@ -417,10 +417,10 @@ namespace GSP_SJ
             {
 
             }
-        
+
         }
 
- 
+
         private void RefSystemState(int Type)
         {
             switch (Type)//报警中
@@ -975,7 +975,7 @@ namespace GSP_SJ
         {
             SwitchFrm(ProgramBtn.TextLine1, MiddleLayer.UI_Program, ProgramBtn.ImageLarge);
         }
-  
+
         private void Debug_btn_Click(object sender, EventArgs e)
         {
             if (Global.SystemRun) { FloatingTip.ShowWarning("请暂停设备再执行操作".tr()); return; }

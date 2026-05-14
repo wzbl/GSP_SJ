@@ -107,7 +107,7 @@ namespace GSP.UI
         private void Save_Btn_Click(object sender, EventArgs e)
         {
             BrowLib.FileClass.DataCsv Csv = new BrowLib.FileClass.DataCsv();
-            if (KryptonMessageBox.Show("确定要保存参数吗？".tr(), "提示".tr(), MessageBoxButtons.OKCancel) != DialogResult.OK) { return; }
+            if ( BrowApp.APP.Tip.ShowTip(0, "提示".tr(), "确定要保存参数吗？".tr(),  "确定".tr(), "取消".tr()) != 1) { return; }
             {
                 try
                 {
@@ -428,7 +428,7 @@ namespace GSP.UI
 
             if (!Global.SystemInitialOk)
             {
-                APP.Tip.ShowTip(0, "警告", "设备未归零,请先归零再执行操作!!!", "确定");
+                APP.Tip.ShowTip(0, "警告".tr(), "设备未归零,请先归零再执行操作!!!", "确定".tr());
                 return;
             }
             if (Flow.IsManualRun()) { return; }

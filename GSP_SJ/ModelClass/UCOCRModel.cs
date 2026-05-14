@@ -1,4 +1,5 @@
-﻿using Browocrlib;
+﻿using BrowApp.Language;
+using Browocrlib;
 using Emgu.CV;
 using Emgu.CV.Structure;
 using HalconDotNet;
@@ -174,7 +175,7 @@ namespace GSP_SJ.ModelClass
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"显示XLD时出错: {ex.Message}");
+                 BrowApp.APP.Tip.ShowTip(1, "警告".tr(), $"显示XLD时出错: {ex.Message}", "确定".tr());
             }
         }
 

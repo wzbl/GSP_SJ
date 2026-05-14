@@ -1,4 +1,5 @@
-﻿using ComponentFactory.Krypton.Toolkit;
+﻿using BrowApp.Language;
+using ComponentFactory.Krypton.Toolkit;
 using SqlHelper;
 using System;
 using System.Collections.Generic;
@@ -292,7 +293,7 @@ namespace GSP_SJ
         {
             if (comOptions.SelectedIndex == 0)
             {
-                MessageBox.Show("默认参数不可修改");
+                 BrowApp.APP.Tip.ShowTip(1, "警告".tr(), "默认参数不可修改".tr(), "确定".tr());
                 return;
             }
             FormMeter formMeter = new FormMeter();
@@ -323,7 +324,7 @@ namespace GSP_SJ
         {
             if (comOptions.SelectedIndex == 0)
             {
-                MessageBox.Show("默认参数不可修改");
+                 BrowApp.APP.Tip.ShowTip(1, "警告".tr(), "默认参数不可修改".tr(), "确定".tr());
                 return;
             }
             SQLDataControl.DeleteMeterOption(comOptions.Text);
@@ -395,7 +396,7 @@ namespace GSP_SJ
 
                 if (comOptions.SelectedIndex == 0 && items.Where(x => x.Row == int.Parse(row)).ToList().Count > 0)
                 {
-                    MessageBox.Show("默认参数不可修改");
+                     BrowApp.APP.Tip.ShowTip(1, "警告".tr(), "默认参数不可修改".tr(), "确定".tr());
                     return;
                 }
                 else
@@ -424,7 +425,7 @@ namespace GSP_SJ
                     }
                     else
                     {
-                        MessageBox.Show("行号错误");
+                         BrowApp.APP.Tip.ShowTip(1, "警告".tr(), "行号错误".tr(), "确定".tr());
                         return;
                     }
                     string LcrType = SQLDataControl.GetEng_MeterByShowValue("LcrType", DBEventAction.GetDGVCellValue(dgvProgram, i, 1));
@@ -436,7 +437,7 @@ namespace GSP_SJ
                     }
                     else
                     {
-                        MessageBox.Show("最小值错误");
+                         BrowApp.APP.Tip.ShowTip(1, "警告".tr(), "最小值错误".tr(), "确定".tr());
                         return;
                     }
                     string MinValueUnit = SQLDataControl.GetEng_MeterByShowValue(unit, DBEventAction.GetDGVCellValue(dgvProgram, i, 3));
@@ -447,7 +448,7 @@ namespace GSP_SJ
                     }
                     else
                     {
-                        MessageBox.Show("最大值错误");
+                         BrowApp.APP.Tip.ShowTip(1, "警告".tr(), "最大值错误".tr(), "确定".tr());
                         return;
                     }
                     string MaxValueUnit = SQLDataControl.GetEng_MeterByShowValue(unit, DBEventAction.GetDGVCellValue(dgvProgram, i, 5));
@@ -463,7 +464,7 @@ namespace GSP_SJ
                     }
                     else
                     {
-                        MessageBox.Show("失败次数错误");
+                         BrowApp.APP.Tip.ShowTip(1, "警告".tr(), "失败次数错误".tr(), "确定".tr());
                         return;
                     }
                     string Speed = SQLDataControl.GetEng_MeterByShowValue("Speed", DBEventAction.GetDGVCellValue(dgvProgram, i, 12));
@@ -475,7 +476,7 @@ namespace GSP_SJ
                     }
                     else
                     {
-                        MessageBox.Show("取值次数错误");
+                         BrowApp.APP.Tip.ShowTip(1, "警告".tr(), "取值次数错误".tr(), "确定".tr());
                         return;
                     }
                     Nullable<decimal> FRValue;
@@ -485,7 +486,7 @@ namespace GSP_SJ
                     }
                     else
                     {
-                        MessageBox.Show("波动区间错误");
+                         BrowApp.APP.Tip.ShowTip(1, "警告".tr(), "波动区间错误".tr(), "确定".tr());
                         return;
                     }
                     Nullable<decimal> MinValidValue;
@@ -495,7 +496,7 @@ namespace GSP_SJ
                     }
                     else
                     {
-                        MessageBox.Show("有效值下限错误");
+                         BrowApp.APP.Tip.ShowTip(1, "警告".tr(), "有效值下限错误".tr(), "确定".tr());
                         return;
                     }
                     string MinValidValueUnit = SQLDataControl.GetEng_MeterByShowValue(unit, DBEventAction.GetDGVCellValue(dgvProgram, i, 17));
@@ -506,7 +507,7 @@ namespace GSP_SJ
                     }
                     else
                     {
-                        MessageBox.Show("有效值上限错误");
+                         BrowApp.APP.Tip.ShowTip(1, "警告".tr(), "有效值上限错误".tr(), "确定".tr());
                         return;
                     }
                     string MaxValidValueUnit = SQLDataControl.GetEng_MeterByShowValue(unit, DBEventAction.GetDGVCellValue(dgvProgram, i, 19));
@@ -515,11 +516,11 @@ namespace GSP_SJ
                     SQLDataControl.AddEng_MeterOptionItem(optionName, row, LcrType, MinValue, MinValueUnit, MaxValue, MaxValueUnit, FunctionType, Frequency, Voltage, RangeType, Range, HoldTimes, Speed, Resistance, ReadCount, FRValue, MinValidValue, MinValidValueUnit, MaxValidValue, MaxValidValueUnit, Remarks);
                 }
 
-                MessageBox.Show("保存成功");
+                 BrowApp.APP.Tip.ShowTip(0, "提示".tr(), "保存成功".tr(), "确定".tr());
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                 BrowApp.APP.Tip.ShowTip(1, "警告".tr(), ex.Message, "确定".tr());
             }
           
         }

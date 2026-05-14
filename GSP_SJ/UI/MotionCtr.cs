@@ -139,13 +139,13 @@ namespace GSP.UI
                     break;
                 case (int)AppVIEW_WM.RBUTTONDOWN:
                     {
-                        ;/// MessageBox.Show("ViewMsgCallBack RBUTTONDOWN");
+                        ;///  BrowApp.APP.Tip.ShowTip(0, "警告".tr(), "ViewMsgCallBack RBUTTONDOWN");
 
                     }
                     break;
                 case (int)AppVIEW_WM.MOUSEWHEEL:
                     {
-                        ///  MessageBox.Show("ViewMsgCallBack MOUSEWHEEL");
+                        ///   BrowApp.APP.Tip.ShowTip(0, "警告".tr(), "ViewMsgCallBack MOUSEWHEEL");
 
                     }
                     break;
@@ -381,7 +381,7 @@ namespace GSP.UI
         {
             if (SelectAxisName == null)
             {
-                KryptonMessageBox.Show("请选中轴在执行操作".tr(), "提示".tr(), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                BrowApp.APP.Tip.ShowTip(1, "警告".tr(), "请选中轴在执行操作".tr(), "提示".tr());
                 return false;
             }
             return true;
@@ -444,7 +444,7 @@ namespace GSP.UI
         {
             if (!Global.SystemInitialOk)
             {
-                APP.Tip.ShowTip(0, "警告", "设备未归零,请先归零再执行操作".tr(), "确定");
+                APP.Tip.ShowTip(0, "警告".tr(), "设备未归零,请先归零再执行操作".tr(), "确定".tr());
                 return;
             }
             if (Global.SystemRun)
@@ -1006,7 +1006,7 @@ namespace GSP.UI
         {
             if (!Global.SystemInitialOk)
             {
-                APP.Tip.ShowTip(0, "警告", "设备未归零,请先归零再执行操作".tr(), "确定");
+                APP.Tip.ShowTip(0, "警告".tr(), "设备未归零,请先归零再执行操作".tr(), "确定".tr());
                 return;
             }
             if (hFlow.IsManualRun()) { return; }

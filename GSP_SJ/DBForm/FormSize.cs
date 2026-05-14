@@ -1,4 +1,5 @@
-﻿using ComponentFactory.Krypton.Toolkit;
+﻿using BrowApp.Language;
+using ComponentFactory.Krypton.Toolkit;
 using SqlHelper;
 using System;
 using System.Collections.Generic;
@@ -86,37 +87,37 @@ namespace GSP_SJ
                     decimal phyW = 0;
                     if (string.IsNullOrEmpty(SizeCode))
                     {
-                        MessageBox.Show("请填写尺寸");
+                         BrowApp.APP.Tip.ShowTip(0, "警告".tr(), "请填写尺寸".tr(), "确定".tr());
                         return;
                     }
 
                     else if (!int.TryParse(PixelWidth, out pw))
                     {
-                        MessageBox.Show("请填写截图宽度");
+                         BrowApp.APP.Tip.ShowTip(0, "警告".tr(), "请填写截图宽度".tr(), "确定".tr());
                         return;
                     }
 
                     else if (!int.TryParse(PixelHeight, out ph))
                     {
-                        MessageBox.Show("请填写截图高度");
+                         BrowApp.APP.Tip.ShowTip(0, "警告".tr(), "请填写截图高度".tr(), "确定".tr());
                         return;
                     }
                     else if (!decimal.TryParse(PhysicalSizeLength, out phyL))
                     {
-                        MessageBox.Show("请填写物理长度");
+                         BrowApp.APP.Tip.ShowTip(0, "警告".tr(), "请填写物理长度".tr(), "确定".tr());
                         return;
                     }
 
                     else if (!decimal.TryParse(PhysicalSizeWidth, out phyW))
                     {
-                        MessageBox.Show("请填写物理宽度");
+                         BrowApp.APP.Tip.ShowTip(0, "警告".tr(), "请填写物理宽度".tr(), "确定".tr());
                         return;
                     }
 
                     SQLDataControl.AddMan_ComponentSize(SizeId, SizeCode, pw, ph, phyL, phyW, IsOCR, Remark);
                 }
                 Search();
-                MessageBox.Show("保存成功");
+                 BrowApp.APP.Tip.ShowTip(0, "提示".tr(), "保存成功".tr(), "确定".tr());
             }
             catch (Exception)
             {

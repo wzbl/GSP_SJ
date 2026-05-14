@@ -1,4 +1,5 @@
-﻿using ComponentFactory.Krypton.Toolkit;
+﻿using BrowApp.Language;
+using ComponentFactory.Krypton.Toolkit;
 using SqlHelper;
 using System;
 using System.Collections.Generic;
@@ -40,7 +41,7 @@ namespace GSP_SJ.DBForm
             else
             {
                 DBEventAction.User = null;
-                MessageBox.Show(msg);
+                BrowApp.APP.Tip.ShowTip(0, "警告".tr(), msg, "确定".tr());
             }
                
         }

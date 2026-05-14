@@ -1,4 +1,5 @@
-﻿using ComponentFactory.Krypton.Toolkit;
+﻿using BrowApp.Language;
+using ComponentFactory.Krypton.Toolkit;
 using HalconDotNet;
 using SqlHelper;
 using System;
@@ -83,7 +84,7 @@ namespace GSP_SJ.DBForm
             {
                 if (dgvUser.SelectedRows[0].Cells[0].Value == null || string.IsNullOrEmpty(dgvUser.SelectedRows[0].Cells[0].Value.ToString()))
                 {
-                    MessageBox.Show("请填写账号");
+                     BrowApp.APP.Tip.ShowTip(0, "提示".tr(), "请填写账号".tr(), "确定".tr());
                     return;
                 }
                 string userCode = dgvUser.SelectedRows[0].Cells[0].Value.ToString();
@@ -91,7 +92,7 @@ namespace GSP_SJ.DBForm
                 {
                     if (SQLDataControl.GetUser().Where(x => x.UserCode == dgvUser.SelectedRows[0].Cells[0].Value.ToString()).ToList().Count > 0)
                     {
-                        MessageBox.Show("该账号已存在");
+                         BrowApp.APP.Tip.ShowTip(0, "提示".tr(), "该账号已存在".tr(), "确定".tr());
                         return;
                     }
                     else
@@ -134,32 +135,32 @@ namespace GSP_SJ.DBForm
         {
             if (AddUser != null && string.IsNullOrEmpty(AddUser.Password))
             {
-                MessageBox.Show("请设置密码");
+                 BrowApp.APP.Tip.ShowTip(1, "警告".tr(), "请设置密码".tr(), "确定".tr());
                 return;
             }
             for (int i = 0; i < dgvUser.Rows.Count; i++)
             {
                 if (dgvUser.Rows[i].Cells[0].Value == null || string.IsNullOrEmpty(dgvUser.Rows[i].Cells[0].Value.ToString()))
                 {
-                    MessageBox.Show("请填写账号");
+                     BrowApp.APP.Tip.ShowTip(1, "警告".tr(), "请填写账号".tr(), "确定".tr());
                     return;
                 }
 
                 if (dgvUser.Rows[i].Cells[1].Value == null || string.IsNullOrEmpty(dgvUser.Rows[i].Cells[1].Value.ToString()))
                 {
-                    MessageBox.Show("请填写用户名");
+                     BrowApp.APP.Tip.ShowTip(1, "警告".tr(), "请填写用户名".tr(), "确定".tr());
                     return;
                 }
 
                 if (dgvUser.Rows[i].Cells[2].Value == null || string.IsNullOrEmpty(dgvUser.Rows[i].Cells[2].Value.ToString()))
                 {
-                    MessageBox.Show("请填写角色");
+                     BrowApp.APP.Tip.ShowTip(1, "警告".tr(), "请填写角色".tr(), "确定".tr());
                     return;
                 }
 
                 if (dgvUser.Rows[i].Cells[3].Value == null || string.IsNullOrEmpty(dgvUser.Rows[i].Cells[3].Value.ToString()))
                 {
-                    MessageBox.Show("请填写状态");
+                     BrowApp.APP.Tip.ShowTip(1, "警告".tr(), "请填写状态".tr(), "确定".tr());
                     return;
                 }
                 SQLDataControl.AddUser(dgvUser.Rows[i].Cells[0].Value.ToString(),

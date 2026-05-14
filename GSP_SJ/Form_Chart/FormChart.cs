@@ -1,4 +1,5 @@
-﻿using SqlHelper;
+﻿using BrowApp.Language;
+using SqlHelper;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -306,16 +307,13 @@ namespace GSP_SJ
         private void Canvas_ComponentDoubleClick(object sender, ComponentCanvas.ComponentEventArgs e)
         {
             Component comp = e.Component;
-            MessageBox.Show(
+             BrowApp.APP.Tip.ShowTip(0, "警告".tr(), 
                 $"元件: {comp.Designator}\n" +
                 $"位置: X={comp.Position.X:F2}, Y={comp.Position.Y:F2}\n" +
                 $"尺寸: {comp.Size.Width:F2} x {comp.Size.Height:F2}\n" +
                 $"角度: {comp.Angle:F1}°\n" +
-                $"字符: {comp.Text}",
-                "元件信息",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Information
-            );
+                $"字符: {comp.Text}"
+           , "确定".tr());
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -617,7 +615,7 @@ namespace GSP_SJ
                 //else
                 //{
                 //    // 如果没有点击到元件，显示点击位置的坐标
-                //    MessageBox.Show($"坐标位置: X={worldPos.X:F2}, Y={worldPos.Y:F2}",
+                //     BrowApp.APP.Tip.ShowTip(0, "警告".tr(), $"坐标位置: X={worldPos.X:F2}, Y={worldPos.Y:F2}",
                 //                  "坐标信息", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 //}
             }
@@ -972,7 +970,7 @@ namespace GSP_SJ
 
                             byte[] bytes = PublicFunction.CompressImage(fullImage, saveDialog.FileName, 20, OrgWidth, orgHight);
                             //SQLDataControl.UpdateProgramOptionPicture(ProductCode, "", bytes);
-                            MessageBox.Show("全图保存成功！", "保存成功");
+                             BrowApp.APP.Tip.ShowTip(0, "提示".tr(), "保存成功".tr(), "确定".tr());
                         }
                     }
                 };

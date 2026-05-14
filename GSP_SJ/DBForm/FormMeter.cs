@@ -1,4 +1,5 @@
-﻿using ComponentFactory.Krypton.Toolkit;
+﻿using BrowApp.Language;
+using ComponentFactory.Krypton.Toolkit;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -30,7 +31,7 @@ namespace GSP_SJ
         {
             if (string.IsNullOrEmpty(txtName.Text))
             {
-                MessageBox.Show("请输入名称");
+                 BrowApp.APP.Tip.ShowTip(1, "警告".tr(), "请输入名称".tr(), "确定".tr());
                 return;
             }
             NewName = txtName.Text;

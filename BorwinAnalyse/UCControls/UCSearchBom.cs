@@ -194,7 +194,7 @@ namespace BorwinAnalyse.UCControls
                 string cmd = string.Format("UPDATE ALLBOM SET modelName = '{1}' ,barCode = '{2}',replaceCode = '{3}',description = '{4}',result = '{5}',type = '{6}',size = '{7}',value = '{8}',unit = '{9}',grade = '{10}',tapeType = '{11}',tapeWidth = '{12}',pitch = '{13}',judgeOCV = '{14}',exp5 = '{15}' where  id = '{0}'", 
                     bomDataModel.id, bomDataModel.modelName, bomDataModel.barCode, bomDataModel.replaceCode, bomDataModel.description, bomDataModel.result, bomDataModel.type, bomDataModel.size, bomDataModel.value, bomDataModel.unit, bomDataModel.grade, bomDataModel.tapeType, bomDataModel.tapeWidth, bomDataModel.pitch, bomDataModel.judgeOCV, bomDataModel.exp5);
                 SqlLiteManager.Instance.BomDB.Insert(cmd);
-                MessageBox.Show("保存成功".tr());
+                 BrowApp.APP.Tip.ShowTip(0, "警告".tr(), "保存成功".tr(), "确定".tr());
             }
             else
             {
@@ -225,7 +225,7 @@ namespace BorwinAnalyse.UCControls
                     bomDataModel.exp5 = gridBomData.Rows[row].Cells[15].FormattedValue.ToString();
                     string cmd = string.Format("insert into ALLBOM values('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}','{11}','{12}','{13}','{14}','{15}')", bomDataModel.id, bomDataModel.modelName, bomDataModel.barCode, bomDataModel.replaceCode, bomDataModel.description, bomDataModel.result, bomDataModel.type, bomDataModel.size, bomDataModel.value, bomDataModel.unit, bomDataModel.grade, bomDataModel.tapeType, bomDataModel.tapeWidth, bomDataModel.pitch, bomDataModel.judgeOCV, bomDataModel.exp5);
                     SqlLiteManager.Instance.BomDB.Insert(cmd);
-                    MessageBox.Show("保存成功".tr());
+                     BrowApp.APP.Tip.ShowTip(0, "警告".tr(), "保存成功".tr(), "确定".tr());
                 }
             }
 
@@ -329,10 +329,10 @@ namespace BorwinAnalyse.UCControls
 
         private void btnDeleteModel_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("是否从本地BOM数据库中，删除数据：".tr() + "模板名称为".tr() + comModelName.Text);
+             BrowApp.APP.Tip.ShowTip(0, "提示".tr(), "是否从本地BOM数据库中，删除数据：".tr() + "模板名称为".tr() + comModelName.Text, "确定".tr());
             BomManager.Instance.DeleteModel(comModelName.Text);
             ComModelUpdata();
-            MessageBox.Show("删除成功".tr());
+             BrowApp.APP.Tip.ShowTip(0, "提示".tr(), "删除成功".tr(), "确定".tr());
         }
 
         private void btnSetModel_Click(object sender, EventArgs e)
@@ -340,7 +340,7 @@ namespace BorwinAnalyse.UCControls
             if (BomManager.Instance.BomNames.Contains(comModelName.Text))
             {
                 BomManager.Instance.SetCurrentModel(comModelName.Text);
-                MessageBox.Show("设为模板成功".tr());
+                 BrowApp.APP.Tip.ShowTip(0, "提示".tr(), "设为模板成功".tr(), "确定".tr());
             }
 
         }
@@ -349,17 +349,17 @@ namespace BorwinAnalyse.UCControls
         {
             if (!BomManager.Instance.BomNames.Contains(comModelName.Text))
             {
-                MessageBox.Show("未选择模板".tr());
+                 BrowApp.APP.Tip.ShowTip(0, "警告".tr(), "未选择模板".tr(), "确定".tr());
                 return;
             }
             if (string.IsNullOrEmpty(txtbarCode.Text))
             {
-                MessageBox.Show("未输入条码".tr());
+                 BrowApp.APP.Tip.ShowTip(0, "警告".tr(), "未输入条码".tr(), "确定".tr());
                 return;
             }
             if (BomManager.Instance.AllBomData.Where(x => x.barCode == txtbarCode.Text).ToList<BomDataModel>().ToList().Count > 0)
             {
-                MessageBox.Show("当前条码已存在".tr());
+                 BrowApp.APP.Tip.ShowTip(0, "警告".tr(), "当前条码已存在".tr(), "确定".tr());
                 return;
             }
 
@@ -533,7 +533,7 @@ namespace BorwinAnalyse.UCControls
         {
             if (String.IsNullOrEmpty(comModelName.Text))
             {
-                MessageBox.Show("请先选择模板".tr());
+                 BrowApp.APP.Tip.ShowTip(0, "警告".tr(), "请先选择模板".tr(), "确定".tr());
                 return;
             }
 
@@ -545,7 +545,7 @@ namespace BorwinAnalyse.UCControls
             }
             else
             {
-                MessageBox.Show("此模板数据为空".tr());
+                 BrowApp.APP.Tip.ShowTip(0, "警告".tr(), "此模板数据为空".tr(), "确定".tr());
                 return;
             }
 

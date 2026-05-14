@@ -1,4 +1,5 @@
-﻿using ComponentFactory.Krypton.Toolkit;
+﻿using BrowApp.Language;
+using ComponentFactory.Krypton.Toolkit;
 using SqlHelper;
 using System;
 using System.Collections.Generic;
@@ -99,7 +100,7 @@ namespace GSP_SJ.ModelClass
 
         private void btnDeleteAll_Click(object sender, EventArgs e)
         {
-            if(MessageBox.Show("确定要删除所有模板吗？", "提示", MessageBoxButtons.OKCancel) == DialogResult.OK)
+            if( BrowApp.APP.Tip.ShowTip(0, "提示".tr(), "确定要删除所有模板吗？".tr(), "确定".tr(), "取消".tr()) != 1)
             {
                 //SQLDataControl.DeleteAllEng_PubModel();
             }

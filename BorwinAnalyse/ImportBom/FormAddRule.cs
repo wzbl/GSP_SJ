@@ -1,4 +1,5 @@
-﻿using ComponentFactory.Krypton.Toolkit;
+﻿using BrowApp.Language;
+using ComponentFactory.Krypton.Toolkit;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -33,13 +34,13 @@ namespace BorwinAnalyse.ImportBom
 
             if (string.IsNullOrEmpty(txtRule.Text))
             {
-                MessageBox.Show("请输入规则名称");
+                 BrowApp.APP.Tip.ShowTip(0, "警告".tr(), "请输入规则名称".tr(), "确定".tr());
                 return;
             }
 
             if (AnaylseDataManager.Instance.Rules.Contains(txtRule.Text))
             {
-                MessageBox.Show("规则名称已存在");
+                 BrowApp.APP.Tip.ShowTip(0, "警告".tr(), "规则名称已存在".tr(), "确定".tr());
                 return;
             }
 

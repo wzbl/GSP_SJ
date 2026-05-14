@@ -274,7 +274,7 @@ namespace BorwinAnalyse.UCControls
             CommonAnalyse.Instance.ReplaceCodeSeparator = txtReplaceCodeSep.Text;
             CommonAnalyse.Instance.IsMergeDescription = IsMergeDescription.Checked;
             CommonAnalyse.Instance.Save(comBomRule.Text);
-            MessageBox.Show("保存成功".tr());
+             BrowApp.APP.Tip.ShowTip(0, "警告".tr(), "保存成功".tr(), "确定".tr());
         }
 
         private void kryptonDataGridView1_MouseEnter(object sender, EventArgs e)

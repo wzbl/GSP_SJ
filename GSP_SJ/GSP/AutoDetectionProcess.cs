@@ -193,7 +193,7 @@ public class AutoRunUltimate
                 else
                 {
                     LogWarn(_currentStep, "未检测到PCB板，弹出警告提示");
-                    APP.Tip.ShowTip(1, "警告", "请放入PCB板".tr(), "确定".tr());
+                    APP.Tip.ShowTip(1, "警告".tr(), "请放入PCB板".tr(), "确定".tr());
                 }
                 break;
         }
@@ -285,7 +285,7 @@ public class AutoRunUltimate
         else if (_runTimer.IsOn(1000))
         {
             LogWarn(_currentStep, "顶升到位超时，弹出选择框");
-            int Rtn = APP.Tip.ShowTip(1, "警告", "顶升到位超时".tr(), "继续".tr(), "停止".tr());
+            int Rtn = APP.Tip.ShowTip(1, "警告".tr(), "顶升到位超时".tr(), "继续".tr(), "停止".tr());
             if (Rtn == 1)
             {
                 LogWarn(_currentStep, "用户选择继续，跳过顶升检测");
@@ -710,7 +710,7 @@ public class AutoRunUltimate
         if (Ecode != 0)
         {
             LogError(_currentStep, $"Mark绑定数据出错，错误码：{Ecode}");
-            APP.Tip.ShowTip(1, "警告", "Mark绑定数据出错".tr(), "确定".tr());
+            APP.Tip.ShowTip(1, "警告".tr(), "Mark绑定数据出错".tr(), "确定".tr());
             Global.StopFlag = true;
             Global.MachineState = GEnumEx.MachineState.MachineStop;
             Global.SystemRun = false;

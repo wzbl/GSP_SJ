@@ -1,4 +1,5 @@
-﻿using ComponentFactory.Krypton.Toolkit;
+﻿using BrowApp.Language;
+using ComponentFactory.Krypton.Toolkit;
 using SqlHelper;
 using System;
 using System.Collections.Generic;
@@ -45,7 +46,7 @@ namespace GSP_SJ
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                 BrowApp.APP.Tip.ShowTip(1, "警告".tr(), ex.Message, "确定".tr());
             }
 
         }
@@ -63,7 +64,7 @@ namespace GSP_SJ
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                 BrowApp.APP.Tip.ShowTip(0, "警告".tr(), ex.Message, "确定".tr());
             }
 
         }

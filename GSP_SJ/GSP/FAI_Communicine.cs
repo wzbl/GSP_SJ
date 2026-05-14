@@ -33,7 +33,7 @@ namespace GSP
         {
             if (!Global.SystemInitialOk)
             {
-                APP.Tip.ShowTip(0, "警告".tr(), "设备未归零,请先归零再执行操作".tr(), "确定");
+                APP.Tip.ShowTip(0, "警告".tr(), "设备未归零,请先归零再执行操作".tr(), "确定".tr());
                 Global.TcpClass.Send("M:Flow_OUT_NG");
                 return;
             }

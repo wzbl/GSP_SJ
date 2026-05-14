@@ -135,13 +135,13 @@ namespace GSP.UI
                     break;
                 case (int)AppVIEW_WM.RBUTTONDOWN:
                     {
-                        ;/// MessageBox.Show("ViewMsgCallBack RBUTTONDOWN");
+                        ;///  BrowApp.APP.Tip.ShowTip(0, "警告".tr(), "ViewMsgCallBack RBUTTONDOWN");
 
                     }
                     break;
                 case (int)AppVIEW_WM.MOUSEWHEEL:
                     {
-                        ///  MessageBox.Show("ViewMsgCallBack MOUSEWHEEL");
+                        ///   BrowApp.APP.Tip.ShowTip(0, "警告".tr(), "ViewMsgCallBack MOUSEWHEEL");
 
                     }
                     break;
@@ -275,7 +275,7 @@ namespace GSP.UI
         {
             if (!Global.SystemInitialOk)
             {
-                APP.Tip.ShowTip(0, "警告", "设备未归零,请先归零再执行操作!!!".tr(), "确定".tr());
+                APP.Tip.ShowTip(0, "警告".tr(), "设备未归零,请先归零再执行操作!!!".tr(), "确定".tr());
                 return;
             }
             if (Flow.IsManualRun()) { return; }
@@ -437,7 +437,7 @@ namespace GSP.UI
         }
         private void P_Save_Click(object sender, EventArgs e)
         {
-            if (KryptonMessageBox.Show("确定要保存参数吗？".tr()) != DialogResult.OK) { return; }
+            if (BrowApp.APP.Tip.ShowTip(0, "提示".tr(), "确定要保存参数吗？".tr(), "确定".tr(), "取消".tr()) != 1) { return; }
             try
             {
                 Global.Systemdata.PatlePos.Xpos = Convert.ToDouble(PatelXpos.Value);
@@ -463,7 +463,7 @@ namespace GSP.UI
         }
         private void P_Save2_Click(object sender, EventArgs e)
         {
-            if (KryptonMessageBox.Show("确定要保存参数吗？".tr()) != DialogResult.OK) { return; }
+            if (BrowApp.APP.Tip.ShowTip(0, "提示".tr(), "确定要保存参数吗？".tr(), "确定".tr(), "取消".tr()) != 1) { return; }
             try
             {
                 Global.Systemdata.PatlePos.Xpos = Convert.ToDouble(PatelXpos.Value);
@@ -492,7 +492,7 @@ namespace GSP.UI
         #region BOM导入
         private void bomSave_Click(object sender, EventArgs e)
         {
-            if (KryptonMessageBox.Show("确定要保存参数吗？".tr()) != DialogResult.OK) { return; }
+            if ( BrowApp.APP.Tip.ShowTip(0, "提示".tr(), "确定要保存参数吗？".tr(), "确定".tr(), "取消".tr()) != 1) { return; }
             try
             {
                 Global.Parm.BMak1Pos.Xpos = Convert.ToDouble(BMask1_Xnum.Value);
@@ -703,7 +703,7 @@ namespace GSP.UI
 
         private void M_Save2_Click(object sender, EventArgs e)
         {
-            if (KryptonMessageBox.Show("确定要保存参数吗？".tr()) != DialogResult.OK) { return; }
+            if (BrowApp.APP.Tip.ShowTip(0, "提示".tr(), "确定要保存参数吗？".tr(), "确定".tr(), "取消".tr()) != 1) { return; }
             try
             {
                 Global.Parm.Mak1Pos.Xpos = Convert.ToDouble(Mask1Xpos.Value);
@@ -746,7 +746,7 @@ namespace GSP.UI
         {
             if (!Global.SystemInitialOk)
             {
-                APP.Tip.ShowTip(0, "警告", "设备未归零,请先归零再执行操作".tr(), "确定".tr());
+                APP.Tip.ShowTip(0, "警告".tr(), "设备未归零,请先归零再执行操作".tr(), "确定".tr());
                 return;
             }
             if (Flow.IsManualRun()) { return; }
@@ -778,7 +778,7 @@ namespace GSP.UI
         {
             if (!Global.SystemInitialOk)
             {
-                APP.Tip.ShowTip(0, "警告", "设备未归零,请先归零再执行操作".tr(), "确定".tr());
+                APP.Tip.ShowTip(0, "警告".tr(), "设备未归零,请先归零再执行操作".tr(), "确定".tr());
                 return;
             }
             if (Flow.IsManualRun()) { return; }
@@ -818,7 +818,7 @@ namespace GSP.UI
         {
             if (!Global.VisionApp.SaveProject(@"./VisionProject/VisionPro.proj"))
             {
-                FloatingTip.ShowError("项目文件保存失败");
+                FloatingTip.ShowError("项目文件保存失败".tr());
             }
             else
             {
@@ -835,7 +835,7 @@ namespace GSP.UI
         {
             if (!Global.SystemInitialOk)
             {
-                APP.Tip.ShowTip(0, "警告", "设备未归零,请先归零再执行操作".tr(), "确定");
+                APP.Tip.ShowTip(0, "警告".tr(), "设备未归零,请先归零再执行操作".tr());
                 return;
             }
             if (Global.SystemRun)

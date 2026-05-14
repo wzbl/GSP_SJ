@@ -1,4 +1,5 @@
-﻿using CKVisionAppNet;
+﻿using BrowApp.Language;
+using CKVisionAppNet;
 using ComponentFactory.Krypton.Docking;
 using ComponentFactory.Krypton.Navigator;
 using ComponentFactory.Krypton.Toolkit;
@@ -44,13 +45,13 @@ namespace GSP.UI
                     break;
                 case (int)AppVIEW_WM.RBUTTONDOWN:
                     {
-                        ;/// MessageBox.Show("ViewMsgCallBack RBUTTONDOWN");
+                        ;///  BrowApp.APP.Tip.ShowTip(0, "警告".tr(), "ViewMsgCallBack RBUTTONDOWN");
 
                     }
                     break;
                 case (int)AppVIEW_WM.MOUSEWHEEL:
                     {
-                        ///  MessageBox.Show("ViewMsgCallBack MOUSEWHEEL");
+                        ///   BrowApp.APP.Tip.ShowTip(0, "警告".tr(), "ViewMsgCallBack MOUSEWHEEL");
 
                     }
                     break;
@@ -145,7 +146,7 @@ namespace GSP.UI
             {
                 if (!Global.VisionApp.LoadProject(fd.FileName))
                 {
-                    KryptonMessageBox.Show("项目文件加载失败？？？");
+                    BrowApp.APP.Tip.ShowTip(1, "警告".tr(), "项目文件加载失败？？？".tr(), "确定".tr());
                 }
             }
             else
@@ -173,7 +174,7 @@ namespace GSP.UI
             {
                 if (!Global.VisionApp.SaveProject(fd.FileName))
                 {
-                    KryptonMessageBox.Show("项目文件保存失败？？？");
+                    BrowApp.APP.Tip.ShowTip(1, "警告".tr(), "项目文件保存失败？？？".tr(), "确定".tr());
                 }
             }
         }

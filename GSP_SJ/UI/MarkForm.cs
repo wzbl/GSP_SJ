@@ -151,13 +151,13 @@ namespace GSP.UI
                     break;
                 case (int)AppVIEW_WM.RBUTTONDOWN:
                     {
-                        ;/// MessageBox.Show("ViewMsgCallBack RBUTTONDOWN");
+                        ;///  BrowApp.APP.Tip.ShowTip(0, "警告".tr(), "ViewMsgCallBack RBUTTONDOWN");
 
                     }
                     break;
                 case (int)AppVIEW_WM.MOUSEWHEEL:
                     {
-                        ///  MessageBox.Show("ViewMsgCallBack MOUSEWHEEL");
+                        ///   BrowApp.APP.Tip.ShowTip(0, "警告".tr(), "ViewMsgCallBack MOUSEWHEEL");
 
                     }
                     break;
@@ -315,7 +315,7 @@ namespace GSP.UI
         {
             Global.VisionApp.ProcEndEvent -= new EventHandler(RefImage);
             //Global.IsMove = false;
-            if (KryptonMessageBox.Show("确定要保存参数吗？".tr())!=DialogResult.OK) { return; }
+            if (BrowApp.APP.Tip.ShowTip(0, "提示".tr(), "确定要保存参数吗？".tr(),"确定".tr(),"取消".tr())!=1) { return; }
             try
             {
                 Global.Parm.Mak1Pos.Xpos = Convert.ToDouble(MPos_X1.Value);
@@ -392,7 +392,7 @@ namespace GSP.UI
         {
             if (!Global.SystemInitialOk)
             {
-                APP.Tip.ShowTip(0, "警告", "设备未归零,请先归零再执行操作".tr(), "确定");
+                APP.Tip.ShowTip(0, "警告".tr(), "设备未归零,请先归零再执行操作".tr(), "确定".tr());
                 return;
             }
             if (Global.SystemRun)

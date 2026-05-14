@@ -111,13 +111,13 @@ namespace GSP.UI
                     break;
                 case (int)AppVIEW_WM.RBUTTONDOWN:
                     {
-                        ;/// MessageBox.Show("ViewMsgCallBack RBUTTONDOWN");
+                        ;///  BrowApp.APP.Tip.ShowTip(0, "警告".tr(), "ViewMsgCallBack RBUTTONDOWN");
 
                     }
                     break;
                 case (int)AppVIEW_WM.MOUSEWHEEL:
                     {
-                        ///  MessageBox.Show("ViewMsgCallBack MOUSEWHEEL");
+                        ///   BrowApp.APP.Tip.ShowTip(0, "警告".tr(), "ViewMsgCallBack MOUSEWHEEL");
 
                     }
                     break;

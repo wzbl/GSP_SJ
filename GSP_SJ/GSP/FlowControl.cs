@@ -396,7 +396,7 @@ namespace GSP
                                 }
                                 else
                                 {
-                                    APP.Tip.ShowTip(0, "警告", "轨道有板不允许轨道归零,请清理轨道重新启动设备归零".tr(), "确定".tr());
+                                    APP.Tip.ShowTip(0, "警告".tr(), "轨道有板不允许轨道归零,请清理轨道重新启动设备归零".tr(), "确定".tr());
                                     HomeStep = 0;
                                     btnhome = true;
                                     Global.SystemInitialOk = false;
@@ -565,7 +565,7 @@ namespace GSP
                                 }
                                 else
                                 {
-                                    APP.Tip.ShowTip(0, "警告", "轨道有板不允许轨道归零,请清理轨道重新启动设备归零".tr(), "确定".tr());
+                                    APP.Tip.ShowTip(0, "警告".tr(), "轨道有板不允许轨道归零,请清理轨道重新启动设备归零".tr(), "确定".tr());
                                     HomeStep = 0;
                                     btnhome = true;
                                     Global.SystemInitialOk = false;
@@ -640,7 +640,7 @@ namespace GSP
                         else if (Flow_InTimer.IsOn(10000))
                         {
                             Global.皮带.AxisStop();
-                            APP.Tip.ShowTip(0, "警告", "进板超时！！！", "确定");
+                            APP.Tip.ShowTip(0, "警告".tr(), "进板超时！！！", "确定".tr());
                             Global.TcpClass.Send("M:Flow_In_NG");
                             IniStart = false;
                             InStep = 0;
@@ -797,7 +797,7 @@ namespace GSP
                                 else if (Flow_OutTimer.IsOn(10000))
                                 {
                                     Global.皮带.AxisStop();
-                                    APP.Tip.ShowTip(1, "警告", "出板超时".tr(), "确定");
+                                    APP.Tip.ShowTip(1, "警告".tr(), "出板超时".tr(), "确定".tr());
                                     Global.TcpClass.Send("M:Flow_OUT_NG");
                                     IniStart = false;
                                 }
@@ -2325,7 +2325,7 @@ namespace GSP
                         }
                         else if (IniTimer.IsOn(2000))
                         {
-                            APP.Tip.ShowTip(1, "警告", "系统初始化失败！！！", "确定");
+                            APP.Tip.ShowTip(1, "警告".tr(), "系统初始化失败！！！", "确定".tr());
                             IniStart = false;
                         }
                         break;
@@ -2413,7 +2413,7 @@ namespace GSP
                                     }
                                     else
                                     {
-                                        APP.Tip.ShowTip(1, "警告", "请放入PCB板".tr(), "确定".tr());
+                                        APP.Tip.ShowTip(1, "警告".tr(), "请放入PCB板".tr(), "确定".tr());
                                     }
                                     break;
                             }
@@ -2478,7 +2478,7 @@ namespace GSP
                             }
                             else if (RunTimer.IsOn(1000))
                             {
-                                int Rtn = APP.Tip.ShowTip(1, "警告", "顶升到位超时".tr(), "继续".tr(), "停止".tr());
+                                int Rtn = APP.Tip.ShowTip(1, "警告".tr(), "顶升到位超时".tr(), "继续".tr(), "停止".tr());
                                 if (Rtn == 1)
                                 {
                                     APP.Log.I_Log("顶升到位超时-点击(继续)");
@@ -2860,7 +2860,7 @@ namespace GSP
                             VisionGlobal.bMak2_Y + VisionGlobal.TranslationY, out Wx, out Wy);
                             if (Ecode != 0)
                             {
-                                APP.Tip.ShowTip(1, "警告", "Mark绑定数据出错".tr(), "确定".tr());
+                                APP.Tip.ShowTip(1, "警告".tr(), "Mark绑定数据出错".tr(), "确定".tr());
                                 Global.StopFlag = true;
                                 Global.MachineState = GEnumEx.MachineState.MachineStop;
                                 Global.SystemRun = false;

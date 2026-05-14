@@ -45,7 +45,7 @@ namespace GSP_SJ
                 }
                 else
                 {
-                    MessageBox.Show("程序已经在运行中,请勿重复打开".tr(), "警告:".tr(), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                     BrowApp.APP.Tip.ShowTip(1, "警告".tr(), "程序已经在运行中,请勿重复打开".tr(), "确定".tr());
                     global::System.Threading.Thread.Sleep(1000);
                     global::System.Environment.Exit(Environment.ExitCode);
                 }

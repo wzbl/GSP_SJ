@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BrowApp.Language;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -35,16 +36,13 @@ namespace GSP_SJ
         private void Canvas_ComponentDoubleClick(object sender, ComponentCanvas.ComponentEventArgs e)
         {
             Component comp = e.Component;
-            MessageBox.Show(
-                $"元件: {comp.Designator}\n" +
-                $"位置: X={comp.Position.X:F2}, Y={comp.Position.Y:F2}\n" +
-                $"尺寸: {comp.Size.Width:F2} x {comp.Size.Height:F2}\n" +
-                $"角度: {comp.Angle:F1}°\n" +
-                $"字符: {comp.Text}",
-                "元件信息",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Information
-            );
+            BrowApp.APP.Tip.ShowTip(0, "警告".tr(),
+               $"元件: {comp.Designator}\n" +
+               $"位置: X={comp.Position.X:F2}, Y={comp.Position.Y:F2}\n" +
+               $"尺寸: {comp.Size.Width:F2} x {comp.Size.Height:F2}\n" +
+               $"角度: {comp.Angle:F1}°\n" +
+               $"字符: {comp.Text}"
+            , "确定".tr());
         }
 
         private void Form2_Shown(object sender, EventArgs e)

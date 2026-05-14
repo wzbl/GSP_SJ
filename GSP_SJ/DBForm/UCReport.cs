@@ -1,4 +1,5 @@
 ﻿using BorwinAnalyse.BaseClass;
+using BrowApp.Language;
 using SqlHelper;
 using System;
 using System.Collections.Generic;
@@ -465,7 +466,7 @@ namespace GSP_SJ
         private void btnSave_Click(object sender, EventArgs e)
         {
             Save();
-            MessageBox.Show("保存成功");
+             BrowApp.APP.Tip.ShowTip(0, "提示".tr(), "保存成功".tr(), "确定".tr());
         }
 
         private void Save()

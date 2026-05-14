@@ -2,6 +2,7 @@
 using BorwinAnalyse.Forms;
 using BorwinAnalyse.ImportBom;
 using BorwinAnalyse.UCControls;
+using BrowApp.Language;
 using ComponentFactory.Krypton.Ribbon;
 using GSP_SJ.DBForm;
 using GSP_SJ.ModelClass;
@@ -156,16 +157,17 @@ namespace GSP_SJ
         {
             if (string.IsNullOrEmpty(txtProductCode.Text))
             {
-                
-                MessageBox.Show("请输入产品编号");
+                txtProductCode.Focus();
+                 BrowApp.APP.Tip.ShowTip(0, "警告".tr(), "请输入产品编号".tr(), "确定".tr());
                 return;
             }
             if (string.IsNullOrEmpty(ComSide.Text))
             {
-                MessageBox.Show("请选择板面");
+                ComSide.Focus();
+                 BrowApp.APP.Tip.ShowTip(0, "警告".tr(), "请选择板面".tr(), "确定".tr());
                 return;
             }
-            if (MessageBox.Show("当前数据将被清除,是否导入XY数据?", "提示", MessageBoxButtons.YesNo) == DialogResult.No)
+            if ( BrowApp.APP.Tip.ShowTip(0, "警告".tr(), "当前数据将被清除,是否导入XY数据?".tr(),"确定".tr(),"取消".tr() )!=1)
             {
                 //取消
                 return;
@@ -552,11 +554,11 @@ namespace GSP_SJ
             SQLDataControl.UpdateBas_Material(0, customerCode, materialCode, materialName, lcrType, lcrStandardValue, lcrUnitCode, lcrMaxValue, lcrMinValue, size, compensateValue, picture, remarks, creator, creationDate, modifier, modificationDate, screenPrinting, maxTolerance, minTolerance, toleranceType, componentPackaging, out msg);
             if (string.IsNullOrEmpty(msg))
             {
-                MessageBox.Show("添加完成");
+                 BrowApp.APP.Tip.ShowTip(1, "提示".tr(), "添加完成".tr(), "确定".tr());
                 return;
             }
 
-            if (MessageBox.Show(msg + ",是否替换?", "提示", MessageBoxButtons.OKCancel) == DialogResult.OK)
+            if ( BrowApp.APP.Tip.ShowTip(0, "提示".tr(), msg + ",是否替换?".tr(),  "确定".tr(), "取消".tr()) == 1)
             {
                 SQLDataControl.UpdateBas_Material(2, customerCode, materialCode, materialName, lcrType, lcrStandardValue, lcrUnitCode, lcrMaxValue, lcrMinValue, size, compensateValue, picture, remarks, creator, creationDate, modifier, modificationDate, screenPrinting, maxTolerance, minTolerance, toleranceType, componentPackaging, out msg);
             }
@@ -567,7 +569,7 @@ namespace GSP_SJ
             if (DataGridView_BOM.SelectedRows.Count == 0)
                 return;
             string materialCode = p_Search_Engs[DataGridView_BOM.SelectedRows[0].Index].物料编码;
-            if (MessageBox.Show("是否删除物料" + materialCode + "?", "提示", MessageBoxButtons.OKCancel) == DialogResult.OK)
+            if ( BrowApp.APP.Tip.ShowTip(0, "提示".tr(), "是否删除物料".tr() + materialCode + "?", "确定".tr(), "取消".tr()) == 1)
             {
                 SQLDataControl.DeleteMaterialCode(txtProductCode.Text, materialCode);
                 RefreshBomData();

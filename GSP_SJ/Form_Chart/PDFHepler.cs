@@ -1,4 +1,5 @@
-﻿using iTextSharp.text;
+﻿using BrowApp.Language;
+using iTextSharp.text;
 using iTextSharp.text.pdf;
 //using PdfSharp;
 //using PdfSharp.Charting;
@@ -168,7 +169,7 @@ namespace GSP_SJ
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                 BrowApp.APP.Tip.ShowTip(1, "警告".tr(), ex.Message, "确定".tr());
             }
         }
 
@@ -177,9 +178,8 @@ namespace GSP_SJ
         {
             if (string.IsNullOrEmpty(filePathAndName)) return;
 
-            MessageBox.Show("导出成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-            if (MessageBox.Show("保存成功，是否打开文件？", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
+            if ( BrowApp.APP.Tip.ShowTip(0, "提示".tr(), "保存成功，是否打开文件？".tr(), "确定".tr(), "取消".tr()) == 1)
             {
                 System.Diagnostics.Process.Start(filePathAndName);
             }

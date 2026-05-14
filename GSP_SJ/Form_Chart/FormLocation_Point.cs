@@ -1,4 +1,5 @@
-﻿using ComponentFactory.Krypton.Toolkit;
+﻿using BrowApp.Language;
+using ComponentFactory.Krypton.Toolkit;
 using Emgu.CV.Flann;
 using System;
 using System.Collections.Generic;
@@ -31,7 +32,7 @@ namespace GSP_SJ
         {
             if (string.IsNullOrEmpty(comPosition.Text))
             {
-                MessageBox.Show("请选择位号");
+                 BrowApp.APP.Tip.ShowTip(1, "警告".tr(), "请选择位号".tr(), "确定".tr());
             }
             Position = comPosition.Text;
             Index = comPosition.SelectedIndex;

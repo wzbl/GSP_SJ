@@ -2413,7 +2413,7 @@ public class AutoDetectionProcess
 
     private void ShowWarning(string message)
     {
-        APP.Tip.ShowTip(1, "警告", message.tr(), "确定".tr());
+        APP.Tip.ShowTip(1, "警告".tr(), message.tr(), "确定".tr());
     }
 
     private void ShowError(string message)

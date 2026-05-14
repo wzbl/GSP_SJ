@@ -1,4 +1,5 @@
-﻿using ComponentFactory.Krypton.Toolkit;
+﻿using BrowApp.Language;
+using ComponentFactory.Krypton.Toolkit;
 using SqlHelper;
 using System;
 using System.Collections.Generic;
@@ -56,13 +57,13 @@ namespace GSP_SJ.DBForm
                 int row = i + 1;
                 if (dgvProgram.Rows[i].Cells[0] == null)
                 {
-                    MessageBox.Show("请填写客户代码");
+                     BrowApp.APP.Tip.ShowTip(1, "警告".tr(), "请填写客户代码", "确定".tr());
                     return;
                 }
 
                 if (dgvProgram.Rows[i].Cells[1] == null)
                 {
-                    MessageBox.Show("请填写客户名称");
+                     BrowApp.APP.Tip.ShowTip(1, "警告".tr(), "请填写客户名称".tr(), "确定".tr());
                     return;
                 }
                 string customerCode = dgvProgram.Rows[i].Cells[0].ToString();
@@ -70,13 +71,13 @@ namespace GSP_SJ.DBForm
 
                 if (string.IsNullOrEmpty(customerCode))
                 {
-                    MessageBox.Show("请填写客户代码");
+                     BrowApp.APP.Tip.ShowTip(1, "警告".tr(), "请填写客户代码".tr(), "确定".tr());
                     return;
                 }
 
                 if (string.IsNullOrEmpty(customerName))
                 {
-                    MessageBox.Show("请填写客户名称");
+                     BrowApp.APP.Tip.ShowTip(1, "警告".tr(), "请填写客户名称".tr(), "确定".tr());
                     return;
                 }
                 if (_Customers.Where(x => x.Row == row).ToList().Count == 0)
