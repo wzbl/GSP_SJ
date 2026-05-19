@@ -3622,6 +3622,12 @@ namespace GSP
                 Thread.Sleep(5);
             }
         }
+
+        #region 发送电表指令
+
+        #endregion
+
+
         /// <summary>
         /// 过板流程
         /// </summary>

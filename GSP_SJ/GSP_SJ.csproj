@@ -377,6 +377,12 @@
     <Compile Include="UI\CreateMode.Designer.cs">
       <DependentUpon>CreateMode.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\FormLoding.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\FormLoding.Designer.cs">
+      <DependentUpon>FormLoding.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\HomeStart.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -577,6 +583,9 @@
     <EmbeddedResource Include="UI\CreateMode.resx">
       <DependentUpon>CreateMode.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UI\FormLoding.resx">
+      <DependentUpon>FormLoding.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI\HomeStart.resx">
       <DependentUpon>HomeStart.cs</DependentUpon>
     </EmbeddedResource>
@@ -650,6 +659,10 @@
     <ProjectReference Include="..\BorwinAnalyse\BorwinAnalyse.csproj">
       <Project>{e24f3998-ff55-4a8f-a7b5-b2dcc34eb3c2}</Project>
       <Name>BorwinAnalyse</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ElectricMeter\ElectricMeter.csproj">
+      <Project>{588B55AE-50F7-4FBD-9F48-4C7441C8B5A0}</Project>
+      <Name>ElectricMeter</Name>
     </ProjectReference>
     <ProjectReference Include="..\SqlHelper\SqlHelper.csproj">
       <Project>{33a74706-9429-47bc-8ecb-5d5a0f6dbe27}</Project>
@@ -837,6 +850,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Mes\FAIlogo.png" />
+    <None Include="Resources\loading.gif" />
     <None Include="Resources\icons8-缩小-16.png" />
     <None Include="Resources\icons8-扩大-16.png" />
     <None Include="Resources\icons8-缩小-48.png" />

@@ -1,5 +1,8 @@
 ﻿using BorwinAnalyse.BaseClass;
 using BrowApp.Language;
+using ElectricMeter;
+using GSP_SJ.DBForm;
+using GSP_SJ.UI;
 using SqlHelper;
 using System;
 using System.Collections.Generic;
@@ -624,10 +627,45 @@ namespace GSP_SJ
             DBEventAction.RefreshReport?.Invoke(txtReportCode.Text);
         }
 
+        FormLoding formLoding;
         private void btnStart_Click(object sender, EventArgs e)
         {
+            InitReportData();
+        }
+
+        private async void InitReportData()
+        {
+            string reportCode = txtReportCode.Text;
+            string productCode = comProductCode.Text;
+            string OptionCode = comOptionCode.Text;
             FormAction form3 = new FormAction(txtReportCode.Text, comProductCode.Text);
+            ShowLoading();
+            await Task.Run(() =>
+            {
+                ElectricMeterManager._MeterOptionItems = SQLDataControl.GetMeterOptionItem(OptionCode);
+                form3.sizes = SQLDataControl.GetMan_ComponentSize();
+                DBEventAction.man_ReportItems = SQLDataControl.Search_Man_ReportItem(reportCode);
+                DBEventAction._Reports = SQLDataControl.GetMan_Report(reportCode);
+                if (DBEventAction._Reports.Picture != null)
+                    form3. image2 = PublicFunction.ByteToBitmap(DBEventAction._Reports.Picture);
+                if (DBEventAction._Reports.PositionImage != null)
+                    form3. image = PublicFunction.ByteToBitmap(DBEventAction._Reports.PositionImage);
+                else
+                    form3. image = PublicFunction.ByteToBitmap(SQLDataControl.GetProgramOptionPicture(productCode));
+            });
+            form3.Init();
+            formLoding.CloseFlg=true;
             form3.ShowDialog();
+        }
+
+        private async void ShowLoading()
+        {
+            formLoding = new FormLoding();
+            await Task.Run(() =>
+            {
+                formLoding.ShowDialog();
+            });
+        
         }
     }
 }

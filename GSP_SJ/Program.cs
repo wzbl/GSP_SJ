@@ -1,6 +1,7 @@
 ﻿using BorwinAnalyse.BaseClass;
 using BorwinAnalyse.ImportBom;
 using BrowApp.Language;
+using ElectricMeter;
 using GSP;
 using GSP_SJ.DBForm;
 using GSP_SJ.ModelClass;
@@ -36,8 +37,9 @@ namespace GSP_SJ
             {
                 if (createNew)
                 {
+                    ElectricMeterManager.SetElectricMeterType(ElectricMeterType.TH2830);
                     MiddleLayer.InitialProject();
-                   
+                 
                     FormLogin formLogin = new FormLogin();
                     if (formLogin.ShowDialog() == DialogResult.OK)
                         new StartForm().ShowDialog();

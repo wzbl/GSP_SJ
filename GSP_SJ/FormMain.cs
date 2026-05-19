@@ -9,6 +9,7 @@ using CKVisionAppNet;
 using ComponentFactory.Krypton.Navigator;
 using ComponentFactory.Krypton.Ribbon;
 using ComponentFactory.Krypton.Toolkit;
+using ElectricMeter;
 using GSP;
 using GSP.Mes;
 using GSP.UI;
@@ -64,6 +65,7 @@ namespace GSP_SJ
             {
                 Global.VisionApp.VisionAppClose();
                 BrowLib.Controller.CardAPI.Servoff();
+                ElectricMeterManager.Close();
                 this.Dispose();
                 System.Environment.Exit(Environment.ExitCode);
             }

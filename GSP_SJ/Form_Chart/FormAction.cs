@@ -1,5 +1,8 @@
 ﻿using BrowApp;
+using BrowApp.Language;
+using BrowApp.MessageTip;
 using ComponentFactory.Krypton.Toolkit;
+using ElectricMeter;
 using Emgu.Util.TypeEnum;
 using GSP;
 using GSP.UI;
@@ -18,6 +21,7 @@ using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Security.Policy;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -31,11 +35,11 @@ namespace GSP_SJ
         /// <summary>
         /// 位号图
         /// </summary>
-        Bitmap image;
+        public Bitmap image;
         /// <summary>
         /// 拼图
         /// </summary>
-        Bitmap image2;
+        public Bitmap image2;
         public FormAction(ComponentCanvas canva)
         {
             InitializeComponent();
@@ -52,17 +56,16 @@ namespace GSP_SJ
         private string reportCode = "";
         private string productCode = "";
         List<string> Position = new List<string>();
+        public List<Man_ComponentSize> sizes;
         public FormAction(string reportCode, string productCode)
         {
             InitializeComponent();
             this.reportCode = reportCode;
             this.productCode = productCode;
-           
             try
             {
                 comMaterialCode.Items.Clear();
                 comLcrStandValue.Items.Clear();
-                Init();
                 pictureBoxZoom1 = new UCZoom(Type_Window.Position);
                 this.panel2.Controls.Add(pictureBoxZoom1);
                 pictureBoxZoom2 = new UCZoom(Type_Window.Puzzle);
@@ -90,16 +93,18 @@ namespace GSP_SJ
                 this.位置2ToolStripMenuItem.Enabled = false;
                 this.位置3ToolStripMenuItem.Enabled = false;
                 this.位置4ToolStripMenuItem.Enabled = false;
-            
             }
             catch (Exception ex)
             {
 
             }
-
-            this.Shown+= OnShown;
+            this.Shown += OnShown;
+            this.FormClosing += FormClosin;
         }
-
+        private void FormClosin(object sender, EventArgs e)
+        {
+            IsManualLcr = false;
+        }
         private void OnShown(object sender, EventArgs e)
         {
             UpdateLanguage();
@@ -122,21 +127,19 @@ namespace GSP_SJ
             }
         }
 
-        private async void Init()
+        public  void Init()
         {
-            await Task.Run(() =>
+            if (image2 != null)
             {
-                DBEventAction.man_ReportItems = SQLDataControl.Search_Man_ReportItem(reportCode);
-                DBEventAction._Reports = SQLDataControl.GetMan_Report(reportCode);
-            if (DBEventAction._Reports.Picture != null)
-                image2 = PublicFunction.ByteToBitmap(DBEventAction._Reports.Picture);
-            if (DBEventAction._Reports.PositionImage != null)
-                image = PublicFunction.ByteToBitmap(DBEventAction._Reports.PositionImage);
-            else
-                image = PublicFunction.ByteToBitmap(SQLDataControl.GetProgramOptionPicture(productCode));
-
-        });
-            List<Man_ComponentSize> sizes = SQLDataControl.GetMan_ComponentSize();
+                pictureBoxZoom2.SetImage(image2);
+                pictureBoxZoom3.SetImage((Image)image2.Clone());
+            }
+            if (image != null)
+                pictureBoxZoom1.SetImage(image);
+            pictureBoxZoom1.Refresh();
+            pictureBoxZoom2.Refresh();
+            pictureBoxZoom3.Refresh();
+            pictureBoxZoom2.Refresh_IsFurnace();
             foreach (var item in DBEventAction.man_ReportItems)
             {
                 comMaterialCode.Items.Add(item.MaterialCode);
@@ -144,9 +147,7 @@ namespace GSP_SJ
                 Position.Add(item.Position);
                 bool isHaveModel = SQLDataControl.GetEng_ModelItem(productCode, item.MaterialCode).Count > 0;
                 List<Man_ComponentSize> ComponentSize = sizes.Where(X => X.SizeCode == item.Size).ToList();
-
                 Size size = new Size(100, 100);
-
                 if (ComponentSize.Count > 0)
                 {
                     size = new Size((int)ComponentSize.First().PixelWidth, (int)ComponentSize.First().PixelHeight);
@@ -221,25 +222,15 @@ namespace GSP_SJ
                    item.MinTolerance,
                    item.ToleranceType
                    );
-
                 refresCellStatus(item);
-
             }
+            dataGridView1.Refresh();
             RefreshBom();
             RefreshMessage();
             txtProductName.Text = DBEventAction._Reports.ProductName;
             txtBoardSide.Text = DBEventAction._Reports.BoardSide;
             txtBoardQty.Text = DBEventAction._Reports.BoardQty.ToString();
-            if (image2 != null)
-            {
-                pictureBoxZoom2.SetImage(image2);
-                pictureBoxZoom3.SetImage((Image)image2.Clone());
-            }
-            if (image != null)
-                pictureBoxZoom1.SetImage(image);
-            pictureBoxZoom1.Refresh();
-            pictureBoxZoom2.Refresh();
-            pictureBoxZoom3.Refresh();
+      
             if (dataGridView1.Rows.Count > 0)
             {
                 dataGridView1.Rows[0].Selected = true;
@@ -250,8 +241,6 @@ namespace GSP_SJ
                 RefreshMaterial(pos);
             }
             comSortType.SelectedIndexChanged += comSortType_SelectedIndexChanged;
-         
-            pictureBoxZoom2.Refresh_IsFurnace();
 
             if (DBEventAction._Reports.IsFurnace == null || (bool)DBEventAction._Reports.IsFurnace)
                 this.位置1ToolStripMenuItem.Enabled = false;
@@ -316,7 +305,7 @@ namespace GSP_SJ
             }
         }
 
-        private  void RefreshDataGrid()
+        private void RefreshDataGrid()
         {
             DBEventAction.man_ReportItems = SQLDataControl.Search_Man_ReportItem(reportCode);
             dataGridView1.Rows.Clear();
@@ -393,11 +382,11 @@ namespace GSP_SJ
         private void 位置1ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //位置Mark1
-     
+
             string pos = "";
-            if(pictureBoxZoom1.GetSelectComponent(out Image img,out Component component))
+            if (pictureBoxZoom1.GetSelectComponent(out Image img, out Component component))
             {
-                pos=component.Designator;
+                pos = component.Designator;
             }
             FormLocation_Point formLocation = new FormLocation_Point(Position, pos);
             if (formLocation.ShowDialog() == DialogResult.OK)
@@ -411,8 +400,8 @@ namespace GSP_SJ
                 Location_Point.eyePixelPositionY[0] = double.Parse(pictureBoxZoom2.PixPoint().Y.ToString());
 
                 pictureBoxZoom1.SetSelectCompont(formLocation.Position);
-                MotionCommand.C_Mark(formLocation.Position,1,1, Location_Point.handPositionX[0], Location_Point.handPositionY[0], (int)Location_Point.eyePixelPositionX[0], (int)Location_Point.eyePixelPositionY[0], pictureBoxZoom2.Image.Width, pictureBoxZoom2.Image.Height, (double)numpcbLong.Value, (double)numpcbHeight.Value);
-                
+                MotionCommand.C_Mark(formLocation.Position, 1, 1, Location_Point.handPositionX[0], Location_Point.handPositionY[0], (int)Location_Point.eyePixelPositionX[0], (int)Location_Point.eyePixelPositionY[0], pictureBoxZoom2.Image.Width, pictureBoxZoom2.Image.Height, (double)numpcbLong.Value, (double)numpcbHeight.Value);
+
                 this.位置1ToolStripMenuItem.Enabled = false;
                 this.位置2ToolStripMenuItem.Enabled = true;
                 this.位置3ToolStripMenuItem.Enabled = false;
@@ -429,7 +418,7 @@ namespace GSP_SJ
             {
                 pos = component.Designator;
             }
-            FormLocation_Point formLocation = new FormLocation_Point(Position,pos);
+            FormLocation_Point formLocation = new FormLocation_Point(Position, pos);
             if (formLocation.ShowDialog() == DialogResult.OK)
             {
                 //dataGridView1.ClearSelection();
@@ -1109,7 +1098,7 @@ namespace GSP_SJ
                 BrowLib.Controller.OutPort["自动切换手动"].On();
                 BrowLib.Controller.OutPort["四线切换两线"].On();
             }
-          
+
         }
 
         private void btnHome_Click(object sender, EventArgs e)
@@ -1159,9 +1148,90 @@ namespace GSP_SJ
             }
         }
 
+
         #endregion
 
+        bool IsManualLcr = false;
 
+        private void btnSetLcrValue_Click(object sender, EventArgs e)
+        {
+            if (ElectricMeterManager.IsConnected() == false)
+            {
+                FloatingTip.ShowError("请先连接电表".tr());
+                return;
+            }
+            if (IsManualLcr)
+            {
+                return;
+            }
+            if (dataGridView1.SelectedRows.Count > 0)
+            {
+                int index = dataGridView1.SelectedRows[0].Index;
+                string lcrType = dataGridView1.Rows[index].Cells[9].Value.ToString();
+                if (dataGridView1.Rows[index].Cells[3].Value == null || dataGridView1.Rows[index].Cells[5].Value == null || dataGridView1.Rows[index].Cells[8].Value == null)
+                    return;
+                if (double.TryParse(dataGridView1.Rows[index].Cells[3].Value.ToString(), out double value))
+                {
+
+                }
+                if (dataGridView1.Rows[index].Cells[5].Value == null)
+                    return;
+                string unit = dataGridView1.Rows[index].Cells[4].Value.ToString();
+                if (double.TryParse(dataGridView1.Rows[index].Cells[5].Value.ToString(), out double min))
+                {
+
+                }
+                if (double.TryParse(dataGridView1.Rows[index].Cells[8].Value.ToString(), out double max))
+                {
+
+                }
+                int step = 0;
+                IsManualLcr = true;
+                Thread thread = new Thread(() =>
+                {
+                    while (IsManualLcr)
+                    {
+                        switch (step)
+                        {
+                            case 0:
+                                ElectricMeterManager.SetLCRParameter(lcrType, value, unit, max, min);
+                                step++;
+                                break;
+                            case 1:
+                                ElectricMeterManager.ReadRequest();
+                                step++;
+                                break;
+                            case 2:
+                                if (ElectricMeterManager.GetReadStatus() == ReadStatus.Finished)
+                                {
+                                    bool res = ElectricMeterManager.GetLCRResult(out double val);
+                                    this.Invoke(new Action(() =>
+                                    {
+                                        dataGridView1.Rows[index].Cells[6].Value = val;
+                                        if (res)
+                                        {
+                                            dataGridView1.Rows[index].Cells[6].Style.ForeColor = Color.Lime;
+                                        }
+                                        else
+                                        {
+                                            dataGridView1.Rows[index].Cells[6].Style.ForeColor = Color.Red;
+                                        }
+                                    }));
+                                    step = 1;
+                                }
+                                break;
+                        }
+                        Thread.Sleep(50);
+                    }
+                });
+                thread.Start();
+            }
+        }
+
+        private void btnStopManualLcr_Click(object sender, EventArgs e)
+        {
+            IsManualLcr = false;
+        }
     }
 
 }

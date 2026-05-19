@@ -322,6 +322,8 @@
             this.kryptonButton3 = new ComponentFactory.Krypton.Toolkit.KryptonButton();
             this.btnSizeManager = new ComponentFactory.Krypton.Toolkit.KryptonButton();
             this.btnOne_click_Detection = new ComponentFactory.Krypton.Toolkit.KryptonButton();
+            this.btnSetLcrValue = new ComponentFactory.Krypton.Toolkit.KryptonButton();
+            this.btnStopManualLcr = new ComponentFactory.Krypton.Toolkit.KryptonButton();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.kryptonNavigator2)).BeginInit();
@@ -356,6 +358,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.comSamplingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.comSortType)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.kryptonPanel7)).BeginInit();
+            this.kryptonPanel7.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.kryptonPage4)).BeginInit();
             this.kryptonPage4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.kryptonGroupBox3)).BeginInit();
@@ -475,7 +478,7 @@
             this.kryptonPage4,
             this.kryptonPage5});
             this.kryptonNavigator2.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.Office2007Blue;
-            this.kryptonNavigator2.SelectedIndex = 2;
+            this.kryptonNavigator2.SelectedIndex = 0;
             this.kryptonNavigator2.Size = new System.Drawing.Size(794, 994);
             this.kryptonNavigator2.TabIndex = 4;
             this.kryptonNavigator2.Text = "kryptonNavigator2";
@@ -1323,6 +1326,8 @@
             // 
             // kryptonPanel7
             // 
+            this.kryptonPanel7.Controls.Add(this.btnStopManualLcr);
+            this.kryptonPanel7.Controls.Add(this.btnSetLcrValue);
             this.kryptonPanel7.Dock = System.Windows.Forms.DockStyle.Top;
             this.kryptonPanel7.Location = new System.Drawing.Point(0, 0);
             this.kryptonPanel7.Name = "kryptonPanel7";
@@ -3627,6 +3632,26 @@
             this.btnOne_click_Detection.Values.Text = "电阻一键检测";
             this.btnOne_click_Detection.Click += new System.EventHandler(this.btnOne_click_Detection_Click);
             // 
+            // btnSetLcrValue
+            // 
+            this.btnSetLcrValue.Location = new System.Drawing.Point(12, 12);
+            this.btnSetLcrValue.Name = "btnSetLcrValue";
+            this.btnSetLcrValue.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.Office2007Blue;
+            this.btnSetLcrValue.Size = new System.Drawing.Size(180, 49);
+            this.btnSetLcrValue.TabIndex = 3;
+            this.btnSetLcrValue.Values.Text = "手动测值";
+            this.btnSetLcrValue.Click += new System.EventHandler(this.btnSetLcrValue_Click);
+            // 
+            // btnStopManualLcr
+            // 
+            this.btnStopManualLcr.Location = new System.Drawing.Point(210, 12);
+            this.btnStopManualLcr.Name = "btnStopManualLcr";
+            this.btnStopManualLcr.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.Office2007Blue;
+            this.btnStopManualLcr.Size = new System.Drawing.Size(180, 49);
+            this.btnStopManualLcr.TabIndex = 4;
+            this.btnStopManualLcr.Values.Text = "停止测值";
+            this.btnStopManualLcr.Click += new System.EventHandler(this.btnStopManualLcr_Click);
+            // 
             // FormAction
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -3676,6 +3701,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.comSamplingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.comSortType)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.kryptonPanel7)).EndInit();
+            this.kryptonPanel7.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.kryptonPage4)).EndInit();
             this.kryptonPage4.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.kryptonGroupBox3.Panel)).EndInit();
@@ -4040,5 +4066,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column27;
         private ComponentFactory.Krypton.Toolkit.KryptonComboBox kryptonComboBox1;
         private ComponentFactory.Krypton.Toolkit.KryptonButton btnFlow_OUT;
+        private ComponentFactory.Krypton.Toolkit.KryptonButton btnSetLcrValue;
+        private ComponentFactory.Krypton.Toolkit.KryptonButton btnStopManualLcr;
     }
 }

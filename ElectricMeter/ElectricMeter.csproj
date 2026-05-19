@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BrowApp">
+      <HintPath>..\..\lib\BrowApp.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -44,6 +47,13 @@
     <Compile Include="ElectricMeterManager.cs" />
     <Compile Include="IElectricMeter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TH2830.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SqlHelper\SqlHelper.csproj">
+      <Project>{33A74706-9429-47BC-8ECB-5D5A0F6DBE27}</Project>
+      <Name>SqlHelper</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

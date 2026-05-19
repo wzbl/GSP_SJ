@@ -652,9 +652,18 @@ namespace SqlHelper
 
         public static List<Eng_MeterOptionItem> GetMeterOptionItem(string OptionName)
         {
-            string optionCode = GetMeterOption().Where(x => x.OptionName == OptionName).ToList()[0].OptionCode;
-            return db.Eng_MeterOptionItem.AsNoTracking().Where(x => x.OptionCode == optionCode).ToList();
+            try
+            {
+                string optionCode = GetMeterOption().Where(x => x.OptionName == OptionName).ToList()[0].OptionCode;
+                return db.Eng_MeterOptionItem.AsNoTracking().Where(x => x.OptionCode == optionCode).ToList();
+            }
+            catch (Exception )
+            {
+                return null;
+            }
+           
         }
+
 
         public static List<View_Eng_MeterOptionItem> View_Eng_MeterOptionItem()
         {

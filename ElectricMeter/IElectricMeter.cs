@@ -49,7 +49,7 @@ namespace ElectricMeter
         /// <summary>
         /// 设置测量电阻
         /// </summary>
-        void SetType(TestType type);
+        void SetType(TestType type, string frequency);
 
         /// <summary>
         /// 设置评率
@@ -102,6 +102,7 @@ namespace ElectricMeter
     /// </summary>
     public enum ElectricMeterType
     {
-
+        TH2830
     }
+
 }

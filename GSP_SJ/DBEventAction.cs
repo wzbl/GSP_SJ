@@ -93,6 +93,7 @@ namespace GSP_SJ
         /// </summary>
         public static Man_Report _Reports = null;
 
+
         public static bool IsShowCompoment = false;
         public static bool IsShowComponentPos = false;
     }

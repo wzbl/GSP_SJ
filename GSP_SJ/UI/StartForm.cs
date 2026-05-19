@@ -1,6 +1,7 @@
 ﻿using BorwinAnalyse.BaseClass;
 using BorwinAnalyse.ImportBom;
 using ComponentFactory.Krypton.Toolkit;
+using ElectricMeter;
 using GSP_SJ.ModelClass;
 using System;
 using System.Collections.Generic;
@@ -191,6 +192,7 @@ namespace GSP
                         AnaylseDataManager.Instance.Load();
                         DeepOCRHelper.Init();
                         Browocrlib.OCRHelper.Init();
+                   
                         InitInfoReported(InitInfoReportMode.Complete, -1, true, null, null);
                         break;
                 }
